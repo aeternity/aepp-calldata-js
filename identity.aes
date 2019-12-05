@@ -1,0 +1,2 @@
+contract Identity =
+  payable entrypoint main (a:bool, b:bool) = a
