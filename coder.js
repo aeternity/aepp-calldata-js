@@ -15,23 +15,22 @@ module.exports = {
         const funcAci = contractAci.functions.find(e => e.name == funName)
         const argAci = (funcAci) ? funcAci.arguments : []
 
-        let serializedArgs = []
+        let taggedArgs = []
         for (let i = 0; i < argAci.length; i++) {
             const value = args[i]
             const type = argAci[i].type
-            const serArg = serializer.serialize(type, value)
-            serializedArgs.push(serArg)
+            taggedArgs.push([type, value])
         }
 
         const functionId = this.symbolIdentifier(funName)
-        const argsTuple = serializer.serialize('tuple', serializedArgs)
+        const calldata = ['tuple', [
+                ['byte_array', functionId],
+                ['tuple', taggedArgs]
+        ]]
 
-        const funcTuple = serializer.serialize('tuple', [
-                serializer.serialize('byte_array', functionId),
-                argsTuple
-        ])
+        const serialized = serializer.serialize(calldata)
 
-        return new Uint8Array(funcTuple.flat(Infinity))
+        return new Uint8Array(serialized.flat(Infinity))
     },
 
     symbolIdentifier: function (funName) {

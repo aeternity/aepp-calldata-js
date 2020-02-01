@@ -1,13 +1,15 @@
 const FATE = require('./FATE_data.js')
 
 module.exports = {
-    serialize: function (type, value) {
+    serialize: function (data) {
+        const [type, value] = data
+
         if (!this.serializers.hasOwnProperty(type)) {
-            console.error("Unsupported type: " + type)
+            console.error("Unsupported type: ", type)
             return
         }
 
-        return this.serializers[type](value)
+        return this.serializers[type].call(this, value)
     },
     serializers: {
         'bool': function (value) {
@@ -18,9 +20,7 @@ module.exports = {
                 return [FATE.EMPTY_TUPLE]
             }
 
-            // should we serialize it ?! what about types ?!
-            // const elements = tuple.map(e => serialize(x))
-            const elements = value
+            const elements = value.map(e => this.serialize(e))
 
             if (value.length < 16) {
                 const lenBin = (value.length << 4)
