@@ -1,3 +1,3 @@
 contract Identity =
-  payable entrypoint main (a:bool, b:bool) = a
-  payable entrypoint main2 (a:int) = a
+    payable entrypoint test_empty () = 1
+    payable entrypoint test_bool (a:bool, b:bool) = a
