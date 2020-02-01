@@ -1,0 +1,28 @@
+{
+  "name": "aehack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "coder.js",
+  "dependencies": {
+    "base64check": "^2.1.3",
+    "blakejs": "^1.1.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  },
+  "devDependencies": {
+    "@aeternity/aepp-sdk": "^6.1.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dincho/aehack.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dincho/aehack/issues"
+  },
+  "homepage": "https://github.com/dincho/aehack#readme"
+}
