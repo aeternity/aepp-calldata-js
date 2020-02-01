@@ -15,10 +15,6 @@ module.exports = {
         },
         'tuple': function (value) {
             if (value.length === 0) {
-                // console.log(
-                //     "serialized empty typle:",
-                //     [FATE.EMPTY_TUPLE]
-                // )
                 return [FATE.EMPTY_TUPLE]
             }
 
@@ -29,14 +25,7 @@ module.exports = {
             if (value.length < 16) {
                 const lenBin = (value.length << 4)
                 const prefix = (value.length << 4) | FATE.SHORT_TUPLE
-                // console.log(
-                //     "serialized tuple (len, lenbin, shlbin, prefix, prefixbin):",
-                //     value.length,
-                //     value.length.toString(2).padStart(8, '0'),
-                //     lenBin.toString(2).padStart(8, '0'),
-                //     prefix,
-                //     prefix.toString(2).padStart(8, '0')
-                // )
+
                 return [
                     prefix,
                     ...elements
@@ -57,14 +46,6 @@ module.exports = {
             if (byteArray.length < 64) {
                 const lenBin = (byteArray.length << 2)
                 const prefix = (byteArray.length << 2) | FATE.SHORT_STRING
-                // console.log(
-                //     "serialized byteArray (len, lenbin, shlbin, prefix, prefixbin):",
-                //     byteArray.length,
-                //     byteArray.length.toString(2).padStart(8, '0'),
-                //     lenBin.toString(2).padStart(8, '0'),
-                //     prefix,
-                //     prefix.toString(2).padStart(8, '0')
-                // )
 
                 return [
                     prefix,
