@@ -24,3 +24,13 @@ test('Encode boolean arguments', t => {
     const encoded = t.context.coder.encode(t.context.aci, 'test_bool', [true, false])
     t.is(encoded, 'cb_KxGhC8WIK/9/56SENg==', 'test_bool(true, false)')
 });
+
+test('Encode tuple arguments', t => {
+    const encoded = t.context.coder.encode(t.context.aci, 'test_tuple', [[true, false]])
+    t.is(encoded, 'cb_KxFbdB1sGyv/fzQzK9M=', 'test_tuple((true, false))')
+});
+
+test('Encode nested tuple arguments', t => {
+    const encoded = t.context.coder.encode(t.context.aci, 'test_nested_tuple', [[[true, false], [false, true]]])
+    t.is(encoded, 'cb_KxHkKCkeGysr/38rf/+ZQRDt', 'test_nested_tuple(((true, false), (false true)))')
+});

@@ -23,7 +23,6 @@ module.exports = {
             const elements = value.map(e => this.serialize(e))
 
             if (value.length < 16) {
-                const lenBin = (value.length << 4)
                 const prefix = (value.length << 4) | FATE.SHORT_TUPLE
 
                 return [
@@ -44,7 +43,6 @@ module.exports = {
             }
 
             if (byteArray.length < 64) {
-                const lenBin = (byteArray.length << 2)
                 const prefix = (byteArray.length << 2) | FATE.SHORT_STRING
 
                 return [
