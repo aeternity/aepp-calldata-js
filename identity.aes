@@ -1,5 +1,7 @@
 contract Identity =
     payable entrypoint test_empty () = 1
     payable entrypoint test_bool (a:bool, b:bool) = a
+    payable entrypoint test_single_int (a:int) = a
+    payable entrypoint test_int (a:int, b:int, c:int, d:int) = a
     payable entrypoint test_tuple (a: bool * bool) = a
     payable entrypoint test_nested_tuple (a: (bool * bool) * (bool * bool)) = a

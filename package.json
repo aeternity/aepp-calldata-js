@@ -6,6 +6,7 @@
   "dependencies": {
     "base64check": "^2.1.3",
     "blakejs": "^1.1.0",
+    "rlp": "^2.2.4",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
   },
