@@ -111,6 +111,15 @@ module.exports = {
             const bytes = encoder.encode(value)
 
             return this.serialize(['byte_array', bytes])
+        },
+        'bits': function (value) {
+            const absVal = Math.abs(value)
+            const prefix = value >= 0 ? FATE.POS_BITS : FATE.NEG_BITS
+
+            return [
+                prefix,
+                ...this.rlpEncodeUnsigned(absVal)
+            ]
         }
     }
 }

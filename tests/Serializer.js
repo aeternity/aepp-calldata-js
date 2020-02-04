@@ -89,3 +89,8 @@ test('Serialize byte array', t => {
 test('Serialize string', t => {
     t.deepEqual(ser(t, ['string', "abc"]), [13,97,98,99])
 });
+
+
+test('Serialize bits', t => {
+    t.deepEqual(ser(t, ['bits', 0b10101010]), [79,129,170])
+});
