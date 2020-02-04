@@ -100,6 +100,12 @@ module.exports = {
                     ...byteArray
                 ]
             }
+
+            return [
+                FATE.SHORT_STRING,
+                ...this.serialize(['int', (byteArray.length - 64)]),
+                ...byteArray
+            ]
         }
     }
 }

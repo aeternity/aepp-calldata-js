@@ -37,6 +37,7 @@ test('RLP Encode Unsigned', t => {
 });
 
 test('Serialize integers', t => {
+    t.deepEqual(ser(t, ['int', 0]), [0])
     t.deepEqual(ser(t, ['int', 63]), [126])
     t.deepEqual(ser(t, ['int', -63]), [254])
     t.deepEqual(ser(t, ['int', 64]), [111, 0])
@@ -62,5 +63,25 @@ test('Serialize byte array', t => {
         [17, 1, 2, 3, 4],
         'short byte_array'
     )
-    //todo: long byte array
+
+    const longBytes = [...Array(64).keys()]
+    t.deepEqual(
+        ser(t, ['byte_array', longBytes]),
+        [1, 0].concat(longBytes),
+        'long byte_array > 64, short int (len - 64 < 64)'
+    )
+
+    const longerBytes = [...Array(128).keys()]
+    t.deepEqual(
+        ser(t, ['byte_array', longerBytes]),
+        [1, 111, 0].concat(longerBytes),
+        'long byte_array > 63, long int (len - 64 > 63)'
+    )
+
+    const hugeBytes = [...Array(250).keys()]
+    t.deepEqual(
+        ser(t, ['byte_array', hugeBytes]),
+        [1, 111, 122].concat(hugeBytes),
+        'very long byte_array > 63'
+    )
 });
