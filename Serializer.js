@@ -6,8 +6,7 @@ module.exports = {
         const [type, value] = data
 
         if (!this.serializers.hasOwnProperty(type)) {
-            console.error("Unsupported type: ", type)
-            return
+            throw new Error("Unsupported type: " + type);
         }
 
         return this.serializers[type].call(this, value)
@@ -106,6 +105,12 @@ module.exports = {
                 ...this.serialize(['int', (byteArray.length - 64)]),
                 ...byteArray
             ]
+        },
+        'string': function (value) {
+            const encoder = new TextEncoder()
+            const bytes = encoder.encode(value)
+
+            return this.serialize(['byte_array', bytes])
         }
     }
 }
