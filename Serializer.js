@@ -107,6 +107,25 @@ module.exports = {
                 ...serializedElements
             ]
         },
+        //TODO: nested maps
+        'map': function (value) {
+            const [keyKype, valueType, elements] = value
+            const len = elements.length
+
+            const serializedElements = elements.map(e => {
+                const [key, value] = e
+                return [
+                    this.serialize([keyKype, key]),
+                    this.serialize([valueType, value])
+                ]
+            })
+
+            return [
+                FATE.MAP,
+                ...this.rlpEncodeUnsigned(len),
+                ...serializedElements.flat(Infinity)
+            ]
+        },
         'byte_array': function (byteArray) {
             if (byteArray.length === 0) {
                 return [FATE.EMPTY_STRING]

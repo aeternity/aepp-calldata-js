@@ -63,6 +63,27 @@ test('Serialize lists', t => {
     )
 });
 
+test('Serialize maps', t => {
+    t.deepEqual(ser(t, ['map', ['int', 'bool', []]]), [47,0], 'empty map')
+
+    t.deepEqual(
+        ser(t, [
+            'map',
+            ['int', 'bool', [[0, false]]]
+        ]),
+        [47,1,0,127],
+        'single element map'
+    )
+
+    t.deepEqual(
+        ser(t, [
+            'map',
+            ['int', 'bool', [[0,false], [1,true], [3,true]]]
+        ]),
+        [47,3,0,127,2,255,6,255]
+    )
+});
+
 test('Serialize tuples', t => {
     t.deepEqual(ser(t, ['tuple', []]), [63], 'empty tuple')
     t.deepEqual(
