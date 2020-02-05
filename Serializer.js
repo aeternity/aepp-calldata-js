@@ -69,7 +69,7 @@ module.exports = {
                 return [FATE.EMPTY_TUPLE]
             }
 
-            const elements = value.map(e => this.serialize(e))
+            const elements = value.map(e => this.serialize(e)).flat(Infinity)
 
             if (value.length < 16) {
                 const prefix = (value.length << 4) | FATE.SHORT_TUPLE
@@ -82,7 +82,7 @@ module.exports = {
 
             return [
                 FATE.LONG_TUPLE,
-                value.size - 16,
+                ...this.serialize(['int', elements.length - 16]),
                 ...elements
             ]
         },
