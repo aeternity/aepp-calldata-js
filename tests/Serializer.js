@@ -63,7 +63,7 @@ test('Serialize lists', t => {
     )
 });
 
-test.only('Serialize tuples', t => {
+test('Serialize tuples', t => {
     t.deepEqual(ser(t, ['tuple', []]), [63], 'empty tuple')
     t.deepEqual(
         ser(t, ['tuple', [['bool', true], ['bool', false], ['int', 0]]]),
@@ -115,6 +115,10 @@ test('Serialize byte array', t => {
 
 test('Serialize string', t => {
     t.deepEqual(ser(t, ['string', "abc"]), [13,97,98,99])
+    t.deepEqual(
+        ser(t, ['string', "x".repeat(64)]),
+        [1,0].concat(Array(64).fill(120))
+    )
 });
 
 

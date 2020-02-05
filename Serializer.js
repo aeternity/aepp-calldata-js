@@ -122,7 +122,7 @@ module.exports = {
             }
 
             return [
-                FATE.SHORT_STRING,
+                FATE.LONG_STRING,
                 ...this.serialize(['int', (byteArray.length - 64)]),
                 ...byteArray
             ]
