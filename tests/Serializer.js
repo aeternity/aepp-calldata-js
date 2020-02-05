@@ -46,6 +46,23 @@ test('Serialize integers', t => {
     t.deepEqual(ser(t, ['int', -100000]), [239, 131, 1, 134, 96])
 });
 
+test('Serialize lists', t => {
+    t.deepEqual(ser(t, ['list', ['int', []]]), [3], 'empty list')
+
+    t.deepEqual(
+        ser(t, ['list', ['int', [1,2,3]]]),
+        [51,2,4,6],
+        'short list'
+    )
+
+    const longList = [...Array(16).keys()]
+    t.deepEqual(
+        ser(t, ['list', ['int', longList]]),
+        [31,0,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30],
+        'long list'
+    )
+});
+
 test('Serialize tuples', t => {
     t.deepEqual(ser(t, ['tuple', []]), [63], 'empty tuple')
     t.deepEqual(

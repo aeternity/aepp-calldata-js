@@ -53,6 +53,10 @@ module.exports = {
             const key = Object.keys(type)[0]
             const valueTypes = type[key]
 
+            if (key === 'list') {
+                return [key, valueTypes[0], value]
+            }
+
             const values = zip(valueTypes, value).map(el => {
                 const [t, v] = el
                 return this.resolveArgument(t, v)

@@ -86,6 +86,27 @@ module.exports = {
                 ...elements
             ]
         },
+        //TODO: nested lists
+        'list': function (value) {
+            const [type, elements] = value
+            const serializedElements = elements.map(e => this.serialize([type, e])).flat(Infinity)
+            const len = elements.length
+
+            if (len < 16) {
+                const prefix = (len << 4) | FATE.SHORT_LIST
+
+                return [
+                    prefix,
+                    ...serializedElements
+                ]
+            }
+
+            return [
+                FATE.LONG_LIST,
+                ...this.serialize(['int', len - 16]),
+                ...serializedElements
+            ]
+        },
         'byte_array': function (byteArray) {
             if (byteArray.length === 0) {
                 return [FATE.EMPTY_STRING]

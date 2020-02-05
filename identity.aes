@@ -4,5 +4,6 @@ contract Identity =
     payable entrypoint test_single_int (a:int) = a
     payable entrypoint test_int (a:int, b:int, c:int, d:int) = a
     payable entrypoint test_string (a:string) = a
+    payable entrypoint test_list (a:list(int)) = a
     payable entrypoint test_tuple (a: bool * bool) = a
     payable entrypoint test_nested_tuple (a: (bool * bool) * (bool * bool)) = a
