@@ -14,14 +14,18 @@ const isObject = (value) => {
     return value && typeof value === 'object' && value.constructor === Object;
 }
 
-module.exports = {
-    encode: function (contractAci, funcName, args) {
-        return 'cb_' + base64check.encode(this.serialize(contractAci, funcName, args))
+Encoder = function (aci) {
+    this.aci = aci
+}
+
+Encoder.prototype = {
+    encode: function (funcName, args) {
+        return 'cb_' + base64check.encode(this.serialize(funcName, args))
     },
 
-    serialize: function (contractAci, funName, args) {
+    serialize: function (funName, args) {
         const functionId = this.symbolIdentifier(funName)
-        const resolvedArgs = this.resolveArguments(contractAci, funName, args)
+        const resolvedArgs = this.resolveArguments(funName, args)
 
         const calldata = ['tuple', [
                 ['byte_array', functionId],
@@ -33,7 +37,8 @@ module.exports = {
         return new Uint8Array(serialized.flat(Infinity))
     },
 
-    resolveArguments: function (contractAci, funName, args) {
+    resolveArguments: function (funName, args) {
+        const contractAci = this.aci
         const funcAci = contractAci.functions.find(e => e.name == funName)
         const argAci = (funcAci) ? funcAci.arguments : []
 
@@ -76,3 +81,5 @@ module.exports = {
         return hash.slice(0, 4)
     }
 }
+
+module.exports = Encoder
