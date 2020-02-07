@@ -139,6 +139,11 @@ test('Serialize bytes', t => {
         ser(t, ['bytes', 0xbeef]),
         [159,1,9,190,239]
     )
+
+    t.deepEqual(
+        ser(t, ['bytes', BigInt("0xfedcba9876543210")]),
+        [159,1,33,254,220,186,152,118,84,50,16]
+    )
 });
 
 test('Serialize string', t => {

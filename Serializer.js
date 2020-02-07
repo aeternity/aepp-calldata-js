@@ -17,7 +17,14 @@ module.exports = {
         }
 
         if (value < 256) {
-            return [value]
+            return [Number(value)]
+        }
+
+        if (typeof value == 'bigint') {
+            return [
+                ...this.encodeUnsigned(value >> 8n),
+                Number(value & BigInt('0xff'))
+            ]
         }
 
         return [
