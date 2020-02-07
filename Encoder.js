@@ -5,6 +5,7 @@ const Serializer = require('./Serializer.js')
 
 const HASH_BYTES = 32
 const serializer = Object.create(Serializer)
+const PRIMITIVE_TYPES = ['bool', 'int', 'string']
 
 const zip = (arr, ...arrs) => {
   return arr.map((val, i) => arrs.reduce((a, arr) => [...a, arr[i]], [val]));
@@ -38,8 +39,7 @@ Encoder.prototype = {
     },
 
     resolveArguments: function (funName, args) {
-        const contractAci = this.aci
-        const funcAci = contractAci.functions.find(e => e.name == funName)
+        const funcAci = this.aci.functions.find(e => e.name == funName)
         const argAci = (funcAci) ? funcAci.arguments : []
 
         let resolvedArgs = []
@@ -53,6 +53,22 @@ Encoder.prototype = {
     },
 
     resolveArgument(type, value) {
+        if (PRIMITIVE_TYPES.includes(type)) {
+            return [type, value]
+        }
+
+        // typedefs, non-primitives
+        if (typeof type === 'string') {
+            const [contractName, localType] = type.split('.')
+            const def = this.aci.type_defs.find(e => e.name == localType);
+
+            if (!def) {
+                throw new Error('Unknown type definition: ' + type)
+            }
+
+            return this.resolveArgument(def.typedef, value)
+        }
+
         // composite types
         if (isObject(type)) {
             const key = Object.keys(type)[0]
@@ -62,16 +78,54 @@ Encoder.prototype = {
                 return [key, valueTypes[0], value]
             }
 
-            const values = zip(valueTypes, value).map(el => {
-                const [t, v] = el
-                return this.resolveArgument(t, v)
-            })
+            // tuple
+            if (key === 'tuple') {
+                const values = this.resolveArgumentValues(valueTypes, value)
 
-            return [key, values]
+                return [key, values]
+            }
+
+            if (key === 'variant') {
+                let arities = []
+                let tag = -1
+                let resolvedArgs = []
+
+                for (let i = 0; i < valueTypes.length; i++) {
+                    const variant = valueTypes[i]
+                    const variantKey = Object.keys(variant)[0]
+                    const variantArgs = variant[variantKey]
+
+                    arities.push(variantArgs.length)
+
+                    if (variantKey == value.variant) {
+                        resolvedArgs = this.resolveArgumentValues(variantArgs, value.values)
+                        tag = i
+                    }
+                }
+
+                if (tag === -1) {
+                    throw new Error('Unknown variant: ' + JSON.stringify(value.variant))
+                }
+
+                return [
+                    key,
+                    {arities, tag, variantValues: resolvedArgs}
+                ]
+            }
         }
 
-        // simple types
-        return [type, value]
+        throw new Error('Cannot resolve type: ' + JSON.stringify(type))
+    },
+
+    resolveArgumentValues(args, values) {
+        if (args.length != values.length) {
+            throw new Error('Non matching argument values: ' + JSON.stringify(args) + JSON.stringify(values))
+        }
+
+        return zip(args, values).map(el => {
+            const [t, v] = el
+            return this.resolveArgument(t, v)
+        })
     },
 
     symbolIdentifier: function (funName) {

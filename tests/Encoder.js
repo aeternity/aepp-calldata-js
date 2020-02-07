@@ -46,3 +46,13 @@ test('Encode nested tuple arguments', t => {
     const encoded = t.context.encoder.encode('test_nested_tuple', [[[true, false], [false, true]]])
     t.is(encoded, 'cb_KxHkKCkeGysr/38rf/+ZQRDt', 'test_nested_tuple(((true, false), (false true)))')
 });
+
+test('Encode simple variant arguments', t => {
+    const encoded = t.context.encoder.encode('test_variants', [{variant: 'No', values: []}])
+    t.is(encoded, 'cb_KxFiWgvXG6+EAAABAAE/Yp8XdQ==', 'test_variants(No)')
+});
+
+test('Encode variant arguments with non-zero arity', t => {
+    const encoded = t.context.encoder.encode('test_variants', [{variant: 'Yep', values: [7]}])
+    t.is(encoded, 'cb_KxFiWgvXG6+EAAABAAIbDv+CzlA=', 'test_variants(Yep(7))')
+});

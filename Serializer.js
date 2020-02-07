@@ -160,6 +160,14 @@ module.exports = {
                 prefix,
                 ...this.rlpEncodeUnsigned(absVal)
             ]
+        },
+        'variant': function (data) {
+            return  [
+                FATE.VARIANT,
+                ...RLP.encode(Uint8Array.from(data.arities)),
+                data.tag,
+                ...this.serialize(['tuple', data.variantValues])
+            ]
         }
     }
 }

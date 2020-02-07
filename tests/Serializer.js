@@ -146,3 +146,24 @@ test('Serialize string', t => {
 test('Serialize bits', t => {
     t.deepEqual(ser(t, ['bits', 0b10101010]), [79,129,170])
 });
+
+
+test('Serialize variant', t => {
+    t.deepEqual(
+        ser(t, ['variant', {
+            arities: [0, 0, 1, 0],
+            tag: 1,
+            variantValues: []
+        }]),
+        [175,132,0,0,1,0,1,63]
+    )
+
+    t.deepEqual(
+        ser(t, ['variant', {
+            arities: [0, 0, 1, 0],
+            tag: 2,
+            variantValues: [['int', 7]]
+        }]),
+        [175,132,0,0,1,0,2,27,14]
+    )
+});
