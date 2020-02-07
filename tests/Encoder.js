@@ -37,6 +37,11 @@ test('Encode multiple int arguments', t => {
     t.is(encoded, 'cb_KxFAuEQES37+bwDvAODy1qs=', 'test_int(63, -63, 64, -64)')
 });
 
+test('Encode bytes arguments', t => {
+    const encoded = t.context.encoder.encode('test_bytes', [[0xbeef]])
+    t.is(encoded, 'cb_KxEe407MG58BCb7vI/elQA==', 'test_bytes(#beef)')
+});
+
 test('Encode tuple arguments', t => {
     const encoded = t.context.encoder.encode('test_tuple', [[true, false]])
     t.is(encoded, 'cb_KxFbdB1sGyv/fzQzK9M=', 'test_tuple((true, false))')

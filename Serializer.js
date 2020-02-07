@@ -146,6 +146,13 @@ module.exports = {
                 ...byteArray
             ]
         },
+        'bytes': function (value) {
+            return [
+                FATE.OBJECT,
+                FATE.OTYPE_BYTES,
+                ...this.serialize(['byte_array', this.encodeUnsigned(value)])
+            ]
+        },
         'string': function (value) {
             const encoder = new TextEncoder()
             const bytes = encoder.encode(value)

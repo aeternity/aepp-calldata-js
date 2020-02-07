@@ -6,6 +6,7 @@ contract Identity =
     payable entrypoint test_bool (a:bool, b:bool) = a
     payable entrypoint test_single_int (a:int) = a
     payable entrypoint test_int (a:int, b:int, c:int, d:int) = a
+    payable entrypoint test_bytes (a:bytes(2)) = a
     payable entrypoint test_string (a:string) = a
     payable entrypoint test_list (a:list(int)) = a
     payable entrypoint test_map (a:map(int, map(int, bool))) = a

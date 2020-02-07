@@ -74,6 +74,10 @@ Encoder.prototype = {
             const key = Object.keys(type)[0]
             const valueTypes = type[key]
 
+            if (key === 'bytes') {
+                return [key, value]
+            }
+
             if (key === 'list') {
                 return [key, valueTypes[0], value]
             }

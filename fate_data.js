@@ -42,5 +42,13 @@ module.exports = Object.freeze({
     NEG_BITS     : 0b11001111, // 1100 1111 | RLP encoded integer (infinite 1:s bitfield)
     EMPTY_MAP    : 0b11011111, // 1101 1111
     NEG_BIG_INT  : 0b11101111, // 1110 1111 | RLP encoded (integer - 64)
-    TRUE         : 0b11111111 // 1111 1111
+    TRUE         : 0b11111111, // 1111 1111
+
+    // Object types
+    OTYPE_ADDRESS    : 0,
+    OTYPE_BYTES      : 1,
+    OTYPE_CONTRACT   : 2,
+    OTYPE_ORACLE     : 3,
+    OTYPE_ORACLE_Q   : 4,
+    OTYPE_CHANNEL    : 5,
 });
