@@ -74,3 +74,18 @@ test('Encode type aliases', t => {
     const encodedMap = t.context.encoder.encode('test_map_type', [[["foo", 19]]])
     t.is(encodedMap, 'cb_KxEM7YA1Gy8BDWZvbybgU5Hd', 'test_map_type({["foo"] = 19})')
 });
+
+test.only('Encode records', t => {
+    const encoded = t.context.encoder.encode('test_record', [{x: 0, y: 0}])
+    t.is(encoded, 'cb_KxFMrKn+GysAAOlAPrs=', 'test_record({x = 0, y = 0})')
+
+    const encodedNest = t.context.encoder.encode(
+        'test_nested_record',
+        [{origin: {x: 1, y: 2}, a: 3, b: 4}]
+    )
+
+    t.is(encodedNest,
+        'cb_KxGQjbdUGzsrAgQGCNvA+iA=',
+        'test_nested_record({origin = {x = 1, y = 2}, a = 3, b = 4})'
+    )
+});

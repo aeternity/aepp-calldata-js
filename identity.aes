@@ -2,6 +2,9 @@ contract Identity =
     type number = int
     type string_map = map(string, int)
 
+    record point = {x: int, y: int}
+    record rectangle = {origin: point, a: int, b: int}
+
     datatype reallyType = Nope | No | Yep(int) | Yes
 
     payable entrypoint test_empty () = 1
@@ -15,5 +18,7 @@ contract Identity =
     payable entrypoint test_variants (a:reallyType) = a
     payable entrypoint test_tuple (a: bool * bool) = a
     payable entrypoint test_nested_tuple (a: (bool * bool) * (bool * bool)) = a
+    payable entrypoint test_record(a: point) = a
+    payable entrypoint test_nested_record(a: rectangle) = a
     payable entrypoint test_int_type(a: number) = a
     payable entrypoint test_map_type(a: string_map) = a
