@@ -42,6 +42,11 @@ test('Encode bytes arguments', t => {
     t.is(encoded, 'cb_KxEe407MG58BCb7vI/elQA==', 'test_bytes(#beef)')
 });
 
+test('Encode map arguments', t => {
+    const encoded = t.context.encoder.encode('test_simple_map', [[[7, false]]])
+    t.is(encoded, 'cb_KxHLN316Gy8BDn+vbmBO', 'test_simple_map({[7] = false})')
+});
+
 test('Encode tuple arguments', t => {
     const encoded = t.context.encoder.encode('test_tuple', [[true, false]])
     t.is(encoded, 'cb_KxFbdB1sGyv/fzQzK9M=', 'test_tuple((true, false))')
@@ -60,4 +65,12 @@ test('Encode simple variant arguments', t => {
 test('Encode variant arguments with non-zero arity', t => {
     const encoded = t.context.encoder.encode('test_variants', [{variant: 'Yep', values: [7]}])
     t.is(encoded, 'cb_KxFiWgvXG6+EAAABAAIbDv+CzlA=', 'test_variants(Yep(7))')
+});
+
+test('Encode type aliases', t => {
+    const encoded = t.context.encoder.encode('test_int_type', [7])
+    t.is(encoded, 'cb_KxE9BFdGGw7F/9+f', 'test_int_type(7)')
+
+    const encodedMap = t.context.encoder.encode('test_map_type', [[["foo", 19]]])
+    t.is(encodedMap, 'cb_KxEM7YA1Gy8BDWZvbybgU5Hd', 'test_map_type({["foo"] = 19})')
 });

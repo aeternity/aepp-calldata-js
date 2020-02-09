@@ -82,6 +82,10 @@ Encoder.prototype = {
                 return [key, valueTypes[0], value]
             }
 
+            if (key === 'map') {
+                return [key, [...valueTypes, value]]
+            }
+
             // tuple
             if (key === 'tuple') {
                 const values = this.resolveArgumentValues(valueTypes, value)

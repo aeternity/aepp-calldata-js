@@ -1,4 +1,6 @@
 contract Identity =
+    type number = int
+    type string_map = map(string, int)
 
     datatype reallyType = Nope | No | Yep(int) | Yes
 
@@ -9,7 +11,9 @@ contract Identity =
     payable entrypoint test_bytes (a:bytes(2)) = a
     payable entrypoint test_string (a:string) = a
     payable entrypoint test_list (a:list(int)) = a
-    payable entrypoint test_map (a:map(int, map(int, bool))) = a
+    payable entrypoint test_simple_map (a: map(int, bool)) = a
     payable entrypoint test_variants (a:reallyType) = a
     payable entrypoint test_tuple (a: bool * bool) = a
     payable entrypoint test_nested_tuple (a: (bool * bool) * (bool * bool)) = a
+    payable entrypoint test_int_type(a: number) = a
+    payable entrypoint test_map_type(a: string_map) = a
