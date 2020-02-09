@@ -134,18 +134,6 @@ test('Serialize byte array', t => {
     )
 });
 
-test('Serialize bytes', t => {
-    t.deepEqual(
-        ser(t, ['bytes', 0xbeef]),
-        [159,1,9,190,239]
-    )
-
-    t.deepEqual(
-        ser(t, ['bytes', BigInt("0xfedcba9876543210")]),
-        [159,1,33,254,220,186,152,118,84,50,16]
-    )
-});
-
 test('Serialize string', t => {
     t.deepEqual(ser(t, ['string', "abc"]), [13,97,98,99])
     t.deepEqual(
@@ -177,5 +165,53 @@ test('Serialize variant', t => {
             variantValues: [['int', 7]]
         }]),
         [175,132,0,0,1,0,2,27,14]
+    )
+});
+
+
+test('Serialize bytes', t => {
+    t.deepEqual(
+        ser(t, ['bytes', 0xbeef]),
+        [159,1,9,190,239]
+    )
+
+    t.deepEqual(
+        ser(t, ['bytes', BigInt("0xfedcba9876543210")]),
+        [159,1,33,254,220,186,152,118,84,50,16]
+    )
+});
+
+test('Serialize address', t => {
+    t.deepEqual(
+        ser(t, ['address', BigInt("0xfedcba9876543210")]),
+        [159,0,136,254,220,186,152,118,84,50,16]
+    )
+});
+
+test('Serialize contract address', t => {
+    t.deepEqual(
+        ser(t, ['contract', BigInt("0xfedcba9876543210")]),
+        [159,2,136,254,220,186,152,118,84,50,16]
+    )
+});
+
+test('Serialize oracle', t => {
+    t.deepEqual(
+        ser(t, ['oracle', BigInt("0xfedcba9876543210")]),
+        [159,3,136,254,220,186,152,118,84,50,16]
+    )
+});
+
+test('Serialize oracle query', t => {
+    t.deepEqual(
+        ser(t, ['oracle_query', BigInt("0xfedcba9876543210")]),
+        [159,4,136,254,220,186,152,118,84,50,16]
+    )
+});
+
+test('Serialize channel', t => {
+    t.deepEqual(
+        ser(t, ['channel', BigInt("0xfedcba9876543210")]),
+        [159,5,136,254,220,186,152,118,84,50,16]
     )
 });

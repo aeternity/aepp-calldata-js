@@ -45,10 +45,10 @@ module.exports = Object.freeze({
     TRUE         : 0b11111111, // 1111 1111
 
     // Object types
-    OTYPE_ADDRESS    : 0,
-    OTYPE_BYTES      : 1,
-    OTYPE_CONTRACT   : 2,
-    OTYPE_ORACLE     : 3,
-    OTYPE_ORACLE_Q   : 4,
-    OTYPE_CHANNEL    : 5,
+    OTYPE_ADDRESS       : 0,
+    OTYPE_BYTES         : 1,
+    OTYPE_CONTRACT      : 2,
+    OTYPE_ORACLE        : 3,
+    OTYPE_ORACLE_QUERY  : 4,
+    OTYPE_CHANNEL       : 5,
 });

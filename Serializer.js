@@ -153,13 +153,6 @@ module.exports = {
                 ...byteArray
             ]
         },
-        'bytes': function (value) {
-            return [
-                FATE.OBJECT,
-                FATE.OTYPE_BYTES,
-                ...this.serialize(['byte_array', this.encodeUnsigned(value)])
-            ]
-        },
         'string': function (value) {
             const encoder = new TextEncoder()
             const bytes = encoder.encode(value)
@@ -182,6 +175,48 @@ module.exports = {
                 data.tag,
                 ...this.serialize(['tuple', data.variantValues])
             ]
-        }
+        },
+        'bytes': function (value) {
+            return [
+                FATE.OBJECT,
+                FATE.OTYPE_BYTES,
+                ...this.serialize(['byte_array', this.encodeUnsigned(value)])
+            ]
+        },
+        'address': function (value) {
+            return [
+                FATE.OBJECT,
+                FATE.OTYPE_ADDRESS,
+                ...this.rlpEncodeUnsigned(value)
+            ]
+        },
+        'contract': function (value) {
+            return [
+                FATE.OBJECT,
+                FATE.OTYPE_CONTRACT,
+                ...this.rlpEncodeUnsigned(value)
+            ]
+        },
+        'oracle': function (value) {
+            return [
+                FATE.OBJECT,
+                FATE.OTYPE_ORACLE,
+                ...this.rlpEncodeUnsigned(value)
+            ]
+        },
+        'oracle_query': function (value) {
+            return [
+                FATE.OBJECT,
+                FATE.OTYPE_ORACLE_QUERY,
+                ...this.rlpEncodeUnsigned(value)
+            ]
+        },
+        'channel': function (value) {
+            return [
+                FATE.OBJECT,
+                FATE.OTYPE_CHANNEL,
+                ...this.rlpEncodeUnsigned(value)
+            ]
+        },
     }
 }
