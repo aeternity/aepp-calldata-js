@@ -1,4 +1,4 @@
-# Aeternity encoding
+# Aeternity data serialization
 
 Aeternity contract calldata encoding and results decoding library
 
