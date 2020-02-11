@@ -12,6 +12,5 @@ npm install
 ### Tests
 
 ```bash
-make
-npm test
+make tests
 ```

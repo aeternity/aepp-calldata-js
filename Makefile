@@ -23,5 +23,13 @@ watch:
 	@echo Watching for file changes in current directory ...
 	@while true; do $(MAKE) -q || $(MAKE); sleep 1; done
 
+node_modules: package-lock.json
+	npm install && touch $@
+
+tests: node_modules $(BUILDDIR)/$(JSON_ACIS)
+	npm test
+
 clean:
-	rm $(BUILDDIR)/$(BYTECODES) $(BUILDDIR)/$(JSON_ACIS)
+	rm $(BUILDDIR)/$(BYTECODES)
+	rm $(BUILDDIR)/$(JSON_ACIS)
+	rm -rf node_modules
