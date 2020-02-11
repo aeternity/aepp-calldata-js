@@ -1,5 +1,5 @@
 const test = require('ava')
-const Serializer = require('../Serializer.js')
+const Serializer = require('../src/Serializer.js')
 
 function ser(t, input) {
     return t.context.serializer.serialize(input)

@@ -1,5 +1,5 @@
 const RLP = require('rlp')
-const FATE = require('./FATE_data.js')
+const FATE = require('./fate.js')
 
 module.exports = {
     serialize: function (data) {

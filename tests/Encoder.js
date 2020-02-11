@@ -1,9 +1,9 @@
 const fs = require('fs')
 const test = require('ava');
-const Encoder = require('../Encoder.js')
+const Encoder = require('../src/Encoder.js')
 
 test.before(async t => {
-    const aci = JSON.parse(fs.readFileSync('build/identity.json', 'utf-8'))
+    const aci = JSON.parse(fs.readFileSync('build/contracts/Test.json', 'utf-8'))
     const encoder = new Encoder(aci[0].contract)
 
     t.context.encoder = encoder
