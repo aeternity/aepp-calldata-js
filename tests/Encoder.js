@@ -75,7 +75,7 @@ test('Encode type aliases', t => {
     t.is(encodedMap, 'cb_KxEM7YA1Gy8BDWZvbybgU5Hd', 'test_map_type({["foo"] = 19})')
 });
 
-test.only('Encode records', t => {
+test('Encode records', t => {
     const encoded = t.context.encoder.encode('test_record', [{x: 0, y: 0}])
     t.is(encoded, 'cb_KxFMrKn+GysAAOlAPrs=', 'test_record({x = 0, y = 0})')
 
