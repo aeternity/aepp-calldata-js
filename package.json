@@ -1,17 +1,15 @@
 {
-  "name": "aehack",
-  "version": "1.0.0",
-  "description": "",
-  "main": "coder.js",
+  "name": "aepp-calldata-js",
+  "version": "0.0.1",
+  "description": "Aeternity data serialization library",
+  "main": "Encoder.js",
+  "keywords": "aeternity, aesophia, fate, calldata, serialization, encoder, decoder",
   "dependencies": {
     "base64check": "^2.1.3",
     "blakejs": "^1.1.0",
-    "rlp": "^2.2.4",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10"
+    "rlp": "^2.2.4"
   },
   "devDependencies": {
-    "@aeternity/aepp-sdk": "^6.1.3",
     "ava": "^3.1.0"
   },
   "scripts": {
@@ -21,12 +19,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dincho/aehack.git"
+    "url": "https://github.com/aeternity/aepp-calldata-js.git"
   },
-  "author": "",
+  "author": "aeternity",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/dincho/aehack/issues"
+    "url": "https://github.com/aeternity/aepp-calldata-js/issues"
   },
-  "homepage": "https://github.com/dincho/aehack#readme"
+  "homepage": "https://github.com/aeternity/aepp-calldata-js#readme"
 }
