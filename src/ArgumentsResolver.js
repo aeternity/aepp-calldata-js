@@ -123,10 +123,7 @@ ArgumentsResolver.prototype = {
             throw new Error('Non matching argument values: ' + JSON.stringify(args) + JSON.stringify(values))
         }
 
-        return zip(args, values).map(el => {
-            const [t, v] = el
-            return this.resolveArgument(t, v)
-        })
+        return zip(args, values).map(el => this.resolveArgument(...el))
     },
 }
 
