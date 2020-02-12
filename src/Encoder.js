@@ -1,4 +1,3 @@
-const fs = require('fs')
 const blake = require('blakejs')
 const base64check = require('base64check')
 const Serializer = require('./Serializer.js')
