@@ -13,9 +13,14 @@
     "ava": "^3.1.0"
   },
   "scripts": {
-    "test": "ava tests/*.js --verbose",
-    "test:watch": "ava tests/*.js --verbose --watch",
+    "test": "ava --verbose",
+    "test:watch": "ava --verbose --watch",
     "ava": "ava --verbose"
+  },
+  "ava": {
+    "files": [
+      "tests/**/*"
+    ]
   },
   "repository": {
     "type": "git",

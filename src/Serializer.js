@@ -1,5 +1,7 @@
 const RLP = require('rlp')
 const FATE = require('./fate.js')
+const Int2ByteArray = require('./utils/Int2ByteArray.js')
+const RLPInt = require('./utils/RLPInt.js')
 
 module.exports = {
     serialize: function (data) {
@@ -10,34 +12,6 @@ module.exports = {
         }
 
         return this.serializers[type].call(this, value)
-    },
-    encodeUnsigned: function (value) {
-        if (value === 0) {
-            return [0]
-        }
-
-        if (value < 256) {
-            return [Number(value)]
-        }
-
-        if (typeof value == 'bigint') {
-            return [
-                ...this.encodeUnsigned(value >> 8n),
-                Number(value & BigInt('0xff'))
-            ]
-        }
-
-        return [
-            ...this.encodeUnsigned(value >> 8),
-            value & 0xff
-        ]
-    },
-    rlpEncodeUnsigned: function (value) {
-        const buffer = Uint8Array.from(this.encodeUnsigned(value))
-
-        return [
-            ...RLP.encode(buffer)
-        ]
     },
     serializers: {
         'bool': function (value) {
@@ -60,14 +34,14 @@ module.exports = {
             if (value < 0) {
                 return [
                     FATE.NEG_BIG_INT,
-                    ...this.rlpEncodeUnsigned(absVal - 64)
+                    ...RLPInt(absVal - 64)
                 ]
             }
 
             // large positive integer
             return [
                 FATE.POS_BIG_INT,
-                ...this.rlpEncodeUnsigned(absVal - 64)
+                ...RLPInt(absVal - 64)
             ]
 
         },
@@ -129,7 +103,7 @@ module.exports = {
 
             return [
                 FATE.MAP,
-                ...this.rlpEncodeUnsigned(len),
+                ...RLPInt(len),
                 ...serializedElements.flat(Infinity)
             ]
         },
@@ -165,7 +139,7 @@ module.exports = {
 
             return [
                 prefix,
-                ...this.rlpEncodeUnsigned(absVal)
+                ...RLPInt(absVal)
             ]
         },
         'variant': function (data) {
@@ -180,42 +154,42 @@ module.exports = {
             return [
                 FATE.OBJECT,
                 FATE.OTYPE_BYTES,
-                ...this.serialize(['byte_array', this.encodeUnsigned(value)])
+                ...this.serialize(['byte_array', Int2ByteArray(value)])
             ]
         },
         'address': function (value) {
             return [
                 FATE.OBJECT,
                 FATE.OTYPE_ADDRESS,
-                ...this.rlpEncodeUnsigned(value)
+                ...RLPInt(value)
             ]
         },
         'contract': function (value) {
             return [
                 FATE.OBJECT,
                 FATE.OTYPE_CONTRACT,
-                ...this.rlpEncodeUnsigned(value)
+                ...RLPInt(value)
             ]
         },
         'oracle': function (value) {
             return [
                 FATE.OBJECT,
                 FATE.OTYPE_ORACLE,
-                ...this.rlpEncodeUnsigned(value)
+                ...RLPInt(value)
             ]
         },
         'oracle_query': function (value) {
             return [
                 FATE.OBJECT,
                 FATE.OTYPE_ORACLE_QUERY,
-                ...this.rlpEncodeUnsigned(value)
+                ...RLPInt(value)
             ]
         },
         'channel': function (value) {
             return [
                 FATE.OBJECT,
                 FATE.OTYPE_CHANNEL,
-                ...this.rlpEncodeUnsigned(value)
+                ...RLPInt(value)
             ]
         },
     }
