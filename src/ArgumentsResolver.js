@@ -46,66 +46,76 @@ ArgumentsResolver.prototype = {
 
         // composite types
         if (isObject(type)) {
-            const key = Object.keys(type)[0]
-            const valueTypes = type[key]
-
-            if (key === 'bytes') {
-                return [key, value]
-            }
-
-            if (key === 'list') {
-                return [key, valueTypes[0], value]
-            }
-
-            if (key === 'map') {
-                return [key, [...valueTypes, value]]
-            }
-
-            if (key === 'record') {
-                const tupleValues = valueTypes.map(valueType => {
-                    return this.resolveArgument(valueType.type, value[valueType.name])
-                })
-
-                return ['tuple', tupleValues]
-            }
-
-            // tuple
-            if (key === 'tuple') {
-                const values = this.resolveArgumentValues(valueTypes, value)
-
-                return [key, values]
-            }
-
-            if (key === 'variant') {
-                let arities = []
-                let tag = -1
-                let resolvedArgs = []
-
-                for (let i = 0; i < valueTypes.length; i++) {
-                    const variant = valueTypes[i]
-                    const variantKey = Object.keys(variant)[0]
-                    const variantArgs = variant[variantKey]
-
-                    arities.push(variantArgs.length)
-
-                    if (variantKey == value.variant) {
-                        resolvedArgs = this.resolveArgumentValues(variantArgs, value.values)
-                        tag = i
-                    }
-                }
-
-                if (tag === -1) {
-                    throw new Error('Unknown variant: ' + JSON.stringify(value.variant))
-                }
-
-                return [
-                    key,
-                    {arities, tag, variantValues: resolvedArgs}
-                ]
-            }
+            return this.resolveObjectArgument(type, value)
         }
 
         throw new Error('Cannot resolve type: ' + JSON.stringify(type))
+    },
+
+    resolveObjectArgument(type, value) {
+        const key = Object.keys(type)[0]
+        const valueTypes = type[key]
+
+        if (key === 'bytes') {
+            return [key, value]
+        }
+
+        if (key === 'list') {
+            return [key, valueTypes[0], value]
+        }
+
+        if (key === 'map') {
+            return [key, [...valueTypes, value]]
+        }
+
+        if (key === 'record') {
+            const tupleValues = valueTypes.map(valueType => {
+                return this.resolveArgument(valueType.type, value[valueType.name])
+            })
+
+            return ['tuple', tupleValues]
+        }
+
+        // tuple
+        if (key === 'tuple') {
+            const values = this.resolveArgumentValues(valueTypes, value)
+
+            return [key, values]
+        }
+
+        if (key === 'variant') {
+            return this.resolveVariantArgument(valueTypes, value)
+        }
+
+        throw new Error('Cannot resolve object type: ' + JSON.stringify(key))
+    },
+
+    resolveVariantArgument(valueTypes, value) {
+            let arities = []
+            let tag = -1
+            let resolvedArgs = []
+
+            for (let i = 0; i < valueTypes.length; i++) {
+                const variant = valueTypes[i]
+                const variantKey = Object.keys(variant)[0]
+                const variantArgs = variant[variantKey]
+
+                arities.push(variantArgs.length)
+
+                if (variantKey == value.variant) {
+                    resolvedArgs = this.resolveArgumentValues(variantArgs, value.values)
+                    tag = i
+                }
+            }
+
+            if (tag === -1) {
+                throw new Error('Unknown variant: ' + JSON.stringify(value.variant))
+            }
+
+            return [
+                'variant',
+                {arities, tag, variantValues: resolvedArgs}
+            ]
     },
 
     resolveArgumentValues(args, values) {
@@ -117,7 +127,7 @@ ArgumentsResolver.prototype = {
             const [t, v] = el
             return this.resolveArgument(t, v)
         })
-    }
+    },
 }
 
 module.exports = ArgumentsResolver
