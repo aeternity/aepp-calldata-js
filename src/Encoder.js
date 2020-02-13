@@ -15,6 +15,7 @@ const isObject = (value) => {
 }
 
 Encoder = function (aci) {
+    this.aci = aci
     this.resolver = new ArgumentsResolver(aci)
     this.serializer = Object.create(Serializer)
 }
@@ -25,6 +26,10 @@ Encoder.prototype = {
     },
 
     serialize: function (funName, args) {
+        if (!this.hasFunction(funName)) {
+            throw new Error(`Unknown function call: ${funName}`)
+        }
+
         const functionId = this.symbolIdentifier(funName)
         const resolvedArgs = this.resolver.resolveArguments(funName, args)
 
@@ -43,6 +48,20 @@ Encoder.prototype = {
         hash = Array.from(blake.blake2b(funName, null, HASH_BYTES))
 
         return hash.slice(0, 4)
+    },
+
+    hasFunction(funName) {
+        // implicit init function always exists (contract constructor)
+        if (funName == 'init') {
+            return true
+        }
+
+        const funcAci = this.aci.functions.find(e => e.name == funName)
+        if (funcAci) {
+            return true
+        }
+
+        return false
     }
 }
 
