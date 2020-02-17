@@ -1,4 +1,4 @@
-const FATE = require('../fate.js')
+const FateTag = require('../FateTag.js')
 const RLP = require('rlp')
 
 VariantSerializer = function (globalSerializer) {
@@ -8,7 +8,7 @@ VariantSerializer = function (globalSerializer) {
 VariantSerializer.prototype = {
     serialize: function (data) {
         return  [
-            FATE.VARIANT,
+            FateTag.VARIANT,
             ...RLP.encode(new Uint8Array(data.arities)),
             data.tag,
             ...this.globalSerializer.serialize(['tuple', data.variantValues])

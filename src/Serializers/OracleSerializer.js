@@ -1,4 +1,4 @@
-const FATE = require('../fate.js')
+const FateTag = require('../FateTag.js')
 const RLPInt = require('../utils/RLPInt.js')
 
 OracleSerializer = function () {}
@@ -6,8 +6,8 @@ OracleSerializer = function () {}
 OracleSerializer.prototype = {
     serialize: function (value) {
         return [
-            FATE.OBJECT,
-            FATE.OTYPE_ORACLE,
+            FateTag.OBJECT,
+            FateTag.OTYPE_ORACLE,
             ...RLPInt(value)
         ]
     }

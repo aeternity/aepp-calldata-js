@@ -1,4 +1,4 @@
-const FATE = require('../fate.js')
+const FateTag = require('../FateTag.js')
 const RLPInt = require('../utils/RLPInt.js')
 
 IntSerializer = function () {}
@@ -20,14 +20,14 @@ IntSerializer.prototype = {
         // large negative integer
         if (value < 0) {
             return [
-                FATE.NEG_BIG_INT,
+                FateTag.NEG_BIG_INT,
                 ...RLPInt(absVal - 64)
             ]
         }
 
         // large positive integer
         return [
-            FATE.POS_BIG_INT,
+            FateTag.POS_BIG_INT,
             ...RLPInt(absVal - 64)
         ]
     }

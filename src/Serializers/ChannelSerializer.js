@@ -1,4 +1,4 @@
-const FATE = require('../fate.js')
+const FateTag = require('../FateTag.js')
 const RLPInt = require('../utils/RLPInt.js')
 
 ChannelSerializer = function () {}
@@ -6,8 +6,8 @@ ChannelSerializer = function () {}
 ChannelSerializer.prototype = {
     serialize: function (value) {
         return [
-            FATE.OBJECT,
-            FATE.OTYPE_CHANNEL,
+            FateTag.OBJECT,
+            FateTag.OTYPE_CHANNEL,
             ...RLPInt(value)
         ]
     }

@@ -1,4 +1,4 @@
-const FATE = require('../fate.js')
+const FateTag = require('../FateTag.js')
 const Int2ByteArray = require('../utils/Int2ByteArray.js')
 const ByteArraySerializer = require('./ByteArraySerializer.js')
 
@@ -9,8 +9,8 @@ BytesSerializer = function () {}
 BytesSerializer.prototype = {
     serialize: function (value) {
         return [
-            FATE.OBJECT,
-            FATE.OTYPE_BYTES,
+            FateTag.OBJECT,
+            FateTag.OTYPE_BYTES,
             ...byteArraySerializer.serialize(Int2ByteArray(value))
         ]
     }

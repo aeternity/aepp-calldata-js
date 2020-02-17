@@ -1,4 +1,4 @@
-const FATE = require('../fate.js')
+const FateTag = require('../FateTag.js')
 const RLPInt = require('../utils/RLPInt.js')
 
 ContractSerializer = function () {}
@@ -6,8 +6,8 @@ ContractSerializer = function () {}
 ContractSerializer.prototype = {
     serialize: function (value) {
         return [
-            FATE.OBJECT,
-            FATE.OTYPE_CONTRACT,
+            FateTag.OBJECT,
+            FateTag.OTYPE_CONTRACT,
             ...RLPInt(value)
         ]
     }

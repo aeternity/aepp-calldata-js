@@ -1,4 +1,4 @@
-const FATE = require('../fate.js')
+const FateTag = require('../FateTag.js')
 const RLPInt = require('../utils/RLPInt.js')
 const FateComparator = require('../FateComparator.js')
 
@@ -24,7 +24,7 @@ MapSerializer.prototype = {
         })
 
         return [
-            FATE.MAP,
+            FateTag.MAP,
             ...RLPInt(len),
             ...serializedElements.flat(Infinity)
         ]

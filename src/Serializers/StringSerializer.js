@@ -1,4 +1,4 @@
-const FATE = require('../fate.js')
+const FateTag = require('../FateTag.js')
 const ByteArraySerializer = require('./ByteArraySerializer.js')
 
 const byteArraySerializer = new ByteArraySerializer()

@@ -1,10 +1,10 @@
-const FATE = require('../fate.js')
+const FateTag = require('../FateTag.js')
 
 BoolSerializer = function () {}
 
 BoolSerializer.prototype = {
     serialize: function (value) {
-        return (value === true) ? [FATE.TRUE] : [FATE.FALSE]
+        return (value === true) ? [FateTag.TRUE] : [FateTag.FALSE]
     }
 }
 

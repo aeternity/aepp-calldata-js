@@ -1,4 +1,4 @@
-const FATE = require('../fate.js')
+const FateTag = require('../FateTag.js')
 const RLPInt = require('../utils/RLPInt.js')
 
 BitsSerializer = function () {}
@@ -6,7 +6,7 @@ BitsSerializer = function () {}
 BitsSerializer.prototype = {
     serialize: function (value) {
         const absVal = Math.abs(value)
-        const prefix = value >= 0 ? FATE.POS_BITS : FATE.NEG_BITS
+        const prefix = value >= 0 ? FateTag.POS_BITS : FateTag.NEG_BITS
 
         return [
             prefix,
