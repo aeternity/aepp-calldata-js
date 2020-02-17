@@ -139,3 +139,24 @@ test('Compare variants', t => {
         ]
     )
 });
+
+test('Compare maps', t => {
+    t.deepEqual(
+        sort('map', [
+            ['int', 'bool', [[1,true], [3,true], [2,false], [0,false]]],
+            ['int', 'bool', []],
+            ['int', 'bool', [[1,true], [3,true], [0,false]]],
+            ['int', 'bool', [[1,true], [3,true], [2,false], [0,false]]],
+            ['int', 'bool', [[1,true], [3,true], [2,false], [0,true]]],
+            ['int', 'bool', [[1,true], [3,true], [2,true], [0,false]]],
+        ]),
+        [
+            ['int', 'bool', []],
+            ['int', 'bool', [[1,true], [3,true], [2,false], [0,false]]],
+            ['int', 'bool', [[1,true], [3,true], [2,false], [0,false]]],
+            ['int', 'bool', [[1,true], [3,true], [2,true], [0,false]]],
+            ['int', 'bool', [[1,true], [3,true], [0,false]]],
+            ['int', 'bool', [[1,true], [3,true], [2,false], [0,true]]],
+        ]
+    )
+});

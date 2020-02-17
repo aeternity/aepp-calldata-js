@@ -87,6 +87,52 @@ const variantComparator = (a, b) => {
     return tupleComparator(a.variantValues, b.variantValues)
 }
 
+const mapItemComparator = (type) => {
+    const keyComparator = FateComparator(type)
+    return (a, b) => keyComparator(a[0], b[0])
+}
+
+const mapComparator = (a, b) => {
+    const [aKeyType, aValueType, itemsA] = a
+    const [bKeyType, bValueType, itemsB] = b
+    const aItems = [...itemsA]
+    const bItems = [...itemsB]
+
+    aItems.sort(mapItemComparator(aKeyType))
+    bItems.sort(mapItemComparator(bKeyType))
+
+    const keyComparator = FateComparator(aKeyType)
+    const valueComparator = FateComparator(aValueType)
+
+    for (let i = 0; i < aItems.length; i++) {
+        // second map is smaller (less items)
+        if (typeof bItems[i] === 'undefined') {
+            return 1
+        }
+
+        const aItem = aItems[i]
+        const bItem = bItems[i]
+
+        const kDiff = keyComparator(aItem[0], bItem[0])
+        if (kDiff !== 0) {
+            return kDiff
+        }
+
+        const vDiff = valueComparator(aItem[1], bItem[1])
+        if (vDiff !== 0) {
+            return vDiff
+        }
+    }
+
+    // equal number of items
+    if (aItems.length === bItems.length) {
+        return 0
+    }
+
+    // first map item list is shorter, thus smaller
+    return -1
+}
+
 const comparators = {
     'int': (a, b) => Number(a - b),
     'bool': (a, b) => a - b,
@@ -96,6 +142,7 @@ const comparators = {
     'list': listComparator,
     'tuple': tupleComparator,
     'variant': variantComparator,
+    'map': mapComparator,
     // objects (bytes)
     'address': (a, b) => Number(a - b),
     'bytes': (a, b) => Number(a - b),
