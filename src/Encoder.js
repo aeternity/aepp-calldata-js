@@ -2,17 +2,9 @@ const blake = require('blakejs')
 const base64check = require('base64check')
 const Serializer = require('./Serializer.js')
 const ArgumentsResolver = require('./ArgumentsResolver.js')
+const {FateTypeTuple, FateTypeByteArray} = require('./FateTypes.js')
 
 const HASH_BYTES = 32
-const PRIMITIVE_TYPES = ['bool', 'int', 'string']
-
-const zip = (arr, ...arrs) => {
-  return arr.map((val, i) => arrs.reduce((a, arr) => [...a, arr[i]], [val]));
-}
-
-const isObject = (value) => {
-    return value && typeof value === 'object' && value.constructor === Object;
-}
 
 Encoder = function (aci) {
     this.aci = aci
@@ -21,23 +13,24 @@ Encoder = function (aci) {
 }
 
 Encoder.prototype = {
-    encode: function (funcName, args) {
-        return 'cb_' + base64check.encode(this.serialize(funcName, args))
+    encode: function (funName, args) {
+        return 'cb_' + base64check.encode(this.serialize(funName, args))
     },
 
     serialize: function (funName, args) {
-        if (!this.hasFunction(funName)) {
-            throw new Error(`Unknown function call: ${funName}`)
-        }
-
+        const argTypes = this.getArgumentTypes(funName)
         const functionId = this.symbolIdentifier(funName)
-        const resolvedArgs = this.resolver.resolveArguments(funName, args)
+        const resolvedArgs = this.resolver.resolveArguments(argTypes, args)
 
-        const calldata = ['tuple', [
-                ['byte_array', functionId],
-                ['tuple', resolvedArgs]
-        ]]
+        const tupleTypes = resolvedArgs.map(e => e[1])
+        const tupleValues = resolvedArgs.map(e => e[2])
 
+        const calldataType = FateTypeTuple([
+            FateTypeByteArray(),
+            FateTypeTuple(tupleTypes)
+        ])
+
+        const calldata = [calldataType, [functionId, tupleValues]]
         const serialized = this.serializer.serialize(calldata)
 
         return new Uint8Array(serialized.flat(Infinity))
@@ -50,18 +43,18 @@ Encoder.prototype = {
         return hash.slice(0, 4)
     },
 
-    hasFunction(funName) {
-        // implicit init function always exists (contract constructor)
-        if (funName == 'init') {
-            return true
-        }
-
+    getArgumentTypes(funName) {
         const funcAci = this.aci.functions.find(e => e.name == funName)
+
         if (funcAci) {
-            return true
+            return funcAci.arguments.map(e => e.type)
         }
 
-        return false
+        if (funName === 'init') {
+            return []
+        }
+
+        throw new Error(`Unknown function ${funName}`)
     }
 }
 

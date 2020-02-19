@@ -1,4 +1,11 @@
-const PRIMITIVE_TYPES = ['bool', 'int', 'string']
+const {
+    PRIMITIVE_TYPES,
+    FateType,
+    FateTypeBytes,
+    FateTypeTuple,
+    FateTypeMap,
+    FateTypeVariant,
+} = require('../src/FateTypes.js')
 
 const zip = (arr, ...arrs) => {
   return arr.map((val, i) => arrs.reduce((a, arr) => [...a, arr[i]], [val]));
@@ -13,29 +20,20 @@ ArgumentsResolver = function (aci) {
 }
 
 ArgumentsResolver.prototype = {
-    resolveArguments(funName, args) {
-        const argAci = this.getArgumentsAci(funName)
-
-        if (argAci.length !== args.length) {
+    resolveArguments(argTypes, args) {
+        if (argTypes.length !== args.length) {
             throw new Error(
-                `Non matching number of arguments to function call of ${funName}.
-                Got ${args.length} but expected ${argAci.length}`
+                `Non matching number of arguments.
+                Got ${args.length} but expected ${argTypes.length}`
             )
         }
 
-        let resolvedArgs = []
-        for (let i = 0; i < argAci.length; i++) {
-            resolvedArgs.push(
-                this.resolveArgument(argAci[i].type, args[i])
-            )
-        }
-
-        return resolvedArgs
+        return zip(argTypes, args).map(el => this.resolveArgument(...el))
     },
 
     resolveArgument(type, value) {
         if (PRIMITIVE_TYPES.includes(type)) {
-            return [type, value]
+            return [type, FateType(type), value]
         }
 
         // typedefs, non-primitives
@@ -63,30 +61,39 @@ ArgumentsResolver.prototype = {
         const valueTypes = type[key]
 
         if (key === 'bytes') {
-            return [key, value]
+            const bytesType = FateTypeBytes(valueTypes)
+
+            return [key, bytesType, value]
         }
 
         if (key === 'list') {
-            return [key, valueTypes[0], value]
+            const listType = FateTypeList(FateType(valueTypes[0]))
+
+            return [key, listType, value]
         }
 
         if (key === 'map') {
-            return [key, [...valueTypes, value]]
+            const [keyType, valueType] = valueTypes
+            const mapType = FateTypeMap(FateType(keyType), FateType(valueType))
+
+            return [key, mapType, value]
         }
 
         if (key === 'record') {
-            const tupleValues = valueTypes.map(valueType => {
-                return this.resolveArgument(valueType.type, value[valueType.name])
-            })
+            const resolvedArgs = valueTypes.map(e => this.resolveArgument(e.type, value[e.name]))
+            const tupleValues = resolvedArgs.map(e => e[2])
+            const tupleValueTypes = resolvedArgs.map(e => e[1])
+            const tupleType = FateTypeTuple(tupleValueTypes)
 
-            return ['tuple', tupleValues]
+            return ['tuple', tupleType, tupleValues]
         }
 
-        // tuple
         if (key === 'tuple') {
-            const values = this.resolveArgumentValues(valueTypes, value)
+            const resolvedTupleTypes = valueTypes.map(t => this.resolveArgument(t))
+            const tupleValueTypes = resolvedTupleTypes.map(e => e[1])
+            const tupleType = FateTypeTuple(tupleValueTypes)
 
-            return [key, values]
+            return [key, tupleType, value]
         }
 
         if (key === 'variant') {
@@ -97,54 +104,32 @@ ArgumentsResolver.prototype = {
     },
 
     resolveVariantArgument(valueTypes, value) {
-            let arities = []
-            let tag = -1
-            let resolvedArgs = []
+            const arities = valueTypes.map(e => {
+                const [[, args]] = Object.entries(e)
+                return args.length
+            })
 
-            for (let i = 0; i < valueTypes.length; i++) {
-                const variant = valueTypes[i]
-                const variantKey = Object.keys(variant)[0]
-                const variantArgs = variant[variantKey]
-
-                arities.push(variantArgs.length)
-
-                if (variantKey == value.variant) {
-                    resolvedArgs = this.resolveArgumentValues(variantArgs, value.values)
-                    tag = i
-                }
-            }
+            const tag = valueTypes.findIndex(e => {
+                const [[key,]] = Object.entries(e)
+                return key === value.variant
+            })
 
             if (tag === -1) {
                 throw new Error('Unknown variant: ' + JSON.stringify(value.variant))
             }
 
+            const [[, variantArgs]] = Object.entries(valueTypes[tag])
+            const resolvedArgs = this.resolveArguments(variantArgs, value.values)
+            const variantValueTypes = resolvedArgs.map(e => e[1])
+            const variantValues = resolvedArgs.map(e => e[2])
+            const variantType = FateTypeVariant(arities, variantValueTypes)
+
             return [
                 'variant',
-                {arities, tag, variantValues: resolvedArgs}
+                variantType,
+                {tag, variantValues: value.values}
             ]
     },
-
-    resolveArgumentValues(args, values) {
-        if (args.length != values.length) {
-            throw new Error('Non matching argument values: ' + JSON.stringify(args) + JSON.stringify(values))
-        }
-
-        return zip(args, values).map(el => this.resolveArgument(...el))
-    },
-
-    getArgumentsAci(funName) {
-        const funcAci = this.aci.functions.find(e => e.name == funName)
-
-        if (funcAci) {
-            return funcAci.arguments
-        }
-
-        if (funName === 'init') {
-            return []
-        }
-
-        throw new Error('Unknown function: ' + funName)
-    }
 }
 
 module.exports = ArgumentsResolver

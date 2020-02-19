@@ -8,9 +8,10 @@ MapSerializer = function (globalSerializer) {
 
 MapSerializer.prototype = {
     serialize (value) {
-        const [keyKype, valueType, elements] = value
+        const [mapType, elements] = value
+        const {keyType, valueType} = mapType
         const len = elements.length
-        const cmp = FateComparator(keyKype)
+        const cmp = FateComparator(keyType)
 
         const sortedElements = [...elements]
         sortedElements.sort((elA, elB) => cmp(elA[0], elB[0]))
@@ -18,7 +19,7 @@ MapSerializer.prototype = {
         const serializedElements = sortedElements.map(e => {
             const [key, value] = e
             return [
-                this.globalSerializer.serialize([keyKype, key]),
+                this.globalSerializer.serialize([keyType, key]),
                 this.globalSerializer.serialize([valueType, value])
             ]
         })

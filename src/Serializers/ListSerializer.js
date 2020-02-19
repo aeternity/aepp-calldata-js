@@ -6,8 +6,11 @@ ListSerializer = function (globalSerializer) {
 
 ListSerializer.prototype = {
     serialize: function (value) {
-        const [type, elements] = value
-        const serializedElements = elements.map(e => this.globalSerializer.serialize([type, e])).flat(Infinity)
+        const [listType, elements] = value
+        const serializedElements = elements.map(e => {
+            return this.globalSerializer.serialize([listType.valuesType, e])
+        }).flat(Infinity)
+
         const len = elements.length
 
         if (len < 16) {

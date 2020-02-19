@@ -1,8 +1,17 @@
 const test = require('ava')
 const FateComparator = require('../src/FateComparator.js')
+const {
+    FateTypeInt,
+    FateTypeBool,
+    FateTypeList,
+    FateTypeMap,
+    FateTypeTuple,
+    FateTypeVariant,
+} = require('../src/FateTypes.js')
 
-const sort = (type, data, innerType) => {
-    data.sort(FateComparator(type, innerType))
+
+const sort = (type, data) => {
+    data.sort(FateComparator(type))
 
     return data
 }
@@ -67,44 +76,46 @@ test('Compare bytes', t => {
 
 //TODO support nested inner types
 test('Compare lists', t => {
+    const listType = FateTypeList(FateTypeInt())
     t.deepEqual(
         sort('list', [
-            [],
-            [0, 1, 2],
-            [0, 1, 2, 3],
-            [0, 1],
-            [0, 0, 0],
-            [0, 1, 2],
-            [],
-        ], 'int'),
+            [listType, []],
+            [listType, [0, 1, 2]],
+            [listType, [0, 1, 2, 3]],
+            [listType, [0, 1]],
+            [listType, [0, 0, 0]],
+            [listType, [0, 1, 2]],
+            [listType, []],
+        ]),
         [
-            [],
-            [],
-            [0, 0, 0],
-            [0, 1],
-            [0, 1, 2],
-            [0, 1, 2],
-            [0, 1, 2, 3],
+            [listType, []],
+            [listType, []],
+            [listType, [0, 0, 0]],
+            [listType, [0, 1]],
+            [listType, [0, 1, 2]],
+            [listType, [0, 1, 2]],
+            [listType, [0, 1, 2, 3]],
         ]
     )
 });
 
 //TODO support nested inner types
 test('Compare tuples', t => {
+    const tupleType = FateTypeTuple([FateTypeBool(), FateTypeInt()])
     t.deepEqual(
         sort('tuple', [
-            [['bool', true], ['int', 1]],
-            [['bool', false], ['int', 1]],
-            [['bool', true], ['int', 1]],
-            [['bool', false], ['int', 0]],
-            [['int', 0]],
+            [tupleType, [true, 1]],
+            [tupleType, [false, 1]],
+            [tupleType, [true, 1]],
+            [tupleType, [false, 0]],
+            [FateTypeTuple([FateTypeInt()]), [0]],
         ]),
         [
-            [['int', 0]],
-            [['bool', false], ['int', 0]],
-            [['bool', false], ['int', 1]],
-            [['bool', true], ['int', 1]],
-            [['bool', true], ['int', 1]],
+            [FateTypeTuple([FateTypeInt()]), [0]],
+            [tupleType, [false, 0]],
+            [tupleType, [false, 1]],
+            [tupleType, [true, 1]],
+            [tupleType, [true, 1]],
         ]
     )
 });
@@ -112,51 +123,118 @@ test('Compare tuples', t => {
 test('Compare variants', t => {
     t.deepEqual(
         sort('variant', [
-            {arities: [0, 0, 1], tag: 2, variantValues: []},
-            {arities: [0, 0, 1, 0], tag: 1, variantValues: []},
-            {arities: [0, 1, 0], tag: 1, variantValues: []},
-            {arities: [1, 1], tag: 1, variantValues: []},
-            {arities: [1, 1, 0], tag: 1, variantValues: []},
-            {arities: [0, 0, 1], tag: 1, variantValues: []},
-            {arities: [0, 0, 1, 0], tag: 1, variantValues: []},
-            {arities: [0, 0, 1, 0], tag: 2, variantValues: [['int', 7]]},
-            {arities: [0, 0, 1, 0], tag: 2, variantValues: [['int', 0]]},
-            {arities: [0, 0, 1, 0], tag: 2, variantValues: [['int', -1]]},
-            {arities: [0, 0, 1], tag: 0, variantValues: []},
+            [
+                FateTypeVariant([0, 0, 1], []),
+                {tag: 2, variantValues: []}
+            ],
+            [
+                FateTypeVariant([0, 0, 1, 0], []),
+                {tag: 1, variantValues: []}
+            ],
+            [
+                FateTypeVariant([0, 1, 0], []),
+                {tag: 1, variantValues: []}
+            ],
+            [
+                FateTypeVariant([1, 1], []),
+                {tag: 1, variantValues: []}
+            ],
+            [
+                FateTypeVariant([1, 1, 0], []),
+                {tag: 1, variantValues: []}
+            ],
+            [
+                FateTypeVariant([0, 0, 1], []),
+                {tag: 1, variantValues: []}
+            ],
+            [
+                FateTypeVariant([0, 0, 1, 0], []),
+                {tag: 1, variantValues: []}
+            ],
+            [
+                FateTypeVariant([0, 0, 1, 0], [FateTypeInt()]),
+                {tag: 2, variantValues: [7]}
+            ],
+            [
+                FateTypeVariant([0, 0, 1, 0], [FateTypeInt()]),
+                {tag: 2, variantValues: [0]}
+            ],
+            [
+                FateTypeVariant([0, 0, 1, 0], [FateTypeInt()]),
+                {tag: 2, variantValues: [-1]}
+            ],
+            [
+                FateTypeVariant([0, 0, 1], []),
+                {tag: 0, variantValues: []}
+            ],
         ]),
         [
-            {arities: [1, 1], tag: 1, variantValues: []},
-            {arities: [0, 0, 1], tag: 0, variantValues: []},
-            {arities: [0, 0, 1], tag: 1, variantValues: []},
-            {arities: [0, 0, 1], tag: 2, variantValues: []},
-            {arities: [0, 1, 0], tag: 1, variantValues: []},
-            {arities: [1, 1, 0], tag: 1, variantValues: []},
-            {arities: [0, 0, 1, 0], tag: 1, variantValues: []},
-            {arities: [0, 0, 1, 0], tag: 1, variantValues: []},
-            {arities: [0, 0, 1, 0], tag: 2, variantValues: [['int', -1]]},
-            {arities: [0, 0, 1, 0], tag: 2, variantValues: [['int', 0]]},
-            {arities: [0, 0, 1, 0], tag: 2, variantValues: [['int', 7]]},
+            [
+                FateTypeVariant([1, 1], []),
+                {tag: 1, variantValues: []}
+            ],
+            [
+                FateTypeVariant([0, 0, 1], []),
+                {tag: 0, variantValues: []}
+            ],
+            [
+                FateTypeVariant([0, 0, 1], []),
+                {tag: 1, variantValues: []}
+            ],
+            [
+                FateTypeVariant([0, 0, 1], []),
+                {tag: 2, variantValues: []}
+            ],
+            [
+                FateTypeVariant([0, 1, 0], []),
+                {tag: 1, variantValues: []}
+            ],
+            [
+                FateTypeVariant([1, 1, 0], []),
+                {tag: 1, variantValues: []}
+            ],
+            [
+                FateTypeVariant([0, 0, 1, 0], []),
+                {tag: 1, variantValues: []}
+            ],
+            [
+                FateTypeVariant([0, 0, 1, 0], []),
+                {tag: 1, variantValues: []}
+            ],
+            [
+                FateTypeVariant([0, 0, 1, 0], [FateTypeInt()]),
+                {tag: 2, variantValues: [-1]}
+            ],
+            [
+                FateTypeVariant([0, 0, 1, 0], [FateTypeInt()]),
+                {tag: 2, variantValues: [0]}
+            ],
+            [
+                FateTypeVariant([0, 0, 1, 0], [FateTypeInt()]),
+                {tag: 2, variantValues: [7]}
+            ],
         ]
     )
 });
 
 test('Compare maps', t => {
+    const mapType = FateTypeMap(FateTypeInt(), FateTypeBool())
     t.deepEqual(
         sort('map', [
-            ['int', 'bool', [[1,true], [3,true], [2,false], [0,false]]],
-            ['int', 'bool', []],
-            ['int', 'bool', [[1,true], [3,true], [0,false]]],
-            ['int', 'bool', [[1,true], [3,true], [2,false], [0,false]]],
-            ['int', 'bool', [[1,true], [3,true], [2,false], [0,true]]],
-            ['int', 'bool', [[1,true], [3,true], [2,true], [0,false]]],
+            [mapType, [[1,true], [3,true], [2,false], [0,false]]],
+            [mapType, []],
+            [mapType, [[1,true], [3,true], [0,false]]],
+            [mapType, [[1,true], [3,true], [2,false], [0,false]]],
+            [mapType, [[1,true], [3,true], [2,false], [0,true]]],
+            [mapType, [[1,true], [3,true], [2,true], [0,false]]],
         ]),
         [
-            ['int', 'bool', []],
-            ['int', 'bool', [[1,true], [3,true], [2,false], [0,false]]],
-            ['int', 'bool', [[1,true], [3,true], [2,false], [0,false]]],
-            ['int', 'bool', [[1,true], [3,true], [2,true], [0,false]]],
-            ['int', 'bool', [[1,true], [3,true], [0,false]]],
-            ['int', 'bool', [[1,true], [3,true], [2,false], [0,true]]],
+            [mapType, []],
+            [mapType, [[1,true], [3,true], [2,false], [0,false]]],
+            [mapType, [[1,true], [3,true], [2,false], [0,false]]],
+            [mapType, [[1,true], [3,true], [2,true], [0,false]]],
+            [mapType, [[1,true], [3,true], [0,false]]],
+            [mapType, [[1,true], [3,true], [2,false], [0,true]]],
         ]
     )
 });

@@ -1,60 +1,72 @@
 // TODO types comparator
-const listComparator = (innerType) => {
-    return (a, b) => {
-        if (a.length === 0) {
-            return -1
-        }
+const listComparator = (a, b) => {
+    const [typeA, itemsA] = a
+    const [typeB, itemsB] = b
 
-        if (b.length === 0) {
+    if (itemsA.length === 0) {
+        return -1
+    }
+
+    if (itemsB.length === 0) {
+        return 1
+    }
+
+    // TODO support different types ?
+    console.assert(
+        typeA.valuesType === typeB.valuesType,
+        "list value types does not match",
+        typeA,
+        typeB
+    )
+
+    const cmp = FateComparator(typeA.valuesType)
+    for (let i = 0; i < itemsA.length; i++) {
+
+        // second list is shorter but matches as prefix of the first one
+        if (typeof itemsB[i] === 'undefined') {
             return 1
         }
 
-        const cmp = FateComparator(innerType)
-        for (let i = 0; i < a.length; i++) {
-
-            // second list is shorter but matches as prefix of the first one
-            if (typeof b[i] === 'undefined') {
-                return 1
-            }
-
-            // element difference
-            const diff = cmp(a[i], b[i])
-            if (diff !== 0) {
-                return diff
-            }
+        // element difference
+        const diff = cmp(itemsA[i], itemsB[i])
+        if (diff !== 0) {
+            return diff
         }
-
-        // if there is no early return from the loop above
-        // then the first list match a prefix of the second
-        
-        // equal lists
-        if (a.length === b.length) {
-            return 0
-        }
-
-        // first list is shorter, thus smaller
-        return -1
     }
+
+    // if there is no early return from the loop above
+    // then the first list match a prefix of the second
+
+    // equal lists
+    if (itemsA.length === itemsB.length) {
+        return 0
+    }
+
+    // first list is shorter, thus smaller
+    return -1
 }
 
 const tupleComparator = (a, b) => {
-    if (a.length === 0) {
+    const [typeA, itemsA] = a
+    const [typeB, itemsB] = b
+
+    if (itemsA.length === 0) {
         return -1
     }
 
-    const sizeDiff = a.length - b.length
+    const sizeDiff = itemsA.length - itemsB.length
     if (sizeDiff !== 0) {
         return sizeDiff
     }
 
     // equal size - compare elements
-    for (let i = 0; i < a.length; i++) {
-        const [typeA, valA] = a[i]
-        const [typeB, valB] = b[i]
-        // TODO support different types ?
-        console.assert(typeA === typeB)
+    for (let i = 0; i < itemsA.length; i++) {
+        const valTypeA = typeA.valueTypes[i]
+        const valTypeB = typeB.valueTypes[i]
 
-        const diff = FateComparator(typeA)(valA, valB)
+        // TODO support different types ?
+
+        const diff = FateComparator(valTypeA)(itemsA[i], itemsB[i])
         if (diff != 0) {
             return diff
         }
@@ -65,18 +77,22 @@ const tupleComparator = (a, b) => {
 }
 
 const variantComparator = (a, b) => {
-    const aDiff = a.arities.length - b.arities.length
+    const [typeA, valueA] = a
+    const [typeB, valueB] = b
+
+    const aDiff = typeA.arities.length - typeB.arities.length
     if (aDiff !== 0) {
         return aDiff
     }
 
-    const aComparator = FateComparator('list')('int')
-    const lDiff = aComparator(a.arities, b.arities)
+    const aType = typeA.aritiesType
+    const aComparator = FateComparator(aType)
+    const lDiff = aComparator([aType, typeA.arities], [aType, typeB.arities])
     if (lDiff !== 0) {
         return lDiff
     }
 
-    const tDiff = a.tag - b.tag
+    const tDiff = valueA.tag - valueB.tag
     if (tDiff !== 0) {
         return tDiff
     }
@@ -84,7 +100,10 @@ const variantComparator = (a, b) => {
     // equal arities and tags - compare elements
     const tupleComparator = FateComparator('tuple')
 
-    return tupleComparator(a.variantValues, b.variantValues)
+    return tupleComparator(
+        [typeA.variantType, valueA.variantValues],
+        [typeB.variantType, valueB.variantValues]
+    )
 }
 
 const mapItemComparator = (type) => {
@@ -93,16 +112,16 @@ const mapItemComparator = (type) => {
 }
 
 const mapComparator = (a, b) => {
-    const [aKeyType, aValueType, itemsA] = a
-    const [bKeyType, bValueType, itemsB] = b
+    const [typeA, itemsA] = a
+    const [typeB, itemsB] = b
     const aItems = [...itemsA]
     const bItems = [...itemsB]
 
-    aItems.sort(mapItemComparator(aKeyType))
-    bItems.sort(mapItemComparator(bKeyType))
+    aItems.sort(mapItemComparator(typeA.keyType))
+    bItems.sort(mapItemComparator(typeB.keyType))
 
-    const keyComparator = FateComparator(aKeyType)
-    const valueComparator = FateComparator(aValueType)
+    const keyComparator = FateComparator(typeA.keyType)
+    const valueComparator = FateComparator(typeA.valueType)
 
     for (let i = 0; i < aItems.length; i++) {
         // second map is smaller (less items)
@@ -152,16 +171,14 @@ const comparators = {
     'oracle': (a, b) => Number(a - b),
 }
 
-const FateComparator = (type, innerType) => {
-    if (!comparators.hasOwnProperty(type)) {
-        throw new Error(`Unsupported comparator for ${type}`)
+const FateComparator = (type) => {
+    const typeName = type.hasOwnProperty('name') ? type.name : type
+
+    if (!comparators.hasOwnProperty(typeName)) {
+        throw new Error(`Unsupported comparator for ${typeName}`)
     }
 
-    if (innerType) {
-        return comparators[type](innerType)
-    }
-
-    return comparators[type]
+    return comparators[typeName]
 }
 
 module.exports = FateComparator

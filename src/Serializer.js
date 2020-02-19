@@ -21,12 +21,18 @@ Serializer = {
     },
     serialize: function (data) {
         const [type, value] = data
+        const typeName = type.hasOwnProperty('name') ? type['name'] : type
 
-        if (!this.serializers.hasOwnProperty(type)) {
-            throw new Error("Unsupported type, " + type);
+        if (!this.serializers.hasOwnProperty(typeName)) {
+            throw new Error(`Unsupported type: ${typeName}`);
         }
 
-        return this.serializers[type].serialize(value)
+        // temp solution
+        if (typeName === 'list' || typeName === 'tuple' || typeName === 'map' || typeName === 'variant') {
+            return this.serializers[typeName].serialize(data)
+        }
+
+        return this.serializers[typeName].serialize(value)
     }
 }
 

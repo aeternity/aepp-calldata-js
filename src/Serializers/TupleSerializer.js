@@ -1,19 +1,29 @@
 const FateTag = require('../FateTag.js')
 
+const zip = (arr, ...arrs) => {
+  return arr.map((val, i) => arrs.reduce((a, arr) => [...a, arr[i]], [val]));
+}
+
 TupleSerializer = function (globalSerializer) {
     this.globalSerializer = globalSerializer
 }
 
 TupleSerializer.prototype = {
-    serialize: function (value) {
-        if (value.length === 0) {
+    serialize: function (data) {
+        const [type, values] = data
+        const len = values.length
+
+        if (len === 0) {
             return [FateTag.EMPTY_TUPLE]
         }
 
-        const elements = value.map(e => this.globalSerializer.serialize(e)).flat(Infinity)
+        const elements = zip(type.valueTypes, values)
+            .map(e => this.globalSerializer.serialize(e))
+            .flat(Infinity)
 
-        if (value.length < 16) {
-            const prefix = (value.length << 4) | FateTag.SHORT_TUPLE
+
+        if (len < 16) {
+            const prefix = (len << 4) | FateTag.SHORT_TUPLE
 
             return [
                 prefix,
@@ -23,7 +33,7 @@ TupleSerializer.prototype = {
 
         return [
             FateTag.LONG_TUPLE,
-            ...this.globalSerializer.serialize(['int', elements.length - 16]),
+            ...this.globalSerializer.serialize(['int', len - 16]),
             ...elements
         ]
     }
