@@ -20,8 +20,17 @@ Serializer = {
         this.serializers[type] = instance
     },
     serialize: function (data) {
-        const [type, value] = data
-        const typeName = type.hasOwnProperty('name') ? type['name'] : type
+        // BC primitive types
+        let type = data
+        if (Array.isArray(data)) {
+            [type, value] = data
+        }
+
+        // BC FateTypes
+        let typeName = type
+        if (type.hasOwnProperty('name')) {
+            typeName = type['name']
+        }
 
         if (!this.serializers.hasOwnProperty(typeName)) {
             throw new Error(`Unsupported type: ${typeName}`);
@@ -40,7 +49,7 @@ Serializer.register('bool', new BoolSerializer())
 Serializer.register('int', new IntSerializer())
 Serializer.register('tuple', new TupleSerializer(Serializer))
 //TODO, nested list
-Serializer.register('list', new ListSerializer())
+Serializer.register('list', new ListSerializer(Serializer))
 //TODO, nested map
 Serializer.register('map', new MapSerializer(Serializer))
 Serializer.register('byte_array', new ByteArraySerializer())

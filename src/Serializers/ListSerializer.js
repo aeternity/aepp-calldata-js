@@ -1,17 +1,20 @@
 const FateTag = require('../FateTag.js')
+const {FateTypeInt} = require('../FateTypes.js')
 
 ListSerializer = function (globalSerializer) {
     this.globalSerializer = globalSerializer
 }
 
 ListSerializer.prototype = {
-    serialize: function (value) {
-        const [listType, elements] = value
-        const serializedElements = elements.map(e => {
-            return this.globalSerializer.serialize([listType.valuesType, e])
+    serialize: function (data) {
+        // BC compatibility
+        const list = Array.isArray(data) ? data[1] : data
+
+        const serializedElements = list.items.map(e => {
+            return this.globalSerializer.serialize([list.itemsType, e])
         }).flat(Infinity)
 
-        const len = elements.length
+        const len = list.items.length
 
         if (len < 16) {
             const prefix = (len << 4) | FateTag.SHORT_LIST
@@ -24,7 +27,7 @@ ListSerializer.prototype = {
 
         return [
             FateTag.LONG_LIST,
-            ...this.globalSerializer.serialize(['int', len - 16]),
+            ...this.globalSerializer.serialize([FateTypeInt(), len - 16]),
             ...serializedElements
         ]
     }

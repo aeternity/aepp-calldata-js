@@ -1,34 +1,25 @@
+const FateList = require('./types/FateList.js')
+
 // TODO types comparator
 const listComparator = (a, b) => {
-    const [typeA, itemsA] = a
-    const [typeB, itemsB] = b
-
-    if (itemsA.length === 0) {
+    if (a.length === 0) {
         return -1
     }
 
-    if (itemsB.length === 0) {
+    if (b.length === 0) {
         return 1
     }
 
-    // TODO support different types ?
-    console.assert(
-        typeA.valuesType === typeB.valuesType,
-        "list value types does not match",
-        typeA,
-        typeB
-    )
-
-    const cmp = FateComparator(typeA.valuesType)
-    for (let i = 0; i < itemsA.length; i++) {
+    const cmp = FateComparator(a.itemsType)
+    for (let i = 0; i < a.length; i++) {
 
         // second list is shorter but matches as prefix of the first one
-        if (typeof itemsB[i] === 'undefined') {
+        if (typeof b.items[i] === 'undefined') {
             return 1
         }
 
         // element difference
-        const diff = cmp(itemsA[i], itemsB[i])
+        const diff = cmp(a.items[i], b.items[i])
         if (diff !== 0) {
             return diff
         }
@@ -38,7 +29,7 @@ const listComparator = (a, b) => {
     // then the first list match a prefix of the second
 
     // equal lists
-    if (itemsA.length === itemsB.length) {
+    if (a.length === b.length) {
         return 0
     }
 
@@ -85,9 +76,11 @@ const variantComparator = (a, b) => {
         return aDiff
     }
 
-    const aType = typeA.aritiesType
-    const aComparator = FateComparator(aType)
-    const lDiff = aComparator([aType, typeA.arities], [aType, typeB.arities])
+    const aList = new FateList(typeA.aritiesType, typeA.arities)
+    const bList = new FateList(typeB.aritiesType, typeB.arities)
+    const aComparator = FateComparator(aList)
+
+    const lDiff = aComparator(aList, bList)
     if (lDiff !== 0) {
         return lDiff
     }

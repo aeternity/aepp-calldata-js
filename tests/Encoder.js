@@ -42,6 +42,11 @@ test('Encode bytes arguments', t => {
     t.is(encoded, 'cb_KxEe407MG58BCb7vI/elQA==', 'test_bytes(#beef)')
 });
 
+test('Encode list arguments', t => {
+    const encoded = t.context.encoder.encode('test_list', [[1,2,3,5,8,13,21]])
+    t.is(encoded, 'cb_KxFLwdBRG3MCBAYKEBoquPlTeA==', 'test_list([1, 2, 3, 5, 8, 13, 21])')
+});
+
 test('Encode map arguments', t => {
     const encoded = t.context.encoder.encode('test_simple_map', [[[7, false]]])
     t.is(encoded, 'cb_KxHLN316Gy8BDn+vbmBO', 'test_simple_map({[7] = false})')

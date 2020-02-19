@@ -5,7 +5,9 @@ const {
     FateTypeTuple,
     FateTypeMap,
     FateTypeVariant,
-} = require('../src/FateTypes.js')
+} = require('./FateTypes.js')
+
+const FateList = require('./types/FateList.js')
 
 const zip = (arr, ...arrs) => {
   return arr.map((val, i) => arrs.reduce((a, arr) => [...a, arr[i]], [val]));
@@ -67,14 +69,12 @@ ArgumentsResolver.prototype = {
         }
 
         if (key === 'list') {
-            const listType = FateTypeList(FateType(valueTypes[0]))
-
-            return [key, listType, value]
+            return new FateList(FateType(valueTypes[0]), value)
         }
 
         if (key === 'map') {
-            const [keyType, valueType] = valueTypes
-            const mapType = FateTypeMap(FateType(keyType), FateType(valueType))
+            const [keyType, valueType] = valueTypes.map(e => FateType(e))
+            const mapType = FateTypeMap(keyType, valueType)
 
             return [key, mapType, value]
         }
