@@ -7,27 +7,27 @@ MapSerializer = function (globalSerializer) {
 }
 
 MapSerializer.prototype = {
-    serialize (value) {
-        const [mapType, elements] = value
-        const {keyType, valueType} = mapType
-        const len = elements.length
-        const cmp = FateComparator(keyType)
+    serialize (data) {
+        // BC compatibility
+        const map = Array.isArray(data) ? data[1] : data
 
-        const sortedElements = [...elements]
-        sortedElements.sort((elA, elB) => cmp(elA[0], elB[0]))
+        const len = map.length
+        const cmp = FateComparator(map.keyType)
 
-        const serializedElements = sortedElements.map(e => {
-            const [key, value] = e
+        const sortedItems = [...map.items]
+        sortedItems.sort((elA, elB) => cmp(elA.key, elB.key))
+
+        const serializedItems = sortedItems.map(i => {
             return [
-                this.globalSerializer.serialize([keyType, key]),
-                this.globalSerializer.serialize([valueType, value])
+                this.globalSerializer.serialize([map.keyType, i.key]),
+                this.globalSerializer.serialize([map.valueType, i.value])
             ]
         })
 
         return [
             FateTag.MAP,
             ...RLPInt(len),
-            ...serializedElements.flat(Infinity)
+            ...serializedItems.flat(Infinity)
         ]
     },
 }

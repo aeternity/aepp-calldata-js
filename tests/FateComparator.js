@@ -1,6 +1,7 @@
 const test = require('ava')
 const FateComparator = require('../src/FateComparator.js')
 const FateList = require('../src/types/FateList.js')
+const FateMap = require('../src/types/FateMap.js')
 const {
     FateTypeInt,
     FateTypeBool,
@@ -218,23 +219,24 @@ test.only('Compare variants', t => {
 });
 
 test('Compare maps', t => {
-    const mapType = FateTypeMap(FateTypeInt(), FateTypeBool())
+    const FTInt = FateTypeInt(), FTBool = FateTypeBool()
+
     t.deepEqual(
-        sort('map', [
-            [mapType, [[1,true], [3,true], [2,false], [0,false]]],
-            [mapType, []],
-            [mapType, [[1,true], [3,true], [0,false]]],
-            [mapType, [[1,true], [3,true], [2,false], [0,false]]],
-            [mapType, [[1,true], [3,true], [2,false], [0,true]]],
-            [mapType, [[1,true], [3,true], [2,true], [0,false]]],
+        sort(FateTypeMap(FTInt, FTBool), [
+            new FateMap(FTInt, FTBool, [[1,true], [3,true], [2,false], [0,false]]),
+            new FateMap(FTInt, FTBool, []),
+            new FateMap(FTInt, FTBool, [[1,true], [3,true], [0,false]]),
+            new FateMap(FTInt, FTBool, [[1,true], [3,true], [2,false], [0,false]]),
+            new FateMap(FTInt, FTBool, [[1,true], [3,true], [2,false], [0,true]]),
+            new FateMap(FTInt, FTBool, [[1,true], [3,true], [2,true], [0,false]]),
         ]),
         [
-            [mapType, []],
-            [mapType, [[1,true], [3,true], [2,false], [0,false]]],
-            [mapType, [[1,true], [3,true], [2,false], [0,false]]],
-            [mapType, [[1,true], [3,true], [2,true], [0,false]]],
-            [mapType, [[1,true], [3,true], [0,false]]],
-            [mapType, [[1,true], [3,true], [2,false], [0,true]]],
+            new FateMap(FTInt, FTBool, []),
+            new FateMap(FTInt, FTBool, [[1,true], [3,true], [2,false], [0,false]]),
+            new FateMap(FTInt, FTBool, [[1,true], [3,true], [2,false], [0,false]]),
+            new FateMap(FTInt, FTBool, [[1,true], [3,true], [2,true], [0,false]]),
+            new FateMap(FTInt, FTBool, [[1,true], [3,true], [0,false]]),
+            new FateMap(FTInt, FTBool, [[1,true], [3,true], [2,false], [0,true]]),
         ]
     )
 });

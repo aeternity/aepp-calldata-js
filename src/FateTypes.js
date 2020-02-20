@@ -1,6 +1,10 @@
 const PRIMITIVE_TYPES = ['bool', 'int', 'string']
 
 const FateType = (type) => {
+    if (typeof type !== 'string') {
+        return type
+    }
+
     switch(type) {
         case 'int':
             return FateTypeInt()
@@ -43,7 +47,7 @@ const FateTypeByteArray = () => {
 const FateTypeList = (valuesType) => {
     return {
         name: 'list',
-        valuesType: valuesType
+        valuesType: FateType(valuesType)
     }
 }
 
@@ -57,8 +61,8 @@ const FateTypeTuple = (valueTypes) => {
 const FateTypeMap = (keyType, valueType) => {
     return {
         name: 'map',
-        keyType: keyType,
-        valueType: valueType,
+        keyType: FateType(keyType),
+        valueType: FateType(valueType),
     }
 }
 
