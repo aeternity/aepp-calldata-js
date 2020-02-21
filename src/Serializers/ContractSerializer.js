@@ -4,11 +4,11 @@ const RLPInt = require('../utils/RLPInt.js')
 ContractSerializer = function () {}
 
 ContractSerializer.prototype = {
-    serialize: function (value) {
+    serialize: function (data) {
         return [
             FateTag.OBJECT,
             FateTag.OTYPE_CONTRACT,
-            ...RLPInt(value)
+            ...RLPInt(data.value)
         ]
     }
 }

@@ -4,11 +4,11 @@ const RLPInt = require('../utils/RLPInt.js')
 AddressSerializer = function () {}
 
 AddressSerializer.prototype = {
-    serialize: function (value) {
+    serialize: function (data) {
         return [
             FateTag.OBJECT,
             FateTag.OTYPE_ADDRESS,
-            ...RLPInt(value)
+            ...RLPInt(data.value)
         ]
     }
 }

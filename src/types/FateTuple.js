@@ -1,9 +1,9 @@
+const FateData = require('./FateData.js')
 const {FateType, FateTypeTuple} = require('../FateTypes.js')
 
-class FateTuple {
+class FateTuple extends FateData {
   constructor(valueTypes = [], items = []) {
-    // BC
-    this.name = 'tuple'
+    super('tuple')
 
     this._valueTypes = (valueTypes.hasOwnProperty('valueTypes')) ? valueTypes.valueTypes : valueTypes
     this._type = Array.isArray(valueTypes) ? FateTypeTuple(valueTypes) : valueTypes

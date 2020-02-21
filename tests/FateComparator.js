@@ -3,6 +3,7 @@ const FateComparator = require('../src/FateComparator.js')
 const FateList = require('../src/types/FateList.js')
 const FateMap = require('../src/types/FateMap.js')
 const FateTuple = require('../src/types/FateTuple.js')
+const FateBytes = require('../src/types/FateBytes.js')
 const {
     FateTypeInt,
     FateTypeBool,
@@ -48,33 +49,33 @@ test('Compare primitive types', t => {
 test('Compare bytes', t => {
     t.deepEqual(
         sort('bytes', [
-            0xfedcba9876543210,
-            0x10000000000000000000000000,
-            0xdeadfeed,
-            0xdeadbeef,
-            0xdeadbad,
+            new FateBytes(0xfedcba9876543210),
+            new FateBytes(0x10000000000000000000000000),
+            new FateBytes(0xdeadfeed),
+            new FateBytes(0xdeadbeef),
+            new FateBytes(0xdeadbad),
         ]),
         [
-            0xdeadbad,
-            0xdeadbeef,
-            0xdeadfeed,
-            0xfedcba9876543210,
-            0x10000000000000000000000000,
+            new FateBytes(0xdeadbad),
+            new FateBytes(0xdeadbeef),
+            new FateBytes(0xdeadfeed),
+            new FateBytes(0xfedcba9876543210),
+            new FateBytes(0x10000000000000000000000000),
         ]
     )
 
     t.deepEqual(
         sort('bytes', [
-            BigInt("0xfedcba9876543210"),
-            BigInt("0xdeadfeed"),
-            BigInt("0xdeadbeef"),
-            BigInt("0xdeadbad"),
+            new FateBytes("0xfedcba9876543210"),
+            new FateBytes("0xdeadfeed"),
+            new FateBytes("0xdeadbeef"),
+            new FateBytes("0xdeadbad"),
         ]),
         [
-            BigInt("0xdeadbad"),
-            BigInt("0xdeadbeef"),
-            BigInt("0xdeadfeed"),
-            BigInt("0xfedcba9876543210"),
+            new FateBytes("0xdeadbad"),
+            new FateBytes("0xdeadbeef"),
+            new FateBytes("0xdeadfeed"),
+            new FateBytes("0xfedcba9876543210"),
         ]
     )
 });

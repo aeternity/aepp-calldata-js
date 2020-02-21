@@ -4,11 +4,11 @@ const RLPInt = require('../utils/RLPInt.js')
 OracleSerializer = function () {}
 
 OracleSerializer.prototype = {
-    serialize: function (value) {
+    serialize: function (data) {
         return [
             FateTag.OBJECT,
             FateTag.OTYPE_ORACLE,
-            ...RLPInt(value)
+            ...RLPInt(data.value)
         ]
     }
 }

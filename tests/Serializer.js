@@ -2,6 +2,13 @@ const test = require('ava')
 const Serializer = require('../src/Serializer.js')
 const FateList = require('../src/types/FateList.js')
 const FateMap = require('../src/types/FateMap.js')
+const FateBytes = require('../src/types/FateBytes.js')
+const FateAccountAddress = require('../src/types/FateAccountAddress.js')
+const FateContractAddress = require('../src/types/FateContractAddress.js')
+const FateOracleAddress = require('../src/types/FateOracleAddress.js')
+const FateOracleQueryAddress = require('../src/types/FateOracleQueryAddress.js')
+const FateChannelAddress = require('../src/types/FateChannelAddress.js')
+
 const {
     FateTypeInt,
     FateTypeBool,
@@ -38,27 +45,27 @@ test('Serialize all types', t => {
 
     // bytes and objects serializers
     t.deepEqual(
-        ser(t, ['bytes', 0xbeef]),
+        ser(t, new FateBytes(0xbeef)),
         [159,1,9,190,239]
     )
     t.deepEqual(
-        ser(t, ['address', BigInt("0xfedcba9876543210")]),
+        ser(t, new FateAccountAddress("0xfedcba9876543210")),
         [159,0,136,254,220,186,152,118,84,50,16]
     )
     t.deepEqual(
-        ser(t, ['contract', BigInt("0xfedcba9876543210")]),
+        ser(t, new FateContractAddress("0xfedcba9876543210")),
         [159,2,136,254,220,186,152,118,84,50,16]
     )
     t.deepEqual(
-        ser(t, ['oracle', BigInt("0xfedcba9876543210")]),
+        ser(t, new FateOracleAddress("0xfedcba9876543210")),
         [159,3,136,254,220,186,152,118,84,50,16]
     )
     t.deepEqual(
-        ser(t, ['oracle_query', BigInt("0xfedcba9876543210")]),
+        ser(t, new FateOracleQueryAddress("0xfedcba9876543210")),
         [159,4,136,254,220,186,152,118,84,50,16]
     )
     t.deepEqual(
-        ser(t, ['channel', BigInt("0xfedcba9876543210")]),
+        ser(t, new FateChannelAddress("0xfedcba9876543210")),
         [159,5,136,254,220,186,152,118,84,50,16]
     )
 });

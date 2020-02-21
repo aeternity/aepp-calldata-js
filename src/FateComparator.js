@@ -140,6 +140,8 @@ const mapComparator = (a, b) => {
     return -1
 }
 
+const bytesComparator = (a, b) => Number(a.value - b.value)
+
 const comparators = {
     'int': (a, b) => Number(a - b),
     'bool': (a, b) => a - b,
@@ -151,12 +153,12 @@ const comparators = {
     'variant': variantComparator,
     'map': mapComparator,
     // objects (bytes)
-    'address': (a, b) => Number(a - b),
-    'bytes': (a, b) => Number(a - b),
-    'channel': (a, b) => Number(a - b),
-    'contract': (a, b) => Number(a - b),
-    'oracle_query': (a, b) => Number(a - b),
-    'oracle': (a, b) => Number(a - b),
+    'bytes': bytesComparator,
+    'account_address': bytesComparator,
+    'channel_address': bytesComparator,
+    'contract_address': bytesComparator,
+    'oracle_query_address': bytesComparator,
+    'oracle_address': bytesComparator,
 }
 
 const FateComparator = (type) => {

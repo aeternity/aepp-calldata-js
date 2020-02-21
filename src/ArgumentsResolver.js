@@ -1,13 +1,13 @@
 const {
     PRIMITIVE_TYPES,
     FateType,
-    FateTypeBytes,
     FateTypeVariant,
 } = require('./FateTypes.js')
 
 const FateList = require('./types/FateList.js')
 const FateMap = require('./types/FateMap.js')
 const FateTuple = require('./types/FateTuple.js')
+const FateBytes = require('./types/FateBytes.js')
 
 const zip = (arr, ...arrs) => {
   return arr.map((val, i) => arrs.reduce((a, arr) => [...a, arr[i]], [val]));
@@ -70,9 +70,7 @@ ArgumentsResolver.prototype = {
         const valueTypes = type[key]
 
         if (key === 'bytes') {
-            const bytesType = FateTypeBytes(valueTypes)
-
-            return [key, bytesType, value]
+            return new FateBytes(value, valueTypes)
         }
 
         if (key === 'list') {

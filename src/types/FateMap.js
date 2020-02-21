@@ -1,3 +1,4 @@
+const FateData = require('./FateData.js')
 const {FateType, FateTypeMap} = require('../FateTypes.js')
 
 const arrayToItem = (item) => {
@@ -5,10 +6,9 @@ const arrayToItem = (item) => {
   return {key, value}
 }
 
-class FateMap {
+class FateMap extends FateData {
   constructor(keyType, valueType, items = []) {
-    // BC
-    this.name = 'map'
+    super('map')
 
     this._keyType = FateType(keyType)
     this._valueType = FateType(valueType)

@@ -1,3 +1,4 @@
+const FateData = require('./types/FateData.js')
 const AddressSerializer = require('./Serializers/AddressSerializer')
 const BitsSerializer = require('./Serializers/BitsSerializer')
 const BoolSerializer = require('./Serializers/BoolSerializer')
@@ -36,8 +37,12 @@ Serializer = {
             throw new Error(`Unsupported type: ${typeName}`);
         }
 
+        if (data instanceof FateData) {
+            return this.serializers[data.name].serialize(data)
+        }
+
         // temp solution
-        if (typeName === 'list' || typeName === 'tuple' || typeName === 'map' || typeName === 'variant') {
+        if (typeName === 'variant') {
             return this.serializers[typeName].serialize(data)
         }
 
@@ -57,10 +62,10 @@ Serializer.register('string', new StringSerializer())
 Serializer.register('bits', new BitsSerializer())
 Serializer.register('variant', new VariantSerializer(Serializer))
 Serializer.register('bytes', new BytesSerializer())
-Serializer.register('address', new AddressSerializer())
-Serializer.register('contract', new ContractSerializer())
-Serializer.register('oracle', new OracleSerializer())
-Serializer.register('oracle_query', new OracleQuerySerializer())
-Serializer.register('channel', new ChannelSerializer())
+Serializer.register('account_address', new AddressSerializer())
+Serializer.register('contract_address', new ContractSerializer())
+Serializer.register('oracle_address', new OracleSerializer())
+Serializer.register('oracle_query_address', new OracleQuerySerializer())
+Serializer.register('channel_address', new ChannelSerializer())
 
 module.exports = Serializer

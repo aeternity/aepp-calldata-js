@@ -1,9 +1,9 @@
+const FateData = require('./FateData.js')
 const {FateTypeList} = require('../FateTypes.js')
 
-class FateList {
+class FateList extends FateData {
   constructor(itemsType, items = []) {
-    // BC
-    this.name = 'list'
+    super('list')
 
     this._itemsType = itemsType
     this.items = Array.from(items)

@@ -4,11 +4,11 @@ const RLPInt = require('../utils/RLPInt.js')
 ChannelSerializer = function () {}
 
 ChannelSerializer.prototype = {
-    serialize: function (value) {
+    serialize: function (data) {
         return [
             FateTag.OBJECT,
             FateTag.OTYPE_CHANNEL,
-            ...RLPInt(value)
+            ...RLPInt(data.value)
         ]
     }
 }

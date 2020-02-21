@@ -7,11 +7,12 @@ const byteArraySerializer = new ByteArraySerializer()
 BytesSerializer = function () {}
 
 BytesSerializer.prototype = {
-    serialize: function (value) {
+    serialize: function (bytes) {
+        const byteArray = Int2ByteArray(bytes.value)
         return [
             FateTag.OBJECT,
             FateTag.OTYPE_BYTES,
-            ...byteArraySerializer.serialize(Int2ByteArray(value))
+            ...byteArraySerializer.serialize(byteArray)
         ]
     }
 }
