@@ -2,6 +2,7 @@ const test = require('ava')
 const FateComparator = require('../src/FateComparator.js')
 const FateList = require('../src/types/FateList.js')
 const FateMap = require('../src/types/FateMap.js')
+const FateTuple = require('../src/types/FateTuple.js')
 const {
     FateTypeInt,
     FateTypeBool,
@@ -17,6 +18,8 @@ const sort = (type, data) => {
 
     return data
 }
+
+const FTInt = FateTypeInt(), FTBool = FateTypeBool()
 
 test('Compare primitive types', t => {
     t.deepEqual(sort('int', [3, 5, -7, 1, 0]), [-7, 0, 1, 3, 5])
@@ -102,26 +105,25 @@ test('Compare lists', t => {
 
 //TODO support nested inner types
 test('Compare tuples', t => {
-    const tupleType = FateTypeTuple([FateTypeBool(), FateTypeInt()])
     t.deepEqual(
-        sort('tuple', [
-            [tupleType, [true, 1]],
-            [tupleType, [false, 1]],
-            [tupleType, [true, 1]],
-            [tupleType, [false, 0]],
-            [FateTypeTuple([FateTypeInt()]), [0]],
+        sort(FateTypeTuple(), [
+            new FateTuple([FTBool, FTInt], [true, 1]),
+            new FateTuple([FTBool, FTInt], [false, 1]),
+            new FateTuple([FTBool, FTInt], [true, 1]),
+            new FateTuple([FTBool, FTInt], [false, 0]),
+            new FateTuple([FTInt], [0]),
         ]),
         [
-            [FateTypeTuple([FateTypeInt()]), [0]],
-            [tupleType, [false, 0]],
-            [tupleType, [false, 1]],
-            [tupleType, [true, 1]],
-            [tupleType, [true, 1]],
+            new FateTuple([FTInt], [0]),
+            new FateTuple([FTBool, FTInt], [false, 0]),
+            new FateTuple([FTBool, FTInt], [false, 1]),
+            new FateTuple([FTBool, FTInt], [true, 1]),
+            new FateTuple([FTBool, FTInt], [true, 1]),
         ]
     )
 });
 
-test.only('Compare variants', t => {
+test('Compare variants', t => {
     t.deepEqual(
         sort(FateTypeVariant(), [
             [
@@ -219,8 +221,6 @@ test.only('Compare variants', t => {
 });
 
 test('Compare maps', t => {
-    const FTInt = FateTypeInt(), FTBool = FateTypeBool()
-
     t.deepEqual(
         sort(FateTypeMap(FTInt, FTBool), [
             new FateMap(FTInt, FTBool, [[1,true], [3,true], [2,false], [0,false]]),

@@ -10,15 +10,28 @@ TupleSerializer = function (globalSerializer) {
 
 TupleSerializer.prototype = {
     serialize: function (data) {
-        const [type, values] = data
-        const len = values.length
+        let type, values
 
+        // BC
+        if (Array.isArray(data)) {
+            [type, values] = data
+            valueTypes = type.valueTypes
+        } else {
+            type = data.type
+            values = data.items
+            valueTypes = type.valueTypes
+        }
+
+        const len = values.length
         if (len === 0) {
             return [FateTag.EMPTY_TUPLE]
         }
 
-        const elements = zip(type.valueTypes, values)
-            .map(e => this.globalSerializer.serialize(e))
+        const elements = zip(valueTypes, values)
+            .map(e => {
+                const [t, v] = e
+                return this.globalSerializer.serialize(v.hasOwnProperty('name') ? v : e)
+            })
             .flat(Infinity)
 
 

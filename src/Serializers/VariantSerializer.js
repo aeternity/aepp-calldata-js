@@ -1,6 +1,5 @@
 const FateTag = require('../FateTag.js')
 const RLP = require('rlp')
-const {FateTypeTuple} = require('../../src/FateTypes.js')
 
 VariantSerializer = function (globalSerializer) {
     this.globalSerializer = globalSerializer

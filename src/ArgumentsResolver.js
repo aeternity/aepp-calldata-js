@@ -2,13 +2,12 @@ const {
     PRIMITIVE_TYPES,
     FateType,
     FateTypeBytes,
-    FateTypeTuple,
-    FateTypeMap,
     FateTypeVariant,
 } = require('./FateTypes.js')
 
 const FateList = require('./types/FateList.js')
 const FateMap = require('./types/FateMap.js')
+const FateTuple = require('./types/FateTuple.js')
 
 const zip = (arr, ...arrs) => {
   return arr.map((val, i) => arrs.reduce((a, arr) => [...a, arr[i]], [val]));
@@ -16,6 +15,13 @@ const zip = (arr, ...arrs) => {
 
 const isObject = (value) => {
     return value && typeof value === 'object' && value.constructor === Object;
+}
+
+const unzipArgs = (args) => {
+    return [
+        args.map(e => Array.isArray(e) ? e[1] : e.type),
+        args.map(e => Array.isArray(e) ? e[2] : e)
+    ]
 }
 
 ArgumentsResolver = function (aci) {
@@ -79,19 +85,16 @@ ArgumentsResolver.prototype = {
 
         if (key === 'record') {
             const resolvedArgs = valueTypes.map(e => this.resolveArgument(e.type, value[e.name]))
-            const tupleValues = resolvedArgs.map(e => e[2])
-            const tupleValueTypes = resolvedArgs.map(e => e[1])
-            const tupleType = FateTypeTuple(tupleValueTypes)
+            const [tupleTypes, tupleValues] = unzipArgs(resolvedArgs)
 
-            return ['tuple', tupleType, tupleValues]
+            return new FateTuple(tupleTypes, tupleValues)
         }
 
         if (key === 'tuple') {
-            const resolvedTupleTypes = valueTypes.map(t => this.resolveArgument(t))
-            const tupleValueTypes = resolvedTupleTypes.map(e => e[1])
-            const tupleType = FateTypeTuple(tupleValueTypes)
+            const resolvedArgs = valueTypes.map((t, i) => this.resolveArgument(t, value[i]))
+            const [tupleTypes, tupleValues] = unzipArgs(resolvedArgs)
 
-            return [key, tupleType, value]
+            return new FateTuple(tupleTypes, tupleValues)
         }
 
         if (key === 'variant') {
@@ -118,8 +121,7 @@ ArgumentsResolver.prototype = {
 
             const [[, variantArgs]] = Object.entries(valueTypes[tag])
             const resolvedArgs = this.resolveArguments(variantArgs, value.values)
-            const variantValueTypes = resolvedArgs.map(e => e[1])
-            const variantValues = resolvedArgs.map(e => e[2])
+            const [variantValueTypes, variantValues] = unzipArgs(resolvedArgs)
             const variantType = FateTypeVariant(arities, variantValueTypes)
 
             return [

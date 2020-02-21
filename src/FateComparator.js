@@ -1,4 +1,5 @@
 const FateList = require('./types/FateList.js')
+const FateTuple = require('./types/FateTuple.js')
 
 // TODO types comparator
 const listComparator = (a, b) => {
@@ -38,26 +39,22 @@ const listComparator = (a, b) => {
 }
 
 const tupleComparator = (a, b) => {
-    const [typeA, itemsA] = a
-    const [typeB, itemsB] = b
-
-    if (itemsA.length === 0) {
+    if (a.size === 0) {
         return -1
     }
 
-    const sizeDiff = itemsA.length - itemsB.length
+    const sizeDiff = a.size - b.size
     if (sizeDiff !== 0) {
         return sizeDiff
     }
 
     // equal size - compare elements
-    for (let i = 0; i < itemsA.length; i++) {
-        const valTypeA = typeA.valueTypes[i]
-        const valTypeB = typeB.valueTypes[i]
+    for (let i = 0; i < a.size; i++) {
+        const valTypeA = a.valueTypes[i]
 
         // TODO support different types ?
 
-        const diff = FateComparator(valTypeA)(itemsA[i], itemsB[i])
+        const diff = FateComparator(valTypeA)(a.items[i], b.items[i])
         if (diff != 0) {
             return diff
         }
@@ -94,27 +91,25 @@ const variantComparator = (a, b) => {
     const tupleComparator = FateComparator('tuple')
 
     return tupleComparator(
-        [typeA.variantType, valueA.variantValues],
-        [typeB.variantType, valueB.variantValues]
+        new FateTuple(typeA.variantType, valueA.variantValues),
+        new FateTuple(typeB.variantType, valueB.variantValues)
     )
 }
 
 const mapItemComparator = (type) => {
     const keyComparator = FateComparator(type)
-    return (a, b) => keyComparator(a[0], b[0])
+    return (a, b) => keyComparator(a.key, b.key)
 }
 
 const mapComparator = (a, b) => {
-    const [typeA, itemsA] = a
-    const [typeB, itemsB] = b
-    const aItems = [...itemsA]
-    const bItems = [...itemsB]
+    const aItems = [...a.items]
+    const bItems = [...b.items]
 
-    aItems.sort(mapItemComparator(typeA.keyType))
-    bItems.sort(mapItemComparator(typeB.keyType))
+    aItems.sort(mapItemComparator(a.keyType))
+    bItems.sort(mapItemComparator(b.keyType))
 
-    const keyComparator = FateComparator(typeA.keyType)
-    const valueComparator = FateComparator(typeA.valueType)
+    const keyComparator = FateComparator(a.keyType)
+    const valueComparator = FateComparator(a.valueType)
 
     for (let i = 0; i < aItems.length; i++) {
         // second map is smaller (less items)
@@ -125,12 +120,12 @@ const mapComparator = (a, b) => {
         const aItem = aItems[i]
         const bItem = bItems[i]
 
-        const kDiff = keyComparator(aItem[0], bItem[0])
+        const kDiff = keyComparator(aItem.key, bItem.key)
         if (kDiff !== 0) {
             return kDiff
         }
 
-        const vDiff = valueComparator(aItem[1], bItem[1])
+        const vDiff = valueComparator(aItem.value, bItem.value)
         if (vDiff !== 0) {
             return vDiff
         }
