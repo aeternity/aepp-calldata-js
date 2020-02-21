@@ -137,25 +137,25 @@ const mapComparator = (a, b) => {
     return -1
 }
 
-const bytesComparator = (a, b) => Number(a.value - b.value)
+const intComparator = (a, b) => Number(BigInt(a) - BigInt(b))
 
 const comparators = {
-    'int': (a, b) => Number(BigInt(a) - BigInt(b)),
+    'int': intComparator,
     'bool': (a, b) => a - b,
     'string': (a, b) => a.toString().localeCompare(b.toString()),
-    'bits': (a, b) => (a < 0 || b < 0) ? -Number(a - b) : Number(a - b),
+    'bits': (a, b) => (a < 0 || b < 0) ? -intComparator(a, b) : intComparator(a, b),
     // composite types
     'list': listComparator,
     'tuple': tupleComparator,
     'variant': variantComparator,
     'map': mapComparator,
     // objects (bytes)
-    'bytes': bytesComparator,
-    'account_address': bytesComparator,
-    'channel_address': bytesComparator,
-    'contract_address': bytesComparator,
-    'oracle_query_address': bytesComparator,
-    'oracle_address': bytesComparator,
+    'bytes': intComparator,
+    'account_address': intComparator,
+    'channel_address': intComparator,
+    'contract_address': intComparator,
+    'oracle_query_address': intComparator,
+    'oracle_address': intComparator,
 }
 
 const FateComparator = (type) => {

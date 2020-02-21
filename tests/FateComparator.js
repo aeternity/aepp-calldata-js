@@ -8,6 +8,7 @@ const FateMap = require('../src/types/FateMap.js')
 const FateTuple = require('../src/types/FateTuple.js')
 const FateVariant = require('../src/types/FateVariant.js')
 const FateBytes = require('../src/types/FateBytes.js')
+const FateBits = require('../src/types/FateBits.js')
 const {
     FateTypeInt,
     FateTypeBool,
@@ -48,8 +49,8 @@ test('Compare primitive types', t => {
     )
 
     t.deepEqual(
-        sort('bits', [-1, 0, -1, 1, 1, 0, -1, 1]),
-        [0, 0, 1, 1, 1, -1, -1, -1]
+        sort('bits', [-1, 0, -1, new FateBits(0), 1, 1, new FateBits(1), 0, -1, 1]),
+        [0, new FateBits(0), 0, 1, 1, new FateBits(1), 1, -1, -1, -1]
     )
 });
 

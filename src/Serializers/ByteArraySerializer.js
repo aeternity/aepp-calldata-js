@@ -16,14 +16,14 @@ ByteArraySerializer.prototype = {
 
             return [
                 prefix,
-                ...data
+                ...data.valueOf()
             ]
         }
 
         return [
             FateTag.LONG_STRING,
-            ...intSerializer.serialize((data.length - 64)),
-            ...data
+            ...intSerializer.serialize(data.length - 64),
+            ...data.valueOf()
         ]
     }
 }

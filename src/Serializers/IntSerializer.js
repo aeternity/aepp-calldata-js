@@ -7,8 +7,8 @@ const abs = (val) => val > 0 ? val : val * -1n
 IntSerializer = function () {}
 
 IntSerializer.prototype = {
-    serialize: function (value) {
-        const bigValue = (value instanceof FateInt) ? value.value : BigInt(value)
+    serialize: function (data) {
+        const bigValue = (data instanceof FateInt) ? data.value : BigInt(data)
         const absVal = abs(bigValue)
 
         // small integer

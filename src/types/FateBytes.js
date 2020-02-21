@@ -16,6 +16,10 @@ class FateBytes extends FateData {
   get size() {
     return this._size
   }
+
+  valueOf() {
+    return this._value
+  }
 }
 
 module.exports = FateBytes
