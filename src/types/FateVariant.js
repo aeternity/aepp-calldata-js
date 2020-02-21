@@ -1,5 +1,5 @@
 const FateData = require('./FateData.js')
-const {FateType, FateTypeVariant, FateTypeTuple, FateTypeInt} = require('../FateTypes.js')
+const {FateTypeVariant, FateTypeTuple, FateTypeInt} = require('../FateTypes.js')
 
 class FateVariant extends FateData {
   constructor(arities, tag, value = [], valueTypes = []) {

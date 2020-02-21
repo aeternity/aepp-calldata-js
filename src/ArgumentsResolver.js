@@ -1,8 +1,6 @@
-const {
-    PRIMITIVE_TYPES,
-    FateType,
-} = require('./FateTypes.js')
-
+const FateInt = require('./types/FateInt.js')
+const FateBool = require('./types/FateBool.js')
+const FateString = require('./types/FateString.js')
 const FateList = require('./types/FateList.js')
 const FateMap = require('./types/FateMap.js')
 const FateTuple = require('./types/FateTuple.js')
@@ -41,8 +39,16 @@ ArgumentsResolver.prototype = {
     },
 
     resolveArgument(type, value) {
-        if (PRIMITIVE_TYPES.includes(type)) {
-            return [type, FateType(type), value]
+        if (type === 'int') {
+            return new FateInt(value)
+        }
+
+        if (type === 'bool') {
+            return new FateBool(value)
+        }
+
+        if (type === 'string') {
+            return new FateString(value)
         }
 
         // typedefs, non-primitives

@@ -1,5 +1,8 @@
 const test = require('ava')
 const FateComparator = require('../src/FateComparator.js')
+const FateInt = require('../src/types/FateInt.js')
+const FateBool = require('../src/types/FateBool.js')
+const FateString = require('../src/types/FateString.js')
 const FateList = require('../src/types/FateList.js')
 const FateMap = require('../src/types/FateMap.js')
 const FateTuple = require('../src/types/FateTuple.js')
@@ -24,16 +27,19 @@ const sort = (type, data) => {
 const FTInt = FateTypeInt(), FTBool = FateTypeBool()
 
 test('Compare primitive types', t => {
-    t.deepEqual(sort('int', [3, 5, -7, 1, 0]), [-7, 0, 1, 3, 5])
-
     t.deepEqual(
-        sort('bool', [true, false, false, true, true, false]),
-        [false, false, false, true, true, true]
+        sort('int', [3, new FateInt(3), 5, -7, 1, 0]),
+        [-7, 0, 1, 3, new FateInt(3), 5]
     )
 
     t.deepEqual(
-        sort('string', ['Z', 'abc', '~', 'a', 'bab', 'B', 'ab', 'b', 'aa', 'abd', 'abcd']),
-        ['~', 'a', 'aa', 'ab', 'abc', 'abcd', 'abd', 'b', 'B', 'bab', 'Z']
+        sort('bool', [true, false, false, new FateBool(true), true, true, false]),
+        [false, false, false, true, new FateBool(true), true, true]
+    )
+
+    t.deepEqual(
+        sort('string', ['Z', 'abc', '~', 'a', 'bab', new FateString('bab'), 'B', 'ab', 'b', 'aa', 'abd', 'abcd']),
+        ['~', 'a', 'aa', 'ab', 'abc', 'abcd', 'abd', 'b', 'B', 'bab', new FateString('bab'), 'Z']
     )
 
     t.deepEqual(

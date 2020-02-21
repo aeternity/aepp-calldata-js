@@ -1,5 +1,5 @@
 const FateTag = require('../FateTag.js')
-const {FateTypeInt} = require('../FateTypes.js')
+const FateInt = require('../types/FateInt.js')
 
 ListSerializer = function (globalSerializer) {
     this.globalSerializer = globalSerializer
@@ -27,7 +27,7 @@ ListSerializer.prototype = {
 
         return [
             FateTag.LONG_LIST,
-            ...this.globalSerializer.serialize([FateTypeInt(), len - 16]),
+            ...this.globalSerializer.serialize(new FateInt(len - 16)),
             ...serializedElements
         ]
     }

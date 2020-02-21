@@ -140,9 +140,9 @@ const mapComparator = (a, b) => {
 const bytesComparator = (a, b) => Number(a.value - b.value)
 
 const comparators = {
-    'int': (a, b) => Number(a - b),
+    'int': (a, b) => Number(BigInt(a) - BigInt(b)),
     'bool': (a, b) => a - b,
-    'string': (a, b) => a.localeCompare(b),
+    'string': (a, b) => a.toString().localeCompare(b.toString()),
     'bits': (a, b) => (a < 0 || b < 0) ? -Number(a - b) : Number(a - b),
     // composite types
     'list': listComparator,

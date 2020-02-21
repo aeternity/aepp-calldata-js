@@ -1,5 +1,3 @@
-const PRIMITIVE_TYPES = ['bool', 'int', 'string']
-
 const FateType = (type) => {
     if (typeof type !== 'string') {
         return type
@@ -76,7 +74,6 @@ const FateTypeVariant = (arities, variantType) => {
 }
 
 module.exports = {
-    PRIMITIVE_TYPES,
     FateType,
     FateTypeInt,
     FateTypeBool,

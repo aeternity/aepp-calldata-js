@@ -3,8 +3,8 @@ const FateTag = require('../FateTag.js')
 BoolSerializer = function () {}
 
 BoolSerializer.prototype = {
-    serialize: function (value) {
-        return (value === true) ? [FateTag.TRUE] : [FateTag.FALSE]
+    serialize: function (data) {
+        return (data.valueOf() === true) ? [FateTag.TRUE] : [FateTag.FALSE]
     }
 }
 
