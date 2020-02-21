@@ -1,4 +1,5 @@
 const FateTag = require('../FateTag.js')
+const FateInt = require('../types/FateInt.js')
 
 const zip = (arr, ...arrs) => {
   return arr.map((val, i) => arrs.reduce((a, arr) => [...a, arr[i]], [val]));
@@ -46,7 +47,7 @@ TupleSerializer.prototype = {
 
         return [
             FateTag.LONG_TUPLE,
-            ...this.globalSerializer.serialize(['int', len - 16]),
+            ...this.globalSerializer.serialize(new FateInt(len - 16)),
             ...elements
         ]
     }
