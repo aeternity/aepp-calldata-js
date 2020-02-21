@@ -7,14 +7,13 @@ VariantSerializer = function (globalSerializer) {
 }
 
 VariantSerializer.prototype = {
-    serialize: function (data) {
-        const [type, value] = data
-        const valueTuple = new FateTuple(type.variantType.valueTypes, value.variantValues)
+    serialize: function (variant) {
+        const valueTuple = new FateTuple(variant.valueTypes, variant.value)
 
         return  [
             FateTag.VARIANT,
-            ...RLP.encode(new Uint8Array(type.arities)),
-            value.tag,
+            ...RLP.encode(new Uint8Array(variant.arities)),
+            variant.tag,
             ...this.globalSerializer.serialize(valueTuple)
         ]
     }

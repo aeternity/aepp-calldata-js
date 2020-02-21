@@ -65,16 +65,13 @@ const tupleComparator = (a, b) => {
 }
 
 const variantComparator = (a, b) => {
-    const [typeA, valueA] = a
-    const [typeB, valueB] = b
-
-    const aDiff = typeA.arities.length - typeB.arities.length
+    const aDiff = a.arities.length - b.arities.length
     if (aDiff !== 0) {
         return aDiff
     }
 
-    const aList = new FateList(typeA.aritiesType, typeA.arities)
-    const bList = new FateList(typeB.aritiesType, typeB.arities)
+    const aList = new FateList(a.aritiesType, a.arities)
+    const bList = new FateList(b.aritiesType, b.arities)
     const aComparator = FateComparator(aList)
 
     const lDiff = aComparator(aList, bList)
@@ -82,7 +79,7 @@ const variantComparator = (a, b) => {
         return lDiff
     }
 
-    const tDiff = valueA.tag - valueB.tag
+    const tDiff = a.tag - b.tag
     if (tDiff !== 0) {
         return tDiff
     }
@@ -91,8 +88,8 @@ const variantComparator = (a, b) => {
     const tupleComparator = FateComparator('tuple')
 
     return tupleComparator(
-        new FateTuple(typeA.variantType, valueA.variantValues),
-        new FateTuple(typeB.variantType, valueB.variantValues)
+        new FateTuple(a.valueTypes, a.value),
+        new FateTuple(b.valueTypes, b.value)
     )
 }
 

@@ -2,6 +2,7 @@ const test = require('ava')
 const Serializer = require('../src/Serializer.js')
 const FateList = require('../src/types/FateList.js')
 const FateMap = require('../src/types/FateMap.js')
+const FateVariant = require('../src/types/FateVariant.js')
 const FateBytes = require('../src/types/FateBytes.js')
 const FateAccountAddress = require('../src/types/FateAccountAddress.js')
 const FateContractAddress = require('../src/types/FateContractAddress.js')
@@ -34,12 +35,11 @@ test('Serialize all types', t => {
     // composite types
     const FTInt = FateTypeInt()
     const FTBool = FateTypeBool()
-    const variantType = FateTypeVariant([0, 0, 1, 0], [FTInt, FTInt, FTInt, FTInt])
 
     t.deepEqual(ser(t, new FateList(FTInt)), [3])
     t.deepEqual(ser(t, new FateMap(FTInt, FTBool, [])), [47,0])
     t.deepEqual(
-        ser(t, [variantType, {tag: 1, variantValues: []}]),
+        ser(t, new FateVariant([0, 0, 1, 0], 1))
         [175,132,0,0,1,0,1,63]
     )
 

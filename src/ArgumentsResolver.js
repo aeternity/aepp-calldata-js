@@ -1,12 +1,12 @@
 const {
     PRIMITIVE_TYPES,
     FateType,
-    FateTypeVariant,
 } = require('./FateTypes.js')
 
 const FateList = require('./types/FateList.js')
 const FateMap = require('./types/FateMap.js')
 const FateTuple = require('./types/FateTuple.js')
+const FateVariant = require('./types/FateVariant.js')
 const FateBytes = require('./types/FateBytes.js')
 
 const zip = (arr, ...arrs) => {
@@ -103,30 +103,25 @@ ArgumentsResolver.prototype = {
     },
 
     resolveVariantArgument(valueTypes, value) {
-            const arities = valueTypes.map(e => {
-                const [[, args]] = Object.entries(e)
-                return args.length
-            })
+        const arities = valueTypes.map(e => {
+            const [[, args]] = Object.entries(e)
+            return args.length
+        })
 
-            const tag = valueTypes.findIndex(e => {
-                const [[key,]] = Object.entries(e)
-                return key === value.variant
-            })
+        const tag = valueTypes.findIndex(e => {
+            const [[key,]] = Object.entries(e)
+            return key === value.variant
+        })
 
-            if (tag === -1) {
-                throw new Error('Unknown variant: ' + JSON.stringify(value.variant))
-            }
+        if (tag === -1) {
+            throw new Error('Unknown variant: ' + JSON.stringify(value.variant))
+        }
 
-            const [[, variantArgs]] = Object.entries(valueTypes[tag])
-            const resolvedArgs = this.resolveArguments(variantArgs, value.values)
-            const [variantValueTypes, variantValues] = unzipArgs(resolvedArgs)
-            const variantType = FateTypeVariant(arities, variantValueTypes)
+        const [[, variantArgs]] = Object.entries(valueTypes[tag])
+        const resolvedArgs = this.resolveArguments(variantArgs, value.values)
+        const [variantValueTypes, variantValues] = unzipArgs(resolvedArgs)
 
-            return [
-                'variant',
-                variantType,
-                {tag, variantValues: value.values}
-            ]
+        return new FateVariant(arities, tag, variantValues, variantValueTypes)
     },
 }
 

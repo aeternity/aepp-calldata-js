@@ -3,6 +3,7 @@ const FateComparator = require('../src/FateComparator.js')
 const FateList = require('../src/types/FateList.js')
 const FateMap = require('../src/types/FateMap.js')
 const FateTuple = require('../src/types/FateTuple.js')
+const FateVariant = require('../src/types/FateVariant.js')
 const FateBytes = require('../src/types/FateBytes.js')
 const {
     FateTypeInt,
@@ -127,96 +128,30 @@ test('Compare tuples', t => {
 test('Compare variants', t => {
     t.deepEqual(
         sort(FateTypeVariant(), [
-            [
-                FateTypeVariant([0, 0, 1], []),
-                {tag: 2, variantValues: []}
-            ],
-            [
-                FateTypeVariant([0, 0, 1, 0], []),
-                {tag: 1, variantValues: []}
-            ],
-            [
-                FateTypeVariant([0, 1, 0], []),
-                {tag: 1, variantValues: []}
-            ],
-            [
-                FateTypeVariant([1, 1], []),
-                {tag: 1, variantValues: []}
-            ],
-            [
-                FateTypeVariant([1, 1, 0], []),
-                {tag: 1, variantValues: []}
-            ],
-            [
-                FateTypeVariant([0, 0, 1], []),
-                {tag: 1, variantValues: []}
-            ],
-            [
-                FateTypeVariant([0, 0, 1, 0], []),
-                {tag: 1, variantValues: []}
-            ],
-            [
-                FateTypeVariant([0, 0, 1, 0], [FateTypeInt()]),
-                {tag: 2, variantValues: [7]}
-            ],
-            [
-                FateTypeVariant([0, 0, 1, 0], [FateTypeInt()]),
-                {tag: 2, variantValues: [0]}
-            ],
-            [
-                FateTypeVariant([0, 0, 1, 0], [FateTypeInt()]),
-                {tag: 2, variantValues: [-1]}
-            ],
-            [
-                FateTypeVariant([0, 0, 1], []),
-                {tag: 0, variantValues: []}
-            ],
+            new FateVariant([0, 0, 1], 2),
+            new FateVariant([0, 0, 1, 0], 1),
+            new FateVariant([0, 1, 0], 1),
+            new FateVariant([1, 1], 1),
+            new FateVariant([1, 1, 0], 1),
+            new FateVariant([0, 0, 1], 1),
+            new FateVariant([0, 0, 1, 0], 1),
+            new FateVariant([0, 0, 1, 0], 2, [7], [FateTypeInt()]),
+            new FateVariant([0, 0, 1, 0], 2, [0], [FateTypeInt()]),
+            new FateVariant([0, 0, 1, 0], 2, [-1], [FateTypeInt()]),
+            new FateVariant([0, 0, 1], 0),
         ]),
         [
-            [
-                FateTypeVariant([1, 1], []),
-                {tag: 1, variantValues: []}
-            ],
-            [
-                FateTypeVariant([0, 0, 1], []),
-                {tag: 0, variantValues: []}
-            ],
-            [
-                FateTypeVariant([0, 0, 1], []),
-                {tag: 1, variantValues: []}
-            ],
-            [
-                FateTypeVariant([0, 0, 1], []),
-                {tag: 2, variantValues: []}
-            ],
-            [
-                FateTypeVariant([0, 1, 0], []),
-                {tag: 1, variantValues: []}
-            ],
-            [
-                FateTypeVariant([1, 1, 0], []),
-                {tag: 1, variantValues: []}
-            ],
-            [
-                FateTypeVariant([0, 0, 1, 0], []),
-                {tag: 1, variantValues: []}
-            ],
-            [
-                FateTypeVariant([0, 0, 1, 0], []),
-                {tag: 1, variantValues: []}
-            ],
-            [
-                FateTypeVariant([0, 0, 1, 0], [FateTypeInt()]),
-                {tag: 2, variantValues: [-1]}
-            ],
-            [
-                FateTypeVariant([0, 0, 1, 0], [FateTypeInt()]),
-                {tag: 2, variantValues: [0]}
-            ],
-            [
-                FateTypeVariant([0, 0, 1, 0], [FateTypeInt()]),
-                {tag: 2, variantValues: [7]}
-            ],
+            new FateVariant([1, 1], 1),
+            new FateVariant([0, 0, 1], 0),
+            new FateVariant([0, 0, 1], 1),
+            new FateVariant([0, 0, 1], 2),
+            new FateVariant([0, 1, 0], 1),
+            new FateVariant([1, 1, 0], 1),
+            new FateVariant([0, 0, 1, 0], 1),
+            new FateVariant([0, 0, 1, 0], 1),
+            new FateVariant([0, 0, 1, 0], 2, [-1], [FateTypeInt()]),
+            new FateVariant([0, 0, 1, 0], 2, [0], [FateTypeInt()]),
+            new FateVariant([0, 0, 1, 0], 2, [7], [FateTypeInt()]),
         ]
     )
 });
