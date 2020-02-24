@@ -80,7 +80,10 @@ ArgumentsResolver.prototype = {
         }
 
         if (key === 'list') {
-            return new FateList(valueTypes[0], value)
+            const resolvedArgs = value.map(v => this.resolveArgument(valueTypes[0], v))
+            const [resolvedTypes, resolvedValues] = unzipArgs(resolvedArgs)
+
+            return new FateList(resolvedTypes[0], resolvedValues)
         }
 
         if (key === 'map') {

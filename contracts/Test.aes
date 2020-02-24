@@ -14,6 +14,7 @@ contract Test =
     entrypoint test_bytes (a:bytes(2)) = a
     entrypoint test_string (a:string) = a
     entrypoint test_list (a:list(int)) = a
+    entrypoint test_nested_list (a:list(list(int))) = a
     entrypoint test_simple_map (a: map(int, bool)) = a
     entrypoint test_variants (a:reallyType) = a
     entrypoint test_tuple (a: bool * bool) = a

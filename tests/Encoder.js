@@ -47,6 +47,11 @@ test('Encode list arguments', t => {
     t.is(encoded, 'cb_KxFLwdBRG3MCBAYKEBoquPlTeA==', 'test_list([1, 2, 3, 5, 8, 13, 21])')
 });
 
+test.only('Encode nested list arguments', t => {
+    const encoded = t.context.encoder.encode('test_nested_list', [[[1,2],[3,4],[5,6]]])
+    t.is(encoded, 'cb_KxEHeg4CGzMjAgQjBggjCgyQqs5t', 'test_nested_list([[1,2],[3,4],[5,6]])')
+});
+
 test('Encode map arguments', t => {
     const encoded = t.context.encoder.encode('test_simple_map', [[[7, false]]])
     t.is(encoded, 'cb_KxHLN316Gy8BDn+vbmBO', 'test_simple_map({[7] = false})')

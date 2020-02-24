@@ -1,4 +1,5 @@
 const FateData = require('./FateData.js')
+const {FateTypeInt} = require('../FateTypes.js')
 
 class FateInt extends FateData {
   constructor(value) {
@@ -9,6 +10,10 @@ class FateInt extends FateData {
 
   get value() {
     return this._value
+  }
+
+  get type() {
+    return FateTypeInt()
   }
 
   valueOf() {

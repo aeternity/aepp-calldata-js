@@ -34,7 +34,7 @@ Serializer = {
         }
 
         if (!this.serializers.hasOwnProperty(typeName)) {
-            throw new Error(`Unsupported type: ${typeName}`);
+            throw new Error(`Unsupported type: ` + JSON.stringify(typeName));
         }
 
         if (data instanceof FateData) {
