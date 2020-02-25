@@ -87,7 +87,17 @@ ArgumentsResolver.prototype = {
         }
 
         if (key === 'map') {
-            return new FateMap(...valueTypes, value)
+            const [keyType, valueType] = valueTypes
+            const resolvedArgs = value.map(item => {
+                return [
+                    this.resolveArgument(keyType, item[0]),
+                    this.resolveArgument(valueType, item[1]),
+                ]
+            })
+
+            const [[firstKey, firstValue]] = resolvedArgs
+
+            return new FateMap(firstKey.type, firstValue.type, resolvedArgs)
         }
 
         if (key === 'record') {

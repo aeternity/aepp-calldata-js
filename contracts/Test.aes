@@ -16,6 +16,7 @@ contract Test =
     entrypoint test_list (a:list(int)) = a
     entrypoint test_nested_list (a:list(list(int))) = a
     entrypoint test_simple_map (a: map(int, bool)) = a
+    entrypoint test_nested_map (a: map(int, map(int, bool))) = a
     entrypoint test_variants (a:reallyType) = a
     entrypoint test_tuple (a: bool * bool) = a
     entrypoint test_nested_tuple (a: (bool * bool) * (bool * bool)) = a
