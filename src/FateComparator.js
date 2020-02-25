@@ -139,12 +139,15 @@ const mapComparator = (a, b) => {
 }
 
 const intComparator = (a, b) => Number(BigInt(a) - BigInt(b))
+const stringComparator = (a, b) => a.toString().localeCompare(b.toString())
+const bitsComparator = (a, b) => (a < 0 || b < 0) ? -intComparator(a, b) : intComparator(a, b)
+const boolComparator = (a, b) => a - b
 
 const comparators = {
     'int': intComparator,
-    'bool': (a, b) => a - b,
-    'string': (a, b) => a.toString().localeCompare(b.toString()),
-    'bits': (a, b) => (a < 0 || b < 0) ? -intComparator(a, b) : intComparator(a, b),
+    'bool': boolComparator,
+    'string': stringComparator,
+    'bits': bitsComparator,
     // composite types
     'list': listComparator,
     'tuple': tupleComparator,
