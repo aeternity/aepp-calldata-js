@@ -22,12 +22,9 @@ Encoder.prototype = {
         const argTypes = this.getArgumentTypes(funName)
         const functionId = this.symbolIdentifier(funName)
         const resolvedArgs = this.resolver.resolveArguments(argTypes, args)
+        const tupleTypes = resolvedArgs.map(e => e.type)
 
-        // isArray check for BC
-        const tupleTypes = resolvedArgs.map(e => Array.isArray(e) ? e[1] : e.type)
-        const tupleValues = resolvedArgs.map(e => Array.isArray(e) ? e[2] : e)
-
-        const argsTuple = new FateTuple(tupleTypes, tupleValues)
+        const argsTuple = new FateTuple(tupleTypes, resolvedArgs)
         const funcBytes = new FateByteArray(functionId)
         const calldata = new FateTuple(
             [funcBytes.type, argsTuple.type],

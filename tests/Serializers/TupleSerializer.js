@@ -1,6 +1,8 @@
 const test = require('ava')
 const Serializer = require('../../src/Serializer.js')
 const TupleSerializer = require('../../src/Serializers/TupleSerializer.js')
+const FateInt = require('../../src/types/FateInt.js')
+const FateBool = require('../../src/types/FateBool.js')
 const FateTuple = require('../../src/types/FateTuple.js')
 const {FateTypeInt, FateTypeBool} = require('../../src/FateTypes.js')
 
@@ -16,12 +18,15 @@ test('Serialize', t => {
     )
 
     t.deepEqual(
-        s.serialize(new FateTuple([FTBool, FTBool, FTInt], [true, false, 0])),
+        s.serialize(new FateTuple(
+            [FTBool, FTBool, FTInt],
+            [new FateBool(true), new FateBool(false), new FateInt(0)]
+        )),
         [59,255,127,0],
         'short tuple'
     )
 
-    let longTuple = [...Array(16).keys()]
+    let longTuple = [...Array(16).keys()].map(e => new FateInt(e))
     let types = Array(16).fill(FTInt)
 
     t.deepEqual(
@@ -30,8 +35,14 @@ test('Serialize', t => {
         'long tuple'
     )
 
-    const t1 = new FateTuple([FTBool, FTInt], [false, 0])
-    const t2 = new FateTuple([FTBool, FTInt], [true, 1])
+    const t1 = new FateTuple(
+        [FTBool, FTInt],
+        [new FateBool(false), new FateInt(0)]
+    )
+    const t2 = new FateTuple(
+        [FTBool, FTInt],
+        [new FateBool(true), new FateInt(1)]
+    )
 
     t.deepEqual(
         s.serialize(new FateTuple(

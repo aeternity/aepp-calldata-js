@@ -8,12 +8,11 @@ BitsSerializer = function () {}
 
 BitsSerializer.prototype = {
     serialize: function (data) {
-        const value = (data instanceof FateBits) ? data.value : BigInt(data)
-        const prefix = value >= 0 ? FateTag.POS_BITS : FateTag.NEG_BITS
+        const prefix = data.value >= 0 ? FateTag.POS_BITS : FateTag.NEG_BITS
 
         return [
             prefix,
-            ...RLPInt(abs(value))
+            ...RLPInt(abs(data.value))
         ]
     }
 }

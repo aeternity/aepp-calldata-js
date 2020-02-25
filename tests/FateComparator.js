@@ -12,6 +12,9 @@ const FateBits = require('../src/types/FateBits.js')
 const {
     FateTypeInt,
     FateTypeBool,
+    FateTypeString,
+    FateTypeBits,
+    FateTypeBytes,
     FateTypeList,
     FateTypeMap,
     FateTypeTuple,
@@ -29,34 +32,34 @@ const FTInt = FateTypeInt(), FTBool = FateTypeBool()
 
 test('Compare primitive types', t => {
     t.deepEqual(
-        sort('int', [3, new FateInt(3), 5, -7, 1, 0]),
+        sort(FateTypeInt(), [3, new FateInt(3), 5, -7, 1, 0]),
         [-7, 0, 1, 3, new FateInt(3), 5]
     )
 
     t.deepEqual(
-        sort('bool', [true, false, false, new FateBool(true), true, true, false]),
+        sort(FateTypeBool(), [true, false, false, new FateBool(true), true, true, false]),
         [false, false, false, true, new FateBool(true), true, true]
     )
 
     t.deepEqual(
-        sort('string', ['Z', 'abc', '~', 'a', 'bab', new FateString('bab'), 'B', 'ab', 'b', 'aa', 'abd', 'abcd']),
+        sort(FateTypeString(), ['Z', 'abc', '~', 'a', 'bab', new FateString('bab'), 'B', 'ab', 'b', 'aa', 'abd', 'abcd']),
         ['~', 'a', 'aa', 'ab', 'abc', 'abcd', 'abd', 'b', 'B', 'bab', new FateString('bab'), 'Z']
     )
 
     t.deepEqual(
-        sort('string', ['Z', 'abc', '~', 'a', 'bab', 'B', 'ab', 'b', 'aa', 'abd', 'abcd']),
+        sort(FateTypeString(), ['Z', 'abc', '~', 'a', 'bab', 'B', 'ab', 'b', 'aa', 'abd', 'abcd']),
         ['~', 'a', 'aa', 'ab', 'abc', 'abcd', 'abd', 'b', 'B', 'bab', 'Z']
     )
 
     t.deepEqual(
-        sort('bits', [-1, 0, -1, new FateBits(0), 1, 1, new FateBits(1), 0, -1, 1]),
+        sort(FateTypeBits(), [-1, 0, -1, new FateBits(0), 1, 1, new FateBits(1), 0, -1, 1]),
         [0, new FateBits(0), 0, 1, 1, new FateBits(1), 1, -1, -1, -1]
     )
 });
 
 test('Compare bytes', t => {
     t.deepEqual(
-        sort('bytes', [
+        sort(FateTypeBytes(), [
             new FateBytes(0xfedcba9876543210),
             new FateBytes(0x10000000000000000000000000),
             new FateBytes(0xdeadfeed),
@@ -73,7 +76,7 @@ test('Compare bytes', t => {
     )
 
     t.deepEqual(
-        sort('bytes', [
+        sort(FateTypeBytes(), [
             new FateBytes("0xfedcba9876543210"),
             new FateBytes("0xdeadfeed"),
             new FateBytes("0xdeadbeef"),

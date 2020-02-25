@@ -7,10 +7,7 @@ MapSerializer = function (globalSerializer) {
 }
 
 MapSerializer.prototype = {
-    serialize (data) {
-        // BC compatibility
-        const map = Array.isArray(data) ? data[1] : data
-
+    serialize (map) {
         const len = map.length
         const cmp = FateComparator(map.keyType)
 
@@ -19,8 +16,8 @@ MapSerializer.prototype = {
 
         const serializedItems = sortedItems.map(i => {
             return [
-                this.globalSerializer.serialize([map.keyType, i.key]),
-                this.globalSerializer.serialize([map.valueType, i.value])
+                this.globalSerializer.serialize(i.key),
+                this.globalSerializer.serialize(i.value)
             ]
         })
 

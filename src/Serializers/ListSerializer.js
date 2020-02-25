@@ -6,12 +6,9 @@ ListSerializer = function (globalSerializer) {
 }
 
 ListSerializer.prototype = {
-    serialize: function (data) {
-        // BC compatibility
-        const list = Array.isArray(data) ? data[1] : data
-
+    serialize: function (list) {
         const serializedElements = list.items.map(e => {
-            return this.globalSerializer.serialize([list.itemsType, e])
+            return this.globalSerializer.serialize(e)
         }).flat(Infinity)
 
         const len = list.items.length

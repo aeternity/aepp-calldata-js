@@ -21,51 +21,37 @@ Serializer = {
         this.serializers[type] = instance
     },
     serialize: function (data) {
-        // BC primitive types
-        let type = data
-        if (Array.isArray(data)) {
-            [type, value] = data
+        if (typeof data !== 'object') {
+            throw new Error('Only object serialization is supported.')
         }
 
-        // BC FateTypes
-        let typeName = type
-        if (type.hasOwnProperty('name')) {
-            typeName = type['name']
+        if (!data instanceof FateData) {
+            throw new Error('Only instances of FateData is supported.')
         }
 
+        const typeName = data.constructor.name
         if (!this.serializers.hasOwnProperty(typeName)) {
             throw new Error(`Unsupported type: ` + JSON.stringify(typeName));
         }
 
-        if (data instanceof FateData) {
-            return this.serializers[data.name].serialize(data)
-        }
-
-        // temp solution
-        if (typeName === 'variant') {
-            return this.serializers[typeName].serialize(data)
-        }
-
-        return this.serializers[typeName].serialize(value)
+        return this.serializers[typeName].serialize(data)
     }
 }
 
-Serializer.register('bool', new BoolSerializer())
-Serializer.register('int', new IntSerializer())
-Serializer.register('tuple', new TupleSerializer(Serializer))
-//TODO, nested list
-Serializer.register('list', new ListSerializer(Serializer))
-//TODO, nested map
-Serializer.register('map', new MapSerializer(Serializer))
-Serializer.register('byte_array', new ByteArraySerializer())
-Serializer.register('string', new StringSerializer())
-Serializer.register('bits', new BitsSerializer())
-Serializer.register('variant', new VariantSerializer(Serializer))
-Serializer.register('bytes', new BytesSerializer())
-Serializer.register('account_address', new AddressSerializer())
-Serializer.register('contract_address', new ContractSerializer())
-Serializer.register('oracle_address', new OracleSerializer())
-Serializer.register('oracle_query_address', new OracleQuerySerializer())
-Serializer.register('channel_address', new ChannelSerializer())
+Serializer.register('FateBool', new BoolSerializer())
+Serializer.register('FateInt', new IntSerializer())
+Serializer.register('FateTuple', new TupleSerializer(Serializer))
+Serializer.register('FateList', new ListSerializer(Serializer))
+Serializer.register('FateMap', new MapSerializer(Serializer))
+Serializer.register('FateByteArray', new ByteArraySerializer())
+Serializer.register('FateString', new StringSerializer())
+Serializer.register('FateBits', new BitsSerializer())
+Serializer.register('FateVariant', new VariantSerializer(Serializer))
+Serializer.register('FateBytes', new BytesSerializer())
+Serializer.register('FateAccountAddress', new AddressSerializer())
+Serializer.register('FateContractAddress', new ContractSerializer())
+Serializer.register('FateOracleAddress', new OracleSerializer())
+Serializer.register('FateOracleQueryAddress', new OracleQuerySerializer())
+Serializer.register('FateChannelAddress', new ChannelSerializer())
 
 module.exports = Serializer

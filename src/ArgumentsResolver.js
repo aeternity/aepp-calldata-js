@@ -15,13 +15,6 @@ const isObject = (value) => {
     return value && typeof value === 'object' && value.constructor === Object;
 }
 
-const unzipArgs = (args) => {
-    return [
-        args.map(e => Array.isArray(e) ? e[1] : e.type),
-        args.map(e => Array.isArray(e) ? e[2] : e)
-    ]
-}
-
 ArgumentsResolver = function (aci) {
     this.aci = aci
 }
@@ -81,9 +74,9 @@ ArgumentsResolver.prototype = {
 
         if (key === 'list') {
             const resolvedArgs = value.map(v => this.resolveArgument(valueTypes[0], v))
-            const [resolvedTypes, resolvedValues] = unzipArgs(resolvedArgs)
+            const resolvedType = resolvedArgs[0].type
 
-            return new FateList(resolvedTypes[0], resolvedValues)
+            return new FateList(resolvedType, resolvedArgs)
         }
 
         if (key === 'map') {
@@ -102,16 +95,16 @@ ArgumentsResolver.prototype = {
 
         if (key === 'record') {
             const resolvedArgs = valueTypes.map(e => this.resolveArgument(e.type, value[e.name]))
-            const [tupleTypes, tupleValues] = unzipArgs(resolvedArgs)
+            const resolvedTypes = resolvedArgs.map(e => e.type)
 
-            return new FateTuple(tupleTypes, tupleValues)
+            return new FateTuple(resolvedTypes, resolvedArgs)
         }
 
         if (key === 'tuple') {
             const resolvedArgs = valueTypes.map((t, i) => this.resolveArgument(t, value[i]))
-            const [tupleTypes, tupleValues] = unzipArgs(resolvedArgs)
+            const resolvedTypes = resolvedArgs.map(e => e.type)
 
-            return new FateTuple(tupleTypes, tupleValues)
+            return new FateTuple(resolvedTypes, resolvedArgs)
         }
 
         if (key === 'variant') {
@@ -138,9 +131,9 @@ ArgumentsResolver.prototype = {
 
         const [[, variantArgs]] = Object.entries(valueTypes[tag])
         const resolvedArgs = this.resolveArguments(variantArgs, value.values)
-        const [variantValueTypes, variantValues] = unzipArgs(resolvedArgs)
+        const resolvedTypes = resolvedArgs.map(e => e.type)
 
-        return new FateVariant(arities, tag, variantValues, variantValueTypes)
+        return new FateVariant(arities, tag, resolvedArgs, resolvedTypes)
     },
 }
 

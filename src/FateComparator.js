@@ -1,5 +1,6 @@
 const FateList = require('./types/FateList.js')
 const FateTuple = require('./types/FateTuple.js')
+const {FateTypeTuple} = require('./FateTypes.js')
 
 // TODO types comparator
 const listComparator = (a, b) => {
@@ -85,7 +86,7 @@ const variantComparator = (a, b) => {
     }
 
     // equal arities and tags - compare elements
-    const tupleComparator = FateComparator('tuple')
+    const tupleComparator = FateComparator(FateTypeTuple())
 
     return tupleComparator(
         new FateTuple(a.valueTypes, a.value),
@@ -159,8 +160,11 @@ const comparators = {
 }
 
 const FateComparator = (type) => {
-    const typeName = type.hasOwnProperty('name') ? type.name : type
+    if (!type.hasOwnProperty('name')) {
+        throw new Error(`Cannot determine type name of ${JSON.stringify(type)}`)
+    }
 
+    const typeName = type.name
     if (!comparators.hasOwnProperty(typeName)) {
         throw new Error(`Unsupported comparator for ${typeName}`)
     }

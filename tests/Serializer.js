@@ -26,15 +26,10 @@ test.before(async t => {
 
 test('Serialize all types', t => {
     // primitive types
-    t.deepEqual(ser(t, ['int', 0]), [0])
     t.deepEqual(ser(t, new FateInt(0)), [0])
-    t.deepEqual(ser(t, ['bool', true]), [255])
     t.deepEqual(ser(t, new FateBool(true)), [255])
-    t.deepEqual(ser(t, [ 'string', "abc"]), [13,97,98,99])
     t.deepEqual(ser(t, new FateString("abc")), [13,97,98,99])
-    t.deepEqual(ser(t, ['byte_array', []]), [95])
     t.deepEqual(ser(t, new FateByteArray()), [95])
-    t.deepEqual(ser(t, ['bits', 0b10101010]), [79,129,170])
     t.deepEqual(ser(t, new FateBits(0b10101010)), [79,129,170])
 
     // composite types
