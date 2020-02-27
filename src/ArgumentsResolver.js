@@ -6,6 +6,7 @@ const FateMap = require('./types/FateMap.js')
 const FateTuple = require('./types/FateTuple.js')
 const FateVariant = require('./types/FateVariant.js')
 const FateBytes = require('./types/FateBytes.js')
+const FateBits = require('./types/FateBits.js')
 
 const zip = (arr, ...arrs) => {
   return arr.map((val, i) => arrs.reduce((a, arr) => [...a, arr[i]], [val]));
@@ -42,6 +43,10 @@ ArgumentsResolver.prototype = {
 
         if (type === 'string') {
             return new FateString(value)
+        }
+
+        if (type === 'bits') {
+            return new FateBits(value)
         }
 
         // typedefs, non-primitives

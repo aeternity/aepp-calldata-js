@@ -42,6 +42,17 @@ test('Encode bytes arguments', t => {
     t.is(encoded, 'cb_KxEe407MG58BCb7vI/elQA==', 'test_bytes(#beef)')
 });
 
+test('Encode bits arguments', t => {
+    const encoded = t.context.encoder.encode('test_bits', [[0]])
+    t.is(encoded, 'cb_KxG27kGGG08Agq5jCw==', 'test_bits(Bits.none)')
+
+    const encoded2 = t.context.encoder.encode('test_bits', [[-1]])
+    t.is(encoded2, 'cb_KxG27kGGG88BYlyOgw==', 'test_bits(Bits.all)')
+
+    const encoded3 = t.context.encoder.encode('test_bits', [[1]])
+    t.is(encoded3, 'cb_KxG27kGGG08BD4ordQ==', 'test_bits(Bits.set(Bits.none, 0)')
+});
+
 test('Encode list arguments', t => {
     const encoded = t.context.encoder.encode('test_list', [[1,2,3,5,8,13,21]])
     t.is(encoded, 'cb_KxFLwdBRG3MCBAYKEBoquPlTeA==', 'test_list([1, 2, 3, 5, 8, 13, 21])')

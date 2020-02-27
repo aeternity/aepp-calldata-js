@@ -14,6 +14,7 @@ contract Test =
     entrypoint test_single_int (a:int) = a
     entrypoint test_int (a:int, b:int, c:int, d:int) = a
     entrypoint test_bytes (a:bytes(2)) = a
+    entrypoint test_bits (a:bits) = a
     entrypoint test_string (a:string) = a
     entrypoint test_list (a:list(int)) = a
     entrypoint test_nested_list (a:list(list(int))) = a
