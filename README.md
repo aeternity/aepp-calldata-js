@@ -14,3 +14,9 @@ npm install
 ```bash
 make tests
 ```
+
+To see the test coverage run:
+
+```bash
+make coverage
+```

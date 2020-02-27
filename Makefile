@@ -29,7 +29,11 @@ node_modules: package-lock.json
 tests: node_modules $(BUILDDIR)/$(JSON_ACIS)
 	npm test
 
+coverage: node_modules $(BUILDDIR)/$(JSON_ACIS)
+	npm run coverage
+
 clean:
 	rm $(BUILDDIR)/$(BYTECODES)
 	rm $(BUILDDIR)/$(JSON_ACIS)
 	rm -rf node_modules
+	rm -rf .nyc_output

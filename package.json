@@ -10,17 +10,25 @@
     "rlp": "^2.2.4"
   },
   "devDependencies": {
-    "ava": "^3.1.0"
+    "ava": "^3.1.0",
+    "nyc": "^15.0.0"
   },
   "scripts": {
     "test": "ava --verbose",
     "test:watch": "ava --verbose --watch",
-    "ava": "ava --verbose"
+    "coverage": "nyc ava"
   },
   "ava": {
     "files": [
       "tests/**/*"
     ]
+  },
+  "nyc": {
+    "all": true,
+    "include": [
+      "src/**/*.js"
+    ],
+    "temp-dir": "build/.nyc_output"
   },
   "repository": {
     "type": "git",
