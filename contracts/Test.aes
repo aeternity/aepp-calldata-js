@@ -1,11 +1,13 @@
 contract Test =
     type number = int
     type string_map = map(string, int)
+    type box('a) = 'a
 
     record point = {x: int, y: int}
     record rectangle = {origin: point, a: int, b: int}
 
-    datatype reallyType = Nope | No | Yep(int) | Yes
+    datatype really_t = Nope | No | Yep(int) | Yes
+    datatype amount_t('a, 'b) = Zero | Any('a, 'b, int, 'a)
 
     entrypoint test_empty () = 1
     entrypoint test_bool (a:bool, b:bool) = a
@@ -17,10 +19,13 @@ contract Test =
     entrypoint test_nested_list (a:list(list(int))) = a
     entrypoint test_simple_map (a: map(int, bool)) = a
     entrypoint test_nested_map (a: map(int, map(int, bool))) = a
-    entrypoint test_variants (a:reallyType) = a
+    entrypoint test_variants (a:really_t) = a
+    entrypoint test_template_variants (a:amount_t(int, bool)) = a
     entrypoint test_tuple (a: bool * bool) = a
     entrypoint test_nested_tuple (a: (bool * bool) * (bool * bool)) = a
     entrypoint test_record(a: point) = a
     entrypoint test_nested_record(a: rectangle) = a
     entrypoint test_int_type(a: number) = a
     entrypoint test_map_type(a: string_map) = a
+    entrypoint test_template_type(a: box(int)) = a
+    entrypoint test_template_maze(a: amount_t(box(rectangle), really_t)) = a

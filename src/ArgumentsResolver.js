@@ -31,7 +31,7 @@ ArgumentsResolver.prototype = {
         return zip(argTypes, args).map(el => this.resolveArgument(...el))
     },
 
-    resolveArgument(type, value) {
+    resolveArgument(type, value, vars = {}) {
         if (type === 'int') {
             return new FateInt(value)
         }
@@ -46,27 +46,43 @@ ArgumentsResolver.prototype = {
 
         // typedefs, non-primitives
         if (typeof type === 'string') {
-            const [contractName, localType] = type.split('.')
-            const def = this.aci.type_defs.find(e => e.name == localType);
-
-            if (!def) {
-                throw new Error('Unknown type definition: ' + type)
-            }
-
-            return this.resolveArgument(def.typedef, value)
+            return this.resolveTypeDef(type, value, vars)
         }
 
         // composite types
         if (isObject(type)) {
-            return this.resolveObjectArgument(type, value)
+            return this.resolveObjectArgument(type, value, vars)
         }
 
         throw new Error('Cannot resolve type: ' + JSON.stringify(type))
     },
 
-    resolveObjectArgument(type, value) {
+    resolveTypeDef(type, value, params = []) {
+        const [contractName, localType] = type.split('.')
+        const def = this.aci.type_defs.find(e => e.name == localType);
+
+        if (!def) {
+            throw new Error('Unknown type definition: ' + JSON.stringify(type))
+        }
+
+        let vars = {}
+        def.vars.forEach((e, i) => {
+            const [[,k]] = Object.entries(e)
+            vars[k] = params[i]
+        })
+
+        const typedef = vars.hasOwnProperty(def.typedef) ? vars[def.typedef] : def.typedef
+
+        return this.resolveArgument(typedef, value, vars)
+    },
+
+    resolveObjectArgument(type, value, vars = {}) {
         const key = Object.keys(type)[0]
-        const valueTypes = type[key]
+        let valueTypes = type[key]
+
+        if (Array.isArray(valueTypes)) {
+            valueTypes = valueTypes.map(e => vars.hasOwnProperty(e) ? vars[e] : e)
+        }
 
         if (key === 'bytes') {
             return new FateBytes(value, valueTypes)
@@ -108,13 +124,18 @@ ArgumentsResolver.prototype = {
         }
 
         if (key === 'variant') {
-            return this.resolveVariantArgument(valueTypes, value)
+            return this.resolveVariantArgument(valueTypes, value, vars)
+        }
+
+        // typedefs
+        if (typeof key === 'string') {
+            return this.resolveTypeDef(key, value, valueTypes)
         }
 
         throw new Error('Cannot resolve object type: ' + JSON.stringify(key))
     },
 
-    resolveVariantArgument(valueTypes, value) {
+    resolveVariantArgument(valueTypes, value, vars = {}) {
         const arities = valueTypes.map(e => {
             const [[, args]] = Object.entries(e)
             return args.length
@@ -129,7 +150,8 @@ ArgumentsResolver.prototype = {
             throw new Error('Unknown variant: ' + JSON.stringify(value.variant))
         }
 
-        const [[, variantArgs]] = Object.entries(valueTypes[tag])
+        const [[, argsTemplate]] = Object.entries(valueTypes[tag])
+        const variantArgs = argsTemplate.map(e => vars.hasOwnProperty(e) ? vars[e] : e)
         const resolvedArgs = this.resolveArguments(variantArgs, value.values)
         const resolvedTypes = resolvedArgs.map(e => e.type)
 

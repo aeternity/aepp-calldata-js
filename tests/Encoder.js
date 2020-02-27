@@ -90,12 +90,42 @@ test('Encode variant arguments with non-zero arity', t => {
     t.is(encoded, 'cb_KxFiWgvXG6+EAAABAAIbDv+CzlA=', 'test_variants(Yep(7))')
 });
 
+test('Encode variant with template arguments', t => {
+    const encoded = t.context.encoder.encode('test_template_variants', [{variant: 'Any', values: [7, true, 9, 21]}])
+    t.is(encoded, 'cb_KxHBGrepG6+CAAQBSw7/EiqgmPlL', 'test_template_variants(Any(7, true, 9, 21))')
+});
+
 test('Encode type aliases', t => {
     const encoded = t.context.encoder.encode('test_int_type', [7])
     t.is(encoded, 'cb_KxE9BFdGGw7F/9+f', 'test_int_type(7)')
 
     const encodedMap = t.context.encoder.encode('test_map_type', [[["foo", 19]]])
     t.is(encodedMap, 'cb_KxEM7YA1Gy8BDWZvbybgU5Hd', 'test_map_type({["foo"] = 19})')
+});
+
+test('Encode template type', t => {
+    const encoded = t.context.encoder.encode('test_template_type', [7])
+    t.is(encoded, 'cb_KxGoCvQ/Gw6liNMS', 'test_template_type(7)')
+});
+
+test('Encode template maze', t => {
+    const encoded = t.context.encoder.encode(
+        'test_template_maze',
+        [{
+            variant: 'Any',
+            values: [
+                {origin: {x: 1, y: 2}, a: 3, b: 4},
+                {variant: 'Yep', values: [10]},
+                20,
+                {origin: {x: 1, y: 2}, a: 3, b: 4},
+            ]
+        }]
+    )
+    t.is(
+        encoded,
+        'cb_KxGu5Sw8G6+CAAQBSzsrAgQGCK+EAAABAAIbFCg7KwIEBgj8xaf6',
+        'test_template_maze(Any({origin = {x = 1, y = 2}, a = 3, b = 4}, Yep(10), 20, {origin = {x = 1, y = 2}, a = 3, b = 4}))'
+    )
 });
 
 test('Encode records', t => {
