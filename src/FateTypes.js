@@ -1,23 +1,3 @@
-const FateType = (type) => {
-    if (typeof type !== 'string') {
-        return type
-    }
-
-    switch(type) {
-        case 'int':
-            return FateTypeInt()
-            break;
-        case 'bool':
-            return FateTypeBool()
-            break;
-        case 'string':
-            return FateTypeString()
-            break;
-        default:
-            throw new Error(`Unsupported type: ${type}`)
-    } 
-}
-
 const FateTypeInt = () => {
     return {name: 'int'}
 }
@@ -45,7 +25,7 @@ const FateTypeByteArray = () => {
 const FateTypeList = (valuesType) => {
     return {
         name: 'list',
-        valuesType: FateType(valuesType)
+        valuesType: valuesType
     }
 }
 
@@ -59,8 +39,8 @@ const FateTypeTuple = (valueTypes) => {
 const FateTypeMap = (keyType, valueType) => {
     return {
         name: 'map',
-        keyType: FateType(keyType),
-        valueType: FateType(valueType),
+        keyType: keyType,
+        valueType: valueType,
     }
 }
 
@@ -74,7 +54,6 @@ const FateTypeVariant = (arities, variantType) => {
 }
 
 module.exports = {
-    FateType,
     FateTypeInt,
     FateTypeBool,
     FateTypeString,
