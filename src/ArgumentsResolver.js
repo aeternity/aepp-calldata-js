@@ -7,6 +7,9 @@ const FateTuple = require('./types/FateTuple.js')
 const FateVariant = require('./types/FateVariant.js')
 const FateBytes = require('./types/FateBytes.js')
 const FateBits = require('./types/FateBits.js')
+const FateAccountAddress = require('./types/FateAccountAddress.js')
+const FateOracleAddress = require('./types/FateOracleAddress.js')
+const FateOracleQueryAddress = require('./types/FateOracleQueryAddress.js')
 
 const zip = (arr, ...arrs) => {
   return arr.map((val, i) => arrs.reduce((a, arr) => [...a, arr[i]], [val]));
@@ -47,6 +50,10 @@ ArgumentsResolver.prototype = {
 
         if (type === 'bits') {
             return new FateBits(value)
+        }
+
+        if (type === 'address') {
+            return new FateAccountAddress(value)
         }
 
         // typedefs, non-primitives
@@ -91,6 +98,14 @@ ArgumentsResolver.prototype = {
 
         if (key === 'bytes') {
             return new FateBytes(value, valueTypes)
+        }
+
+        if (key === 'oracle') {
+            return new FateOracleAddress(value, valueTypes)
+        }
+
+        if (key === 'oracle_query') {
+            return new FateOracleQueryAddress(value, valueTypes)
         }
 
         if (key === 'list') {

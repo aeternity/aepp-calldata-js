@@ -42,6 +42,39 @@ test('Encode bytes arguments', t => {
     t.is(encoded, 'cb_KxEe407MG58BCb7vI/elQA==', 'test_bytes(#beef)')
 });
 
+test('Encode account address arguments', t => {
+    t.is(
+        t.context.encoder.encode(
+            'test_account_address',
+            [[BigInt("0xDE68BFE1B203E51F52351BA087F79B7828E6A140F0C314A670C7003B3FF57075")]]
+        ),
+        'cb_KxHgYyOEG58AoN5ov+GyA+UfUjUboIf3m3go5qFA8MMUpnDHADs/9XB1FYw7tQ==',
+        'test_account_address(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt)'
+    )
+});
+
+test('Encode oracle address arguments', t => {
+    t.is(
+        t.context.encoder.encode(
+            'test_oracle_address',
+            [[BigInt("0xCAF22A244EDAC03D26F02A17D923942D055CFC862328B25A51C284BC9D420E49")]]
+        ),
+        'cb_KxGPms0RG58DoMryKiRO2sA9JvAqF9kjlC0FXPyGIyiyWlHChLydQg5Jyfi1MA==',
+        'test_oracle_address(ok_2YNyxd6TRJPNrTcEDCe9ra59SVUdp9FR9qWC5msKZWYD9bP9z5)'
+    )
+});
+
+test('Encode oracle query address arguments', t => {
+    t.is(
+        t.context.encoder.encode(
+            'test_oracle_query_address',
+            [[BigInt("0xED1EE7DC0278D05CE9509473C50A93D43A28B28D5032F6DF7DAA442FE1371348")]]
+        ),
+        'cb_KxFBufYfG58EoO0e59wCeNBc6VCUc8UKk9Q6KLKNUDL2332qRC/hNxNIgI8x6g==',
+        'test_oracle_query_address(oq_2oRvyowJuJnEkxy58Ckkw77XfWJrmRgmGaLzhdqb67SKEL1gPY)'
+    )
+});
+
 test('Encode bits arguments', t => {
     const encoded = t.context.encoder.encode('test_bits', [[0]])
     t.is(encoded, 'cb_KxG27kGGG08Agq5jCw==', 'test_bits(Bits.none)')
