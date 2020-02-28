@@ -14,14 +14,13 @@ Encoder = function (aci) {
 }
 
 Encoder.prototype = {
-    encode: function (funName, args) {
-        return 'cb_' + base64check.encode(this.serialize(funName, args))
+    encode: function (contract, funName, args) {
+        return 'cb_' + base64check.encode(this.serialize(contract, funName, args))
     },
 
-    serialize: function (funName, args) {
-        const argTypes = this.getArgumentTypes(funName)
+    serialize: function (contract, funName, args) {
         const functionId = this.symbolIdentifier(funName)
-        const resolvedArgs = this.resolver.resolveArguments(argTypes, args)
+        const resolvedArgs = this.resolver.resolveFuncationCall(contract, funName, args)
         const tupleTypes = resolvedArgs.map(e => e.type)
 
         const argsTuple = new FateTuple(tupleTypes, resolvedArgs)
@@ -42,20 +41,6 @@ Encoder.prototype = {
 
         return hash.slice(0, 4)
     },
-
-    getArgumentTypes(funName) {
-        const funcAci = this.aci.functions.find(e => e.name == funName)
-
-        if (funcAci) {
-            return funcAci.arguments.map(e => e.type)
-        }
-
-        if (funName === 'init') {
-            return []
-        }
-
-        throw new Error(`Unknown function ${funName}`)
-    }
 }
 
 module.exports = Encoder

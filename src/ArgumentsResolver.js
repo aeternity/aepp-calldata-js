@@ -24,6 +24,12 @@ ArgumentsResolver = function (aci) {
 }
 
 ArgumentsResolver.prototype = {
+    resolveFuncationCall(contract, funName, args) {
+        const argTypes = this.getArgumentTypes(contract, funName)
+
+        return this.resolveArguments(argTypes, args)
+    },
+
     resolveArguments(argTypes, args) {
         if (argTypes.length !== args.length) {
             throw new Error(
@@ -33,6 +39,31 @@ ArgumentsResolver.prototype = {
         }
 
         return zip(argTypes, args).map(el => this.resolveArgument(...el))
+    },
+
+    getArgumentTypes(contract, funName) {
+        const funcAci = this.getNamespaceAci(contract).functions.find(e => e.name == funName)
+
+        if (funcAci) {
+            return funcAci.arguments.map(e => e.type)
+        }
+
+        if (funName === 'init') {
+            return []
+        }
+
+        throw new Error(`Unknown function ${funName}`)
+    },
+
+    getNamespaceAci(name) {
+        for (const e of this.aci) {
+            const [[type, data]] = Object.entries(e)
+            if (data.name === name) {
+                return data
+            }
+        }
+
+        throw new Error(`Unknown namespace ${name}`)
     },
 
     resolveArgument(type, value, vars = {}) {
@@ -70,8 +101,8 @@ ArgumentsResolver.prototype = {
     },
 
     resolveTypeDef(type, value, params = []) {
-        const [contractName, localType] = type.split('.')
-        const def = this.aci.type_defs.find(e => e.name == localType);
+        const [namespace, localType] = type.split('.')
+        const def = this.getNamespaceAci(namespace).type_defs.find(e => e.name == localType);
 
         if (!def) {
             throw new Error('Unknown type definition: ' + JSON.stringify(type))

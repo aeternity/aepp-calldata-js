@@ -1,3 +1,6 @@
+namespace Lib =
+    type data = int
+
 contract Test =
     type number = int
     type string_map = map(string, int)
@@ -36,3 +39,4 @@ contract Test =
     entrypoint test_map_type(a: string_map) = a
     entrypoint test_template_type(a: box(int)) = a
     entrypoint test_template_maze(a: amount_t(box(rectangle), really_t)) = a
+    entrypoint test_lib_type(a:Lib.data) = a
