@@ -57,6 +57,23 @@ test('Encode hash arguments', t => {
     )
 });
 
+
+test('Encode signature arguments', t => {
+    const encoded = t.context.encoder.encode(
+        CONTRACT,
+        'test_signature',
+        [`0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f`]
+    )
+    t.is(
+        encoded,
+        'cb_KxEbznV5G58BAQAAAQIDBAUGBwgJCgsMDQ4PAAECAwQFBgcICQoLDA0ODwABAgMEBQYHCAkKCwwNDg8AAQIDBAUGBwgJCgsMDQ4P+jjEQA==',
+        `test_signature(
+            #000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f
+            000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f
+        )`
+    )
+});
+
 test('Encode account address arguments', t => {
     t.is(
         t.context.encoder.encode(

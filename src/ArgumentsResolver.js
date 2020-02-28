@@ -2,6 +2,7 @@ const FateInt = require('./types/FateInt.js')
 const FateBool = require('./types/FateBool.js')
 const FateString = require('./types/FateString.js')
 const FateHash = require('./types/FateHash.js')
+const FateSignature = require('./types/FateSignature.js')
 const FateList = require('./types/FateList.js')
 const FateMap = require('./types/FateMap.js')
 const FateTuple = require('./types/FateTuple.js')
@@ -87,6 +88,10 @@ ArgumentsResolver.prototype = {
 
         if (type === 'hash') {
             return new FateHash(value)
+        }
+
+        if (type === 'signature') {
+            return new FateSignature(value)
         }
 
         if (type === 'address') {
