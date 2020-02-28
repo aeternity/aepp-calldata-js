@@ -1,6 +1,6 @@
 const FateList = require('./types/FateList.js')
 const FateTuple = require('./types/FateTuple.js')
-const {FateTypeTuple} = require('./FateTypes.js')
+const {FateTypeTuple, FateTypeInt} = require('./FateTypes.js')
 
 // TODO types comparator
 const listComparator = (a, b) => {
@@ -138,6 +138,13 @@ const mapComparator = (a, b) => {
     return -1
 }
 
+const bytesComparator = (a, b) => {
+    const aList = new FateList(FateTypeInt(), a.valueOf())
+    const bList = new FateList(FateTypeInt(), b.valueOf())
+
+    return listComparator(aList, bList)
+}
+
 const intComparator = (a, b) => Number(BigInt(a) - BigInt(b))
 const stringComparator = (a, b) => a.toString().localeCompare(b.toString())
 const bitsComparator = (a, b) => (a < 0 || b < 0) ? -intComparator(a, b) : intComparator(a, b)
@@ -154,12 +161,12 @@ const comparators = {
     'variant': variantComparator,
     'map': mapComparator,
     // objects (bytes)
-    'bytes': intComparator,
-    'account_address': intComparator,
-    'channel_address': intComparator,
-    'contract_address': intComparator,
-    'oracle_query_address': intComparator,
-    'oracle_address': intComparator,
+    'bytes': bytesComparator,
+    'account_address': bytesComparator,
+    'channel_address': bytesComparator,
+    'contract_address': bytesComparator,
+    'oracle_query_address': bytesComparator,
+    'oracle_address': bytesComparator,
 }
 
 const FateComparator = (type) => {

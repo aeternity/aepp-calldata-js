@@ -1,5 +1,5 @@
 const FateTag = require('../FateTag.js')
-const RLPInt = require('../utils/RLPInt.js')
+const RLP = require('rlp')
 
 AddressSerializer = function () {}
 
@@ -8,7 +8,7 @@ AddressSerializer.prototype = {
         return [
             FateTag.OBJECT,
             FateTag.OTYPE_ADDRESS,
-            ...RLPInt(data.value)
+            ...RLP.encode(data.valueOf())
         ]
     }
 }

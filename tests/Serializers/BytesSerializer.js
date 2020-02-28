@@ -6,7 +6,22 @@ const s = new BytesSerializer()
 
 test('Serialize', t => {
     t.deepEqual(
+        s.serialize(new FateBytes([0xbe, 0xef])),
+        [159,1,9,190,239]
+    )
+
+    t.deepEqual(
         s.serialize(new FateBytes(0xbeef)),
+        [159,1,9,190,239]
+    )
+
+    t.deepEqual(
+        s.serialize(new FateBytes("beef")),
+        [159,1,9,190,239]
+    )
+
+    t.deepEqual(
+        s.serialize(new FateBytes("0xbeef")),
         [159,1,9,190,239]
     )
 

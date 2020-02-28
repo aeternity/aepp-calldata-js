@@ -1,5 +1,5 @@
 const FateTag = require('../FateTag.js')
-const RLPInt = require('../utils/RLPInt.js')
+const RLP = require('rlp')
 
 ContractSerializer = function () {}
 
@@ -8,7 +8,7 @@ ContractSerializer.prototype = {
         return [
             FateTag.OBJECT,
             FateTag.OTYPE_CONTRACT,
-            ...RLPInt(data.value)
+            ...RLP.encode(data.valueOf())
         ]
     }
 }

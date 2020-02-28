@@ -64,14 +64,14 @@ test('Compare bytes', t => {
             new FateBytes(0x10000000000000000000000000),
             new FateBytes(0xdeadfeed),
             new FateBytes(0xdeadbeef),
-            new FateBytes(0xdeadbad),
+            new FateBytes(0x0deadbad),
         ]),
         [
-            new FateBytes(0xdeadbad),
+            new FateBytes(0x0deadbad),
+            new FateBytes(0x10000000000000000000000000),
             new FateBytes(0xdeadbeef),
             new FateBytes(0xdeadfeed),
             new FateBytes(0xfedcba9876543210),
-            new FateBytes(0x10000000000000000000000000),
         ]
     )
 
