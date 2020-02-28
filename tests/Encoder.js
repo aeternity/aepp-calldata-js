@@ -56,6 +56,18 @@ test('Encode account address arguments', t => {
     )
 });
 
+test('Encode contract address arguments', t => {
+    t.is(
+        t.context.encoder.encode(
+            CONTRACT,
+            'test_contract_address',
+            [[BigInt("0x1FC0D099EC5A13CB9328A317FCECD852B1F7489E5E00BA09573C3C2DB6985553")]]
+        ),
+        'cb_KxELEfrsG58CoB/A0JnsWhPLkyijF/zs2FKx90ieXgC6CVc8PC22mFVTzM0KJQ==',
+        'test_contract_address(ct_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ)'
+    )
+});
+
 test('Encode oracle address arguments', t => {
     t.is(
         t.context.encoder.encode(

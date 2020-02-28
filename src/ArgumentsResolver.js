@@ -8,6 +8,7 @@ const FateVariant = require('./types/FateVariant.js')
 const FateBytes = require('./types/FateBytes.js')
 const FateBits = require('./types/FateBits.js')
 const FateAccountAddress = require('./types/FateAccountAddress.js')
+const FateContractAddress = require('./types/FateContractAddress.js')
 const FateOracleAddress = require('./types/FateOracleAddress.js')
 const FateOracleQueryAddress = require('./types/FateOracleQueryAddress.js')
 
@@ -87,6 +88,10 @@ ArgumentsResolver.prototype = {
             return new FateAccountAddress(value)
         }
 
+        if (type === 'contract_address') {
+            return new FateContractAddress(value)
+        }
+
         // typedefs, non-primitives
         if (typeof type === 'string') {
             return this.resolveTypeDef(type, value, vars)
@@ -102,7 +107,13 @@ ArgumentsResolver.prototype = {
 
     resolveTypeDef(type, value, params = []) {
         const [namespace, localType] = type.split('.')
-        const def = this.getNamespaceAci(namespace).type_defs.find(e => e.name == localType);
+        const namespaceData = this.getNamespaceAci(namespace)
+
+        if (namespaceData.name === type) {
+            return this.resolveArgument('contract_address', value)
+        }
+
+        const def = namespaceData.type_defs.find(e => e.name == localType);
 
         if (!def) {
             throw new Error('Unknown type definition: ' + JSON.stringify(type))
