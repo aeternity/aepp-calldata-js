@@ -210,3 +210,11 @@ test('Encode namespaced arguments', t => {
     const encoded1 = t.context.encoder.encode(CONTRACT, 'test_lib_type', [404])
     t.is(encoded1, 'cb_KxGExpeGG2+CAVT2R/aU', 'test_lib_type(404)')
 });
+
+test('Encode optional arguments', t => {
+    const encoded1 = t.context.encoder.encode(CONTRACT, 'test_optional', [{variant: 'None', values: []}])
+    t.is(encoded1, 'cb_KxG0+HBxG6+CAAEAP4sG0gs=', 'test_optional(None)')
+
+    const encoded2 = t.context.encoder.encode(CONTRACT, 'test_optional', [{variant: 'Some', values: [404]}])
+    t.is(encoded2, 'cb_KxG0+HBxG6+CAAEBG2+CAVSsnrJE', 'test_optional(Some(404))')
+});

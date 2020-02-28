@@ -45,3 +45,4 @@ contract Test =
     entrypoint test_template_type(a: box(int)) = a
     entrypoint test_template_maze(a: amount_t(box(rectangle), really_t)) = a
     entrypoint test_lib_type(a:Lib.data) = a
+    entrypoint test_optional(a:option(int)) = a

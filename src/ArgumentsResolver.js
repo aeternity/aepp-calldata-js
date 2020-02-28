@@ -189,6 +189,11 @@ ArgumentsResolver.prototype = {
             return this.resolveVariantArgument(valueTypes, value, vars)
         }
 
+        if (key === 'option') {
+            const optionTypes = [{ None: []}, { Some: valueTypes }]
+            return this.resolveVariantArgument(optionTypes, value, vars)
+        }
+
         // typedefs
         if (typeof key === 'string') {
             return this.resolveTypeDef(key, value, valueTypes)
