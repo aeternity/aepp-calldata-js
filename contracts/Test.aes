@@ -49,3 +49,4 @@ contract Test =
     entrypoint test_optional(a:option(int)) = a
     entrypoint test_hash(a:hash) = a
     entrypoint test_signature(a:signature) = a
+    entrypoint test_ttl(a:Chain.ttl) = a

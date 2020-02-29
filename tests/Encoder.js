@@ -248,3 +248,11 @@ test('Encode optional arguments', t => {
     const encoded2 = t.context.encoder.encode(CONTRACT, 'test_optional', [{variant: 'Some', values: [404]}])
     t.is(encoded2, 'cb_KxG0+HBxG6+CAAEBG2+CAVSsnrJE', 'test_optional(Some(404))')
 });
+
+test('Encode TTL arguments', t => {
+    const encoded1 = t.context.encoder.encode(CONTRACT, 'test_ttl', [{variant: 'RelativeTTL', values: [50]}])
+    t.is(encoded1, 'cb_KxGDonYLG6+CAQEAG2Smlh4I', 'test_ttl(RelativeTTL(50))')
+
+    const encoded2 = t.context.encoder.encode(CONTRACT, 'test_ttl', [{variant: 'FixedTTL', values: [50]}])
+    t.is(encoded2, 'cb_KxGDonYLG6+CAQEBG2SzOT3Y', 'test_ttl(FixedTTL(50))')
+});

@@ -102,6 +102,11 @@ ArgumentsResolver.prototype = {
             return new FateContractAddress(value)
         }
 
+        if (type === 'Chain.ttl') {
+            const chainTypes = [{RelativeTTL: ['int']}, {FixedTTL: ['int']}]
+            return this.resolveVariantArgument(chainTypes, value, vars)
+        }
+
         // typedefs, non-primitives
         if (typeof type === 'string') {
             return this.resolveTypeDef(type, value, vars)
