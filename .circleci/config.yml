@@ -6,6 +6,9 @@ jobs:
     executor:
       name: node/default
     steps:
+      - run:
+          name: Install dependencies
+          command: apt-get install erlang
       - checkout
       - node/with-cache:
           steps:
