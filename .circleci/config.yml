@@ -8,7 +8,9 @@ jobs:
     steps:
       - run:
           name: Install dependencies
-          command: sudo apt-get install erlang
+          command: |
+            wget https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_21.3.8.13-1~debian~stretch_amd64.deb
+            sudo dpkg -i esl-erlang_21.3.8.13-1~debian~stretch_amd64.deb
       - checkout
       - node/with-cache:
           steps:
