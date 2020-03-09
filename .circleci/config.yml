@@ -7,6 +7,12 @@ jobs:
       name: node/default
     steps:
       - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            wget https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_21.3.8.13-1~debian~stretch_amd64.deb
+            sudo apt install ./esl-erlang_21.3.8.13-1~debian~stretch_amd64.deb || true
+            sudo apt --fix-broken install
       - node/with-cache:
           steps:
             - run: make tests
