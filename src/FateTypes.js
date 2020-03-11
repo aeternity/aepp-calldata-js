@@ -18,6 +18,38 @@ const FateTypeBytes = (size) => {
     return {name: 'bytes', size}
 }
 
+const FateTypeHash = () => {
+    return {name: 'hash'}
+}
+
+const FateTypeSignature = () => {
+    return {name: 'signature'}
+}
+
+const FateTypeAccountAddress = () => {
+    return {name: 'account_address'}
+}
+
+const FateTypeContractAddress = () => {
+    return {name: 'contract_address'}
+}
+
+const FateTypeOracleAddress = (questionType, answerType) => {
+    return {
+        name: 'oracle_address',
+        questionType,
+        answerType
+    }
+}
+
+const FateTypeOracleQueryAddress = (questionType, answerType) => {
+    return {
+        name: 'oracle_query_address',
+        questionType,
+        answerType
+    }
+}
+
 const FateTypeByteArray = () => {
     return {name: 'byte_array'}
 }
@@ -44,7 +76,7 @@ const FateTypeMap = (keyType, valueType) => {
     }
 }
 
-const FateTypeVariant = (arities, variantType) => {
+const FateTypeVariant = (arities, variantType, variants) => {
     return {
         name: 'variant',
         aritiesType: FateTypeInt(),
@@ -53,15 +85,41 @@ const FateTypeVariant = (arities, variantType) => {
     }
 }
 
+const FateTypeOption = (valueTypes) => {
+    const variants = [
+        { None: []},
+        { Some: valueTypes }
+    ]
+
+    return FateTypeVariant(0, null, variants)
+}
+
+const FateTypeChainTTL = () => {
+    const variants = [
+        {RelativeTTL: [FateTypeInt()]},
+        {FixedTTL: [FateTypeInt()]}
+    ]
+
+    return FateTypeVariant(0, null, variants)
+}
+
 module.exports = {
     FateTypeInt,
     FateTypeBool,
     FateTypeString,
     FateTypeBits,
     FateTypeBytes,
+    FateTypeHash,
+    FateTypeSignature,
+    FateTypeAccountAddress,
+    FateTypeContractAddress,
+    FateTypeOracleAddress,
+    FateTypeOracleQueryAddress,
     FateTypeByteArray,
     FateTypeList,
     FateTypeTuple,
     FateTypeMap,
-    FateTypeVariant
+    FateTypeVariant,
+    FateTypeOption,
+    FateTypeChainTTL,
 }
