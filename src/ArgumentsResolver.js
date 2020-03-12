@@ -13,6 +13,7 @@ const FateAccountAddress = require('./types/FateAccountAddress.js')
 const FateContractAddress = require('./types/FateContractAddress.js')
 const FateOracleAddress = require('./types/FateOracleAddress.js')
 const FateOracleQueryAddress = require('./types/FateOracleQueryAddress.js')
+const TypeResolver = require('./TypeResolver.js')
 
 const zip = (arr, ...arrs) => {
   return arr.map((val, i) => arrs.reduce((a, arr) => [...a, arr[i]], [val]));
@@ -149,9 +150,10 @@ ArgumentsResolver.prototype = {
         const key = Object.keys(type)[0]
         let valueTypes = type[key]
 
-        if (Array.isArray(valueTypes)) {
-            valueTypes = valueTypes.map(e => vars.hasOwnProperty(e) ? vars[e] : e)
-        }
+        // Not covered by tests ?! Unknown functionality. Related to template vars.
+        // if (Array.isArray(valueTypes)) {
+        //     valueTypes = valueTypes.map(e => vars.hasOwnProperty(e) ? vars[e] : e)
+        // }
 
         if (key === 'bytes') {
             return new FateBytes(value, valueTypes)
