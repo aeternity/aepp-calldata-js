@@ -16,6 +16,7 @@ const {
     FateTypeList,
     FateTypeMap,
     FateTypeTuple,
+    FateTypeRecord,
     FateTypeVariant,
     FateTypeOption,
     FateTypeChainTTL,
@@ -33,14 +34,14 @@ test.before(async t => {
 
 test('Get implicit empty init argument types', t => {
     t.deepEqual(
-        t.context.resolver.getArgumentTypes(CONTRACT, 'init'),
+        t.context.resolver.getCallTypes(CONTRACT, 'init'),
         []
     )
 });
 
 test('Get function argument types', t => {
     t.deepEqual(
-        t.context.resolver.getArgumentTypes(CONTRACT, 'test_bool'),
+        t.context.resolver.getCallTypes(CONTRACT, 'test_bool'),
         [FateTypeBool(), FateTypeBool()]
     )
 });
@@ -160,21 +161,24 @@ test('Resolve tuple', t => {
 test('Resolve record', t => {
     t.deepEqual(
         t.context.resolver.resolveType(ns('point')),
-        FateTypeTuple([
-            FateTypeInt(),
-            FateTypeInt(),
-        ])
+        FateTypeRecord(
+            ['x', 'y'],
+            [FateTypeInt(), FateTypeInt()]
+        )
     )
 });
 
 test('Resolve nested record', t => {
     t.deepEqual(
         t.context.resolver.resolveType(ns('rectangle')),
-        FateTypeTuple([
-            FateTypeTuple([FateTypeInt(), FateTypeInt()]),
-            FateTypeInt(),
-            FateTypeInt(),
-        ])
+        FateTypeRecord(
+            ['origin', 'a', 'b'],
+            [
+                FateTypeRecord(['x', 'y'], [FateTypeInt(), FateTypeInt()]),
+                FateTypeInt(),
+                FateTypeInt()
+            ],
+        )
     )
 });
 

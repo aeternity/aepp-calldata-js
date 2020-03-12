@@ -13,6 +13,7 @@ const {
     FateTypeList,
     FateTypeMap,
     FateTypeTuple,
+    FateTypeRecord,
     FateTypeVariant,
     FateTypeOption,
     FateTypeChainTTL,
@@ -27,7 +28,7 @@ class TypeResolver {
         this.aci = aci
     }
 
-    getArgumentTypes(contract, funName) {
+    getCallTypes(contract, funName) {
         const funcAci = this.getNamespaceAci(contract).functions.find(e => e.name == funName)
 
         if (funcAci) {
@@ -183,10 +184,10 @@ class TypeResolver {
     }
 
     resolveRecord(valueTypes) {
+        const keys = valueTypes.map(e => e.name)
         const resolvedTypes = valueTypes.map(e => this.resolveType(e.type))
-        const names = valueTypes.map(e => e.name)
 
-        return FateTypeTuple(resolvedTypes)
+        return FateTypeRecord(keys, resolvedTypes)
     }
 
     resolveTypeDef(type, params = []) {

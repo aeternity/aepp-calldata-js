@@ -1,18 +1,18 @@
 const blake = require('blakejs')
 const base64check = require('base64check')
 const Serializer = require('./Serializer.js')
-const ArgumentsResolver = require('./ArgumentsResolver.js')
 const FateByteArray = require('./types/FateByteArray.js')
 const FateTuple = require('./types/FateTuple.js')
 const TypeResolver = require('./TypeResolver.js')
+const DataFactory = require('./DataFactory.js')
 
 const HASH_BYTES = 32
 
 Encoder = function (aci) {
     this.aci = aci
-    this.resolver = new ArgumentsResolver(aci)
     this.serializer = Object.create(Serializer)
     this.typeResolver = new TypeResolver(aci)
+    this.dataFactory = new DataFactory(aci)
 }
 
 Encoder.prototype = {
@@ -33,11 +33,11 @@ Encoder.prototype = {
 
     serialize: function (contract, funName, args) {
         const functionId = this.symbolIdentifier(funName)
-        const resolvedArgs = this.resolver.resolveFuncationCall(contract, funName, args)
-        const tupleTypes = resolvedArgs.map(e => e.type)
+        const argTypes = this.typeResolver.getCallTypes(contract, funName)
+        const argsData = this.dataFactory.create(argTypes, args)
 
-        const argsTuple = new FateTuple(tupleTypes, resolvedArgs)
         const funcBytes = new FateByteArray(functionId)
+        const argsTuple = new FateTuple(argTypes, argsData)
         const calldata = new FateTuple(
             [funcBytes.type, argsTuple.type],
             [funcBytes, argsTuple]
