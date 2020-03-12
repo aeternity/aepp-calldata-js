@@ -71,7 +71,7 @@ class TypeResolver {
         }
     }
 
-    resolveType(type) {
+    resolveType(type, vars = {}) {
         let key = type
         let valueTypes = []
         let resolvedTypes = []
@@ -81,13 +81,12 @@ class TypeResolver {
         }
 
         if (this.isCustomType(key)) {
-            const typeDef = this.resolveTypeDef(key, valueTypes)
+            const [typeDef, typeVars] = this.resolveTypeDef(key, valueTypes)
 
-            return this.resolveType(typeDef)
+            return this.resolveType(typeDef, typeVars)
         }
 
         if (Array.isArray(valueTypes)) {
-            // record and variant have special format
             if (key !== 'record' && key !== 'variant') {
                 resolvedTypes = valueTypes.map(t => this.resolveType(t))
             }
@@ -150,7 +149,7 @@ class TypeResolver {
         }
 
         if (key === 'variant') {
-            return this.resolveVariant(valueTypes)
+            return this.resolveVariant(valueTypes, vars)
         }
 
         if (key === 'option') {
@@ -168,10 +167,13 @@ class TypeResolver {
         throw new Error('Cannot resolve type: ' + JSON.stringify(type))
     }
 
-    resolveVariant(valueTypes) {
+    resolveVariant(valueTypes, vars) {
         const variants = valueTypes.map(e => {
             const [[variant, args]] = Object.entries(e)
-            const resolvedArgs = args.map(t => this.resolveType(t))
+            const resolvedArgs = args.map(v => {
+                const t = vars.hasOwnProperty(v) ? vars[v] : v
+                return this.resolveType(t, vars)
+            })
 
             return {[variant]: resolvedArgs}
         })
@@ -197,7 +199,7 @@ class TypeResolver {
         }
 
         if (namespaceData.name === type) {
-            return 'contract_address'
+            return ['contract_address', []]
         }
 
         const def = namespaceData.type_defs.find(e => e.name == localType);
@@ -212,7 +214,9 @@ class TypeResolver {
             vars[k] = params[i]
         })
 
-        return vars.hasOwnProperty(def.typedef) ? vars[def.typedef] : def.typedef
+        const typeDef = vars.hasOwnProperty(def.typedef) ? vars[def.typedef] : def.typedef
+
+        return [typeDef, vars]
     }
 }
 

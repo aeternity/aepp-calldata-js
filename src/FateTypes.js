@@ -79,6 +79,7 @@ const FateTypeMap = (keyType, valueType) => {
 const FateTypeVariant = (arities, variantType, variants) => {
     return {
         name: 'variant',
+        variants,
         aritiesType: FateTypeInt(),
         arities,
         variantType: FateTypeTuple(variantType),

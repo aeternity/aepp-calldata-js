@@ -31,7 +31,6 @@ test.before(async t => {
     t.context.resolver = resolver
 });
 
-
 test('Get implicit empty init argument types', t => {
     t.deepEqual(
         t.context.resolver.getArgumentTypes(CONTRACT, 'init'),
@@ -190,10 +189,23 @@ test('Resolve variant', t => {
     )
 });
 
+test('Resolve variant with template vars', t => {
+    t.deepEqual(
+        t.context.resolver.resolveType({
+            [ns('amount_t')]: ['int', 'bool']
+        }),
+        FateTypeVariant(
+            0,
+            null,
+            [{Zero: []}, {Any: [FateTypeInt(), FateTypeBool(), FateTypeInt(), FateTypeInt()]}]
+        )
+    )
+});
+
 test('Resolve Option', t => {
     t.deepEqual(
         t.context.resolver.resolveType({option: ['int']}),
-        FateTypeOption(FateTypeInt())
+        FateTypeOption([FateTypeInt()])
     )
 });
 
