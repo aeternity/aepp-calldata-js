@@ -1,5 +1,5 @@
 const FateData = require('./FateData.js')
-const Int2ByteArray = require('../utils/Int2ByteArray.js')
+const {Int2ByteArray} = require('../utils/Int2ByteArray.js')
 const HexStringToByteArray = require('../utils/HexStringToByteArray.js')
 
 const toByteArray = (value) => {

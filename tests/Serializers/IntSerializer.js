@@ -20,3 +20,17 @@ test('Serialize', t => {
         [111,136,254,220,186,152,118,84,49,208]
     )
 });
+
+test('Deserialize', t => {
+    t.deepEqual(s.deserialize([0]), new FateInt(0))
+    t.deepEqual(s.deserialize([126]), new FateInt(63))
+    t.deepEqual(s.deserialize([254]), new FateInt(-63))
+    t.deepEqual(s.deserialize([111, 0]), new FateInt(64))
+    t.deepEqual(s.deserialize([239, 0]), new FateInt(-64))
+    t.deepEqual(s.deserialize([111, 131, 1, 134, 96]), new FateInt(100000))
+    t.deepEqual(s.deserialize([239, 131, 1, 134, 96]), new FateInt(-100000))
+    t.deepEqual(
+        s.deserialize([111,136,254,220,186,152,118,84,49,208]),
+        new FateInt("0xfedcba9876543210")
+    )
+});

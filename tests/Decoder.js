@@ -11,9 +11,17 @@ test.before(async t => {
     t.context.encoder = encoder
 });
 
-test('Encode boolean return', t => {
+test('Decode boolean return', t => {
     t.is(
         t.context.encoder.decode(CONTRACT, 'test_bool', 'cb_/8CwV/U='),
         true
+    )
+});
+
+test('Decode int return', t => {
+    t.is(
+        t.context.encoder.decode(CONTRACT, 'test_single_int', 'cb_b4MC7W/bKkpn'),
+        191919n,
+        'test_single_int(191919)'
     )
 });

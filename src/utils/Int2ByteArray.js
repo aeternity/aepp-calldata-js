@@ -1,4 +1,4 @@
-const Int2ByteArray = function (value) {
+const Int2ByteArray =  (value) => {
     if (value < 256) {
         return new Uint8Array([Number(value)])
     }
@@ -16,4 +16,23 @@ const Int2ByteArray = function (value) {
     ])
 }
 
-module.exports = Int2ByteArray
+const ByteArray2Int = (data) => {
+    var hex = [];
+
+    data.forEach(i => {
+        var h = i.toString(16)
+
+        if (h.length % 2) {
+            h = '0' + h;
+        }
+
+        hex.push(h)
+    })
+
+    return BigInt('0x' + hex.join(''))
+}
+
+module.exports = {
+    Int2ByteArray,
+    ByteArray2Int
+}
