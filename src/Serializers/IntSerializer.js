@@ -8,10 +8,8 @@ const abs = (val) => val > 0 ? val : val * -1n
 
 const SMALL_INT_MASK = 0b00000001
 
-IntSerializer = function () {}
-
-IntSerializer.prototype = {
-    serialize: function (data) {
+class IntSerializer {
+    serialize(data) {
         const bigValue = (data instanceof FateInt) ? data.value : BigInt(data)
         const absVal = abs(bigValue)
 
@@ -39,8 +37,13 @@ IntSerializer.prototype = {
             FateTag.POS_BIG_INT,
             ...RLPInt(absVal - 64n)
         ]
-    },
-    deserialize: function (data) {
+    }
+    deserialize(data) {
+        const [value, rest] = this.deserializeStream(data)
+
+        return value
+    }
+    deserializeStream(data) {
         data = new Uint8Array(data)
         const prefix = data[0]
 
@@ -48,20 +51,30 @@ IntSerializer.prototype = {
         if ((prefix & SMALL_INT_MASK) === 0) {
             // positive
             if ((prefix & 0b10000000) === 0) {
-                return new FateInt(prefix >> 1)
+                return [
+                    new FateInt(prefix >> 1),
+                    data.slice(1)
+                ]
             }
 
             // negative
             const i = (prefix & 0b01111110) >> 1
-            return new FateInt(-i)
+
+            return [
+                new FateInt(-i),
+                data.slice(1)
+            ]
         }
 
         if (prefix === FateTag.POS_BIG_INT || prefix === FateTag.NEG_BIG_INT) {
             const sign = prefix === FateTag.POS_BIG_INT ? 1n : -1n
-            const i = ByteArray2Int(RLP.decode(data.slice(1)))
+            const decoded = RLP.decode(data.slice(1), true)
+            const i = ByteArray2Int(decoded.data)
 
-            return new FateInt((i + 64n) * sign)
-
+            return [
+                new FateInt((i + 64n) * sign),
+                new Uint8Array(decoded.remainder)
+            ]
         }
 
         throw new Error('Unsupported byte sequence for ' + prefix.toString(2))
