@@ -44,6 +44,11 @@ test('Encode bytes arguments', t => {
     t.is(encoded, 'cb_KxEe407MG58BCb7vI/elQA==', 'test_bytes(#beef)')
 });
 
+test('Encode string arguments', t => {
+    const encoded = t.context.encoder.encode(CONTRACT, 'test_string', ["whoolymoly"])
+    t.is(encoded, 'cb_KxHwzCuVGyl3aG9vbHltb2x5zwMSnw==', 'test_bytes("whoolymoly")')
+});
+
 test('Encode hash arguments', t => {
     const encoded = t.context.encoder.encode(
         CONTRACT,

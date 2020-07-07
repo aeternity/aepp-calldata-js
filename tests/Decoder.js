@@ -25,3 +25,11 @@ test('Decode int return', t => {
         'test_single_int(191919)'
     )
 });
+
+test('Decode string return', t => {
+    t.is(
+        t.context.encoder.decode(CONTRACT, 'test_string', 'cb_KXdob29seW1vbHlGazSE'),
+        "whoolymoly",
+        'test_string("whoolymoly")'
+    )
+});

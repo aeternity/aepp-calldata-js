@@ -12,3 +12,11 @@ test('Serialize', t => {
         [1,0].concat(Array(64).fill(120))
     )
 });
+
+test('Deserialize', t => {
+    t.deepEqual(s.deserialize([13,97,98,99]), "abc")
+    t.deepEqual(
+        s.deserialize([1,0].concat(Array(64).fill(120))),
+        "x".repeat(64)
+    )
+});
