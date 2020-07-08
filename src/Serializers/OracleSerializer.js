@@ -1,15 +1,20 @@
-const FateTag = require('../FateTag.js')
 const RLP = require('rlp')
+const FateTag = require('../FateTag.js')
+const FateOracleAddress = require('../types/FateOracleAddress.js')
 
-OracleSerializer = function () {}
-
-OracleSerializer.prototype = {
-    serialize: function (data) {
+class OracleSerializer {
+    serialize(data) {
         return [
             FateTag.OBJECT,
             FateTag.OTYPE_ORACLE,
             ...RLP.encode(data.valueOf())
         ]
+    }
+    deserialize(data) {
+        const buffer = new Uint8Array(data)
+        const value = RLP.decode(buffer.slice(2))
+
+        return new FateOracleAddress(value)
     }
 }
 

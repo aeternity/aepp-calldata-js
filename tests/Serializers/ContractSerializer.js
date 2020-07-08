@@ -10,3 +10,10 @@ test('Serialize', t => {
         [159,2,136,254,220,186,152,118,84,50,16]
     )
 });
+
+test('Deserialize', t => {
+    t.deepEqual(
+        s.deserialize([159,2,136,254,220,186,152,118,84,50,16]),
+        new FateContractAddress("0xfedcba9876543210")
+    )
+});

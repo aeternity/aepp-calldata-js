@@ -1,15 +1,20 @@
-const FateTag = require('../FateTag.js')
 const RLP = require('rlp')
+const FateTag = require('../FateTag.js')
+const FateAccountAddress = require('../types/FateAccountAddress.js')
 
-AddressSerializer = function () {}
-
-AddressSerializer.prototype = {
-    serialize: function (data) {
+class AddressSerializer {
+    serialize(data) {
         return [
             FateTag.OBJECT,
             FateTag.OTYPE_ADDRESS,
             ...RLP.encode(data.valueOf())
         ]
+    }
+    deserialize(data) {
+        const buffer = new Uint8Array(data)
+        const value = RLP.decode(buffer.slice(2))
+
+        return new FateAccountAddress(value)
     }
 }
 

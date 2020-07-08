@@ -3,7 +3,7 @@ const {Int2ByteArray} = require('../utils/Int2ByteArray.js')
 const HexStringToByteArray = require('../utils/HexStringToByteArray.js')
 
 const toByteArray = (value) => {
-  if (Array.isArray(value)) {
+  if (Array.isArray(value) || ArrayBuffer.isView(value)) {
     return new Uint8Array(value)
   }
 

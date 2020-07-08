@@ -51,7 +51,7 @@ Serializer = {
         }
 
         // drop FateType prefix
-        const typeName = ucFirst(type.name)
+        const typeName = type.name.split('_').map(ucFirst).join('');
         if (!this.serializers.hasOwnProperty(typeName)) {
             throw new Error(`Unsupported type: ` + JSON.stringify(typeName));
         }

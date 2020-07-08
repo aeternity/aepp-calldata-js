@@ -30,3 +30,10 @@ test('Serialize', t => {
         [159,1,33,254,220,186,152,118,84,50,16]
     )
 });
+
+test('Deserialize', t => {
+    t.deepEqual(
+        s.deserialize([159,1,9,190,239]),
+        new FateBytes(0xbeef)
+    )
+});
