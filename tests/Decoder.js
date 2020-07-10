@@ -116,3 +116,14 @@ test('Decode oracle query address return', t => {
         'test_oracle_query_address(oq_2oRvyowJuJnEkxy58Ckkw77XfWJrmRgmGaLzhdqb67SKEL1gPY)'
     )
 });
+
+// test('Decode bits return', t => {
+//     const decoded = t.context.encoder.decode(CONTRACT, 'test_bits', '???')
+//     t.is(decoded, new FateBits(0b0), 'test_bits(Bits.none)')
+
+//     const decoded2 = t.context.encoder.decode(CONTRACT, 'test_bits', '???')
+//     t.is(decoded2, new FateBits(0b11111111), 'test_bits(Bits.all)')
+
+//     const decoded3 = t.context.encoder.decode(CONTRACT, 'test_bits', '???')
+//     t.is(decoded3, new FateBits(0b00000001), 'test_bits(Bits.set(Bits.none, 0)')
+// });
