@@ -21,7 +21,7 @@ function ser(t, input) {
 }
 
 test.before(async t => {
-    t.context.serializer = Object.create(Serializer)
+    t.context.serializer = new Serializer()
 });
 
 test('Serialize all types', t => {

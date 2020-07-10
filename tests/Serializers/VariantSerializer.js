@@ -5,7 +5,7 @@ const FateVariant = require('../../src/types/FateVariant.js')
 const Serializer = require('../../src/Serializer.js')
 const VariantSerializer = require('../../src/Serializers/VariantSerializer.js')
 
-const s = new VariantSerializer(Object.create(Serializer))
+const s = new VariantSerializer(new Serializer())
 
 test('Serialize', t => {
     t.deepEqual(

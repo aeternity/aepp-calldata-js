@@ -19,12 +19,13 @@ const ucFirst = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
-Serializer = {
-    serializers: {},
-    register: function(type, instance) {
-        this.serializers[type] = instance
-    },
-    serialize: function (data) {
+const _serializers = {}
+
+class Serializer {
+    static register(type, instance) {
+        _serializers[type] = instance
+    }
+    serialize(data) {
         if (typeof data !== 'object') {
             throw new Error('Only object serialization is supported.')
         }
@@ -35,42 +36,49 @@ Serializer = {
 
         // drop FateType prefix
         const typeName = data.constructor.name.slice(4)
-        if (!this.serializers.hasOwnProperty(typeName)) {
+        if (!_serializers.hasOwnProperty(typeName)) {
             throw new Error(`Unsupported type: ` + JSON.stringify(typeName));
         }
 
-        return this.serializers[typeName].serialize(data)
-    },
-    deserialize: function(type, data) {
-        if (!type.hasOwnProperty('name')) {
-            throw new Error('Unsupported type: ' + JSON.stringify(type))
-        }
+        return _serializers[typeName].serialize(data)
+    }
+    deserialize(type, data) {
+        const serializer = this._getSerializer(type)
 
         if (!data instanceof Uint8Array) {
             throw new Error('Only instances of Uint8Array is supported.')
         }
 
+        return serializer.deserialize(data)
+    }
+    _getSerializer(type) {
+        if (!type.hasOwnProperty('name')) {
+            throw new Error('Unsupported type: ' + JSON.stringify(type))
+        }
+
         // drop FateType prefix
         const typeName = type.name.split('_').map(ucFirst).join('');
-        if (!this.serializers.hasOwnProperty(typeName)) {
+        if (!_serializers.hasOwnProperty(typeName)) {
             throw new Error(`Unsupported type: ` + JSON.stringify(typeName));
         }
 
-        return this.serializers[typeName].deserialize(data)
+        return _serializers[typeName]
     }
 }
 
+const globalSerializer = new Serializer()
+
 Serializer.register('Bool', new BoolSerializer())
 Serializer.register('Int', new IntSerializer())
-Serializer.register('Tuple', new TupleSerializer(Serializer))
-Serializer.register('List', new ListSerializer(Serializer))
-Serializer.register('Map', new MapSerializer(Serializer))
+Serializer.register('Tuple', new TupleSerializer(globalSerializer))
+Serializer.register('List', new ListSerializer(globalSerializer))
+Serializer.register('Map', new MapSerializer(globalSerializer))
 Serializer.register('ByteArray', new ByteArraySerializer())
 Serializer.register('String', new StringSerializer())
 Serializer.register('Hash', new BytesSerializer())
 Serializer.register('Signature', new BytesSerializer())
 Serializer.register('Bits', new BitsSerializer())
-Serializer.register('Variant', new VariantSerializer(Serializer))
+Serializer.register('Variant', new VariantSerializer(globalSerializer))
 Serializer.register('Bytes', new BytesSerializer())
 Serializer.register('AccountAddress', new AddressSerializer())
 Serializer.register('ContractAddress', new ContractSerializer())

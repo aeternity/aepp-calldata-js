@@ -6,7 +6,7 @@ const FateBool = require('../../src/types/FateBool.js')
 const FateMap = require('../../src/types/FateMap.js')
 const {FateTypeInt, FateTypeBool, FateTypeMap} = require('../../src/FateTypes.js')
 
-const s = new MapSerializer(Object.create(Serializer))
+const s = new MapSerializer(new Serializer())
 
 test('Serialize', t => {
     const FTInt = FateTypeInt()

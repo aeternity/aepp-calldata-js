@@ -6,7 +6,7 @@ const FateBool = require('../../src/types/FateBool.js')
 const FateTuple = require('../../src/types/FateTuple.js')
 const {FateTypeInt, FateTypeBool} = require('../../src/FateTypes.js')
 
-const s = new TupleSerializer(Object.create(Serializer))
+const s = new TupleSerializer(new Serializer())
 
 test('Serialize', t => {
     const FTInt = FateTypeInt(), FTBool = FateTypeBool()

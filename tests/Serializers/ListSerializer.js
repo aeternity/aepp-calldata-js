@@ -5,7 +5,7 @@ const {FateTypeInt, FateTypeList} = require('../../src/FateTypes.js')
 const FateInt = require('../../src/types/FateInt.js')
 const FateList = require('../../src/types/FateList.js')
 
-const s = new ListSerializer(Object.create(Serializer))
+const s = new ListSerializer(new Serializer())
 
 test('Serialize', t => {
     t.deepEqual(

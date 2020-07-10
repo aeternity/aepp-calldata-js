@@ -10,7 +10,7 @@ const HASH_BYTES = 32
 
 Encoder = function (aci) {
     this.aci = aci
-    this.serializer = Object.create(Serializer)
+    this.serializer = new Serializer()
     this.typeResolver = new TypeResolver(aci)
     this.dataFactory = new DataFactory(aci)
 }
