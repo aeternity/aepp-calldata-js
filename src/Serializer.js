@@ -1,3 +1,4 @@
+const TypeFactory = require('./TypeFactory.js')
 const FateData = require('./types/FateData.js')
 const AddressSerializer = require('./Serializers/AddressSerializer')
 const BitsSerializer = require('./Serializers/BitsSerializer')
@@ -25,6 +26,9 @@ class Serializer {
     static register(type, instance) {
         _serializers[type] = instance
     }
+    constructor() {
+        this.typeFactory = new TypeFactory()
+    }
     serialize(data) {
         if (typeof data !== 'object') {
             throw new Error('Only object serialization is supported.')
@@ -43,13 +47,20 @@ class Serializer {
         return _serializers[typeName].serialize(data)
     }
     deserialize(type, data) {
-        const serializer = this._getSerializer(type)
-
         if (!data instanceof Uint8Array) {
             throw new Error('Only instances of Uint8Array is supported.')
         }
 
-        return serializer.deserialize(data)
+        return this._getSerializer(type).deserialize(data)
+    }
+    deserializeStream(data) {
+        if (!data instanceof Uint8Array) {
+            throw new Error('Only instances of Uint8Array is supported.')
+        }
+
+        const type = this.typeFactory.createType(data[0])
+
+        return this._getSerializer(type).deserializeStream(data)
     }
     _getSerializer(type) {
         if (!type.hasOwnProperty('name')) {

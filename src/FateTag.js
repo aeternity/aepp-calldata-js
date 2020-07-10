@@ -9,22 +9,10 @@ module.exports = Object.freeze({
                                       // 11  Set below
     SHORT_LIST   :     0b0011, // xxxx 0011 | [encoded elements] when  0 < length < 16
                                // xxxx 0111
-    TYPE_INTEGER : 0b00000111, // 0000 0111 - Integer typedef
-    TYPE_BOOLEAN : 0b00010111, // 0001 0111 - Boolean typedef
-    TYPE_LIST    : 0b00100111, // 0010 0111 | Type
-    TYPE_TUPLE   : 0b00110111, // 0011 0111 | Size | [Element Types]
-    TYPE_OBJECT  : 0b01000111, // 0100 0111 | ObjectType
-    TYPE_BITS    : 0b01010111, // 0101 0111 - Bits typedef
-    TYPE_MAP     : 0b01100111, // 0110 0111 | Type | Type
-    TYPE_STRING  : 0b01110111, // 0111 0111 - string typedef
-    TYPE_VARIANT : 0b10000111, // 1000 0111 | [Arities] | [Type]
-    TYPE_BYTES   : 0b10010111, // 1001 0111 - Bytes typedef
-                              // 1010 0111
-                              // 1011 0111
-                              // 1100 0111
-                              // 1101 0111
-    TYPE_VAR     : 0b11100111, // 1110 0111 | Id when 0 =< Id < 256 (type variable)
-    TYPE_ANY     : 0b11110111, // 1111 0111 - Any typedef
+                               // 1010 0111
+                               // 1011 0111
+                               // 1100 0111
+                               // 1101 0111
     LONG_TUPLE   : 0b00001011, // 0000 1011 | RLP encoded (size - 16) | [encoded elements],
     SHORT_TUPLE  :     0b1011, // xxxx 1011 | [encoded elements] when 0  <  size < 16
                                     // 1111 Set below

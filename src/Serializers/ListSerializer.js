@@ -1,12 +1,12 @@
 const FateTag = require('../FateTag.js')
 const FateInt = require('../types/FateInt.js')
+const FateList = require('../types/FateList.js')
 
-ListSerializer = function (globalSerializer) {
-    this.globalSerializer = globalSerializer
-}
-
-ListSerializer.prototype = {
-    serialize: function (list) {
+class ListSerializer {
+    constructor(globalSerializer) {
+        this.globalSerializer = globalSerializer
+    }
+    serialize(list) {
         const serializedElements = list.items.map(e => {
             return this.globalSerializer.serialize(e)
         }).flat(Infinity)
@@ -26,6 +26,42 @@ ListSerializer.prototype = {
             FateTag.LONG_LIST,
             ...this.globalSerializer.serialize(new FateInt(len - 16)),
             ...serializedElements
+        ]
+    }
+    deserialize(data) {
+        const [value, rest] = this.deserializeStream(data)
+
+        return value
+    }
+    deserializeStream(data) {
+        const buffer = new Uint8Array(data)
+        const prefix = buffer[0]
+        let len = 0n
+        let rest = buffer.slice(1)
+
+        if (prefix === FateTag.LONG_LIST) {
+            [len, rest] = this.globalSerializer.deserializeStream(buffer.slice(1))
+            len += 16n
+        }
+
+        if ((prefix & 0x0F) === FateTag.SHORT_LIST) {
+            len = (prefix & 0xF0) >> 4
+        }
+
+        let elements = []
+        let el = null
+        for (let i = 0n; i < len; i++) {
+            [el, rest] = this.globalSerializer.deserializeStream(rest)
+            elements.push(el)
+        }
+
+        if (len === 0) {
+            return [new FateList(null), rest]
+        }
+
+        return [
+            new FateList(elements[0].type, elements),
+            rest
         ]
     }
 }
