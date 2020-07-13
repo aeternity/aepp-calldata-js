@@ -2,6 +2,11 @@ const fs = require('fs')
 const test = require('ava');
 const Encoder = require('../src/Encoder.js')
 const HexStringToByteArray = require('../src/utils/HexStringToByteArray.js')
+const FateInt = require('../src/types/FateInt.js')
+const FateList = require('../src/types/FateList.js')
+const FateBits = require('../src/types/FateBits.js')
+const {FateTypeInt, FateTypeList} = require('../src/FateTypes.js')
+
 const CONTRACT = 'Test'
 
 test.before(async t => {
@@ -81,17 +86,17 @@ test('Decode account address return', t => {
     )
 });
 
-// test('Decode contract address return', t => {
-//     t.is(
-//         t.context.encoder.decode(
-//             CONTRACT,
-//             'test_contract_address',
-//             '???',
-//         ),
-//         HexStringToByteArray("0x1FC0D099EC5A13CB9328A317FCECD852B1F7489E5E00BA09573C3C2DB6985553"),
-//         'test_contract_address(ct_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ)'
-//     )
-// });
+test('Decode contract address return', t => {
+    t.deepEqual(
+        t.context.encoder.decode(
+            CONTRACT,
+            'test_contract_address',
+            'cb_nwKgH8DQmexaE8uTKKMX/OzYUrH3SJ5eALoJVzw8LbaYVVPlirXw',
+        ),
+        HexStringToByteArray("0x1FC0D099EC5A13CB9328A317FCECD852B1F7489E5E00BA09573C3C2DB6985553"),
+        'test_contract_address(ct_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ)'
+    )
+});
 
 test('Decode oracle address return', t => {
     t.deepEqual(
@@ -117,13 +122,31 @@ test('Decode oracle query address return', t => {
     )
 });
 
-// test('Decode bits return', t => {
-//     const decoded = t.context.encoder.decode(CONTRACT, 'test_bits', '???')
-//     t.is(decoded, new FateBits(0b0), 'test_bits(Bits.none)')
+test('Decode bits return', t => {
+    const decoded = t.context.encoder.decode(CONTRACT, 'test_bits', 'cb_TwBixWzt')
+    t.deepEqual(decoded, 0b0n, 'test_bits(Bits.none)')
 
-//     const decoded2 = t.context.encoder.decode(CONTRACT, 'test_bits', '???')
-//     t.is(decoded2, new FateBits(0b11111111), 'test_bits(Bits.all)')
+    const decoded2 = t.context.encoder.decode(CONTRACT, 'test_bits', 'cb_zwH34yVW')
+    t.deepEqual(decoded2, -1n, 'test_bits(Bits.all)')
 
-//     const decoded3 = t.context.encoder.decode(CONTRACT, 'test_bits', '???')
-//     t.is(decoded3, new FateBits(0b00000001), 'test_bits(Bits.set(Bits.none, 0)')
-// });
+    const decoded3 = t.context.encoder.decode(CONTRACT, 'test_bits', 'cb_TwEPbJQb')
+    t.deepEqual(decoded3, 0b00000001n, 'test_bits(Bits.set(Bits.none, 0)')
+});
+
+test('Decode list arguments', t => {
+    const decoded = t.context.encoder.decode(CONTRACT, 'test_list', 'cb_cwIEBgoQGiqNmBRX')
+    const ints = [1, 2, 3, 5, 8, 13, 21].map(i => new FateInt(i))
+
+    t.deepEqual(decoded, new FateList(FateTypeInt(), ints), 'test_list([1, 2, 3, 5, 8, 13, 21])')
+});
+
+test('Decode nested list arguments', t => {
+    const decoded = t.context.encoder.decode(CONTRACT, 'test_nested_list', 'cb_MyMCBCMGCCMKDPLAUC0=')
+    const ints = [
+        new FateList(FateTypeInt(), [new FateInt(1), new FateInt(2)]),
+        new FateList(FateTypeInt(), [new FateInt(3), new FateInt(4)]),
+        new FateList(FateTypeInt(), [new FateInt(5), new FateInt(6)])
+    ]
+
+    t.deepEqual(decoded, new FateList(FateTypeList(FateTypeInt()), ints), 'test_nested_list([[1,2],[3,4],[5,6]])')
+});
