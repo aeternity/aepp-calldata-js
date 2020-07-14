@@ -22,6 +22,10 @@ const FateTag = require('./FateTag.js')
 
 class TypeFactory {
     createType(tag) {
+        if (tag === FateTag.TRUE || tag === FateTag.FALSE) {
+            return FateTypeBool()
+        }
+
         if ((tag & 0x01) === FateTag.SMALL_INT
             || tag === FateTag.POS_BIG_INT
             || tag === FateTag.NEG_BIG_INT
