@@ -37,6 +37,13 @@ class TypeFactory {
             return FateTypeList()
         }
 
+        if ((tag & 0x0F) === FateTag.SHORT_TUPLE
+            || tag === FateTag.LONG_TUPLE
+            || tag === FateTag.EMPTY_TUPLE
+        ) {
+            return FateTypeTuple()
+        }
+
         throw new Error("Unknown tag: 0b" + tag.toString(2))
     }
 }

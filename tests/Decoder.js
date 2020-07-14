@@ -5,7 +5,9 @@ const HexStringToByteArray = require('../src/utils/HexStringToByteArray.js')
 const FateInt = require('../src/types/FateInt.js')
 const FateList = require('../src/types/FateList.js')
 const FateBits = require('../src/types/FateBits.js')
-const {FateTypeInt, FateTypeList} = require('../src/FateTypes.js')
+const FateTuple = require('../src/types/FateTuple.js')
+const FateBool = require('../src/types/FateBool.js')
+const {FateTypeBool, FateTypeInt, FateTypeList} = require('../src/FateTypes.js')
 
 const CONTRACT = 'Test'
 
@@ -149,4 +151,35 @@ test('Decode nested list arguments', t => {
     ]
 
     t.deepEqual(decoded, new FateList(FateTypeList(FateTypeInt()), ints), 'test_nested_list([[1,2],[3,4],[5,6]])')
+});
+
+test('Decode tuple arguments', t => {
+    t.deepEqual(
+        t.context.encoder.decode(CONTRACT, 'test_tuple', 'cb_K/9/fDzeoA=='),
+        new FateTuple(
+            [FateTypeBool(), FateTypeBool()],
+            [new FateBool(true), new FateBool(false)]
+        ),
+        'test_tuple((true, false))'
+    )
+});
+
+test('Decode nested tuple arguments', t => {
+    const t1 = new FateTuple(
+        [FateTypeBool(), FateTypeBool()],
+        [new FateBool(true), new FateBool(false)]
+    )
+    const t2 = new FateTuple(
+        [FateTypeBool(), FateTypeBool()],
+        [new FateBool(false), new FateBool(true)]
+    )
+
+    t.deepEqual(
+        t.context.encoder.decode(CONTRACT, 'test_nested_tuple', 'cb_Kyv/fyt//701yEI='),
+        new FateTuple(
+            [t1.type, t2.type],
+            [t1, t2]
+        ),
+        'test_nested_tuple(((true, false), (false true)))'
+    )
 });
