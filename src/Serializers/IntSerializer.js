@@ -21,7 +21,7 @@ class IntSerializer {
             }
 
             // negative
-            return [(0xff | (small << 1)) & 0b11111110]
+            return [(0b10000000 | (small << 1)) & 0b11111110]
         }
 
         // large negative integer

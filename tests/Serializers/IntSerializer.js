@@ -7,6 +7,10 @@ const s = new IntSerializer()
 test('Serialize', t => {
     t.deepEqual(s.serialize(0), [0])
     t.deepEqual(s.serialize(new FateInt(0)), [0])
+    t.deepEqual(s.serialize(1), [2])
+    t.deepEqual(s.serialize(-1), [130])
+    t.deepEqual(s.serialize(5), [10])
+    t.deepEqual(s.serialize(-5), [138])
     t.deepEqual(s.serialize(63), [126])
     t.deepEqual(s.serialize(-63), [254])
     t.deepEqual(s.serialize(64), [111, 0])
@@ -46,6 +50,10 @@ test('Deserialize Stream', t => {
 
 test('Deserialize', t => {
     t.deepEqual(s.deserialize([0]), new FateInt(0))
+    t.deepEqual(s.deserialize([2]), new FateInt(1))
+    t.deepEqual(s.deserialize([130]), new FateInt(-1))
+    t.deepEqual(s.deserialize([10]), new FateInt(5))
+    t.deepEqual(s.deserialize([138]), new FateInt(-5))
     t.deepEqual(s.deserialize([126]), new FateInt(63))
     t.deepEqual(s.deserialize([254]), new FateInt(-63))
     t.deepEqual(s.deserialize([111, 0]), new FateInt(64))
