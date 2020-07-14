@@ -44,6 +44,10 @@ class TypeFactory {
             return FateTypeTuple()
         }
 
+        if (tag === FateTag.MAP) {
+            return FateTypeMap()
+        }
+
         throw new Error("Unknown tag: 0b" + tag.toString(2))
     }
 }

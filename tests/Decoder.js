@@ -7,7 +7,8 @@ const FateList = require('../src/types/FateList.js')
 const FateBits = require('../src/types/FateBits.js')
 const FateTuple = require('../src/types/FateTuple.js')
 const FateBool = require('../src/types/FateBool.js')
-const {FateTypeBool, FateTypeInt, FateTypeList} = require('../src/FateTypes.js')
+const FateMap = require('../src/types/FateMap.js')
+const {FateTypeBool, FateTypeInt, FateTypeList, FateTypeMap} = require('../src/FateTypes.js')
 
 const CONTRACT = 'Test'
 
@@ -181,5 +182,38 @@ test('Decode nested tuple arguments', t => {
             [t1, t2]
         ),
         'test_nested_tuple(((true, false), (false true)))'
+    )
+});
+
+test('Decode map arguments', t => {
+    t.deepEqual(
+        t.context.encoder.decode(CONTRACT, 'test_simple_map', 'cb_LwEOfzGit9U='),
+        new FateMap(FateTypeInt(), FateTypeBool(), [[new FateInt(7), new FateBool(false)]]),
+        'test_simple_map({[7] = false})'
+    )
+});
+
+test('Decode nested map arguments', t => {
+    const FTInt = FateTypeInt()
+    const FTBool = FateTypeBool()
+
+    t.deepEqual(
+        t.context.encoder.decode(CONTRACT, 'test_nested_map', 'cb_LwMALwEAfwIvAQL/BC8BEP8Q+3ou'),
+        new FateMap(
+            FTInt,
+            FateTypeMap(FTInt, FTBool),
+            [
+                [new FateInt(0), new FateMap(
+                    FTInt, FTBool, [[new FateInt(0), new FateBool(false)]])
+                ],
+                [new FateInt(1), new FateMap(
+                    FTInt, FTBool, [[new FateInt(1), new FateBool(true)]])
+                ],
+                [new FateInt(2), new FateMap(
+                    FTInt, FTBool, [[new FateInt(8), new FateBool(true)]])
+                ],
+            ]
+        ),
+        'test_nested_map({[0] = {[0] = false}, [1] = {[1] = true}, [2] = {[8] = true}})'
     )
 });
