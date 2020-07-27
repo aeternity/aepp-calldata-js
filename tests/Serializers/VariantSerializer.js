@@ -18,3 +18,15 @@ test('Serialize', t => {
         [175,132,0,0,1,0,2,27,14]
     )
 });
+
+test('Deserialize', t => {
+    t.deepEqual(
+        s.deserialize([175,132,0,0,1,0,1,63]),
+        new FateVariant([0, 0, 1, 0], 1, [], [])
+    )
+
+    t.deepEqual(
+        s.deserialize([175,132,0,0,1,0,2,27,14]),
+        new FateVariant([0, 0, 1, 0], 2, [new FateInt(7)], [FateTypeInt()])
+    )
+});

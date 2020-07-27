@@ -8,9 +8,13 @@ const FateBits = require('../src/types/FateBits.js')
 const FateTuple = require('../src/types/FateTuple.js')
 const FateBool = require('../src/types/FateBool.js')
 const FateMap = require('../src/types/FateMap.js')
+const FateVariant = require('../src/types/FateVariant.js')
 const {FateTypeBool, FateTypeInt, FateTypeList, FateTypeMap} = require('../src/FateTypes.js')
 
 const CONTRACT = 'Test'
+
+const FTInt = FateTypeInt()
+const FTBool = FateTypeBool()
 
 test.before(async t => {
     const aci = JSON.parse(fs.readFileSync('build/contracts/Test.json', 'utf-8'))
@@ -194,9 +198,6 @@ test('Decode map arguments', t => {
 });
 
 test('Decode nested map arguments', t => {
-    const FTInt = FateTypeInt()
-    const FTBool = FateTypeBool()
-
     t.deepEqual(
         t.context.encoder.decode(CONTRACT, 'test_nested_map', 'cb_LwMALwEAfwIvAQL/BC8BEP8Q+3ou'),
         new FateMap(
@@ -215,5 +216,46 @@ test('Decode nested map arguments', t => {
             ]
         ),
         'test_nested_map({[0] = {[0] = false}, [1] = {[1] = true}, [2] = {[8] = true}})'
+    )
+});
+
+test('Decode simple variant arguments', t => {
+    t.deepEqual(
+        t.context.encoder.decode(
+            CONTRACT,
+            'test_variants',
+            'cb_r4QAAAEAAT8xtJ9f'
+        ),
+        new FateVariant([0, 0, 1, 0], 1),
+        'test_variants(No)'
+    )
+});
+
+test('Decode variant arguments with non-zero arity', t => {
+    t.deepEqual(
+        t.context.encoder.decode(
+            CONTRACT,
+            'test_variants',
+            'cb_r4QAAAEAAhsOfGqVXg=='
+        ),
+        new FateVariant([0, 0, 1, 0], 2, [new FateInt(7)], [FTInt]),
+        'test_variants(Yep(7))'
+    )
+});
+
+test('Decode variant with template arguments', t => {
+    t.deepEqual(
+        t.context.encoder.decode(
+            CONTRACT,
+            'test_template_variants',
+            'cb_r4IABAFLDv8SKhktM40=',
+        ),
+        new FateVariant(
+            [0, 4],
+            1,
+            [new FateInt(7), new FateBool(true), new FateInt(9), new FateInt(21)],
+            [FTInt, FTBool, FTInt, FTInt]
+        ),
+        'test_template_variants(Any(7, true, 9, 21))'
     )
 });
