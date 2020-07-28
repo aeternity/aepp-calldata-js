@@ -15,6 +15,10 @@ class FateString extends FateData {
   toString() {
     return this._value
   }
+
+  valueOf() {
+    return this._value
+  }
 }
 
 module.exports = FateString

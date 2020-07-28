@@ -9,7 +9,14 @@ const FateTuple = require('../src/types/FateTuple.js')
 const FateBool = require('../src/types/FateBool.js')
 const FateMap = require('../src/types/FateMap.js')
 const FateVariant = require('../src/types/FateVariant.js')
-const {FateTypeBool, FateTypeInt, FateTypeList, FateTypeMap} = require('../src/FateTypes.js')
+const FateString = require('../src/types/FateString.js')
+const {
+    FateTypeBool,
+    FateTypeInt,
+    FateTypeList,
+    FateTypeMap,
+    FateTypeString
+} = require('../src/FateTypes.js')
 
 const CONTRACT = 'Test'
 
@@ -47,7 +54,7 @@ test('Decode bytes return', t => {
 });
 
 test('Decode string return', t => {
-    t.is(
+    t.deepEqual(
         t.context.encoder.decode(CONTRACT, 'test_string', 'cb_KXdob29seW1vbHlGazSE'),
         "whoolymoly",
         'test_string("whoolymoly")'
@@ -257,5 +264,31 @@ test('Decode variant with template arguments', t => {
             [FTInt, FTBool, FTInt, FTInt]
         ),
         'test_template_variants(Any(7, true, 9, 21))'
+    )
+});
+
+test('Decode type aliases', t => {
+    t.is(
+        t.context.encoder.decode(CONTRACT, 'test_int_type', 'cb_DtbN98k='),
+        7n,
+        'test_int_type(7)'
+    )
+
+    t.deepEqual(
+        t.context.encoder.decode(CONTRACT, 'test_map_type', 'cb_LwENZm9vJjJRlLM='),
+        new FateMap(FateTypeString(), FTInt, [[new FateString("foo"), new FateInt(19)]]),
+        'test_map_type({["foo"] = 19})'
+    )
+});
+
+test('Decode template type', t => {
+    t.is(
+        t.context.encoder.decode(
+            CONTRACT,
+            'test_template_type',
+            'cb_DtbN98k='
+        ),
+        7n,
+        'test_template_type(7)'
     )
 });

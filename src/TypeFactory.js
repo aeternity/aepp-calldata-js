@@ -33,6 +33,12 @@ class TypeFactory {
             return FateTypeInt()
         }
 
+        if ((tag & 0x03) === FateTag.SHORT_STRING
+            || tag === FateTag.LONG_STRING
+        ) {
+            return FateTypeString()
+        }
+
         if ((tag & 0x0F) === FateTag.SHORT_LIST || tag === FateTag.LONG_LIST) {
             return FateTypeList()
         }
@@ -44,7 +50,7 @@ class TypeFactory {
             return FateTypeTuple()
         }
 
-        if (tag === FateTag.MAP) {
+        if (tag === FateTag.MAP || tag === FateTag.EMPTY_MAP) {
             return FateTypeMap()
         }
 
