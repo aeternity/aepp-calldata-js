@@ -15,7 +15,8 @@ const {
     FateTypeInt,
     FateTypeList,
     FateTypeMap,
-    FateTypeString
+    FateTypeString,
+    FateTypeTuple
 } = require('../src/FateTypes.js')
 
 const CONTRACT = 'Test'
@@ -290,5 +291,34 @@ test('Decode template type', t => {
         ),
         7n,
         'test_template_type(7)'
+    )
+});
+
+test('Decode records', t => {
+    t.deepEqual(
+        t.context.encoder.decode(
+            CONTRACT,
+            'test_record',
+            'cb_KwAAUjeM0Q=='
+        ),
+        new FateTuple([FTInt, FTInt], [new FateInt(0), new FateInt(0)]),
+        'test_record({x = 0, y = 0})'
+    )
+
+    t.deepEqual(
+        t.context.encoder.decode(
+            CONTRACT,
+            'test_nested_record',
+            'cb_OysCBAYISeTR0A=='
+        ),
+        new FateTuple(
+            [FateTypeTuple([FTInt, FTInt]), FTInt, FTInt],
+            [
+                new FateTuple([FTInt, FTInt], [new FateInt(1), new FateInt(2)]),
+                new FateInt(3),
+                new FateInt(4)
+            ]
+        ),
+        'test_nested_record({origin = {x = 1, y = 2}, a = 3, b = 4})'
     )
 });

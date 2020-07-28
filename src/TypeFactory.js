@@ -13,7 +13,6 @@ const {
     FateTypeList,
     FateTypeMap,
     FateTypeTuple,
-    FateTypeRecord,
     FateTypeVariant,
     FateTypeOption,
     FateTypeChainTTL,

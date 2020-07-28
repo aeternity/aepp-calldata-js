@@ -78,10 +78,11 @@ class Serializer {
 }
 
 const globalSerializer = new Serializer()
+const tupleSerializer = new TupleSerializer(globalSerializer)
 
 Serializer.register('Bool', new BoolSerializer())
 Serializer.register('Int', new IntSerializer())
-Serializer.register('Tuple', new TupleSerializer(globalSerializer))
+Serializer.register('Tuple', tupleSerializer)
 Serializer.register('List', new ListSerializer(globalSerializer))
 Serializer.register('Map', new MapSerializer(globalSerializer))
 Serializer.register('ByteArray', new ByteArraySerializer())
@@ -96,5 +97,6 @@ Serializer.register('ContractAddress', new ContractSerializer())
 Serializer.register('OracleAddress', new OracleSerializer())
 Serializer.register('OracleQueryAddress', new OracleQuerySerializer())
 Serializer.register('ChannelAddress', new ChannelSerializer())
+Serializer.register('Record', tupleSerializer)
 
 module.exports = Serializer
