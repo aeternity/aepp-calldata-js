@@ -150,49 +150,37 @@ test('Decode bits return', t => {
 
 test('Decode list arguments', t => {
     const decoded = t.context.encoder.decode(CONTRACT, 'test_list', 'cb_cwIEBgoQGiqNmBRX')
-    const ints = [1, 2, 3, 5, 8, 13, 21].map(i => new FateInt(i))
+    const ints = [1, 2, 3, 5, 8, 13, 21].map(i => BigInt(i))
 
-    t.deepEqual(decoded, new FateList(FateTypeInt(), ints), 'test_list([1, 2, 3, 5, 8, 13, 21])')
+    t.deepEqual(decoded, ints, 'test_list([1, 2, 3, 5, 8, 13, 21])')
 });
 
 test('Decode nested list arguments', t => {
     const decoded = t.context.encoder.decode(CONTRACT, 'test_nested_list', 'cb_MyMCBCMGCCMKDPLAUC0=')
     const ints = [
-        new FateList(FateTypeInt(), [new FateInt(1), new FateInt(2)]),
-        new FateList(FateTypeInt(), [new FateInt(3), new FateInt(4)]),
-        new FateList(FateTypeInt(), [new FateInt(5), new FateInt(6)])
+        [1n, 2n],
+        [3n, 4n],
+        [5n, 6n]
     ]
 
-    t.deepEqual(decoded, new FateList(FateTypeList(FateTypeInt()), ints), 'test_nested_list([[1,2],[3,4],[5,6]])')
+    t.deepEqual(decoded, ints, 'test_nested_list([[1,2],[3,4],[5,6]])')
 });
 
 test('Decode tuple arguments', t => {
     t.deepEqual(
         t.context.encoder.decode(CONTRACT, 'test_tuple', 'cb_K/9/fDzeoA=='),
-        new FateTuple(
-            [FateTypeBool(), FateTypeBool()],
-            [new FateBool(true), new FateBool(false)]
-        ),
+        [true, false],
         'test_tuple((true, false))'
     )
 });
 
 test('Decode nested tuple arguments', t => {
-    const t1 = new FateTuple(
-        [FateTypeBool(), FateTypeBool()],
-        [new FateBool(true), new FateBool(false)]
-    )
-    const t2 = new FateTuple(
-        [FateTypeBool(), FateTypeBool()],
-        [new FateBool(false), new FateBool(true)]
-    )
-
     t.deepEqual(
         t.context.encoder.decode(CONTRACT, 'test_nested_tuple', 'cb_Kyv/fyt//701yEI='),
-        new FateTuple(
-            [t1.type, t2.type],
-            [t1, t2]
-        ),
+        [
+            [true, false],
+            [false, true]
+        ],
         'test_nested_tuple(((true, false), (false true)))'
     )
 });
@@ -200,7 +188,7 @@ test('Decode nested tuple arguments', t => {
 test('Decode map arguments', t => {
     t.deepEqual(
         t.context.encoder.decode(CONTRACT, 'test_simple_map', 'cb_LwEOfzGit9U='),
-        new FateMap(FateTypeInt(), FateTypeBool(), [[new FateInt(7), new FateBool(false)]]),
+        new Map([[7n, false]]),
         'test_simple_map({[7] = false})'
     )
 });
@@ -208,21 +196,11 @@ test('Decode map arguments', t => {
 test('Decode nested map arguments', t => {
     t.deepEqual(
         t.context.encoder.decode(CONTRACT, 'test_nested_map', 'cb_LwMALwEAfwIvAQL/BC8BEP8Q+3ou'),
-        new FateMap(
-            FTInt,
-            FateTypeMap(FTInt, FTBool),
-            [
-                [new FateInt(0), new FateMap(
-                    FTInt, FTBool, [[new FateInt(0), new FateBool(false)]])
-                ],
-                [new FateInt(1), new FateMap(
-                    FTInt, FTBool, [[new FateInt(1), new FateBool(true)]])
-                ],
-                [new FateInt(2), new FateMap(
-                    FTInt, FTBool, [[new FateInt(8), new FateBool(true)]])
-                ],
-            ]
-        ),
+        new Map([
+            [0n, new Map([[0n, false]])],
+            [1n, new Map([[1n, true]])],
+            [2n, new Map([[8n, true]])],
+        ]),
         'test_nested_map({[0] = {[0] = false}, [1] = {[1] = true}, [2] = {[8] = true}})'
     )
 });
@@ -277,7 +255,7 @@ test('Decode type aliases', t => {
 
     t.deepEqual(
         t.context.encoder.decode(CONTRACT, 'test_map_type', 'cb_LwENZm9vJjJRlLM='),
-        new FateMap(FateTypeString(), FTInt, [[new FateString("foo"), new FateInt(19)]]),
+        new Map([["foo", 19n]]),
         'test_map_type({["foo"] = 19})'
     )
 });
@@ -301,7 +279,8 @@ test('Decode records', t => {
             'test_record',
             'cb_KwAAUjeM0Q=='
         ),
-        new FateTuple([FTInt, FTInt], [new FateInt(0), new FateInt(0)]),
+        // TODO: should be {x: 0, y: 0}
+        [0n, 0n],
         'test_record({x = 0, y = 0})'
     )
 
@@ -311,14 +290,12 @@ test('Decode records', t => {
             'test_nested_record',
             'cb_OysCBAYISeTR0A=='
         ),
-        new FateTuple(
-            [FateTypeTuple([FTInt, FTInt]), FTInt, FTInt],
-            [
-                new FateTuple([FTInt, FTInt], [new FateInt(1), new FateInt(2)]),
-                new FateInt(3),
-                new FateInt(4)
-            ]
-        ),
+        // TODO: should be {origin: {x: 1, y: 2}, a: 3, b: 4}}
+        [
+            [1n, 2n],
+            3n,
+            4n,
+        ],
         'test_nested_record({origin = {x = 1, y = 2}, a = 3, b = 4})'
     )
 });

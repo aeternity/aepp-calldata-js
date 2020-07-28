@@ -13,7 +13,11 @@ class FateMap extends FateData {
     this._keyType = keyType
     this._valueType = valueType
     this._type = FateTypeMap(keyType, valueType)
-    this.items = items.map(arrayToItem)
+    this._value = new Map(items)
+  }
+
+  get items() {
+    return [...this._value.entries()].map(arrayToItem)
   }
 
   get keyType() {
@@ -29,7 +33,16 @@ class FateMap extends FateData {
   }
 
   get length() {
-    return this.items.length
+    return this._value.size
+  }
+
+  valueOf() {
+    const rawMap = new Map()
+    this._value.forEach((v, k) => {
+      rawMap.set(k.valueOf(), v.valueOf())
+    })
+
+    return rawMap
   }
 }
 

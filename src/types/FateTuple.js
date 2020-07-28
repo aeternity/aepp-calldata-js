@@ -1,5 +1,9 @@
 const FateData = require('./FateData.js')
-const {FateTypeTuple} = require('../FateTypes.js')
+const {FateTypeTuple, FateTypeRecord} = require('../FateTypes.js')
+
+const zipObject = (keys, values) => {
+  return keys.reduce((acc, k, i) => (acc[k] = values[i], acc), {})
+}
 
 class FateTuple extends FateData {
   constructor(valueTypes = [], items = []) {
@@ -24,6 +28,16 @@ class FateTuple extends FateData {
 
   get items() {
     return this._items
+  }
+
+  valueOf() {
+    const items = this._items.map(e => e.valueOf())
+
+    if (this._type.name === 'record') {
+      return zipObject(this._type.keys, items)
+    }
+
+    return items
   }
 }
 
