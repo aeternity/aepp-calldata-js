@@ -272,6 +272,21 @@ test('Decode template type', t => {
     )
 });
 
+
+test('Decode optional arguments', t => {
+    t.deepEqual(
+        t.context.encoder.decode(CONTRACT, 'test_optional', 'cb_r4IAAQA/aHG2bw=='),
+        new FateVariant([0, 1], 0),
+        'test_optional(None)'
+    )
+
+    t.deepEqual(
+        t.context.encoder.decode(CONTRACT, 'test_optional', 'cb_r4IAAQEbb4IBVPA+5jI='),
+        new FateVariant([0, 1], 1, [new FateInt(404)], [FTInt]),
+        'test_optional(Some(404))'
+    )
+});
+
 test('Decode records', t => {
     t.deepEqual(
         t.context.encoder.decode(
