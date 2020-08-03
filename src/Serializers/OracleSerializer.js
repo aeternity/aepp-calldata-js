@@ -7,7 +7,7 @@ class OracleSerializer {
         return [
             FateTag.OBJECT,
             FateTag.OTYPE_ORACLE,
-            ...RLP.encode(data.valueOf())
+            ...RLP.encode(data.value)
         ]
     }
     deserialize(data) {

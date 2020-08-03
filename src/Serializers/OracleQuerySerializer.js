@@ -7,7 +7,7 @@ class OracleQuerySerializer {
         return [
             FateTag.OBJECT,
             FateTag.OTYPE_ORACLE_QUERY,
-            ...RLP.encode(data.valueOf())
+            ...RLP.encode(data.value)
         ]
     }
     deserialize(data) {

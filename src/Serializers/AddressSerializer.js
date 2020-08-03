@@ -7,7 +7,7 @@ class AddressSerializer {
         return [
             FateTag.OBJECT,
             FateTag.OTYPE_ADDRESS,
-            ...RLP.encode(data.valueOf())
+            ...RLP.encode(data.value)
         ]
     }
     deserialize(data) {

@@ -10,7 +10,7 @@ class BytesSerializer {
         return [
             FateTag.OBJECT,
             FateTag.OTYPE_BYTES,
-            ...byteArraySerializer.serialize(bytes.valueOf())
+            ...byteArraySerializer.serialize(bytes.value)
         ]
     }
     deserialize(data) {

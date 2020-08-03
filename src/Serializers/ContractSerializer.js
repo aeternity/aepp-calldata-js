@@ -7,7 +7,7 @@ class ContractSerializer {
         return [
             FateTag.OBJECT,
             FateTag.OTYPE_CONTRACT,
-            ...RLP.encode(data.valueOf())
+            ...RLP.encode(data.value)
         ]
     }
     deserialize(data) {

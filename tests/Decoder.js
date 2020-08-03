@@ -96,7 +96,7 @@ test('Decode account address return', t => {
             'test_account_address',
             'cb_nwCg3mi/4bID5R9SNRugh/ebeCjmoUDwwxSmcMcAOz/1cHVYbXWK'
         ),
-        HexStringToByteArray("0xDE68BFE1B203E51F52351BA087F79B7828E6A140F0C314A670C7003B3FF57075"),
+        'ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt',
         'test_account_address(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt)'
     )
 });
@@ -108,7 +108,7 @@ test('Decode contract address return', t => {
             'test_contract_address',
             'cb_nwKgH8DQmexaE8uTKKMX/OzYUrH3SJ5eALoJVzw8LbaYVVPlirXw',
         ),
-        HexStringToByteArray("0x1FC0D099EC5A13CB9328A317FCECD852B1F7489E5E00BA09573C3C2DB6985553"),
+        'ct_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ',
         'test_contract_address(ct_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ)'
     )
 });
@@ -120,7 +120,7 @@ test('Decode oracle address return', t => {
             'test_oracle_address',
             'cb_nwOgyvIqJE7awD0m8CoX2SOULQVc/IYjKLJaUcKEvJ1CDkkkbvWd'
         ),
-        HexStringToByteArray("0xCAF22A244EDAC03D26F02A17D923942D055CFC862328B25A51C284BC9D420E49"),
+        'ok_2YNyxd6TRJPNrTcEDCe9ra59SVUdp9FR9qWC5msKZWYD9bP9z5',
         'test_oracle_address(ok_2YNyxd6TRJPNrTcEDCe9ra59SVUdp9FR9qWC5msKZWYD9bP9z5)'
     )
 });
@@ -132,7 +132,7 @@ test('Decode oracle query address return', t => {
             'test_oracle_query_address',
             'cb_nwSg7R7n3AJ40FzpUJRzxQqT1Dooso1QMvbffapEL+E3E0g6bqyq',
         ),
-        HexStringToByteArray("0xED1EE7DC0278D05CE9509473C50A93D43A28B28D5032F6DF7DAA442FE1371348"),
+        'oq_2oRvyowJuJnEkxy58Ckkw77XfWJrmRgmGaLzhdqb67SKEL1gPY',
         'test_oracle_query_address(oq_2oRvyowJuJnEkxy58Ckkw77XfWJrmRgmGaLzhdqb67SKEL1gPY)'
     )
 });

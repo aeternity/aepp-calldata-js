@@ -7,7 +7,7 @@ class ChannelSerializer {
         return [
             FateTag.OBJECT,
             FateTag.OTYPE_CHANNEL,
-            ...RLP.encode(data.valueOf())
+            ...RLP.encode(data.value)
         ]
     }
     deserialize(data) {

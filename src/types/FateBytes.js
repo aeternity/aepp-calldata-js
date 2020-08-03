@@ -1,6 +1,7 @@
 const FateData = require('./FateData.js')
 const {Int2ByteArray} = require('../utils/Int2ByteArray.js')
 const HexStringToByteArray = require('../utils/HexStringToByteArray.js')
+const bs58check = require('bs58check')
 
 const toByteArray = (value) => {
   if (Array.isArray(value) || ArrayBuffer.isView(value)) {
@@ -30,6 +31,10 @@ class FateBytes extends FateData {
 
   get size() {
     return this._size
+  }
+
+  base58Encode(prefix) {
+    return prefix + '_' + bs58check.encode(this.value)
   }
 
   valueOf() {
