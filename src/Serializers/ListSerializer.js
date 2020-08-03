@@ -28,12 +28,12 @@ class ListSerializer {
             ...serializedElements
         ]
     }
-    deserialize(data) {
-        const [value, rest] = this.deserializeStream(data)
+    deserialize(data, typeInfo) {
+        const [value, rest] = this.deserializeStream(data, typeInfo)
 
         return value
     }
-    deserializeStream(data) {
+    deserializeStream(data, typeInfo) {
         const buffer = new Uint8Array(data)
         const prefix = buffer[0]
         let len = 0n
@@ -50,8 +50,14 @@ class ListSerializer {
 
         let elements = []
         let el = null
+        let itemsType = undefined
+
+        if (typeof typeInfo !== 'undefined') {
+            itemsType = typeInfo.valuesType
+        }
+
         for (let i = 0n; i < len; i++) {
-            [el, rest] = this.globalSerializer.deserializeStream(rest)
+            [el, rest] = this.globalSerializer.deserializeStream(rest, itemsType)
             elements.push(el)
         }
 
@@ -59,8 +65,12 @@ class ListSerializer {
             return [new FateList(null), rest]
         }
 
+        if (typeof typeInfo === 'undefined') {
+            itemsType = elements[0].type
+        }
+
         return [
-            new FateList(elements[0].type, elements),
+            new FateList(itemsType, elements),
             rest
         ]
     }

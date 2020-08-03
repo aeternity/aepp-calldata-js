@@ -284,3 +284,19 @@ test('Decode records', t => {
         'test_nested_record({origin = {x = 1, y = 2}, a = 3, b = 4})'
     )
 });
+
+test('Decode list of records', t => {
+    t.deepEqual(
+        t.context.encoder.decode(
+            CONTRACT,
+            'test_records_list',
+            'cb_MysAACsCAisEBMjzXEk='
+        ),
+        [
+            {x: 0n, y: 0n},
+            {x: 1n, y: 1n},
+            {x: 2n, y: 2n},
+        ],
+        'test_records_list([{x: 0, y: 0}, {x: 1, y: 1}, {x: 2, y: 2}])'
+    )
+});
