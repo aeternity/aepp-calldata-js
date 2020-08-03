@@ -212,7 +212,7 @@ test('Decode simple variant arguments', t => {
             'test_variants',
             'cb_r4QAAAEAAT8xtJ9f'
         ),
-        new FateVariant([0, 0, 1, 0], 1),
+        {No: []},
         'test_variants(No)'
     )
 });
@@ -224,7 +224,7 @@ test('Decode variant arguments with non-zero arity', t => {
             'test_variants',
             'cb_r4QAAAEAAhsOfGqVXg=='
         ),
-        new FateVariant([0, 0, 1, 0], 2, [new FateInt(7)], [FTInt]),
+        {Yep: [7n]},
         'test_variants(Yep(7))'
     )
 });
@@ -236,12 +236,7 @@ test('Decode variant with template arguments', t => {
             'test_template_variants',
             'cb_r4IABAFLDv8SKhktM40=',
         ),
-        new FateVariant(
-            [0, 4],
-            1,
-            [new FateInt(7), new FateBool(true), new FateInt(9), new FateInt(21)],
-            [FTInt, FTBool, FTInt, FTInt]
-        ),
+        {Any: [7n, true, 9n, 21n]},
         'test_template_variants(Any(7, true, 9, 21))'
     )
 });
@@ -276,13 +271,13 @@ test('Decode template type', t => {
 test('Decode optional arguments', t => {
     t.deepEqual(
         t.context.encoder.decode(CONTRACT, 'test_optional', 'cb_r4IAAQA/aHG2bw=='),
-        new FateVariant([0, 1], 0),
+        {None: []},
         'test_optional(None)'
     )
 
     t.deepEqual(
         t.context.encoder.decode(CONTRACT, 'test_optional', 'cb_r4IAAQEbb4IBVPA+5jI='),
-        new FateVariant([0, 1], 1, [new FateInt(404)], [FTInt]),
+        {Some: [404n]},
         'test_optional(Some(404))'
     )
 });

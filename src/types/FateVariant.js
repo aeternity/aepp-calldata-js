@@ -2,7 +2,7 @@ const FateData = require('./FateData.js')
 const {FateTypeVariant, FateTypeTuple, FateTypeInt} = require('../FateTypes.js')
 
 class FateVariant extends FateData {
-  constructor(arities, tag, value = [], valueTypes = []) {
+  constructor(arities, tag, value = [], valueTypes = [], variants = []) {
     super('variant')
 
     this.arities = Array.from(arities)
@@ -11,7 +11,7 @@ class FateVariant extends FateData {
     this._value = value
     this._valueTypes = valueTypes
 
-    this._type = FateTypeVariant(arities, valueTypes)
+    this._type = FateTypeVariant(arities, valueTypes, variants)
   }
 
   get valueTypes() {
@@ -36,6 +36,23 @@ class FateVariant extends FateData {
 
   get variantType() {
     return FateTypeTuple(this._valueTypes)
+  }
+
+  get variants() {
+    return this._type.variants
+  }
+
+  valueOf() {
+    if (this.variants.length === 0) {
+      return this
+    }
+
+    const variant = this.variants[this.tag]
+    const variantName = Object.keys(variant)[0]
+
+    return {
+      [variantName]: this._value.map(e => e.valueOf())
+    }
   }
 }
 

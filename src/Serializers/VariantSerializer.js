@@ -17,20 +17,25 @@ class VariantSerializer {
             ...this.globalSerializer.serialize(valueTuple)
         ]
     }
-    deserialize(data) {
-        const [value, rest] = this.deserializeStream(data)
+    deserialize(data, typeInfo) {
+        const [value, rest] = this.deserializeStream(data, typeInfo)
 
         return value
     }
-    deserializeStream(data) {
+    deserializeStream(data, typeInfo) {
         const buffer = new Uint8Array(data)
         const decoded = RLP.decode(buffer.slice(1), true)
         const arities = [...decoded.data]
         const tag = decoded.remainder[0]
         const [els, rest] = this.globalSerializer.deserializeStream(decoded.remainder.slice(1))
 
+        let variants = []
+        if (typeof typeInfo != 'undefined') {
+            variants = typeInfo.variants
+        }
+
         return [
-            new FateVariant(arities, tag, els.items, els.valueTypes),
+            new FateVariant(arities, tag, els.items, els.valueTypes, variants),
             rest
         ]
     }
