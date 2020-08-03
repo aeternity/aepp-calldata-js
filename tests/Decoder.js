@@ -294,8 +294,7 @@ test('Decode records', t => {
             'test_record',
             'cb_KwAAUjeM0Q=='
         ),
-        // TODO: should be {x: 0, y: 0}
-        [0n, 0n],
+        {x: 0n, y: 0n},
         'test_record({x = 0, y = 0})'
     )
 
@@ -305,12 +304,7 @@ test('Decode records', t => {
             'test_nested_record',
             'cb_OysCBAYISeTR0A=='
         ),
-        // TODO: should be {origin: {x: 1, y: 2}, a: 3, b: 4}}
-        [
-            [1n, 2n],
-            3n,
-            4n,
-        ],
+        {origin: {x: 1n, y: 2n}, a: 3n, b: 4n},
         'test_nested_record({origin = {x = 1, y = 2}, a = 3, b = 4})'
     )
 });

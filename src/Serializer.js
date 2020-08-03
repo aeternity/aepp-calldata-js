@@ -51,16 +51,19 @@ class Serializer {
             throw new Error('Only instances of Uint8Array is supported.')
         }
 
-        return this._getSerializer(type).deserialize(data)
+        return this._getSerializer(type).deserialize(data, type)
     }
-    deserializeStream(data) {
+    deserializeStream(data, typeInfo) {
         if (!data instanceof Uint8Array) {
             throw new Error('Only instances of Uint8Array is supported.')
         }
 
-        const type = this.typeFactory.createType(data[0])
+        let type = typeInfo
+        if (typeof typeInfo === 'undefined') {
+            type = this.typeFactory.createType(data[0])
+        }
 
-        return this._getSerializer(type).deserializeStream(data)
+        return this._getSerializer(type).deserializeStream(data, typeInfo)
     }
     _getSerializer(type) {
         if (!type.hasOwnProperty('name')) {

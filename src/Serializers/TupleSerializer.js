@@ -35,12 +35,12 @@ class TupleSerializer {
             ...elements
         ]
     }
-    deserialize(data) {
-        const [value, rest] = this.deserializeStream(data)
+    deserialize(data, typeInfo) {
+        const [value, rest] = this.deserializeStream(data, typeInfo)
 
         return value
     }
-    deserializeStream(data) {
+    deserializeStream(data, typeInfo) {
         const buffer = new Uint8Array(data)
         const prefix = buffer[0]
         let len = 0n
@@ -59,17 +59,25 @@ class TupleSerializer {
             len += 16n
         }
 
+        let valueTypes = []
+        if (typeof typeInfo !== 'undefined') {
+            valueTypes = typeInfo.valueTypes
+        }
+
         let elements = []
         let el = null
         for (let i = 0n; i < len; i++) {
-            [el, rest] = this.globalSerializer.deserializeStream(rest)
+            [el, rest] = this.globalSerializer.deserializeStream(rest, valueTypes[i])
             elements.push(el)
         }
 
-        const types = elements.map(e => e.type)
+        let type = typeInfo
+        if (typeof typeInfo === 'undefined') {
+            type = elements.map(e => e.type)
+        }
 
         return [
-            new FateTuple(types, elements),
+            new FateTuple(type, elements),
             rest
         ]
     }
