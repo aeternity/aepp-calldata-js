@@ -316,3 +316,58 @@ test('Decode records map', t => {
         'test_records_map([[{x: 0, y: 0}, {x: 1, y: 1}], [{x: 1, y: 2}, {x: 3, y: 4}], [{x: 100, y: 12}, {x: 23, y: 99}]])'
     )
 });
+
+test('Decode primitive tuple', t => {
+    t.deepEqual(
+        t.context.encoder.decode(
+            CONTRACT,
+            'test_primitives_tuple',
+            'cb_ewL/EXRlc3RPAJ8BCb7vnwGBAAECAwQFBgcICQoLDA0ODwABAgMEBQYHCAkKCwwNDg+fAQEAAAECAwQFBgcICQoLDA0ODwABAgMEBQYHCAkKCwwNDg8AAQIDBAUGBwgJCgsMDQ4PAAECAwQFBgcICQoLDA0ODzwY0fk='
+        ),
+        [
+            1n,
+            true,
+            "test",
+            0n,
+            HexStringToByteArray("0xBEEF"),
+            HexStringToByteArray("0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f"),
+            HexStringToByteArray("0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f")
+        ],
+        'test_primitives_tuple((1, true, "test", Bits.none, 0xBEEF, #000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f, #000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f))'
+    )
+});
+
+test('Decode addresses tuple', t => {
+    t.deepEqual(
+        t.context.encoder.decode(
+            CONTRACT,
+            'test_addresses_tuple',
+            'cb_S58AoN5ov+GyA+UfUjUboIf3m3go5qFA8MMUpnDHADs/9XB1nwKgH8DQmexaE8uTKKMX/OzYUrH3SJ5eALoJVzw8LbaYVVOfA6DK8iokTtrAPSbwKhfZI5QtBVz8hiMoslpRwoS8nUIOSZ8EoO0e59wCeNBc6VCUc8UKk9Q6KLKNUDL2332qRC/hNxNI/pLnKw=='
+        ),
+        [
+            'ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt',
+            'ct_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ',
+            'ok_2YNyxd6TRJPNrTcEDCe9ra59SVUdp9FR9qWC5msKZWYD9bP9z5',
+            'oq_2oRvyowJuJnEkxy58Ckkw77XfWJrmRgmGaLzhdqb67SKEL1gPY',
+        ],
+        'test_addresses_tuple((ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt, ct_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ, ok_2YNyxd6TRJPNrTcEDCe9ra59SVUdp9FR9qWC5msKZWYD9bP9z5, oq_2oRvyowJuJnEkxy58Ckkw77XfWJrmRgmGaLzhdqb67SKEL1gPY))'
+    )
+});
+
+test('Decode complex tuple', t => {
+    t.deepEqual(
+        t.context.encoder.decode(
+            CONTRACT,
+            'test_complex_tuple',
+            'cb_WysCAq+EAAABAAIbBjMCBAYvAgIEBggrCgyRsE4R'
+        ),
+        [
+            {x: 1n, y: 1n},
+            {Yep: [3n]},
+            [1n, 2n, 3n],
+            new Map([[1n, 2n], [3n, 4n]]),
+            [5n, 6n]
+        ],
+        'test_complex_tuple(({x = 1, y = 1}, Yep(3), [1, 2, 3], {[1] = 2, [3] = 4}, (5, 6)))'
+    )
+});

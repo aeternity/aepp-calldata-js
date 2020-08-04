@@ -16,11 +16,20 @@ class BitsSerializer {
         ]
     }
     deserialize(data) {
-        const buffer = new Uint8Array(data)
-        const sign = data[0] === FateTag.POS_BITS ? 1n : -1n
-        const i = ByteArray2Int(RLP.decode(buffer.slice(1)))
+        const [value, rest] = this.deserializeStream(data)
 
-        return new FateBits(i * sign)
+        return value
+    }
+    deserializeStream(data) {
+        const buffer = new Uint8Array(data)
+        const sign = buffer[0] === FateTag.POS_BITS ? 1n : -1n
+        const decoded = RLP.decode(buffer.slice(1), true)
+        const i = ByteArray2Int(decoded.data)
+
+        return [
+            new FateBits(i * sign),
+            new Uint8Array(decoded.remainder)
+        ]
     }
 }
 

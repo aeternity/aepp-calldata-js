@@ -11,10 +11,18 @@ class ContractSerializer {
         ]
     }
     deserialize(data) {
-        const buffer = new Uint8Array(data)
-        const value = RLP.decode(buffer.slice(2))
+        const [value, rest] = this.deserializeStream(data)
 
-        return new FateContractAddress(value)
+        return value
+    }
+    deserializeStream(data) {
+        const buffer = new Uint8Array(data)
+        const decoded = RLP.decode(buffer.slice(2), true)
+
+        return [
+            new FateContractAddress(decoded.data),
+            new Uint8Array(decoded.remainder)
+        ]
     }
 }
 

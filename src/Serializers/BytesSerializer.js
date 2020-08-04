@@ -14,10 +14,18 @@ class BytesSerializer {
         ]
     }
     deserialize(data) {
-        const buffer = new Uint8Array(data)
-        const bytes = byteArraySerializer.deserialize(buffer.slice(2))
+        const [value, rest] = this.deserializeStream(data)
 
-        return new FateBytes(bytes.valueOf())
+        return value
+    }
+    deserializeStream(data) {
+        const buffer = new Uint8Array(data)
+        const [bytes, rest] = byteArraySerializer.deserializeStream(buffer.slice(2))
+
+        return [
+            new FateBytes(bytes.valueOf()),
+            rest
+        ]
     }
 }
 

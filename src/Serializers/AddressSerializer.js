@@ -11,10 +11,18 @@ class AddressSerializer {
         ]
     }
     deserialize(data) {
-        const buffer = new Uint8Array(data)
-        const value = RLP.decode(buffer.slice(2))
+        const [value, rest] = this.deserializeStream(data)
 
-        return new FateAccountAddress(value)
+        return value
+    }
+    deserializeStream(data) {
+        const buffer = new Uint8Array(data)
+        const decoded = RLP.decode(buffer.slice(2), true)
+
+        return [
+            new FateAccountAddress(decoded.data),
+            new Uint8Array(decoded.remainder)
+        ]
     }
 }
 

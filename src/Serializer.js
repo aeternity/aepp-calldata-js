@@ -63,7 +63,13 @@ class Serializer {
             type = this.typeFactory.createType(data[0])
         }
 
-        return this._getSerializer(type).deserializeStream(data, typeInfo)
+        const serializer = this._getSerializer(type)
+
+        if (typeof serializer.deserializeStream !== 'function') {
+            throw new Error('Unsupported stream deserialization for type: ' + JSON.stringify(type))
+        }
+
+        return serializer.deserializeStream(data, typeInfo)
     }
     _getSerializer(type) {
         if (!type.hasOwnProperty('name')) {
