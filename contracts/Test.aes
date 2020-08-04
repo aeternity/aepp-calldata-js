@@ -42,6 +42,7 @@ contract Test =
     entrypoint test_record(a: point) = a
     entrypoint test_nested_record(a: rectangle) = a
     entrypoint test_records_list(a:list(point)) = a
+    entrypoint test_records_map(a: map(point, point)) = a
     entrypoint test_int_type(a: number) = a
     entrypoint test_map_type(a: string_map) = a
     entrypoint test_template_type(a: box(int)) = a

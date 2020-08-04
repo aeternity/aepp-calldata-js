@@ -29,12 +29,12 @@ class MapSerializer {
             ...serializedItems.flat(Infinity)
         ]
     }
-    deserialize(data) {
-        const [value, rest] = this.deserializeStream(data)
+    deserialize(data, typeInfo) {
+        const [value, rest] = this.deserializeStream(data, typeInfo)
 
         return value
     }
-    deserializeStream(data) {
+    deserializeStream(data, typeInfo) {
         const buffer = new Uint8Array(data)
         const prefix = buffer[0]
 
@@ -50,10 +50,17 @@ class MapSerializer {
             return [new FateMap(), rest]
         }
 
+        let keyType = undefined
+        let valueType = undefined
         let elements = []
+
+        if (typeof typeInfo !== 'undefined') {
+            ({keyType, valueType} = typeInfo)
+        }
+
         for (let i = 0n; i < len; i++) {
-            const keyData = this.globalSerializer.deserializeStream(rest)
-            const valueData = this.globalSerializer.deserializeStream(keyData[1])
+            const keyData = this.globalSerializer.deserializeStream(rest, keyType)
+            const valueData = this.globalSerializer.deserializeStream(keyData[1], valueType)
 
             elements.push([keyData[0], valueData[0]])
             rest = valueData[1]
@@ -61,10 +68,15 @@ class MapSerializer {
 
         const firstEl = elements[0]
 
+        if (typeof typeInfo === 'undefined') {
+            keyType = firstEl[0].type
+            valueType = firstEl[1].type
+        }
+
         return [
             new FateMap(
-                firstEl[0].type,
-                firstEl[1].type,
+                keyType,
+                valueType,
                 elements
             ),
             rest

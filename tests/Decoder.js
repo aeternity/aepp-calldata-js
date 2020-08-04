@@ -297,6 +297,22 @@ test('Decode list of records', t => {
             {x: 1n, y: 1n},
             {x: 2n, y: 2n},
         ],
-        'test_records_list([{x: 0, y: 0}, {x: 1, y: 1}, {x: 2, y: 2}])'
+        'test_records_list([{x = 0, y = 0}, {x = 1, y = 1}, {x = 2, y = 2}])'
+    )
+});
+
+test('Decode records map', t => {
+    t.deepEqual(
+        t.context.encoder.decode(
+            CONTRACT,
+            'test_records_map',
+            'cb_LwMrAAArAgIrAgQrBggrbyQYKy5vIzf5arA='
+        ),
+        new Map([
+            [{x: 0n, y: 0n}, {x: 1n, y: 1n}],
+            [{x: 1n, y: 2n}, {x: 3n, y: 4n}],
+            [{x: 100n, y: 12n}, {x: 23n, y: 99n}],
+        ]),
+        'test_records_map([[{x: 0, y: 0}, {x: 1, y: 1}], [{x: 1, y: 2}, {x: 3, y: 4}], [{x: 100, y: 12}, {x: 23, y: 99}]])'
     )
 });
