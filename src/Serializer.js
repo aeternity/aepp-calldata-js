@@ -58,9 +58,13 @@ class Serializer {
             throw new Error('Only instances of Uint8Array is supported.')
         }
 
+        // in general the type factory needs to support only composite types
+        // after the implementation of typeInfo in the serializers
+        // however it is fully implmented for completenes
+
         let type = typeInfo
         if (typeof typeInfo === 'undefined') {
-            type = this.typeFactory.createType(data[0])
+            type = this.typeFactory.createType(data)
         }
 
         const serializer = this._getSerializer(type)
