@@ -20,7 +20,7 @@ class StringSerializer {
         const buffer = new Uint8Array(data)
         const prefix = buffer[0]
 
-        if ((prefix & 0x11) !== FateTag.SHORT_STRING && prefix !== FateTag.LONG_STRING) {
+        if ((prefix & 0b11) !== FateTag.SHORT_STRING && prefix !== FateTag.LONG_STRING) {
             throw new Error("Unsupported prefix: 0b" + prefix.toString(2).padStart(8, '0'))
         }
 
