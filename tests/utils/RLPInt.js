@@ -1,9 +1,10 @@
-const test = require('ava')
+const test = require('../../src/test.js')
 const RLPInt = require('../../src/utils/RLPInt.js')
 
 const b = (value) => new Uint8Array(value)
 
 test('RLP Encode Integer', t => {
+    t.plan(8)
     t.deepEqual(RLPInt(0), b([0]))
     t.deepEqual(RLPInt(1), b([1]))
     t.deepEqual(RLPInt(127), b([127]))

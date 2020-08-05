@@ -1,9 +1,10 @@
-const test = require('ava')
+const test = require('../../src/test.js')
 const {Int2ByteArray, ByteArray2Int} = require('../../src/utils/Int2ByteArray.js')
 
 const b = (value) => new Uint8Array(value)
 
 test('Int2ByteArray', t => {
+    t.plan(10)
     t.deepEqual(Int2ByteArray(0), b([0]))
     t.deepEqual(Int2ByteArray(1), b([1]))
     t.deepEqual(Int2ByteArray(255), b([255]))
@@ -20,6 +21,7 @@ test('Int2ByteArray', t => {
 });
 
 test('ByteArray2Int', t => {
+    t.plan(10)
     t.deepEqual(ByteArray2Int([0]), 0n)
     t.deepEqual(ByteArray2Int([1]), 1n)
     t.deepEqual(ByteArray2Int([255]), 255n)

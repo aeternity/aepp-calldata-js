@@ -1,4 +1,4 @@
-const test = require('ava')
+const test = require('../../src/test.js')
 const Serializer = require('../../src/Serializer.js')
 const TupleSerializer = require('../../src/Serializers/TupleSerializer.js')
 const FateInt = require('../../src/types/FateInt.js')
@@ -10,6 +10,7 @@ const s = new TupleSerializer(new Serializer())
 const FTInt = FateTypeInt(), FTBool = FateTypeBool()
 
 test('Serialize', t => {
+    t.plan(4)
     t.deepEqual(
         s.serialize(new FateTuple()),
         [63],
@@ -54,6 +55,7 @@ test('Serialize', t => {
 });
 
 test('Deserialize', t => {
+    t.plan(4)
     t.deepEqual(
         s.deserialize([63]),
         new FateTuple(),

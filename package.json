@@ -12,12 +12,15 @@
   },
   "devDependencies": {
     "ava": "^3.1.0",
-    "nyc": "^15.0.0"
+    "browserify": "^16.5.2",
+    "nyc": "^15.0.0",
+    "tape": "^5.0.1"
   },
   "scripts": {
     "test": "ava --verbose",
     "test:watch": "ava --verbose --watch",
-    "coverage": "nyc ava"
+    "coverage": "nyc ava",
+    "browser-test-bundle": "browserify tests/**/*.js > build/js/tests.js"
   },
   "ava": {
     "files": [

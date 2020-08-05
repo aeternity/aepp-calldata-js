@@ -1,4 +1,4 @@
-const test = require('ava')
+const test = require('../../src/test.js')
 const Serializer = require('../../src/Serializer.js')
 const MapSerializer = require('../../src/Serializers/MapSerializer.js')
 const FateInt = require('../../src/types/FateInt.js')
@@ -11,6 +11,7 @@ const FTInt = FateTypeInt()
 const FTBool = FateTypeBool()
 
 test('Serialize', t => {
+    t.plan(5)
     t.deepEqual(
         s.serialize(new FateMap(FTInt, FTBool, [])),
         [47,0],
@@ -66,6 +67,7 @@ test('Serialize', t => {
 });
 
 test('Deserialize', t => {
+    t.plan(3)
     t.deepEqual(
         s.deserialize([47,0]),
         new FateMap(),

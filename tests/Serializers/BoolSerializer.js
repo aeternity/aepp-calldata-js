@@ -1,10 +1,11 @@
-const test = require('ava')
+const test = require('../../src/test.js')
 const FateBool = require('../../src/types/FateBool.js')
 const BoolSerializer = require('../../src/Serializers/BoolSerializer.js')
 
 const s = new BoolSerializer()
 
 test('Serialize', t => {
+    t.plan(8)
     t.deepEqual(s.serialize(true), [255])
     t.deepEqual(s.serialize(false), [127])
 
@@ -18,6 +19,7 @@ test('Serialize', t => {
 });
 
 test('Deserialize', t => {
+    t.plan(4)
     const T = new FateBool(true)
     const F = new FateBool(false)
 

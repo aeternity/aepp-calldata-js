@@ -1,4 +1,4 @@
-const test = require('ava')
+const test = require('../../src/test.js')
 const {FateTypeInt} = require('../../src/FateTypes.js')
 const FateInt = require('../../src/types/FateInt.js')
 const FateVariant = require('../../src/types/FateVariant.js')
@@ -8,6 +8,7 @@ const VariantSerializer = require('../../src/Serializers/VariantSerializer.js')
 const s = new VariantSerializer(new Serializer())
 
 test('Serialize', t => {
+    t.plan(2)
     t.deepEqual(
         s.serialize(new FateVariant([0, 0, 1, 0], 1, [], [])),
         [175,132,0,0,1,0,1,63]
@@ -20,6 +21,7 @@ test('Serialize', t => {
 });
 
 test('Deserialize', t => {
+    t.plan(2)
     t.deepEqual(
         s.deserialize([175,132,0,0,1,0,1,63]),
         new FateVariant([0, 0, 1, 0], 1, [], [])

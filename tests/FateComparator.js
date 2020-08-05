@@ -1,4 +1,4 @@
-const test = require('ava')
+const test = require('../src/test.js')
 const FateComparator = require('../src/FateComparator.js')
 const FateInt = require('../src/types/FateInt.js')
 const FateBool = require('../src/types/FateBool.js')
@@ -31,6 +31,7 @@ const sort = (type, data) => {
 const FTInt = FateTypeInt(), FTBool = FateTypeBool()
 
 test('Compare primitive types', t => {
+    t.plan(5)
     t.deepEqual(
         sort(FateTypeInt(), [3, new FateInt(3), 5, -7, 1, 0]),
         [-7, 0, 1, 3, new FateInt(3), 5]
@@ -58,6 +59,7 @@ test('Compare primitive types', t => {
 });
 
 test('Compare bytes', t => {
+    t.plan(2)
     t.deepEqual(
         sort(FateTypeBytes(), [
             new FateBytes(0xfedcba9876543210),
@@ -93,6 +95,7 @@ test('Compare bytes', t => {
 
 //TODO support nested inner types
 test('Compare lists', t => {
+    t.plan(1)
     t.deepEqual(
         sort(FateTypeList(FateTypeInt()), [
             new FateList(FateTypeInt()),
@@ -117,6 +120,7 @@ test('Compare lists', t => {
 
 //TODO support nested inner types
 test('Compare tuples', t => {
+    t.plan(1)
     t.deepEqual(
         sort(FateTypeTuple(), [
             new FateTuple([FTBool, FTInt], [true, 1]),
@@ -136,6 +140,7 @@ test('Compare tuples', t => {
 });
 
 test('Compare variants', t => {
+    t.plan(1)
     t.deepEqual(
         sort(FateTypeVariant(), [
             new FateVariant([0, 0, 1], 2),
@@ -167,6 +172,7 @@ test('Compare variants', t => {
 });
 
 test('Compare maps', t => {
+    t.plan(1)
     t.deepEqual(
         sort(FateTypeMap(FTInt, FTBool), [
             new FateMap(FTInt, FTBool, [[1,true], [3,true], [2,false], [0,false]]),

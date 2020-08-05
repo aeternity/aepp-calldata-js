@@ -1,4 +1,4 @@
-const test = require('ava')
+const test = require('../src/test.js')
 const Serializer = require('../src/Serializer.js')
 const FateInt = require('../src/types/FateInt.js')
 const FateBool = require('../src/types/FateBool.js')
@@ -16,15 +16,14 @@ const FateOracleQueryAddress = require('../src/types/FateOracleQueryAddress.js')
 const FateChannelAddress = require('../src/types/FateChannelAddress.js')
 const {FateTypeInt, FateTypeBool} = require('../src/FateTypes.js')
 
+const serializer = new Serializer()
+
 function ser(t, input) {
-    return t.context.serializer.serialize(input)
+    return serializer.serialize(input)
 }
 
-test.before(async t => {
-    t.context.serializer = new Serializer()
-});
-
 test('Serialize all types', t => {
+    t.plan(14)
     // primitive types
     t.deepEqual(ser(t, new FateInt(0)), [0])
     t.deepEqual(ser(t, new FateBool(true)), [255])
@@ -39,7 +38,7 @@ test('Serialize all types', t => {
     t.deepEqual(ser(t, new FateList(FTInt)), [3])
     t.deepEqual(ser(t, new FateMap(FTInt, FTBool, [])), [47,0])
     t.deepEqual(
-        ser(t, new FateVariant([0, 0, 1, 0], 1))
+        ser(t, new FateVariant([0, 0, 1, 0], 1)),
         [175,132,0,0,1,0,1,63]
     )
 

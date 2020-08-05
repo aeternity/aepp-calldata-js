@@ -1,4 +1,4 @@
-const test = require('ava')
+const test = require('../../src/test.js')
 const Serializer = require('../../src/Serializer.js')
 const ListSerializer = require('../../src/Serializers/ListSerializer.js')
 const {FateTypeInt, FateTypeList} = require('../../src/FateTypes.js')
@@ -8,6 +8,7 @@ const FateList = require('../../src/types/FateList.js')
 const s = new ListSerializer(new Serializer())
 
 test('Serialize', t => {
+    t.plan(4)
     t.deepEqual(
         s.serialize(new FateList(FateTypeInt(), [])),
         [3],
@@ -46,6 +47,7 @@ test('Serialize', t => {
 });
 
 test('Deserialize', t => {
+    t.plan(4)
     t.deepEqual(
         s.deserialize([3]),
         new FateList(null, []),

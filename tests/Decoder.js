@@ -1,51 +1,51 @@
 const fs = require('fs')
-const test = require('ava');
+const test = require('../src/test.js');
 const Encoder = require('../src/Encoder.js')
 const HexStringToByteArray = require('../src/utils/HexStringToByteArray.js')
+const aci = require('../build/contracts/Test.json')
 
 const CONTRACT = 'Test'
-
-test.before(async t => {
-    const aci = JSON.parse(fs.readFileSync('build/contracts/Test.json', 'utf-8'))
-    const encoder = new Encoder(aci)
-
-    t.context.encoder = encoder
-});
+const encoder = new Encoder(aci)
 
 test('Decode boolean return', t => {
+    t.plan(1)
     t.is(
-        t.context.encoder.decode(CONTRACT, 'test_bool', 'cb_/8CwV/U='),
+        encoder.decode(CONTRACT, 'test_bool', 'cb_/8CwV/U='),
         true
     )
 });
 
 test('Decode int return', t => {
+    t.plan(1)
     t.is(
-        t.context.encoder.decode(CONTRACT, 'test_single_int', 'cb_b4MC7W/bKkpn'),
+        encoder.decode(CONTRACT, 'test_single_int', 'cb_b4MC7W/bKkpn'),
         191919n,
         'test_single_int(191919)'
     )
 });
 
 test('Decode bytes return', t => {
+    t.plan(1)
     t.deepEqual(
-        t.context.encoder.decode(CONTRACT, 'test_bytes', 'cb_nwEJvu+rlRrs'),
+        encoder.decode(CONTRACT, 'test_bytes', 'cb_nwEJvu+rlRrs'),
         new Uint8Array([0xbe, 0xef]),
         'test_bytes(#beef)'
     )
 });
 
 test('Decode string return', t => {
+    t.plan(1)
     t.deepEqual(
-        t.context.encoder.decode(CONTRACT, 'test_string', 'cb_KXdob29seW1vbHlGazSE'),
+        encoder.decode(CONTRACT, 'test_string', 'cb_KXdob29seW1vbHlGazSE'),
         "whoolymoly",
         'test_string("whoolymoly")'
     )
 });
 
 test('Decode hash return', t => {
+    t.plan(1)
     t.deepEqual(
-        t.context.encoder.decode(
+        encoder.decode(
             CONTRACT,
             'test_hash',
             'cb_nwGBAAECAwQFBgcICQoLDA0ODwABAgMEBQYHCAkKCwwNDg/55Yfk',
@@ -56,8 +56,9 @@ test('Decode hash return', t => {
 });
 
 test('Decode signature return', t => {
+    t.plan(1)
     t.deepEqual(
-        t.context.encoder.decode(
+        encoder.decode(
             CONTRACT,
             'test_signature',
             'cb_nwEBAAABAgMEBQYHCAkKCwwNDg8AAQIDBAUGBwgJCgsMDQ4PAAECAwQFBgcICQoLDA0ODwABAgMEBQYHCAkKCwwNDg/EV2+8',
@@ -71,8 +72,9 @@ test('Decode signature return', t => {
 });
 
 test('Decode account address return', t => {
+    t.plan(1)
     t.deepEqual(
-        t.context.encoder.decode(
+        encoder.decode(
             CONTRACT,
             'test_account_address',
             'cb_nwCg3mi/4bID5R9SNRugh/ebeCjmoUDwwxSmcMcAOz/1cHVYbXWK'
@@ -83,8 +85,9 @@ test('Decode account address return', t => {
 });
 
 test('Decode contract address return', t => {
+    t.plan(1)
     t.deepEqual(
-        t.context.encoder.decode(
+        encoder.decode(
             CONTRACT,
             'test_contract_address',
             'cb_nwKgH8DQmexaE8uTKKMX/OzYUrH3SJ5eALoJVzw8LbaYVVPlirXw',
@@ -95,8 +98,9 @@ test('Decode contract address return', t => {
 });
 
 test('Decode oracle address return', t => {
+    t.plan(1)
     t.deepEqual(
-        t.context.encoder.decode(
+        encoder.decode(
             CONTRACT,
             'test_oracle_address',
             'cb_nwOgyvIqJE7awD0m8CoX2SOULQVc/IYjKLJaUcKEvJ1CDkkkbvWd'
@@ -107,8 +111,9 @@ test('Decode oracle address return', t => {
 });
 
 test('Decode oracle query address return', t => {
+    t.plan(1)
     t.deepEqual(
-        t.context.encoder.decode(
+        encoder.decode(
             CONTRACT,
             'test_oracle_query_address',
             'cb_nwSg7R7n3AJ40FzpUJRzxQqT1Dooso1QMvbffapEL+E3E0g6bqyq',
@@ -119,25 +124,28 @@ test('Decode oracle query address return', t => {
 });
 
 test('Decode bits return', t => {
-    const decoded = t.context.encoder.decode(CONTRACT, 'test_bits', 'cb_TwBixWzt')
+    t.plan(3)
+    const decoded = encoder.decode(CONTRACT, 'test_bits', 'cb_TwBixWzt')
     t.deepEqual(decoded, 0b0n, 'test_bits(Bits.none)')
 
-    const decoded2 = t.context.encoder.decode(CONTRACT, 'test_bits', 'cb_zwH34yVW')
+    const decoded2 = encoder.decode(CONTRACT, 'test_bits', 'cb_zwH34yVW')
     t.deepEqual(decoded2, -1n, 'test_bits(Bits.all)')
 
-    const decoded3 = t.context.encoder.decode(CONTRACT, 'test_bits', 'cb_TwEPbJQb')
+    const decoded3 = encoder.decode(CONTRACT, 'test_bits', 'cb_TwEPbJQb')
     t.deepEqual(decoded3, 0b00000001n, 'test_bits(Bits.set(Bits.none, 0)')
 });
 
 test('Decode list arguments', t => {
-    const decoded = t.context.encoder.decode(CONTRACT, 'test_list', 'cb_cwIEBgoQGiqNmBRX')
+    t.plan(1)
+    const decoded = encoder.decode(CONTRACT, 'test_list', 'cb_cwIEBgoQGiqNmBRX')
     const ints = [1, 2, 3, 5, 8, 13, 21].map(i => BigInt(i))
 
     t.deepEqual(decoded, ints, 'test_list([1, 2, 3, 5, 8, 13, 21])')
 });
 
 test('Decode nested list arguments', t => {
-    const decoded = t.context.encoder.decode(CONTRACT, 'test_nested_list', 'cb_MyMCBCMGCCMKDPLAUC0=')
+    t.plan(1)
+    const decoded = encoder.decode(CONTRACT, 'test_nested_list', 'cb_MyMCBCMGCCMKDPLAUC0=')
     const ints = [
         [1n, 2n],
         [3n, 4n],
@@ -148,16 +156,18 @@ test('Decode nested list arguments', t => {
 });
 
 test('Decode tuple arguments', t => {
+    t.plan(1)
     t.deepEqual(
-        t.context.encoder.decode(CONTRACT, 'test_tuple', 'cb_K/9/fDzeoA=='),
+        encoder.decode(CONTRACT, 'test_tuple', 'cb_K/9/fDzeoA=='),
         [true, false],
         'test_tuple((true, false))'
     )
 });
 
 test('Decode nested tuple arguments', t => {
+    t.plan(1)
     t.deepEqual(
-        t.context.encoder.decode(CONTRACT, 'test_nested_tuple', 'cb_Kyv/fyt//701yEI='),
+        encoder.decode(CONTRACT, 'test_nested_tuple', 'cb_Kyv/fyt//701yEI='),
         [
             [true, false],
             [false, true]
@@ -167,16 +177,18 @@ test('Decode nested tuple arguments', t => {
 });
 
 test('Decode map arguments', t => {
+    t.plan(1)
     t.deepEqual(
-        t.context.encoder.decode(CONTRACT, 'test_simple_map', 'cb_LwEOfzGit9U='),
+        encoder.decode(CONTRACT, 'test_simple_map', 'cb_LwEOfzGit9U='),
         new Map([[7n, false]]),
         'test_simple_map({[7] = false})'
     )
 });
 
 test('Decode nested map arguments', t => {
+    t.plan(1)
     t.deepEqual(
-        t.context.encoder.decode(CONTRACT, 'test_nested_map', 'cb_LwMALwEAfwIvAQL/BC8BEP8Q+3ou'),
+        encoder.decode(CONTRACT, 'test_nested_map', 'cb_LwMALwEAfwIvAQL/BC8BEP8Q+3ou'),
         new Map([
             [0n, new Map([[0n, false]])],
             [1n, new Map([[1n, true]])],
@@ -187,8 +199,9 @@ test('Decode nested map arguments', t => {
 });
 
 test('Decode simple variant arguments', t => {
+    t.plan(1)
     t.deepEqual(
-        t.context.encoder.decode(
+        encoder.decode(
             CONTRACT,
             'test_variants',
             'cb_r4QAAAEAAT8xtJ9f'
@@ -199,8 +212,9 @@ test('Decode simple variant arguments', t => {
 });
 
 test('Decode variant arguments with non-zero arity', t => {
+    t.plan(1)
     t.deepEqual(
-        t.context.encoder.decode(
+        encoder.decode(
             CONTRACT,
             'test_variants',
             'cb_r4QAAAEAAhsOfGqVXg=='
@@ -211,8 +225,9 @@ test('Decode variant arguments with non-zero arity', t => {
 });
 
 test('Decode variant with template arguments', t => {
+    t.plan(1)
     t.deepEqual(
-        t.context.encoder.decode(
+        encoder.decode(
             CONTRACT,
             'test_template_variants',
             'cb_r4IABAFLDv8SKhktM40=',
@@ -223,22 +238,24 @@ test('Decode variant with template arguments', t => {
 });
 
 test('Decode type aliases', t => {
+    t.plan(2)
     t.is(
-        t.context.encoder.decode(CONTRACT, 'test_int_type', 'cb_DtbN98k='),
+        encoder.decode(CONTRACT, 'test_int_type', 'cb_DtbN98k='),
         7n,
         'test_int_type(7)'
     )
 
     t.deepEqual(
-        t.context.encoder.decode(CONTRACT, 'test_map_type', 'cb_LwENZm9vJjJRlLM='),
+        encoder.decode(CONTRACT, 'test_map_type', 'cb_LwENZm9vJjJRlLM='),
         new Map([["foo", 19n]]),
         'test_map_type({["foo"] = 19})'
     )
 });
 
 test('Decode template type', t => {
+    t.plan(1)
     t.is(
-        t.context.encoder.decode(
+        encoder.decode(
             CONTRACT,
             'test_template_type',
             'cb_DtbN98k='
@@ -250,22 +267,24 @@ test('Decode template type', t => {
 
 
 test('Decode optional arguments', t => {
+    t.plan(2)
     t.deepEqual(
-        t.context.encoder.decode(CONTRACT, 'test_optional', 'cb_r4IAAQA/aHG2bw=='),
+        encoder.decode(CONTRACT, 'test_optional', 'cb_r4IAAQA/aHG2bw=='),
         {None: []},
         'test_optional(None)'
     )
 
     t.deepEqual(
-        t.context.encoder.decode(CONTRACT, 'test_optional', 'cb_r4IAAQEbb4IBVPA+5jI='),
+        encoder.decode(CONTRACT, 'test_optional', 'cb_r4IAAQEbb4IBVPA+5jI='),
         {Some: [404n]},
         'test_optional(Some(404))'
     )
 });
 
 test('Decode records', t => {
+    t.plan(2)
     t.deepEqual(
-        t.context.encoder.decode(
+        encoder.decode(
             CONTRACT,
             'test_record',
             'cb_KwAAUjeM0Q=='
@@ -275,7 +294,7 @@ test('Decode records', t => {
     )
 
     t.deepEqual(
-        t.context.encoder.decode(
+        encoder.decode(
             CONTRACT,
             'test_nested_record',
             'cb_OysCBAYISeTR0A=='
@@ -286,8 +305,9 @@ test('Decode records', t => {
 });
 
 test('Decode list of records', t => {
+    t.plan(1)
     t.deepEqual(
-        t.context.encoder.decode(
+        encoder.decode(
             CONTRACT,
             'test_records_list',
             'cb_MysAACsCAisEBMjzXEk='
@@ -302,8 +322,9 @@ test('Decode list of records', t => {
 });
 
 test('Decode records map', t => {
+    t.plan(1)
     t.deepEqual(
-        t.context.encoder.decode(
+        encoder.decode(
             CONTRACT,
             'test_records_map',
             'cb_LwMrAAArAgIrAgQrBggrbyQYKy5vIzf5arA='
@@ -318,8 +339,9 @@ test('Decode records map', t => {
 });
 
 test('Decode primitive tuple', t => {
+    t.plan(1)
     t.deepEqual(
-        t.context.encoder.decode(
+        encoder.decode(
             CONTRACT,
             'test_primitives_tuple',
             'cb_ewL/EXRlc3RPAJ8BCb7vnwGBAAECAwQFBgcICQoLDA0ODwABAgMEBQYHCAkKCwwNDg+fAQEAAAECAwQFBgcICQoLDA0ODwABAgMEBQYHCAkKCwwNDg8AAQIDBAUGBwgJCgsMDQ4PAAECAwQFBgcICQoLDA0ODzwY0fk='
@@ -338,8 +360,9 @@ test('Decode primitive tuple', t => {
 });
 
 test('Decode addresses tuple', t => {
+    t.plan(1)
     t.deepEqual(
-        t.context.encoder.decode(
+        encoder.decode(
             CONTRACT,
             'test_addresses_tuple',
             'cb_S58AoN5ov+GyA+UfUjUboIf3m3go5qFA8MMUpnDHADs/9XB1nwKgH8DQmexaE8uTKKMX/OzYUrH3SJ5eALoJVzw8LbaYVVOfA6DK8iokTtrAPSbwKhfZI5QtBVz8hiMoslpRwoS8nUIOSZ8EoO0e59wCeNBc6VCUc8UKk9Q6KLKNUDL2332qRC/hNxNI/pLnKw=='
@@ -355,8 +378,9 @@ test('Decode addresses tuple', t => {
 });
 
 test('Decode complex tuple', t => {
+    t.plan(1)
     t.deepEqual(
-        t.context.encoder.decode(
+        encoder.decode(
             CONTRACT,
             'test_complex_tuple',
             'cb_WysCAq+EAAABAAIbBjMCBAYvAgIEBggrCgyRsE4R'

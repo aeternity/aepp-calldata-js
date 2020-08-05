@@ -1,10 +1,11 @@
-const test = require('ava')
+const test = require('../../src/test.js')
 const ByteArraySerializer = require('../../src/Serializers/ByteArraySerializer.js')
 const FateByteArray = require('../../src/types/FateByteArray.js')
 
 const s = new ByteArraySerializer()
 
 test('Serialize FateByteArray', t => {
+    t.plan(3)
     const longBytes = [...Array(64).keys()]
 
     t.deepEqual(s.serialize(new FateByteArray([])), [95], 'empty byte_array')
@@ -23,6 +24,7 @@ test('Serialize FateByteArray', t => {
 });
 
 test('Serialize plain array', t => {
+    t.plan(5)
     t.deepEqual(s.serialize([]), [95], 'empty byte_array')
 
     t.deepEqual(
@@ -55,6 +57,7 @@ test('Serialize plain array', t => {
 });
 
 test('Deserialize Stream', t => {
+    t.plan(3)
     const longBytes = [...Array(64).keys()]
 
     t.deepEqual(
@@ -84,6 +87,7 @@ test('Deserialize Stream', t => {
 });
 
 test('Deserialize', t => {
+    t.plan(5)
     t.deepEqual(s.deserialize([95]), new FateByteArray([]), 'empty byte_array')
 
     t.deepEqual(

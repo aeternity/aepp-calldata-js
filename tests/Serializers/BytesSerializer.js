@@ -1,10 +1,11 @@
-const test = require('ava')
+const test = require('../../src/test.js')
 const BytesSerializer = require('../../src/Serializers/BytesSerializer.js')
 const FateBytes = require('../../src/types/FateBytes.js')
 
 const s = new BytesSerializer()
 
 test('Serialize', t => {
+    t.plan(5)
     t.deepEqual(
         s.serialize(new FateBytes([0xbe, 0xef])),
         [159,1,9,190,239]
@@ -32,6 +33,7 @@ test('Serialize', t => {
 });
 
 test('Deserialize', t => {
+    t.plan(1)
     t.deepEqual(
         s.deserialize([159,1,9,190,239]),
         new FateBytes(0xbeef)

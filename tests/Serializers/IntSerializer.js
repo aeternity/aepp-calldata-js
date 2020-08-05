@@ -1,10 +1,11 @@
-const test = require('ava')
+const test = require('../../src/test.js')
 const IntSerializer = require('../../src/Serializers/IntSerializer.js')
 const FateInt = require('../../src/types/FateInt.js')
 
 const s = new IntSerializer()
 
 test('Serialize', t => {
+    t.plan(15)
     t.deepEqual(s.serialize(0), [0])
     t.deepEqual(s.serialize(new FateInt(0)), [0])
     t.deepEqual(s.serialize(1), [2])
@@ -27,6 +28,7 @@ test('Serialize', t => {
 
 
 test('Deserialize Stream', t => {
+    t.plan(4)
     t.deepEqual(
         s.deserializeStream([126, 5, 5, 5]),
         [new FateInt(63), new Uint8Array([5,5,5])]
@@ -49,6 +51,7 @@ test('Deserialize Stream', t => {
 });
 
 test('Deserialize', t => {
+    t.plan(12)
     t.deepEqual(s.deserialize([0]), new FateInt(0))
     t.deepEqual(s.deserialize([2]), new FateInt(1))
     t.deepEqual(s.deserialize([130]), new FateInt(-1))
