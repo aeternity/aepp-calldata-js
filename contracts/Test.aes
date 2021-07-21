@@ -5,7 +5,7 @@ namespace Lib =
 contract RemoteTest =
     entrypoint test_remote : (int) => int
 
-contract Test =
+main contract Test =
     type number = int
     type string_map = map(string, int)
     type box('a) = 'a
