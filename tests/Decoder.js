@@ -64,10 +64,7 @@ test('Decode signature return', t => {
             'cb_nwEBAAABAgMEBQYHCAkKCwwNDg8AAQIDBAUGBwgJCgsMDQ4PAAECAwQFBgcICQoLDA0ODwABAgMEBQYHCAkKCwwNDg/EV2+8',
         ),
         HexStringToByteArray("0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f"),
-        `test_signature(
-            #000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f
-            000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f
-        )`
+        `test_signature(#000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f)`
     )
 });
 
@@ -152,7 +149,7 @@ test('Decode nested list arguments', t => {
         [5n, 6n]
     ]
 
-    t.deepEqual(decoded, ints, 'test_nested_list([[1,2],[3,4],[5,6]])')
+    t.deepEqual(decoded, ints, 'test_nested_list([[1, 2], [3, 4], [5, 6]])')
 });
 
 test('Decode tuple arguments', t => {
@@ -172,7 +169,7 @@ test('Decode nested tuple arguments', t => {
             [true, false],
             [false, true]
         ],
-        'test_nested_tuple(((true, false), (false true)))'
+        'test_nested_tuple(((true, false), (false, true)))'
     )
 });
 
@@ -334,7 +331,11 @@ test('Decode records map', t => {
             [{x: 1n, y: 2n}, {x: 3n, y: 4n}],
             [{x: 100n, y: 12n}, {x: 23n, y: 99n}],
         ]),
-        'test_records_map([[{x: 0, y: 0}, {x: 1, y: 1}], [{x: 1, y: 2}, {x: 3, y: 4}], [{x: 100, y: 12}, {x: 23, y: 99}]])'
+        `test_records_map(
+                {[{x = 0, y = 0}] = {x = 1, y = 1},
+                [{x = 1, y = 2}] = {x = 3, y = 4},
+                [{x = 100, y = 12}] = {x = 23, y = 99}}
+        )`
     )
 });
 
