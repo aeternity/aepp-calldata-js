@@ -1,4 +1,5 @@
 const {
+    FateTypeVoid,
     FateTypeInt,
     FateTypeBool,
     FateTypeString,
@@ -43,6 +44,10 @@ class TypeResolver {
     }
 
     getReturnType(contract, funName) {
+        if (funName === 'init') {
+            return this.resolveType('void')
+        }
+
         const funcAci = this.getNamespaceAci(contract).functions.find(e => e.name == funName)
 
         if (!funcAci) {
@@ -91,6 +96,10 @@ class TypeResolver {
             if (key !== 'record' && key !== 'variant') {
                 resolvedTypes = valueTypes.map(t => this.resolveType(t))
             }
+        }
+
+        if (key === 'void') {
+            return FateTypeVoid()
         }
 
         if (key === 'int') {
