@@ -26,3 +26,4 @@ jobs:
           sudo apt install ./esl-erlang_21.3.8.13-1~debian~stretch_amd64.deb || true
           sudo apt --fix-broken install
     - run: make tests
+    - run: make integration-tests

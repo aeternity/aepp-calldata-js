@@ -48,7 +48,7 @@ test('Encode bytes arguments', t => {
 test('Encode string arguments', t => {
     t.plan(1)
     const encoded = encoder.encode(CONTRACT, 'test_string', ["whoolymoly"])
-    t.is(encoded, 'cb_KxHwzCuVGyl3aG9vbHltb2x5zwMSnw==', 'test_bytes("whoolymoly")')
+    t.is(encoded, 'cb_KxHwzCuVGyl3aG9vbHltb2x5zwMSnw==', 'test_string("whoolymoly")')
 });
 
 test('Encode hash arguments', t => {
@@ -144,7 +144,7 @@ test('Encode bits arguments', t => {
     t.is(encoded2, 'cb_KxG27kGGG88BYlyOgw==', 'test_bits(Bits.all)')
 
     const encoded3 = encoder.encode(CONTRACT, 'test_bits', [[1]])
-    t.is(encoded3, 'cb_KxG27kGGG08BD4ordQ==', 'test_bits(Bits.set(Bits.none, 0)')
+    t.is(encoded3, 'cb_KxG27kGGG08BD4ordQ==', 'test_bits(Bits.set(Bits.none, 0))')
 });
 
 test('Encode list arguments', t => {
@@ -188,7 +188,7 @@ test('Encode tuple arguments', t => {
 test('Encode nested tuple arguments', t => {
     t.plan(1)
     const encoded = encoder.encode(CONTRACT, 'test_nested_tuple', [[[true, false], [false, true]]])
-    t.is(encoded, 'cb_KxHkKCkeGysr/38rf/+ZQRDt', 'test_nested_tuple(((true, false), (false true)))')
+    t.is(encoded, 'cb_KxHkKCkeGysr/38rf/+ZQRDt', 'test_nested_tuple(((true, false), (false, true)))')
 });
 
 test('Encode simple variant arguments', t => {

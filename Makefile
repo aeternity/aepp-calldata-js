@@ -39,6 +39,10 @@ browser-tests: $(BUILDDIR)/js/tests.js
 	@echo Make sure to change the test runner to "tape" in "src/test.js" prior running this command.
 	@echo Open "tests/index.html" in your browser.
 
+integration-tests:
+	./tests/integration/encoder.sh
+	./tests/integration/decoder.sh
+
 coverage: node_modules $(BUILDDIR)/$(JSON_ACIS)
 	npm run coverage
 
