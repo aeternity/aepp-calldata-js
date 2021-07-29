@@ -1,8 +1,9 @@
+@compiler >= 6
+
 namespace Lib =
     type data = int
 
-
-contract RemoteTest =
+contract interface RemoteTest =
     entrypoint test_remote : (int) => int
 
 main contract Test =
