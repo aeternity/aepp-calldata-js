@@ -1,3 +1,7 @@
+const FateTypeVoid = () => {
+    return {name: 'void'}
+}
+
 const FateTypeInt = () => {
     return {name: 'int'}
 }
@@ -113,6 +117,7 @@ const FateTypeChainTTL = () => {
 }
 
 module.exports = {
+    FateTypeVoid,
     FateTypeInt,
     FateTypeBool,
     FateTypeString,

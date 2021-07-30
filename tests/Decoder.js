@@ -7,6 +7,14 @@ const aci = require('../build/contracts/Test.json')
 const CONTRACT = 'Test'
 const encoder = new Encoder(aci)
 
+test('Decode implicit init (void)', t => {
+    t.plan(1)
+    t.is(
+        encoder.decode(CONTRACT, 'init', 'cb_/8CwV/U='),
+        undefined
+    )
+});
+
 test('Decode boolean return', t => {
     t.plan(1)
     t.is(
