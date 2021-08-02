@@ -3,6 +3,7 @@ SOURCEDIR = contracts
 SOURCES=$(wildcard $(SOURCEDIR)/*.aes)
 BYTECODES=$(SOURCES:.aes=.aeb)
 JSON_ACIS=$(SOURCES:.aes=.json)
+ADDRESSES=$(SOURCES:.aes=.addr)
 BUILDDIR = build
 
 all: $(BUILDDIR)/$(BYTECODES) $(BUILDDIR)/$(JSON_ACIS)
@@ -47,8 +48,10 @@ coverage: node_modules $(BUILDDIR)/$(JSON_ACIS)
 	npm run coverage
 
 clean:
-	rm $(BUILDDIR)/$(BYTECODES)
-	rm $(BUILDDIR)/$(JSON_ACIS)
+	rm -f $(BUILDDIR)/$(BYTECODES)
+	rm -f $(BUILDDIR)/$(JSON_ACIS)
+	rm -f $(BUILDDIR)/$(ADDRESSES)
+	rm -rf $(BUILDDIR)/wallet
 	rm -rf $(BUILDDIR)/js
+	rm -rf $(BUILDDIR)/.nyc_output
 	rm -rf node_modules
-	rm -rf .nyc_output
