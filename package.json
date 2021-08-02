@@ -1,5 +1,5 @@
 {
-  "name": "aepp-calldata-js",
+  "name": "@aeternity/aepp-calldata",
   "version": "0.0.1",
   "description": "Aeternity data serialization library",
   "main": "src/Encoder.js",
