@@ -2,7 +2,7 @@
   "name": "aepp-calldata-js",
   "version": "0.0.1",
   "description": "Aeternity data serialization library",
-  "main": "Encoder.js",
+  "main": "src/Encoder.js",
   "keywords": "aeternity, aesophia, fate, calldata, serialization, encoder, decoder",
   "dependencies": {
     "base64check": "^2.1.3",
