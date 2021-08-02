@@ -99,6 +99,11 @@ Using the library involves data types and their mappings from Sophia to JavaScri
 - note the fixed structure of variant object with keys `variant` which denotes variant constructor and `values` as it's arguments.
 - while Javascript Number and primitive `int` types can be used as well when `BigInt` type is expected it's not recommended because of it's `Number.MAX_SAFE_INTEGER` limitation.
 
+## Versioning
+
+This project follows the [semantic versioning](https://semver.org/spec/v2.0.0) guidelines.
+Refer to the CHANGELOG(CHANGELOG.md) for more information about releases.
+
 ## Development
 
 ### Install
