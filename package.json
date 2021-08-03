@@ -22,6 +22,9 @@
     "serialization"
   ],
   "main": "src/Encoder.js",
+  "files": [
+    "src/*"
+  ],
   "dependencies": {
     "base64check": "^2.1.3",
     "blakejs": "^1.1.0",
