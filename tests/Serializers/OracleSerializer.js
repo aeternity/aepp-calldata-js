@@ -1,4 +1,4 @@
-const test = require('../../src/test.js')
+const test = require('../test.js')
 const OracleSerializer = require('../../src/Serializers/OracleSerializer.js')
 const FateOracleAddress = require('../../src/types/FateOracleAddress.js')
 

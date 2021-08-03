@@ -1,4 +1,4 @@
-const test = require('../../src/test.js')
+const test = require('../test.js')
 const AddressSerializer = require('../../src/Serializers/AddressSerializer.js')
 const FateAccountAddress = require('../../src/types/FateAccountAddress.js')
 

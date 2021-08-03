@@ -1,4 +1,4 @@
-const test = require('../../src/test.js')
+const test = require('../test.js')
 const {FateTypeInt} = require('../../src/FateTypes.js')
 const FateInt = require('../../src/types/FateInt.js')
 const FateVariant = require('../../src/types/FateVariant.js')

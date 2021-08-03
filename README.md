@@ -118,6 +118,12 @@ npm install
 make tests
 ```
 
+Verify browser compatibility with:
+
+```bash
+make browser-tests
+```
+
 To see the test coverage run:
 
 ```bash

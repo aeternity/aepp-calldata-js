@@ -1,4 +1,4 @@
-const test = require('../../src/test.js')
+const test = require('../test.js')
 const {Int2ByteArray, ByteArray2Int} = require('../../src/utils/Int2ByteArray.js')
 
 const b = (value) => new Uint8Array(value)

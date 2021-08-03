@@ -1,4 +1,4 @@
-const test = require('../../src/test.js')
+const test = require('../test.js')
 const FateString = require('../../src/types/FateString.js')
 const StringSerializer = require('../../src/Serializers/StringSerializer.js')
 

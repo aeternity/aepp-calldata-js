@@ -1,4 +1,4 @@
-const test = require('../../src/test.js')
+const test = require('../test.js')
 const Serializer = require('../../src/Serializer.js')
 const TupleSerializer = require('../../src/Serializers/TupleSerializer.js')
 const FateInt = require('../../src/types/FateInt.js')
