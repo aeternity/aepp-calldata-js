@@ -86,12 +86,13 @@ class DataFactory {
         }
 
         if (type.name === 'map') {
-            const resolvedValues = value.map(item => {
-                return [
+            const resolvedValues = []
+            for (const item of value) {
+                resolvedValues.push([
                     this.createData(type.keyType, item[0]),
                     this.createData(type.valueType, item[1]),
-                ]
-            })
+                ])
+            }
 
             return new FateMap(type.keyType, type.valueType, resolvedValues)
         }

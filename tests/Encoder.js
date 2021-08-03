@@ -161,7 +161,7 @@ test('Encode nested list arguments', t => {
 
 test('Encode map arguments', t => {
     t.plan(1)
-    const encoded = encoder.encode(CONTRACT, 'test_simple_map', [[[7, false]]])
+    const encoded = encoder.encode(CONTRACT, 'test_simple_map', [new Map([[7, false]])])
     t.is(encoded, 'cb_KxHLN316Gy8BDn+vbmBO', 'test_simple_map({[7] = false})')
 });
 
