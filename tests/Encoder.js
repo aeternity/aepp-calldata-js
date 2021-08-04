@@ -1,5 +1,5 @@
 const fs = require('fs')
-const test = require('../src/test.js');
+const test = require('./test.js');
 const Encoder = require('../src/Encoder.js')
 const aci = require('../build/contracts/Test.json')
 

@@ -7,7 +7,7 @@ Aeternity contract calldata encoding and results decoding library
 This package is not published to NPM registry yet.
 
 ```bash
-npm install -P @aeternity/aepp-calldata@https://github.com/aeternity/aepp-calldata-js.git
+npm install -P @aeternity/aepp-calldata
 ```
 
 ## Quick Start
@@ -102,7 +102,7 @@ Using the library involves data types and their mappings from Sophia to JavaScri
 ## Versioning
 
 This project follows the [semantic versioning](https://semver.org/spec/v2.0.0) guidelines.
-Refer to the CHANGELOG(CHANGELOG.md) for more information about releases.
+Refer to the [CHANGELOG](CHANGELOG.md) for more information about releases.
 
 ## Development
 
@@ -116,6 +116,12 @@ npm install
 
 ```bash
 make tests
+```
+
+Verify browser compatibility with:
+
+```bash
+make browser-tests
 ```
 
 To see the test coverage run:

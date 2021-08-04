@@ -1,4 +1,4 @@
-const test = require('../src/test.js')
+const test = require('./test.js')
 const FateComparator = require('../src/FateComparator.js')
 const FateInt = require('../src/types/FateInt.js')
 const FateBool = require('../src/types/FateBool.js')
