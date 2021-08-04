@@ -7,7 +7,7 @@ Aeternity contract calldata encoding and results decoding library
 This package is not published to NPM registry yet.
 
 ```bash
-npm install -P @aeternity/aepp-calldata@https://github.com/aeternity/aepp-calldata-js.git
+npm install -P @aeternity/aepp-calldata
 ```
 
 ## Quick Start
