@@ -102,7 +102,7 @@ Using the library involves data types and their mappings from Sophia to JavaScri
 ## Versioning
 
 This project follows the [semantic versioning](https://semver.org/spec/v2.0.0) guidelines.
-Refer to the CHANGELOG(CHANGELOG.md) for more information about releases.
+Refer to the [CHANGELOG](CHANGELOG.md) for more information about releases.
 
 ## Development
 
