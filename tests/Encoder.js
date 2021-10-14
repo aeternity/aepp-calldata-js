@@ -84,7 +84,7 @@ test('Encode signature arguments', t => {
 });
 
 test('Encode account address arguments', t => {
-    t.plan(1)
+    t.plan(2)
     t.is(
         encoder.encode(
             CONTRACT,
@@ -94,10 +94,20 @@ test('Encode account address arguments', t => {
         'cb_KxHgYyOEG58AoN5ov+GyA+UfUjUboIf3m3go5qFA8MMUpnDHADs/9XB1FYw7tQ==',
         'test_account_address(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt)'
     )
+
+    t.is(
+        encoder.encode(
+            CONTRACT,
+            'test_account_address',
+            ["ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt"]
+        ),
+        'cb_KxHgYyOEG58AoN5ov+GyA+UfUjUboIf3m3go5qFA8MMUpnDHADs/9XB1FYw7tQ==',
+        'test_account_address(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt)'
+    )
 });
 
 test('Encode contract address arguments', t => {
-    t.plan(1)
+    t.plan(2)
     t.is(
         encoder.encode(
             CONTRACT,
@@ -107,10 +117,20 @@ test('Encode contract address arguments', t => {
         'cb_KxELEfrsG58CoB/A0JnsWhPLkyijF/zs2FKx90ieXgC6CVc8PC22mFVTzM0KJQ==',
         'test_contract_address(ct_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ)'
     )
+
+    t.is(
+        encoder.encode(
+            CONTRACT,
+            'test_contract_address',
+            ["ct_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ"]
+        ),
+        'cb_KxELEfrsG58CoB/A0JnsWhPLkyijF/zs2FKx90ieXgC6CVc8PC22mFVTzM0KJQ==',
+        'test_contract_address(ct_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ)'
+    )
 });
 
 test('Encode oracle address arguments', t => {
-    t.plan(1)
+    t.plan(2)
     t.is(
         encoder.encode(
             CONTRACT,
@@ -120,15 +140,35 @@ test('Encode oracle address arguments', t => {
         'cb_KxGPms0RG58DoMryKiRO2sA9JvAqF9kjlC0FXPyGIyiyWlHChLydQg5Jyfi1MA==',
         'test_oracle_address(ok_2YNyxd6TRJPNrTcEDCe9ra59SVUdp9FR9qWC5msKZWYD9bP9z5)'
     )
+
+    t.is(
+        encoder.encode(
+            CONTRACT,
+            'test_oracle_address',
+            ["ok_2YNyxd6TRJPNrTcEDCe9ra59SVUdp9FR9qWC5msKZWYD9bP9z5"]
+        ),
+        'cb_KxGPms0RG58DoMryKiRO2sA9JvAqF9kjlC0FXPyGIyiyWlHChLydQg5Jyfi1MA==',
+        'test_oracle_address(ok_2YNyxd6TRJPNrTcEDCe9ra59SVUdp9FR9qWC5msKZWYD9bP9z5)'
+    )
 });
 
 test('Encode oracle query address arguments', t => {
-    t.plan(1)
+    t.plan(2)
     t.is(
         encoder.encode(
             CONTRACT,
             'test_oracle_query_address',
             ["0xED1EE7DC0278D05CE9509473C50A93D43A28B28D5032F6DF7DAA442FE1371348"]
+        ),
+        'cb_KxFBufYfG58EoO0e59wCeNBc6VCUc8UKk9Q6KLKNUDL2332qRC/hNxNIgI8x6g==',
+        'test_oracle_query_address(oq_2oRvyowJuJnEkxy58Ckkw77XfWJrmRgmGaLzhdqb67SKEL1gPY)'
+    )
+
+    t.is(
+        encoder.encode(
+            CONTRACT,
+            'test_oracle_query_address',
+            ["oq_2oRvyowJuJnEkxy58Ckkw77XfWJrmRgmGaLzhdqb67SKEL1gPY"]
         ),
         'cb_KxFBufYfG58EoO0e59wCeNBc6VCUc8UKk9Q6KLKNUDL2332qRC/hNxNIgI8x6g==',
         'test_oracle_query_address(oq_2oRvyowJuJnEkxy58Ckkw77XfWJrmRgmGaLzhdqb67SKEL1gPY)'

@@ -1,12 +1,8 @@
-const FateBytes = require('./FateBytes.js')
+const FateAddress = require('./FateAddress.js')
 
-class FateOracleAddress extends FateBytes {
+class FateOracleAddress extends FateAddress {
   constructor(value) {
-    super(value, 32, 'oracle_address')
-  }
-
-  valueOf() {
-    return this.base58Encode('ok')
+    super(value, 32, 'oracle_address', 'ok')
   }
 }
 
