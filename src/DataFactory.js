@@ -119,19 +119,7 @@ class DataFactory {
             return new FateTuple(type.valueTypes, resolvedValue)
         }
 
-        if (type.name === 'variant') {
-            return this.createVariant(type, value, vars)
-        }
-
-        if (type.name === 'option') {
-            return this.createVariant(type, value, vars)
-        }
-
-        if (type.name === 'Chain.ttl') {
-            return this.createVariant(type, value, vars)
-        }
-
-        if (type.name === 'AENS.pointee') {
+        if (['variant', 'option', 'Chain.ttl', 'AENS.pointee', 'AENS.name'].includes(type.name)) {
             return this.createVariant(type, value, vars)
         }
 
@@ -150,7 +138,7 @@ class DataFactory {
         })
 
         if (tag === -1) {
-            throw new Error('Unknown variant: ' + JSON.stringify(value.variant))
+            throw new Error('Unknown variant: ' + JSON.stringify(value))
         }
 
         const [[, variantTypes]] = Object.entries(type.variants[tag])

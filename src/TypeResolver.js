@@ -21,6 +21,7 @@ const {
     FateTypeChainGAMetaTx,
     FateTypeChainPayingForTx,
     FateTypeAENSPointee,
+    FateTypeAENSName,
 } = require('./FateTypes.js')
 
 const isObject = (value) => {
@@ -151,6 +152,10 @@ class TypeResolver {
 
         if (key === 'AENS.pointee') {
             return FateTypeAENSPointee()
+        }
+
+        if (key === 'AENS.name') {
+            return FateTypeAENSName()
         }
 
         if (key === 'bytes') {

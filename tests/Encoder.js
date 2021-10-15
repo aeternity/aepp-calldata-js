@@ -374,6 +374,31 @@ test('Encode AENS.pointee arguments', t => {
     )
 });
 
+test('Encode AENS.name arguments', t => {
+    t.plan(1)
+    const encoded1 = encoder.encode(
+        CONTRACT,
+        'test_aens_name',
+        [
+            {
+                variant: 'AENS.Name',
+                values: [
+                    'ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt',
+                    {variant: 'FixedTTL', values: [100]},
+                    new Map([
+                        ["pt1", {variant: 'AENS.AccountPt', values: ['ak_2dATVcZ9KJU5a8hdsVtTv21pYiGWiPbmVcU1Pz72FFqpk9pSRR']}]
+                    ])
+                ]
+            }
+        ]
+    )
+    t.is(
+        encoded1,
+        'cb_KxF9Ou/tG68DADufAKDeaL/hsgPlH1I1G6CH95t4KOahQPDDFKZwxwA7P/Vwda+CAQEBG28kLwENcHQxr4QBAQEBABufAKDVzwhADpiCIvJutLAsj4kHdFdGchGm5tlV7bcHScajO9PzmRQ=',
+        'test_aens_name(AENS.Name(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt, RelativeTTL(100), {["pt1"] = AENS.AccountPt(ak_2dATVcZ9KJU5a8hdsVtTv21pYiGWiPbmVcU1Pz72FFqpk9pSRR)}))'
+    )
+});
+
 test('Encode Chain.ga_meta_tx arguments', t => {
     t.plan(1)
     const encoded1 = encoder.encode(

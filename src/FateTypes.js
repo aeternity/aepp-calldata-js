@@ -147,6 +147,18 @@ const FateTypeAENSPointee = () => {
     return FateTypeVariant(0, null, variants)
 }
 
+const FateTypeAENSName = () => {
+    const variants = [
+        {'AENS.Name': [
+            FateTypeAccountAddress(),
+            FateTypeChainTTL(),
+            FateTypeMap(FateTypeString(), FateTypeAENSPointee())
+        ]},
+    ]
+
+    return FateTypeVariant(0, null, variants)
+}
+
 module.exports = {
     FateTypeVoid,
     FateTypeInt,
@@ -171,4 +183,5 @@ module.exports = {
     FateTypeChainGAMetaTx,
     FateTypeChainPayingForTx,
     FateTypeAENSPointee,
+    FateTypeAENSName,
 }
