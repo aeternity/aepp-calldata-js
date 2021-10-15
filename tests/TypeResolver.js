@@ -22,6 +22,7 @@ const {
     FateTypeOption,
     FateTypeChainTTL,
     FateTypeAENSPointee,
+    FateTypeChainGAMetaTx,
 } = require('../src/FateTypes.js')
 
 const CONTRACT = 'Test'

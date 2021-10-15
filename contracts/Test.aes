@@ -54,6 +54,7 @@ main contract Test =
     entrypoint test_signature(a:signature) = a
     entrypoint test_ttl(a:Chain.ttl) = a
     entrypoint test_pointee(a:AENS.pointee) = a
+    entrypoint test_ga_meta_tx(a:Chain.ga_meta_tx) = a
     entrypoint test_primitives_tuple(a: int * bool * string * bits * bytes(2) * hash * signature) = a
     entrypoint test_addresses_tuple(a: address * RemoteTest * oracle_id * query_id) = a
     entrypoint test_complex_tuple(a: point * really_t * list(int) * map(int, int) * (int * int)) = a

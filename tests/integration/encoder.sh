@@ -58,3 +58,4 @@ test_encoder 'test_pointee(AENS.AccountPt(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvB
 test_encoder 'test_pointee(AENS.OraclePt(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt))'
 test_encoder 'test_pointee(AENS.ContractPt(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt))'
 test_encoder 'test_pointee(AENS.ChannelPt(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt))'
+test_encoder 'test_ga_meta_tx(Chain.GAMetaTx(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt, 42))'

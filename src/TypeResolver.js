@@ -18,6 +18,7 @@ const {
     FateTypeVariant,
     FateTypeOption,
     FateTypeChainTTL,
+    FateTypeChainGAMetaTx,
     FateTypeAENSPointee,
 } = require('./FateTypes.js')
 
@@ -137,6 +138,10 @@ class TypeResolver {
 
         if (key === 'Chain.ttl') {
             return FateTypeChainTTL()
+        }
+
+        if (key === 'Chain.ga_meta_tx') {
+            return FateTypeChainGAMetaTx()
         }
 
         if (key === 'AENS.pointee') {

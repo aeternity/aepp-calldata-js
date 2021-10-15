@@ -120,6 +120,14 @@ const FateTypeChainTTL = () => {
     return FateTypeVariant(0, null, variants)
 }
 
+const FateTypeChainGAMetaTx = () => {
+    const variants = [
+        {'Chain.GAMetaTx': [FateTypeAccountAddress(), FateTypeInt()]},
+    ]
+
+    return FateTypeVariant(0, null, variants)
+}
+
 const FateTypeAENSPointee = () => {
     const variants = [
         {'AENS.AccountPt': [FateTypeAccountAddress()]},
@@ -152,5 +160,6 @@ module.exports = {
     FateTypeVariant,
     FateTypeOption,
     FateTypeChainTTL,
+    FateTypeChainGAMetaTx,
     FateTypeAENSPointee,
 }

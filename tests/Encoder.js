@@ -373,3 +373,17 @@ test('Encode pointee arguments', t => {
         'test_pointee(AENS.ChannelPt(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt))'
     )
 });
+
+test('Encode ga_meta_tx arguments', t => {
+    t.plan(1)
+    const encoded1 = encoder.encode(
+        CONTRACT,
+        'test_ga_meta_tx',
+        [{variant: 'Chain.GAMetaTx', values: ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt', 42]}]
+    )
+    t.is(
+        encoded1,
+        'cb_KxGKKBrYG68CACufAKDeaL/hsgPlH1I1G6CH95t4KOahQPDDFKZwxwA7P/VwdVSFBs0q',
+        'test_ga_meta_tx(Chain.GAMetaTx(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt, 42))'
+    )
+});
