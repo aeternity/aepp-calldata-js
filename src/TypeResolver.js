@@ -20,6 +20,7 @@ const {
     FateTypeChainTTL,
     FateTypeChainGAMetaTx,
     FateTypeChainPayingForTx,
+    FateTypeChainBaseTx,
     FateTypeAENSPointee,
     FateTypeAENSName,
 } = require('./FateTypes.js')
@@ -148,6 +149,10 @@ class TypeResolver {
 
         if (key === 'Chain.paying_for_tx') {
             return FateTypeChainPayingForTx()
+        }
+
+        if (key === 'Chain.base_tx') {
+            return FateTypeChainBaseTx()
         }
 
         if (key === 'AENS.pointee') {

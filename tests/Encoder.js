@@ -426,3 +426,17 @@ test('Encode Chain.paying_for_tx arguments', t => {
         'test_paying_for_tx(Chain.PayingForTx(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt, 42))'
     )
 });
+
+test('Encode Chain.base_tx arguments', t => {
+    t.plan(1)
+    const encoded1 = encoder.encode(
+        CONTRACT,
+        'test_base_tx',
+        [{variant: 'Chain.SpendTx', values: ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt', 42, 'foo']}]
+    )
+    t.is(
+        encoded1,
+        'cb_KxHC9sshG6+WAwAAAAAAAQEBAgECAgEBAQEBAQECAAA7nwCg3mi/4bID5R9SNRugh/ebeCjmoUDwwxSmcMcAOz/1cHVUDWZvb5zbO1o=',
+        'test_base_tx(Chain.SpendTx(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt, 42, "foo"))'
+    )
+});
