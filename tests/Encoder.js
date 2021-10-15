@@ -318,7 +318,7 @@ test('Encode optional arguments', t => {
     t.is(encoded2, 'cb_KxG0+HBxG6+CAAEBG2+CAVSsnrJE', 'test_optional(Some(404))')
 });
 
-test('Encode TTL arguments', t => {
+test('Encode Chain.ttl arguments', t => {
     t.plan(2)
     const encoded1 = encoder.encode(CONTRACT, 'test_ttl', [{variant: 'RelativeTTL', values: [50]}])
     t.is(encoded1, 'cb_KxGDonYLG6+CAQEAG2Smlh4I', 'test_ttl(RelativeTTL(50))')
@@ -327,7 +327,7 @@ test('Encode TTL arguments', t => {
     t.is(encoded2, 'cb_KxGDonYLG6+CAQEBG2SzOT3Y', 'test_ttl(FixedTTL(50))')
 });
 
-test('Encode pointee arguments', t => {
+test('Encode AENS.pointee arguments', t => {
     t.plan(4)
     const encoded1 = encoder.encode(
         CONTRACT,
@@ -374,7 +374,7 @@ test('Encode pointee arguments', t => {
     )
 });
 
-test('Encode ga_meta_tx arguments', t => {
+test('Encode Chain.ga_meta_tx arguments', t => {
     t.plan(1)
     const encoded1 = encoder.encode(
         CONTRACT,
@@ -385,5 +385,19 @@ test('Encode ga_meta_tx arguments', t => {
         encoded1,
         'cb_KxGKKBrYG68CACufAKDeaL/hsgPlH1I1G6CH95t4KOahQPDDFKZwxwA7P/VwdVSFBs0q',
         'test_ga_meta_tx(Chain.GAMetaTx(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt, 42))'
+    )
+});
+
+test('Encode Chain.paying_for_tx arguments', t => {
+    t.plan(1)
+    const encoded1 = encoder.encode(
+        CONTRACT,
+        'test_paying_for_tx',
+        [{variant: 'Chain.PayingForTx', values: ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt', 42]}]
+    )
+    t.is(
+        encoded1,
+        'cb_KxGFY3+SG68CACufAKDeaL/hsgPlH1I1G6CH95t4KOahQPDDFKZwxwA7P/VwdVQi1L6n',
+        'test_paying_for_tx(Chain.PayingForTx(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt, 42))'
     )
 });
