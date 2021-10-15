@@ -18,6 +18,7 @@ const {
     FateTypeVariant,
     FateTypeOption,
     FateTypeChainTTL,
+    FateTypeAENSPointee,
 } = require('./FateTypes.js')
 
 const isObject = (value) => {
@@ -136,6 +137,10 @@ class TypeResolver {
 
         if (key === 'Chain.ttl') {
             return FateTypeChainTTL()
+        }
+
+        if (key === 'AENS.pointee') {
+            return FateTypeAENSPointee()
         }
 
         if (key === 'bytes') {

@@ -14,8 +14,6 @@ const {
     FateTypeMap,
     FateTypeTuple,
     FateTypeVariant,
-    FateTypeOption,
-    FateTypeChainTTL,
 } = require('./FateTypes.js')
 const FateTag = require('./FateTag.js')
 

@@ -38,6 +38,10 @@ const FateTypeContractAddress = () => {
     return {name: 'contract_address'}
 }
 
+const FateTypeChannelAddress = () => {
+    return {name: 'channel_address'}
+}
+
 const FateTypeOracleAddress = (questionType, answerType) => {
     return {
         name: 'oracle_address',
@@ -116,6 +120,17 @@ const FateTypeChainTTL = () => {
     return FateTypeVariant(0, null, variants)
 }
 
+const FateTypeAENSPointee = () => {
+    const variants = [
+        {'AENS.AccountPt': [FateTypeAccountAddress()]},
+        {'AENS.OraclePt': [FateTypeAccountAddress()]},
+        {'AENS.ContractPt': [FateTypeAccountAddress()]},
+        {'AENS.ChannelPt': [FateTypeAccountAddress()]},
+    ]
+
+    return FateTypeVariant(0, null, variants)
+}
+
 module.exports = {
     FateTypeVoid,
     FateTypeInt,
@@ -137,4 +152,5 @@ module.exports = {
     FateTypeVariant,
     FateTypeOption,
     FateTypeChainTTL,
+    FateTypeAENSPointee,
 }

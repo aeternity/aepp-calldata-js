@@ -326,3 +326,50 @@ test('Encode TTL arguments', t => {
     const encoded2 = encoder.encode(CONTRACT, 'test_ttl', [{variant: 'FixedTTL', values: [50]}])
     t.is(encoded2, 'cb_KxGDonYLG6+CAQEBG2SzOT3Y', 'test_ttl(FixedTTL(50))')
 });
+
+test('Encode pointee arguments', t => {
+    t.plan(4)
+    const encoded1 = encoder.encode(
+        CONTRACT,
+        'test_pointee',
+        [{variant: 'AENS.AccountPt', values: ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']}]
+    )
+    t.is(
+        encoded1,
+        'cb_KxETYCAKG6+EAQEBAQAbnwCg3mi/4bID5R9SNRugh/ebeCjmoUDwwxSmcMcAOz/1cHV5nrYN',
+        'test_pointee(AENS.AccountPt(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt))'
+    )
+
+    const encoded2 = encoder.encode(
+        CONTRACT,
+        'test_pointee',
+        [{variant: 'AENS.OraclePt', values: ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']}]
+    )
+    t.is(
+        encoded2,
+        'cb_KxETYCAKG6+EAQEBAQEbnwCg3mi/4bID5R9SNRugh/ebeCjmoUDwwxSmcMcAOz/1cHV1g9LO',
+        'test_pointee(AENS.OraclePt(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt))'
+    )
+
+    const encoded3 = encoder.encode(
+        CONTRACT,
+        'test_pointee',
+         [{variant: 'AENS.ContractPt', values: ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']}]
+    )
+    t.is(
+        encoded3,
+        'cb_KxETYCAKG6+EAQEBAQIbnwCg3mi/4bID5R9SNRugh/ebeCjmoUDwwxSmcMcAOz/1cHXYPI6p',
+        'test_pointee(AENS.ContractPt(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt))'
+    )
+
+    const encoded4 = encoder.encode(
+        CONTRACT,
+        'test_pointee',
+         [{variant: 'AENS.ChannelPt', values: ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']}]
+    )
+    t.is(
+        encoded4,
+        'cb_KxETYCAKG6+EAQEBAQMbnwCg3mi/4bID5R9SNRugh/ebeCjmoUDwwxSmcMcAOz/1cHUl0JMb',
+        'test_pointee(AENS.ChannelPt(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt))'
+    )
+});

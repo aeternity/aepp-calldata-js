@@ -3,8 +3,8 @@ const bs58check = require('bs58check')
 
 const base58Decode = (prefix, value) => {
   if (typeof value === 'string' && value.charAt(2) === '_') {
-    if (!value.startsWith(prefix + '_')) {
-      throw new Error('Invalid prefix: ' + prefix)
+    if (!value.startsWith(prefix)) {
+      throw new Error('Invalid prefix: ' + value.substring(0, 2))
     }
 
     return bs58check.decode(value.substring(prefix.length + 1))
