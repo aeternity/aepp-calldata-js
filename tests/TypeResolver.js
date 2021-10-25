@@ -256,3 +256,11 @@ test('Resolve template type', t => {
         FateTypeInt()
     )
 });
+
+test('Resolve state', t => {
+    t.plan(1)
+    t.deepEqual(
+        resolver.resolveType('WithInit.state'),
+        FateTypeRecord(['v'], [FateTypeString()])
+    )
+});
