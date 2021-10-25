@@ -230,7 +230,7 @@ class TypeResolver {
 
         // not a custom type
         if (!namespaceData) {
-            throw new Error('Unknown namespace for ' + SON.stringify(type))
+            throw new Error('Unknown namespace for ' + JSON.stringify(type))
         }
 
         if (namespaceData.name === type) {
