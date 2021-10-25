@@ -27,8 +27,8 @@ class DataFactory {
     create(types, values) {
         if (types.length !== values.length) {
             throw new Error(
-                `Non matching number of arguments.
-                Got ${values.length} but expected ${types.length}`
+                'Non matching number of arguments. ' +
+                `Got ${values.length} but expected ${types.length}`
             )
         }
 
