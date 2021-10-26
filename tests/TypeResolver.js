@@ -21,6 +21,8 @@ const {
     FateTypeVariant,
     FateTypeOption,
     FateTypeChainTTL,
+    FateTypeAENSPointee,
+    FateTypeChainGAMetaTx,
 } = require('../src/FateTypes.js')
 
 const CONTRACT = 'Test'
@@ -236,6 +238,14 @@ test('Resolve Chain.ttl', t => {
     t.deepEqual(
         resolver.resolveType('Chain.ttl'),
         FateTypeChainTTL()
+    )
+});
+
+test('Resolve AENS.pointee', t => {
+    t.plan(1)
+    t.deepEqual(
+        resolver.resolveType('AENS.pointee'),
+        FateTypeAENSPointee()
     )
 });
 

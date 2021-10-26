@@ -18,6 +18,11 @@ const {
     FateTypeVariant,
     FateTypeOption,
     FateTypeChainTTL,
+    FateTypeChainGAMetaTx,
+    FateTypeChainPayingForTx,
+    FateTypeChainBaseTx,
+    FateTypeAENSPointee,
+    FateTypeAENSName,
 } = require('./FateTypes.js')
 
 const isObject = (value) => {
@@ -136,6 +141,26 @@ class TypeResolver {
 
         if (key === 'Chain.ttl') {
             return FateTypeChainTTL()
+        }
+
+        if (key === 'Chain.ga_meta_tx') {
+            return FateTypeChainGAMetaTx()
+        }
+
+        if (key === 'Chain.paying_for_tx') {
+            return FateTypeChainPayingForTx()
+        }
+
+        if (key === 'Chain.base_tx') {
+            return FateTypeChainBaseTx()
+        }
+
+        if (key === 'AENS.pointee') {
+            return FateTypeAENSPointee()
+        }
+
+        if (key === 'AENS.name') {
+            return FateTypeAENSName()
         }
 
         if (key === 'bytes') {

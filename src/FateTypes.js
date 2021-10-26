@@ -38,6 +38,10 @@ const FateTypeContractAddress = () => {
     return {name: 'contract_address'}
 }
 
+const FateTypeChannelAddress = () => {
+    return {name: 'channel_address'}
+}
+
 const FateTypeOracleAddress = (questionType, answerType) => {
     return {
         name: 'oracle_address',
@@ -116,6 +120,75 @@ const FateTypeChainTTL = () => {
     return FateTypeVariant(0, null, variants)
 }
 
+const FateTypeChainGAMetaTx = () => {
+    const variants = [
+        {'Chain.GAMetaTx': [FateTypeAccountAddress(), FateTypeInt()]},
+    ]
+
+    return FateTypeVariant(0, null, variants)
+}
+
+const FateTypeChainPayingForTx = () => {
+    const variants = [
+        {'Chain.PayingForTx': [FateTypeAccountAddress(), FateTypeInt()]},
+    ]
+
+    return FateTypeVariant(0, null, variants)
+}
+
+
+const FateTypeChainBaseTx = () => {
+    const variants = [
+        {'Chain.SpendTx': [FateTypeAccountAddress(), FateTypeInt(), FateTypeString()]},
+        {'Chain.OracleRegisterTx': []},
+        {'Chain.OracleQueryTx': []},
+        {'Chain.OracleResponseTx': []},
+        {'Chain.OracleExtendTx': []},
+        {'Chain.NamePreclaimTx': []},
+        {'Chain.NameClaimTx': [FateTypeString()]},
+        {'Chain.NameUpdateTx': [FateTypeHash()]},
+        {'Chain.NameRevokeTx': [FateTypeHash()]},
+        {'Chain.NameTransferTx': [FateTypeAccountAddress(), FateTypeHash()]},
+        {'Chain.ChannelCreateTx': [FateTypeAccountAddress()]},
+        {'Chain.ChannelDepositTx': [FateTypeAccountAddress(), FateTypeInt()]},
+        {'Chain.ChannelWithdrawTx': [FateTypeAccountAddress(), FateTypeInt()]},
+        {'Chain.ChannelForceProgressTx': [FateTypeAccountAddress()]},
+        {'Chain.ChannelCloseMutualTx': [FateTypeAccountAddress()]},
+        {'Chain.ChannelCloseSoloTx': [FateTypeAccountAddress()]},
+        {'Chain.ChannelSlashTx': [FateTypeAccountAddress()]},
+        {'Chain.ChannelSettleTx': [FateTypeAccountAddress()]},
+        {'Chain.ChannelSnapshotSoloTx': [FateTypeAccountAddress()]},
+        {'Chain.ContractCreateTx': [FateTypeAccountAddress()]},
+        {'Chain.ContractCallTx': [FateTypeAccountAddress(), FateTypeInt()]},
+        {'Chain.GAAttachTx': []},
+    ]
+
+    return FateTypeVariant(0, null, variants)
+}
+
+const FateTypeAENSPointee = () => {
+    const variants = [
+        {'AENS.AccountPt': [FateTypeAccountAddress()]},
+        {'AENS.OraclePt': [FateTypeAccountAddress()]},
+        {'AENS.ContractPt': [FateTypeAccountAddress()]},
+        {'AENS.ChannelPt': [FateTypeAccountAddress()]},
+    ]
+
+    return FateTypeVariant(0, null, variants)
+}
+
+const FateTypeAENSName = () => {
+    const variants = [
+        {'AENS.Name': [
+            FateTypeAccountAddress(),
+            FateTypeChainTTL(),
+            FateTypeMap(FateTypeString(), FateTypeAENSPointee())
+        ]},
+    ]
+
+    return FateTypeVariant(0, null, variants)
+}
+
 module.exports = {
     FateTypeVoid,
     FateTypeInt,
@@ -137,4 +210,9 @@ module.exports = {
     FateTypeVariant,
     FateTypeOption,
     FateTypeChainTTL,
+    FateTypeChainGAMetaTx,
+    FateTypeChainPayingForTx,
+    FateTypeChainBaseTx,
+    FateTypeAENSPointee,
+    FateTypeAENSName,
 }

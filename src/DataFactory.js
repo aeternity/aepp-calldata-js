@@ -11,6 +11,7 @@ const FateBytes = require('./types/FateBytes.js')
 const FateBits = require('./types/FateBits.js')
 const FateAccountAddress = require('./types/FateAccountAddress.js')
 const FateContractAddress = require('./types/FateContractAddress.js')
+const FateChannelAddress = require('./types/FateChannelAddress.js')
 const FateOracleAddress = require('./types/FateOracleAddress.js')
 const FateOracleQueryAddress = require('./types/FateOracleQueryAddress.js')
 
@@ -67,6 +68,10 @@ class DataFactory {
             return new FateContractAddress(value)
         }
 
+        if (type.name === 'channel_address') {
+            return new FateChannelAddress(value)
+        }
+
         if (type.name === 'bytes') {
             return new FateBytes(value, type.valueTypes)
         }
@@ -114,15 +119,7 @@ class DataFactory {
             return new FateTuple(type.valueTypes, resolvedValue)
         }
 
-        if (type.name === 'variant') {
-            return this.createVariant(type, value, vars)
-        }
-
-        if (type.name === 'option') {
-            return this.createVariant(type, value, vars)
-        }
-
-        if (type.name === 'Chain.ttl') {
+        if (['variant', 'option', 'Chain.ttl', 'AENS.pointee', 'AENS.name'].includes(type.name)) {
             return this.createVariant(type, value, vars)
         }
 
@@ -141,7 +138,7 @@ class DataFactory {
         })
 
         if (tag === -1) {
-            throw new Error('Unknown variant: ' + JSON.stringify(value.variant))
+            throw new Error('Unknown variant: ' + JSON.stringify(value))
         }
 
         const [[, variantTypes]] = Object.entries(type.variants[tag])

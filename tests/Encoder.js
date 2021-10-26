@@ -318,11 +318,125 @@ test('Encode optional arguments', t => {
     t.is(encoded2, 'cb_KxG0+HBxG6+CAAEBG2+CAVSsnrJE', 'test_optional(Some(404))')
 });
 
-test('Encode TTL arguments', t => {
+test('Encode Chain.ttl arguments', t => {
     t.plan(2)
     const encoded1 = encoder.encode(CONTRACT, 'test_ttl', [{variant: 'RelativeTTL', values: [50]}])
     t.is(encoded1, 'cb_KxGDonYLG6+CAQEAG2Smlh4I', 'test_ttl(RelativeTTL(50))')
 
     const encoded2 = encoder.encode(CONTRACT, 'test_ttl', [{variant: 'FixedTTL', values: [50]}])
     t.is(encoded2, 'cb_KxGDonYLG6+CAQEBG2SzOT3Y', 'test_ttl(FixedTTL(50))')
+});
+
+test('Encode AENS.pointee arguments', t => {
+    t.plan(4)
+    const encoded1 = encoder.encode(
+        CONTRACT,
+        'test_pointee',
+        [{variant: 'AENS.AccountPt', values: ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']}]
+    )
+    t.is(
+        encoded1,
+        'cb_KxETYCAKG6+EAQEBAQAbnwCg3mi/4bID5R9SNRugh/ebeCjmoUDwwxSmcMcAOz/1cHV5nrYN',
+        'test_pointee(AENS.AccountPt(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt))'
+    )
+
+    const encoded2 = encoder.encode(
+        CONTRACT,
+        'test_pointee',
+        [{variant: 'AENS.OraclePt', values: ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']}]
+    )
+    t.is(
+        encoded2,
+        'cb_KxETYCAKG6+EAQEBAQEbnwCg3mi/4bID5R9SNRugh/ebeCjmoUDwwxSmcMcAOz/1cHV1g9LO',
+        'test_pointee(AENS.OraclePt(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt))'
+    )
+
+    const encoded3 = encoder.encode(
+        CONTRACT,
+        'test_pointee',
+         [{variant: 'AENS.ContractPt', values: ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']}]
+    )
+    t.is(
+        encoded3,
+        'cb_KxETYCAKG6+EAQEBAQIbnwCg3mi/4bID5R9SNRugh/ebeCjmoUDwwxSmcMcAOz/1cHXYPI6p',
+        'test_pointee(AENS.ContractPt(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt))'
+    )
+
+    const encoded4 = encoder.encode(
+        CONTRACT,
+        'test_pointee',
+         [{variant: 'AENS.ChannelPt', values: ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']}]
+    )
+    t.is(
+        encoded4,
+        'cb_KxETYCAKG6+EAQEBAQMbnwCg3mi/4bID5R9SNRugh/ebeCjmoUDwwxSmcMcAOz/1cHUl0JMb',
+        'test_pointee(AENS.ChannelPt(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt))'
+    )
+});
+
+test('Encode AENS.name arguments', t => {
+    t.plan(1)
+    const encoded1 = encoder.encode(
+        CONTRACT,
+        'test_aens_name',
+        [
+            {
+                variant: 'AENS.Name',
+                values: [
+                    'ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt',
+                    {variant: 'FixedTTL', values: [100]},
+                    new Map([
+                        ["pt1", {variant: 'AENS.AccountPt', values: ['ak_2dATVcZ9KJU5a8hdsVtTv21pYiGWiPbmVcU1Pz72FFqpk9pSRR']}]
+                    ])
+                ]
+            }
+        ]
+    )
+    t.is(
+        encoded1,
+        'cb_KxF9Ou/tG68DADufAKDeaL/hsgPlH1I1G6CH95t4KOahQPDDFKZwxwA7P/Vwda+CAQEBG28kLwENcHQxr4QBAQEBABufAKDVzwhADpiCIvJutLAsj4kHdFdGchGm5tlV7bcHScajO9PzmRQ=',
+        'test_aens_name(AENS.Name(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt, RelativeTTL(100), {["pt1"] = AENS.AccountPt(ak_2dATVcZ9KJU5a8hdsVtTv21pYiGWiPbmVcU1Pz72FFqpk9pSRR)}))'
+    )
+});
+
+test('Encode Chain.ga_meta_tx arguments', t => {
+    t.plan(1)
+    const encoded1 = encoder.encode(
+        CONTRACT,
+        'test_ga_meta_tx',
+        [{variant: 'Chain.GAMetaTx', values: ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt', 42]}]
+    )
+    t.is(
+        encoded1,
+        'cb_KxGKKBrYG68CACufAKDeaL/hsgPlH1I1G6CH95t4KOahQPDDFKZwxwA7P/VwdVSFBs0q',
+        'test_ga_meta_tx(Chain.GAMetaTx(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt, 42))'
+    )
+});
+
+test('Encode Chain.paying_for_tx arguments', t => {
+    t.plan(1)
+    const encoded1 = encoder.encode(
+        CONTRACT,
+        'test_paying_for_tx',
+        [{variant: 'Chain.PayingForTx', values: ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt', 42]}]
+    )
+    t.is(
+        encoded1,
+        'cb_KxGFY3+SG68CACufAKDeaL/hsgPlH1I1G6CH95t4KOahQPDDFKZwxwA7P/VwdVQi1L6n',
+        'test_paying_for_tx(Chain.PayingForTx(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt, 42))'
+    )
+});
+
+test('Encode Chain.base_tx arguments', t => {
+    t.plan(1)
+    const encoded1 = encoder.encode(
+        CONTRACT,
+        'test_base_tx',
+        [{variant: 'Chain.SpendTx', values: ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt', 42, 'foo']}]
+    )
+    t.is(
+        encoded1,
+        'cb_KxHC9sshG6+WAwAAAAAAAQEBAgECAgEBAQEBAQECAAA7nwCg3mi/4bID5R9SNRugh/ebeCjmoUDwwxSmcMcAOz/1cHVUDWZvb5zbO1o=',
+        'test_base_tx(Chain.SpendTx(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt, 42, "foo"))'
+    )
 });
