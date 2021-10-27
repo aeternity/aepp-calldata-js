@@ -126,8 +126,14 @@ class DataFactory {
     }
 
     createVariant(type, value) {
-        const variantCtor = Object.keys(value)[0]
-        const variantArgs = value[variantCtor]
+        if (
+            typeof value !== 'object' || value === null
+            || Object.entries(value).length !== 1 || !Array.isArray(Object.values(value)[0])
+        ) {
+            throw new Error(`Variant should be an object mapping constructor to array of values, got ${value} instead`)
+        }
+
+        const [variantCtor, variantArgs] = Object.entries(value)[0]
 
         const arities = type.variants.map(e => {
             const [[, args]] = Object.entries(e)
@@ -140,7 +146,7 @@ class DataFactory {
         })
 
         if (tag === -1) {
-            throw new Error('Unknown variant: ' + JSON.stringify(value))
+            throw new Error('Unknown variant constructor: ' + variantCtor)
         }
 
         const [[, variantTypes]] = Object.entries(type.variants[tag])
