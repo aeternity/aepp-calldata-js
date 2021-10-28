@@ -5,7 +5,10 @@ class FateBool extends FateData {
   constructor(value) {
     super('bool')
 
-    this._value = !!value
+    if (typeof value !== 'boolean') {
+      throw new Error(`"${value}" must be a boolean`)
+    }
+    this._value = value
   }
 
   get value() {
