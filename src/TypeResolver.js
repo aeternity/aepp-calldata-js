@@ -230,14 +230,21 @@ class TypeResolver {
 
         // not a custom type
         if (!namespaceData) {
-            throw new Error('Unknown namespace for ' + SON.stringify(type))
+            throw new Error('Unknown namespace for ' + JSON.stringify(type))
         }
 
         if (namespaceData.name === type) {
             return ['contract_address', []]
         }
 
-        const def = namespaceData.type_defs.find(e => e.name == localType);
+        const def = [
+            ...namespaceData.type_defs,
+            ...namespaceData.state ? [{
+                name: 'state',
+                typedef: namespaceData.state,
+                vars: []
+            }] : []
+        ].find(e => e.name == localType);
 
         if (!def) {
             throw new Error('Unknown type definition: ' + JSON.stringify(type))
