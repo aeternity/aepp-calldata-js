@@ -233,19 +233,19 @@ test('Encode nested tuple arguments', t => {
 
 test('Encode simple variant arguments', t => {
     t.plan(1)
-    const encoded = encoder.encode(CONTRACT, 'test_variants', [{variant: 'No', values: []}])
+    const encoded = encoder.encode(CONTRACT, 'test_variants', [{'No': []}])
     t.is(encoded, 'cb_KxFiWgvXG6+EAAABAAE/Yp8XdQ==', 'test_variants(No)')
 });
 
 test('Encode variant arguments with non-zero arity', t => {
     t.plan(1)
-    const encoded = encoder.encode(CONTRACT, 'test_variants', [{variant: 'Yep', values: [7]}])
+    const encoded = encoder.encode(CONTRACT, 'test_variants', [{'Yep': [7]}])
     t.is(encoded, 'cb_KxFiWgvXG6+EAAABAAIbDv+CzlA=', 'test_variants(Yep(7))')
 });
 
 test('Encode variant with template arguments', t => {
     t.plan(1)
-    const encoded = encoder.encode(CONTRACT, 'test_template_variants', [{variant: 'Any', values: [7, true, 9, 21]}])
+    const encoded = encoder.encode(CONTRACT, 'test_template_variants', [{'Any': [7, true, 9, 21]}])
     t.is(encoded, 'cb_KxHBGrepG6+CAAQBSw7/EiqgmPlL', 'test_template_variants(Any(7, true, 9, 21))')
 });
 
@@ -270,10 +270,9 @@ test('Encode template maze', t => {
         CONTRACT,
         'test_template_maze',
         [{
-            variant: 'Any',
-            values: [
+            'Any': [
                 {origin: {x: 1, y: 2}, a: 3, b: 4},
-                {variant: 'Yep', values: [10]},
+                {'Yep': [10]},
                 20,
                 {origin: {x: 1, y: 2}, a: 3, b: 4},
             ]
@@ -311,19 +310,19 @@ test('Encode namespaced arguments', t => {
 
 test('Encode optional arguments', t => {
     t.plan(2)
-    const encoded1 = encoder.encode(CONTRACT, 'test_optional', [{variant: 'None', values: []}])
+    const encoded1 = encoder.encode(CONTRACT, 'test_optional', [{'None': []}])
     t.is(encoded1, 'cb_KxG0+HBxG6+CAAEAP4sG0gs=', 'test_optional(None)')
 
-    const encoded2 = encoder.encode(CONTRACT, 'test_optional', [{variant: 'Some', values: [404]}])
+    const encoded2 = encoder.encode(CONTRACT, 'test_optional', [{'Some': [404]}])
     t.is(encoded2, 'cb_KxG0+HBxG6+CAAEBG2+CAVSsnrJE', 'test_optional(Some(404))')
 });
 
 test('Encode Chain.ttl arguments', t => {
     t.plan(2)
-    const encoded1 = encoder.encode(CONTRACT, 'test_ttl', [{variant: 'RelativeTTL', values: [50]}])
+    const encoded1 = encoder.encode(CONTRACT, 'test_ttl', [{'RelativeTTL': [50]}])
     t.is(encoded1, 'cb_KxGDonYLG6+CAQEAG2Smlh4I', 'test_ttl(RelativeTTL(50))')
 
-    const encoded2 = encoder.encode(CONTRACT, 'test_ttl', [{variant: 'FixedTTL', values: [50]}])
+    const encoded2 = encoder.encode(CONTRACT, 'test_ttl', [{'FixedTTL': [50]}])
     t.is(encoded2, 'cb_KxGDonYLG6+CAQEBG2SzOT3Y', 'test_ttl(FixedTTL(50))')
 });
 
@@ -332,7 +331,7 @@ test('Encode AENS.pointee arguments', t => {
     const encoded1 = encoder.encode(
         CONTRACT,
         'test_pointee',
-        [{variant: 'AENS.AccountPt', values: ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']}]
+        [{'AENS.AccountPt': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']}]
     )
     t.is(
         encoded1,
@@ -343,7 +342,7 @@ test('Encode AENS.pointee arguments', t => {
     const encoded2 = encoder.encode(
         CONTRACT,
         'test_pointee',
-        [{variant: 'AENS.OraclePt', values: ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']}]
+        [{'AENS.OraclePt': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']}]
     )
     t.is(
         encoded2,
@@ -354,7 +353,7 @@ test('Encode AENS.pointee arguments', t => {
     const encoded3 = encoder.encode(
         CONTRACT,
         'test_pointee',
-         [{variant: 'AENS.ContractPt', values: ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']}]
+         [{'AENS.ContractPt': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']}]
     )
     t.is(
         encoded3,
@@ -365,7 +364,7 @@ test('Encode AENS.pointee arguments', t => {
     const encoded4 = encoder.encode(
         CONTRACT,
         'test_pointee',
-         [{variant: 'AENS.ChannelPt', values: ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']}]
+         [{'AENS.ChannelPt': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']}]
     )
     t.is(
         encoded4,
@@ -381,12 +380,11 @@ test('Encode AENS.name arguments', t => {
         'test_aens_name',
         [
             {
-                variant: 'AENS.Name',
-                values: [
+                'AENS.Name': [
                     'ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt',
-                    {variant: 'FixedTTL', values: [100]},
+                    {'FixedTTL': [100]},
                     new Map([
-                        ["pt1", {variant: 'AENS.AccountPt', values: ['ak_2dATVcZ9KJU5a8hdsVtTv21pYiGWiPbmVcU1Pz72FFqpk9pSRR']}]
+                        ["pt1", {'AENS.AccountPt': ['ak_2dATVcZ9KJU5a8hdsVtTv21pYiGWiPbmVcU1Pz72FFqpk9pSRR']}]
                     ])
                 ]
             }
@@ -404,7 +402,7 @@ test('Encode Chain.ga_meta_tx arguments', t => {
     const encoded1 = encoder.encode(
         CONTRACT,
         'test_ga_meta_tx',
-        [{variant: 'Chain.GAMetaTx', values: ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt', 42]}]
+        [{'Chain.GAMetaTx': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt', 42]}]
     )
     t.is(
         encoded1,
@@ -418,7 +416,7 @@ test('Encode Chain.paying_for_tx arguments', t => {
     const encoded1 = encoder.encode(
         CONTRACT,
         'test_paying_for_tx',
-        [{variant: 'Chain.PayingForTx', values: ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt', 42]}]
+        [{'Chain.PayingForTx': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt', 42]}]
     )
     t.is(
         encoded1,
@@ -432,7 +430,7 @@ test('Encode Chain.base_tx arguments', t => {
     const encoded1 = encoder.encode(
         CONTRACT,
         'test_base_tx',
-        [{variant: 'Chain.SpendTx', values: ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt', 42, 'foo']}]
+        [{'Chain.SpendTx': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt', 42, 'foo']}]
     )
     t.is(
         encoded1,

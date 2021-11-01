@@ -90,13 +90,13 @@ Using the library involves data types and their mappings from Sophia to JavaScri
 | tuple               | `(true, false)`                                             | Array           | `[true, false]`                                                                |
 | map                 | `{[7] = false}`                                             | Map             | `new Map([[7, false]])`                                                        |
 | record              | `{x = 0, y = 0}`                                            | Object (POJO)   | `{x: 0, y: 0}`                                                                 |
-| variant             | `Some(404)`                                                 | Object (POJO)   | `{variant: 'Some', values: [404]}`                                             |
+| variant             | `Some(404)`, `None`                                         | Object (POJO)   | `{'Some': [404]}`, `{'None': []}`                                              |
 | bits                | `Bits.none`, `Bits.all`  `Bits.set(Bits.none, 0)`           | BigInt          | `0b0n`, `-1n`, `0b00000001n`                                                   |
 | hash                | `#001234d`                                                  | BigInt          | `BigInt("0x001234d")`                                                          |
 | signature           | `#001234d`                                                  | BigInt          | `BigInt("0x001234d")`                                                          |
 | address             | `ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt`     | BigInt, String  | `BigInt("0xDE68BFE1B203E51F52351BA087F79B7828E6A140F0C314A670C7003B3FF57075")`, `ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt` |
 
-- note the fixed structure of variant object with keys `variant` which denotes variant constructor and `values` as it's arguments.
+- note the fixed structure of variant object with a single key - the variant constructor (i.e. ``Some`) and array of variant arguments as it's value.
 - while Javascript Number and primitive `int` types can be used as well when `BigInt` type is expected it's not recommended because of it's `Number.MAX_SAFE_INTEGER` limitation.
 
 ## Versioning
