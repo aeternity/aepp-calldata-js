@@ -2,6 +2,7 @@ const fs = require('fs')
 const test = require('./test.js');
 const Encoder = require('../src/Encoder.js')
 const aci = require('../build/contracts/Test.json')
+const {Variant, Some, None} = require('../src/Variant.js')
 
 const CONTRACT = 'Test'
 const encoder = new Encoder(aci)
@@ -232,15 +233,23 @@ test('Encode nested tuple arguments', t => {
 });
 
 test('Encode simple variant arguments', t => {
-    t.plan(1)
-    const encoded = encoder.encode(CONTRACT, 'test_variants', [{'No': []}])
-    t.is(encoded, 'cb_KxFiWgvXG6+EAAABAAE/Yp8XdQ==', 'test_variants(No)')
+    t.plan(2)
+    const encoded1 = encoder.encode(CONTRACT, 'test_variants', [{'No': []}])
+    t.is(encoded1, 'cb_KxFiWgvXG6+EAAABAAE/Yp8XdQ==', 'test_variants(No)')
+
+    // Test data constructor
+    const encoded2 = encoder.encode(CONTRACT, 'test_variants', [Variant('No')])
+    t.is(encoded2, 'cb_KxFiWgvXG6+EAAABAAE/Yp8XdQ==', 'test_variants(No)')
 });
 
 test('Encode variant arguments with non-zero arity', t => {
-    t.plan(1)
-    const encoded = encoder.encode(CONTRACT, 'test_variants', [{'Yep': [7]}])
-    t.is(encoded, 'cb_KxFiWgvXG6+EAAABAAIbDv+CzlA=', 'test_variants(Yep(7))')
+    t.plan(2)
+    const encoded1 = encoder.encode(CONTRACT, 'test_variants', [{'Yep': [7]}])
+    t.is(encoded1, 'cb_KxFiWgvXG6+EAAABAAIbDv+CzlA=', 'test_variants(Yep(7))')
+
+    // Test data constructor
+    const encoded2 = encoder.encode(CONTRACT, 'test_variants', [Variant('Yep', 7)])
+    t.is(encoded2, 'cb_KxFiWgvXG6+EAAABAAIbDv+CzlA=', 'test_variants(Yep(7))')
 });
 
 test('Encode variant with template arguments', t => {
@@ -309,12 +318,20 @@ test('Encode namespaced arguments', t => {
 });
 
 test('Encode optional arguments', t => {
-    t.plan(2)
+    t.plan(4)
     const encoded1 = encoder.encode(CONTRACT, 'test_optional', [{'None': []}])
     t.is(encoded1, 'cb_KxG0+HBxG6+CAAEAP4sG0gs=', 'test_optional(None)')
 
     const encoded2 = encoder.encode(CONTRACT, 'test_optional', [{'Some': [404]}])
     t.is(encoded2, 'cb_KxG0+HBxG6+CAAEBG2+CAVSsnrJE', 'test_optional(Some(404))')
+
+    console.log(None(), Some(404))
+    // Test data constructors
+    const encoded3 = encoder.encode(CONTRACT, 'test_optional', [None()])
+    t.is(encoded3, 'cb_KxG0+HBxG6+CAAEAP4sG0gs=', 'test_optional(None)')
+
+    const encoded4 = encoder.encode(CONTRACT, 'test_optional', [Some(404)])
+    t.is(encoded4, 'cb_KxG0+HBxG6+CAAEBG2+CAVSsnrJE', 'test_optional(Some(404))')
 });
 
 test('Encode Chain.ttl arguments', t => {

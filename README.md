@@ -21,7 +21,7 @@ The `decode` method is used to decode contract call results while the first two 
 NodeJS example:
 
 ```javascript
-const Encoder = require('@aeternity/aepp-calldata')
+const {Encoder} = require('@aeternity/aepp-calldata')
 const ACI = require('./Test.json')
 const CONTRACT = 'Test'
 
@@ -47,7 +47,7 @@ The `encode` and `decode` methods of the `Encoder` accept and return contract by
 The library also provides serialization and deserialization methods to work with binary data, i.e.:
 
 ```javascript
-const Encoder = require('@aeternity/aepp-calldata')
+const {Encoder} = require('@aeternity/aepp-calldata')
 const ACI = require('./Test.json')
 const CONTRACT = 'Test'
 
@@ -98,6 +98,39 @@ Using the library involves data types and their mappings from Sophia to JavaScri
 
 - note the fixed structure of variant object with a single key - the variant constructor (i.e. ``Some`) and array of variant arguments as it's value.
 - while Javascript Number and primitive `int` types can be used as well when `BigInt` type is expected it's not recommended because of it's `Number.MAX_SAFE_INTEGER` limitation.
+
+## Data constructors
+
+To easy `Variant` data construction this library provide the following constructors:
+
+- `Variant(constructor, arg1, arg2, ...argN)`
+- `Some(arg)`
+- `None()`
+
+Example:
+
+Given the following Sophia entrypoint:
+```sophia
+entrypoint test_optional(a:option(int)) = a
+```
+
+Below encoder call groups are equivalent:
+
+```javascript
+const {Encoder, Variant, Some, None} = require('@aeternity/aepp-calldata')
+const ACI = require('./Test.json')
+const CONTRACT = 'Test'
+
+const encoder = new Encoder(ACI)
+
+encoder.encode(CONTRACT, 'test_optional', [{'None': []}])
+encoder.encode(CONTRACT, 'test_optional', [Variant('None')])
+encoder.encode(CONTRACT, 'test_optional', [None()])
+
+encoder.encode(CONTRACT, 'test_optional', [{'Some': [404]}])
+encoder.encode(CONTRACT, 'test_optional', [Variant('Some', 404)])
+encoder.encode(CONTRACT, 'test_optional', [Some(404)])
+```
 
 ## Versioning
 
