@@ -15,10 +15,11 @@ test('Serialize', t => {
 });
 
 test('Deserialize', t => {
-    t.plan(2)
+    t.plan(3)
     t.deepEqual(s.deserialize([13,97,98,99]), new FateString("abc"))
     t.deepEqual(
         s.deserialize([1,0].concat(Array(64).fill(120))),
         new FateString("x".repeat(64))
     )
+    t.deepEqual(s.deserialize([95]), new FateString(""))
 });
