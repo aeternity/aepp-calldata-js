@@ -1,5 +1,5 @@
 const Variant = (ctor, ...args) => {
-    return {[ctor]: [...args]}
+    return {[ctor]: args}
 }
 
 const Some = (args) => {
