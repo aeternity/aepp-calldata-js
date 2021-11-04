@@ -1,13 +1,13 @@
+// TODO consider using Buffer.from(<string>, 'hex') instead
 const HexStringToByteArray = function (str) {
-    const start = str.startsWith('0x') ? 2 : 0
-    let ints = [];
-
-    for (let i = start, charsLength = str.length; i < charsLength; i += 2) {
-        const hex = str.substring(i, i + 2)
-        ints.push(parseInt(hex, 16));
+    const match = str.match(new RegExp(/^(0x)?([a-f0-9]*)$/, 'i'))
+    if (!match) {
+        throw new Error(`Invalid hex string: ${str}`)
     }
-
-    return new Uint8Array(ints)
+    return new Uint8Array(match[2]
+        .split(/(.{1,2})/)
+        .filter(el => el)
+        .map(el => parseInt(el, 16)))
 }
 
 module.exports = HexStringToByteArray
