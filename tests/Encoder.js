@@ -325,7 +325,6 @@ test('Encode optional arguments', t => {
     const encoded2 = encoder.encode(CONTRACT, 'test_optional', [{'Some': [404]}])
     t.is(encoded2, 'cb_KxG0+HBxG6+CAAEBG2+CAVSsnrJE', 'test_optional(Some(404))')
 
-    console.log(None(), Some(404))
     // Test data constructors
     const encoded3 = encoder.encode(CONTRACT, 'test_optional', [None()])
     t.is(encoded3, 'cb_KxG0+HBxG6+CAAEAP4sG0gs=', 'test_optional(None)')
