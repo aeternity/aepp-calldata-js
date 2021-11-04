@@ -96,7 +96,7 @@ Using the library involves data types and their mappings from Sophia to JavaScri
 | signature           | `#001234d`                                                  | BigInt          | `BigInt("0x001234d")`                                                          |
 | address             | `ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt`     | BigInt, String  | `BigInt("0xDE68BFE1B203E51F52351BA087F79B7828E6A140F0C314A670C7003B3FF57075")`, `ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt` |
 
-- note the fixed structure of variant object with a single key - the variant constructor (i.e. ``Some`) and array of variant arguments as it's value.
+- note the fixed structure of variant object with a single key - the variant constructor (i.e. `Some`) and array of variant arguments as it's value.
 - while Javascript Number and primitive `int` types can be used as well when `BigInt` type is expected it's not recommended because of it's `Number.MAX_SAFE_INTEGER` limitation.
 
 ## Data constructors
