@@ -21,6 +21,14 @@ Pull requests are the best way to propose changes to the codebase (we use [Githu
 6. Make sure your code lints.
 7. Issue that pull request!
 
+In general pull requests should:
+- Only fix/add the functionality in question **OR** address wide-spread whitespace/style issues, not both.
+- Add unit or integration tests for fixed or changed functionality (if a test suite already exists).
+- Address a single concern in the least number of changed lines as possible.
+- Include documentation in the repo
+
+For changes that address core functionality or would require breaking changes (e.g. a major release), it's best to open an Issue to discuss your proposal first. This is not required but can save time creating and reviewing changes.
+
 ## Any contributions you make will be under the ISC Software License
 In short, when you submit code changes, your submissions are understood to be under the same [ISC License](https://choosealicense.com/licenses/isc/) that covers the project. Feel free to contact the maintainers if that's a concern.
 

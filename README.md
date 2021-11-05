@@ -1,6 +1,10 @@
 # Aeternity data serialization
 
-Aeternity contract calldata encoding and results decoding library
+Aeternity contract calldata encoding and results decoding **standalone** library.
+
+This is Javascript imeplemtnation of data serialization specified in [aeternity protocol](https://github.com/aeternity/protocol/blob/master/serializations.md#data).
+
+While the only purpose of the library at the moment of this writing is solely to provide serialize/deserialize and ecnode/decode respectively of contracts calldata and return data it may evolve to full fledged serialization library of the full protocol specification.
 
 ## Installation
 
@@ -104,7 +108,23 @@ Using the library involves data types and their mappings from Sophia to JavaScri
 This project follows the [semantic versioning](https://semver.org/spec/v2.0.0) guidelines.
 Refer to the [CHANGELOG](CHANGELOG.md) for more information about releases.
 
+## Public API
+
+The backward compatibility promise signaled with semantic versioning [above](#versioning) is **only** applied to public API of this library,
+that is only the module exports and [data types](#data-types) listed above.
+
+The public API namely consist of:
+
+- `encode(contractName: string, functionName: string, arguments: Array<Data>): string`
+- `decode(contractName: string, functionName: string, encodedData: string): Data`
+- `serialize(contractName: string, functionName: string, arguments: Array<Data>): string`
+- `deserialize(contractName: string, functionName: string, encodedData: Uint8Array): Data`
+
+where `Data: Boolean | BigInt | String | Array | Map | Object`
+
 ## Development
+
+Please make sure you get familiar with [Contributing Guidelines](CONTRIBUTING.md) first.
 
 ### Install
 
