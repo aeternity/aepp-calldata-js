@@ -25,9 +25,13 @@ class DataFactory {
     }
 
     create(types, values) {
-        if (types.length !== values.length) {
+        const requiredTypesCount = types
+            .map(type => FateVariant.isFateTypeOption(type))
+            .lastIndexOf(false) + 1
+        if (values.length > types.length || values.length < requiredTypesCount) {
             throw new Error(
-                `Non matching number of arguments. Got ${values.length} but expected ${types.length}`
+                'Non matching number of arguments. '
+                + `Got ${values.length} but expected from ${requiredTypesCount} to ${types.length}`
             )
         }
 
@@ -118,23 +122,35 @@ class DataFactory {
             return new FateTuple(type.valueTypes, resolvedValue)
         }
 
+        if (
+            FateVariant.isFateTypeOption(type)
+            && !['Some', 'None'].includes(this.getVariantName(value))
+        ) {
+            const isPresented = ![undefined, null].includes(value)
+            const variantCtor = isPresented ? 'Some' : 'None'
+            const variantArgs = isPresented ? [value] : []
+            return this.createVariant(type, variantCtor, variantArgs)
+        }
+
         if (['variant', 'Chain.ttl', 'AENS.pointee', 'AENS.name'].includes(type.name)) {
-            return this.createVariant(type, value)
+            if (!this.getVariantName(value)) {
+                throw new Error(`Variant should be an object mapping constructor to array of values, got ${value} instead`)
+            }
+
+            const [variantCtor, variantArgs] = Object.entries(value)[0]
+            return this.createVariant(type, variantCtor, variantArgs)
         }
 
         throw new Error('Unsupported type: ' + JSON.stringify(type))
     }
 
-    createVariant(type, value) {
-        if (
-            typeof value !== 'object' || value === null
-            || Object.entries(value).length !== 1 || !Array.isArray(Object.values(value)[0])
-        ) {
-            throw new Error(`Variant should be an object mapping constructor to array of values, got ${value} instead`)
-        }
+    getVariantName(value) {
+        const isValid = typeof value === 'object' && value !== null
+            && Object.entries(value).length === 1 && Array.isArray(Object.values(value)[0])
+        return isValid ? Object.keys(value)[0] : ''
+    }
 
-        const [variantCtor, variantArgs] = Object.entries(value)[0]
-
+    createVariant(type, variantCtor, variantArgs) {
         const arities = type.variants.map(e => {
             const [[, args]] = Object.entries(e)
             return args.length
@@ -152,7 +168,7 @@ class DataFactory {
         const [[, variantTypes]] = Object.entries(type.variants[tag])
         const variantValue = this.create(variantTypes, variantArgs)
 
-        return new FateVariant(arities, tag, variantValue, variantTypes)
+        return new FateVariant(arities, tag, variantValue, variantTypes, type.variants)
     }
 }
 

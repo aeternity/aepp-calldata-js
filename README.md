@@ -123,7 +123,7 @@ Using the library involves data types and their mappings from Sophia to JavaScri
 | tuple               | `(true, false)`                                             | Array           | `[true, false]`                                                                |
 | map                 | `{[7] = false}`                                             | Map             | `new Map([[7, false]])`                                                        |
 | record              | `{x = 0, y = 0}`                                            | Object (POJO)   | `{x: 0, y: 0}`                                                                 |
-| variant             | `Some(404)`, `None`                                         | Object (POJO)   | `{'Some': [404]}`, `{'None': []}`                                              |
+| variant             | `Some(404)`, `None`                                         | Object (POJO)   | `{'Some': [404]}`, `{'None': []}`, `404`, `undefined`                          |
 | bits                | `Bits.none`, `Bits.all`  `Bits.set(Bits.none, 0)`           | BigInt          | `0b0n`, `-1n`, `0b00000001n`                                                   |
 | hash                | `#001234d`                                                  | BigInt          | `BigInt("0x001234d")`                                                          |
 | signature           | `#001234d`                                                  | BigInt          | `BigInt("0x001234d")`                                                          |

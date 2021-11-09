@@ -206,7 +206,7 @@ test('Decode map with optional key', t => {
     t.plan(1)
     t.deepEqual(
         encoder.decode(CONTRACT, 'test_fancy_map', 'cb_LwGvggABAD8CMr9vhg=='),
-        new Map([[{None: []}, 1n]]),
+        new Map([[undefined, 1n]]),
         'test_fancy_map({[None] = 1}, {[Some(0)] = 2})'
     )
 })
@@ -295,13 +295,13 @@ test('Decode optional arguments', t => {
     t.plan(2)
     t.deepEqual(
         encoder.decode(CONTRACT, 'test_optional', 'cb_r4IAAQA/aHG2bw=='),
-        {None: []},
+        undefined,
         'test_optional(None)'
     )
 
     t.deepEqual(
         encoder.decode(CONTRACT, 'test_optional', 'cb_r4IAAQEbb4IBVPA+5jI='),
-        {Some: [404n]},
+        404n,
         'test_optional(Some(404))'
     )
 })
