@@ -127,6 +127,9 @@ class DataFactory {
     }
 
     createVariant(type, value) {
+        const variantCtor = Object.keys(value)[0]
+        const variantArgs = value[variantCtor]
+
         const arities = type.variants.map(e => {
             const [[, args]] = Object.entries(e)
             return args.length
@@ -134,7 +137,7 @@ class DataFactory {
 
         const tag = type.variants.findIndex(e => {
             const [[key,]] = Object.entries(e)
-            return key === value.variant
+            return key === variantCtor
         })
 
         if (tag === -1) {
@@ -142,7 +145,7 @@ class DataFactory {
         }
 
         const [[, variantTypes]] = Object.entries(type.variants[tag])
-        const variantValue = this.create(variantTypes, value.values)
+        const variantValue = this.create(variantTypes, variantArgs)
 
         return new FateVariant(arities, tag, variantValue, variantTypes)
     }
