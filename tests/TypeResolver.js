@@ -1,4 +1,3 @@
-const fs = require('fs')
 const test = require('./test.js');
 const TypeResolver = require('../src/TypeResolver.js')
 const aci = require('../build/contracts/Test.json')
