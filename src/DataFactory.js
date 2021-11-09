@@ -119,7 +119,7 @@ class DataFactory {
             return new FateTuple(type.valueTypes, resolvedValue)
         }
 
-        if (['variant', 'option', 'Chain.ttl', 'AENS.pointee', 'AENS.name'].includes(type.name)) {
+        if (['variant', 'Chain.ttl', 'AENS.pointee', 'AENS.name'].includes(type.name)) {
             return this.createVariant(type, value)
         }
 
