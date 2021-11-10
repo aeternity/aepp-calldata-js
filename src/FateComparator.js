@@ -56,7 +56,7 @@ const tupleComparator = (a, b) => {
         // TODO support different types ?
 
         const diff = FateComparator(valTypeA)(a.items[i], b.items[i])
-        if (diff != 0) {
+        if (diff !== 0) {
             return diff
         }
     }

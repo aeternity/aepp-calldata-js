@@ -35,7 +35,7 @@ class TypeResolver {
     }
 
     getCallTypes(contract, funName) {
-        const funcAci = this.getNamespaceAci(contract).functions.find(e => e.name == funName)
+        const funcAci = this.getNamespaceAci(contract).functions.find(e => e.name === funName)
 
         if (funcAci) {
             return funcAci.arguments.map(e => this.resolveType(e.type))
@@ -53,7 +53,7 @@ class TypeResolver {
             return this.resolveType('void')
         }
 
-        const funcAci = this.getNamespaceAci(contract).functions.find(e => e.name == funName)
+        const funcAci = this.getNamespaceAci(contract).functions.find(e => e.name === funName)
 
         if (!funcAci) {
             throw new Error(`Unknown function ${funName}`)
@@ -244,7 +244,7 @@ class TypeResolver {
                 typedef: namespaceData.state,
                 vars: []
             }] : []
-        ].find(e => e.name == localType);
+        ].find(e => e.name === localType);
 
         if (!def) {
             throw new Error('Unknown type definition: ' + JSON.stringify(type))
