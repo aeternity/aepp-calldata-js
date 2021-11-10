@@ -1,18 +1,13 @@
-const Int2ByteArray =  (value) => {
-    if (value < 256) {
-        return new Uint8Array([Number(value)])
-    }
+const Int2ByteArray = (value) => {
+    const bigInt = BigInt(value)
 
-    if (typeof value == 'bigint') {
-        return new Uint8Array([
-            ...Int2ByteArray(value >> 8n),
-            Number(value & BigInt('0xff'))
-        ])
+    if (bigInt < 256n) {
+        return new Uint8Array([Number(bigInt)])
     }
 
     return new Uint8Array([
-        ...Int2ByteArray(value >> 8),
-        value & 0xff
+        ...Int2ByteArray(bigInt >> 8n),
+        Number(bigInt & 0xffn)
     ])
 }
 
