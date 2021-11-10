@@ -17,10 +17,10 @@ const Int2ByteArray =  (value) => {
 }
 
 const ByteArray2Int = (data) => {
-    var hex = [];
+    const hex = [];
 
     data.forEach(i => {
-        var h = i.toString(16)
+        let h = i.toString(16)
 
         if (h.length % 2) {
             h = '0' + h;
