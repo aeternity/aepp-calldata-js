@@ -243,6 +243,12 @@ test('Encode variant arguments with non-zero arity', t => {
     t.is(encoded1, 'cb_KxFiWgvXG6+EAAABAAIbDv+CzlA=', 'test_variants(Yep(7))')
 });
 
+test('Encode variant arguments with nested variant', t => {
+    t.plan(1)
+    const encoded1 = encoder.encode(CONTRACT, 'test_nested_variants', [{'One': [{'RelativeTTL': [7]}]}])
+    t.is(encoded1, 'cb_KxF1qXomG6+CAQEAG6+CAQEAGw7cNGqs', 'test_nested_variants(One(RelativeTTL(7)))')
+});
+
 test('Encode variant with template arguments', t => {
     t.plan(1)
     const encoded = encoder.encode(CONTRACT, 'test_template_variants', [{'Any': [7, true, 9, 21]}])

@@ -27,12 +27,16 @@ class VariantSerializer {
         const decoded = RLP.decode(buffer.slice(1), true)
         const arities = [...decoded.data]
         const tag = decoded.remainder[0]
-        const [els, rest] = this.globalSerializer.deserializeStream(decoded.remainder.slice(1))
-
         let variants = []
+        let valueType
         if (typeof typeInfo != 'undefined') {
             variants = typeInfo.variants
+            valueType = {
+                ...typeInfo.variantType,
+                valueTypes: Object.values(typeInfo.variants[tag])[0]
+            }
         }
+        const [els, rest] = this.globalSerializer.deserializeStream(decoded.remainder.slice(1), valueType)
 
         return [
             new FateVariant(arities, tag, els.items, els.valueTypes, variants),

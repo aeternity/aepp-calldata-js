@@ -229,6 +229,19 @@ test('Decode variant arguments with non-zero arity', t => {
     )
 });
 
+test('Decode variant arguments with nested variant', t => {
+    t.plan(1)
+    t.deepEqual(
+        encoder.decode(
+            CONTRACT,
+            'test_nested_variants',
+            'cb_r4IBAQAbr4IBAQAbDi9/8t0='
+        ),
+        {One: [{RelativeTTL: [7n]}]},
+        'test_nested_variants(One(RelativeTTL(7)))'
+    )
+});
+
 test('Decode variant with template arguments', t => {
     t.plan(1)
     t.deepEqual(
