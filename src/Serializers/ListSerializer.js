@@ -45,7 +45,7 @@ class ListSerializer {
         }
 
         if ((prefix & 0x0F) === FateTag.SHORT_LIST) {
-            len = (prefix & 0xF0) >> 4
+            len = BigInt((prefix & 0xF0) >> 4)
         }
 
         let elements = []
@@ -61,7 +61,7 @@ class ListSerializer {
             elements.push(el)
         }
 
-        if (len === 0) {
+        if (len === 0n) {
             return [new FateList(null), rest]
         }
 

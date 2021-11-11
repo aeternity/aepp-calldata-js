@@ -1,5 +1,5 @@
 const FateData = require('./FateData.js')
-const {FateTypeTuple, FateTypeRecord} = require('../FateTypes.js')
+const {FateTypeTuple} = require('../FateTypes.js')
 
 const zipObject = (keys, values) => {
   return keys.reduce((acc, k, i) => (acc[k] = values[i], acc), {})

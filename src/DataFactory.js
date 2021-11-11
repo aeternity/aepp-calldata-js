@@ -35,7 +35,7 @@ class DataFactory {
         return zip(types, values).map(el => this.createData(...el))
     }
 
-    createData(type, value, vars = {}) {
+    createData(type, value) {
         if (type.name === 'int') {
             return new FateInt(value)
         }
@@ -119,8 +119,8 @@ class DataFactory {
             return new FateTuple(type.valueTypes, resolvedValue)
         }
 
-        if (['variant', 'option', 'Chain.ttl', 'AENS.pointee', 'AENS.name'].includes(type.name)) {
-            return this.createVariant(type, value, vars)
+        if (['variant', 'Chain.ttl', 'AENS.pointee', 'AENS.name'].includes(type.name)) {
+            return this.createVariant(type, value)
         }
 
         throw new Error('Unsupported type: ' + JSON.stringify(type))
