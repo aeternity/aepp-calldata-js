@@ -216,6 +216,23 @@ test('Encode map arguments', t => {
     t.is(encoded, 'cb_KxHLN316Gy8BDn+vbmBO', 'test_simple_map({[7] = false})')
 })
 
+test('Encode map arguments by object', t => {
+    t.plan(1)
+    const encoded = encoder.encode(CONTRACT, 'test_simple_map', [{ 7: false }])
+    t.is(encoded, 'cb_KxHLN316Gy8BDn+vbmBO', 'test_simple_map({[7] = false})')
+})
+
+test('Ensures map is map, array, object', t => {
+    t.plan(1)
+    t.throws(
+        () => encoder.encode(CONTRACT, 'test_simple_map', ['test-string']),
+        {
+            name: 'FateTypeError',
+            message: 'Fate map must be one of: Map, Array, Object; got test-string instead'
+        }
+    )
+})
+
 test('Encode nested map arguments', t => {
     t.plan(1)
     const encoded = encoder.encode(CONTRACT, 'test_nested_map', [[

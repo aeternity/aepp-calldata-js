@@ -96,21 +96,21 @@ Expected output:
 
 Using the library involves data types and their mappings from Sophia to JavaScript and vice versa.
 
-| Sophia Type         | Sophia Example                                              | Javascript type | Javascript Example                                                             |
-| ------------------- | -----------                                                 | --------------- | -----------                                                                    |
-| int                 | `63`, `-63`                                                 | BigInt          | `63n`, `-63n`                                                                  |
-| bool                | `true`, `false`                                             | Boolean         | `true`, `false`                                                                |
-| string              | `"whoolymoly"`                                              | String          | `"whoolymoly"`                                                                 |
-| bytes               | `#beef`                                                     | BigInt          | `BigInt("0xbeef")`                                                             |
-| list                | `[1, 2, 3, 5, 8, 13, 21]`                                   | Array           | `[1,2,3,5,8,13,21]`                                                            |
-| tuple               | `(true, false)`                                             | Array           | `[true, false]`                                                                |
-| map                 | `{[7] = false}`                                             | Map             | `new Map([[7, false]])`                                                        |
-| record              | `{x = 0, y = 0}`                                            | Object (POJO)   | `{x: 0, y: 0}`                                                                 |
-| variant             | `Some(404)`, `None`                                         | Object (POJO)   | `{'Some': [404]}`, `{'None': []}`, `404`, `undefined`                          |
-| bits                | `Bits.none`, `Bits.all`  `Bits.set(Bits.none, 0)`           | BigInt          | `0b0n`, `-1n`, `0b00000001n`                                                   |
-| hash                | `#001234d`                                                  | BigInt          | `BigInt("0x001234d")`                                                          |
-| signature           | `#001234d`                                                  | BigInt          | `BigInt("0x001234d")`                                                          |
-| address             | `ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt`     | String          | `ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt`                        |
+| Sophia Type | Sophia Example                                          | Javascript type    | Javascript Example                                      |
+|-------------|---------------------------------------------------------|--------------------|---------------------------------------------------------|
+| int         | `63`, `-63`                                             | BigInt             | `63n`, `-63n`                                           |
+| bool        | `true`, `false`                                         | Boolean            | `true`, `false`                                         |
+| string      | `"whoolymoly"`                                          | String             | `"whoolymoly"`                                          |
+| bytes       | `#beef`                                                 | BigInt             | `BigInt("0xbeef")`                                      |
+| list        | `[1, 2, 3, 5, 8, 13, 21]`                               | Array              | `[1,2,3,5,8,13,21]`                                     |
+| tuple       | `(true, false)`                                         | Array              | `[true, false]`                                         |
+| map         | `{[7] = false}`                                         | Map, Object, Array | `new Map([[7, false]])`, `{7: false}`, `[[7, false]]`   |
+| record      | `{x = 0, y = 0}`                                        | Object (POJO)      | `{x: 0, y: 0}`                                          |
+| variant     | `Some(404)`, `None`                                     | Object (POJO)      | `{'Some': [404]}`, `{'None': []}`, `404`, `undefined`   |
+| bits        | `Bits.none`, `Bits.all`  `Bits.set(Bits.none, 0)`       | BigInt             | `0b0n`, `-1n`, `0b00000001n`                            |
+| hash        | `#001234d`                                              | BigInt             | `BigInt("0x001234d")`                                   |
+| signature   | `#001234d`                                              | BigInt             | `BigInt("0x001234d")`                                   |
+| address     | `ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt` | String             | `ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt` |
 
 - note the fixed structure of variant object with a single key - the variant constructor (i.e. `Some`) and array of variant arguments as it's value.
 - while Javascript Number and primitive `int` types can be used as well when `BigInt` type is expected it's not recommended because of it's `Number.MAX_SAFE_INTEGER` limitation.
