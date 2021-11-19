@@ -17,10 +17,6 @@ const StringSerializer = require('./Serializers/StringSerializer')
 const TupleSerializer = require('./Serializers/TupleSerializer')
 const VariantSerializer = require('./Serializers/VariantSerializer')
 
-const ucFirst = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1)
-}
-
 const _serializers = {}
 
 class Serializer {
@@ -39,8 +35,7 @@ class Serializer {
             throw new Error('Only instances of FateData is supported.')
         }
 
-        // drop FateType prefix
-        const typeName = data.constructor.name.slice(4)
+        const typeName = data.name
         if (!_serializers.hasOwnProperty(typeName)) {
             throw new Error(`Unsupported type: ` + JSON.stringify(typeName));
         }
@@ -81,8 +76,7 @@ class Serializer {
             throw new Error('Unsupported type: ' + JSON.stringify(type))
         }
 
-        // drop FateType prefix
-        const typeName = type.name.split('_').map(ucFirst).join('');
+        const typeName = type.name;
         if (!_serializers.hasOwnProperty(typeName)) {
             throw new Error(`Unsupported type: ` + JSON.stringify(typeName));
         }
@@ -94,24 +88,24 @@ class Serializer {
 const globalSerializer = new Serializer()
 const tupleSerializer = new TupleSerializer(globalSerializer)
 
-Serializer.register('Void', new VoidSerializer())
-Serializer.register('Bool', new BoolSerializer())
-Serializer.register('Int', new IntSerializer())
-Serializer.register('Tuple', tupleSerializer)
-Serializer.register('List', new ListSerializer(globalSerializer))
-Serializer.register('Map', new MapSerializer(globalSerializer))
-Serializer.register('ByteArray', new ByteArraySerializer())
-Serializer.register('String', new StringSerializer())
-Serializer.register('Hash', new BytesSerializer())
-Serializer.register('Signature', new BytesSerializer())
-Serializer.register('Bits', new BitsSerializer())
-Serializer.register('Variant', new VariantSerializer(globalSerializer))
-Serializer.register('Bytes', new BytesSerializer())
-Serializer.register('AccountAddress', new AddressSerializer())
-Serializer.register('ContractAddress', new ContractSerializer())
-Serializer.register('OracleAddress', new OracleSerializer())
-Serializer.register('OracleQueryAddress', new OracleQuerySerializer())
-Serializer.register('ChannelAddress', new ChannelSerializer())
-Serializer.register('Record', tupleSerializer)
+Serializer.register('void', new VoidSerializer())
+Serializer.register('bool', new BoolSerializer())
+Serializer.register('int', new IntSerializer())
+Serializer.register('tuple', tupleSerializer)
+Serializer.register('record', tupleSerializer)
+Serializer.register('list', new ListSerializer(globalSerializer))
+Serializer.register('map', new MapSerializer(globalSerializer))
+Serializer.register('byte_array', new ByteArraySerializer())
+Serializer.register('string', new StringSerializer())
+Serializer.register('hash', new BytesSerializer())
+Serializer.register('signature', new BytesSerializer())
+Serializer.register('bits', new BitsSerializer())
+Serializer.register('variant', new VariantSerializer(globalSerializer))
+Serializer.register('bytes', new BytesSerializer())
+Serializer.register('account_address', new AddressSerializer())
+Serializer.register('contract_address', new ContractSerializer())
+Serializer.register('oracle_address', new OracleSerializer())
+Serializer.register('oracle_query_address', new OracleQuerySerializer())
+Serializer.register('channel_address', new ChannelSerializer())
 
 module.exports = Serializer
