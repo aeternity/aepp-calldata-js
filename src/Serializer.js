@@ -30,7 +30,7 @@ class Serializer {
 
     serialize(data) {
         if (typeof data !== 'object') {
-            throw new Error('Only object serialization is supported.')
+            throw new Error('Only object serialization is supported. Got: ' + JSON.stringify(data))
         }
 
         if (!(data instanceof FateData)) {

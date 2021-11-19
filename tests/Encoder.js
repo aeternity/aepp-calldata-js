@@ -262,6 +262,15 @@ test('Encode type aliases', t => {
     t.is(encodedMap, 'cb_KxEM7YA1Gy8BDWZvbybgU5Hd', 'test_map_type({["foo"] = 19})')
 })
 
+test('Encode fancy map', t => {
+    t.plan(1)
+    const encodedMap = encoder.encode(CONTRACT, 'test_fancy_map', [
+        new Map([[{None: []}, 1]]),
+        new Map([[{Some: [0]}, 2]])
+    ])
+    t.is(encodedMap, 'cb_KxETMqtuKy8Br4IAAQA/Ai8Br4IAAQEbAASjVMXT', 'test_fancy_map({[None()] = 1}, {[Some(0)] = 2})')
+})
+
 test('Encode template type', t => {
     t.plan(1)
     const encoded = encoder.encode(CONTRACT, 'test_template_type', [7])
