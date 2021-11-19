@@ -1,5 +1,5 @@
-const test = require('../test.js')
-const RLPInt = require('../../src/utils/RLPInt.js')
+const test = require('../test')
+const RLPInt = require('../../src/utils/RLPInt')
 
 const b = (value) => new Uint8Array(value)
 

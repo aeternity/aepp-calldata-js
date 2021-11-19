@@ -14,8 +14,8 @@ const {
     FateTypeMap,
     FateTypeTuple,
     FateTypeVariant,
-} = require('./FateTypes.js')
-const FateTag = require('./FateTag.js')
+} = require('./FateTypes')
+const FateTag = require('./FateTag')
 
 class TypeFactory {
     createType(data) {

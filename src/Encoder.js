@@ -1,10 +1,10 @@
 const blake = require('blakejs')
 const base64check = require('base64check')
-const Serializer = require('./Serializer.js')
-const FateByteArray = require('./types/FateByteArray.js')
-const FateTuple = require('./types/FateTuple.js')
-const TypeResolver = require('./TypeResolver.js')
-const DataFactory = require('./DataFactory.js')
+const Serializer = require('./Serializer')
+const FateByteArray = require('./types/FateByteArray')
+const FateTuple = require('./types/FateTuple')
+const TypeResolver = require('./TypeResolver')
+const DataFactory = require('./DataFactory')
 
 const HASH_BYTES = 32
 

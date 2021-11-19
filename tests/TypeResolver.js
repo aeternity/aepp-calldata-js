@@ -1,5 +1,5 @@
-const test = require('./test.js');
-const TypeResolver = require('../src/TypeResolver.js')
+const test = require('./test');
+const TypeResolver = require('../src/TypeResolver')
 const aci = require('../build/contracts/Test.json')
 const {
     FateTypeInt,
@@ -22,7 +22,7 @@ const {
     FateTypeChainTTL,
     FateTypeAENSPointee,
     FateTypeChainGAMetaTx,
-} = require('../src/FateTypes.js')
+} = require('../src/FateTypes')
 
 const CONTRACT = 'Test'
 const resolver = new TypeResolver(aci)

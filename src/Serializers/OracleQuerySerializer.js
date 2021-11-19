@@ -1,6 +1,6 @@
 const RLP = require('rlp')
-const FateTag = require('../FateTag.js')
-const FateOracleQueryAddress = require('../types/FateOracleQueryAddress.js')
+const FateTag = require('../FateTag')
+const FateOracleQueryAddress = require('../types/FateOracleQueryAddress')
 
 class OracleQuerySerializer {
     serialize(data) {

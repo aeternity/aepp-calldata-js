@@ -1,6 +1,6 @@
-const test = require('../test.js')
-const ChannelSerializer = require('../../src/Serializers/ChannelSerializer.js')
-const FateChannelAddress = require('../../src/types/FateChannelAddress.js')
+const test = require('../test')
+const ChannelSerializer = require('../../src/Serializers/ChannelSerializer')
+const FateChannelAddress = require('../../src/types/FateChannelAddress')
 
 const s = new ChannelSerializer()
 

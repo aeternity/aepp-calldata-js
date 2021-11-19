@@ -1,9 +1,9 @@
-const test = require('../test.js')
-const Serializer = require('../../src/Serializer.js')
-const ListSerializer = require('../../src/Serializers/ListSerializer.js')
-const {FateTypeInt, FateTypeList} = require('../../src/FateTypes.js')
-const FateInt = require('../../src/types/FateInt.js')
-const FateList = require('../../src/types/FateList.js')
+const test = require('../test')
+const Serializer = require('../../src/Serializer')
+const ListSerializer = require('../../src/Serializers/ListSerializer')
+const {FateTypeInt, FateTypeList} = require('../../src/FateTypes')
+const FateInt = require('../../src/types/FateInt')
+const FateList = require('../../src/types/FateList')
 
 const s = new ListSerializer(new Serializer())
 

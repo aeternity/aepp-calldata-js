@@ -1,4 +1,4 @@
-const FateBytes = require('./FateBytes.js')
+const FateBytes = require('./FateBytes')
 
 class FateSignature extends FateBytes {
   constructor(value) {

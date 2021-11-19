@@ -1,8 +1,8 @@
 const RLP = require('rlp')
-const FateTag = require('../FateTag.js')
-const RLPInt = require('../utils/RLPInt.js')
-const FateBits = require('../types/FateBits.js')
-const {ByteArray2Int} = require('../utils/Int2ByteArray.js')
+const FateTag = require('../FateTag')
+const RLPInt = require('../utils/RLPInt')
+const FateBits = require('../types/FateBits')
+const {ByteArray2Int} = require('../utils/Int2ByteArray')
 
 const abs = (val) => val > 0 ? val : val * -1n
 

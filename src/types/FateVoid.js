@@ -1,5 +1,5 @@
-const FateData = require('./FateData.js')
-const {FateTypeVoid} = require('../FateTypes.js')
+const FateData = require('./FateData')
+const {FateTypeVoid} = require('../FateTypes')
 
 class FateVoid extends FateData {
   constructor(value) {

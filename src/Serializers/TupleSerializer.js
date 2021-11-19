@@ -1,6 +1,6 @@
-const FateTag = require('../FateTag.js')
-const FateInt = require('../types/FateInt.js')
-const FateTuple = require('../types/FateTuple.js')
+const FateTag = require('../FateTag')
+const FateInt = require('../types/FateInt')
+const FateTuple = require('../types/FateTuple')
 
 const zip = (arr, ...arrs) => {
   return arr.map((val, i) => arrs.reduce((a, arr) => [...a, arr[i]], [val]));

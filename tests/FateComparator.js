@@ -1,14 +1,14 @@
-const test = require('./test.js')
-const FateComparator = require('../src/FateComparator.js')
-const FateInt = require('../src/types/FateInt.js')
-const FateBool = require('../src/types/FateBool.js')
-const FateString = require('../src/types/FateString.js')
-const FateList = require('../src/types/FateList.js')
-const FateMap = require('../src/types/FateMap.js')
-const FateTuple = require('../src/types/FateTuple.js')
-const FateVariant = require('../src/types/FateVariant.js')
-const FateBytes = require('../src/types/FateBytes.js')
-const FateBits = require('../src/types/FateBits.js')
+const test = require('./test')
+const FateComparator = require('../src/FateComparator')
+const FateInt = require('../src/types/FateInt')
+const FateBool = require('../src/types/FateBool')
+const FateString = require('../src/types/FateString')
+const FateList = require('../src/types/FateList')
+const FateMap = require('../src/types/FateMap')
+const FateTuple = require('../src/types/FateTuple')
+const FateVariant = require('../src/types/FateVariant')
+const FateBytes = require('../src/types/FateBytes')
+const FateBits = require('../src/types/FateBits')
 const {
     FateTypeInt,
     FateTypeBool,
@@ -19,7 +19,7 @@ const {
     FateTypeMap,
     FateTypeTuple,
     FateTypeVariant,
-} = require('../src/FateTypes.js')
+} = require('../src/FateTypes')
 
 
 const sort = (type, data) => {

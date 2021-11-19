@@ -1,5 +1,5 @@
-const FateData = require('./FateData.js')
-const {FateTypeMap} = require('../FateTypes.js')
+const FateData = require('./FateData')
+const {FateTypeMap} = require('../FateTypes')
 
 const arrayToItem = (item) => {
   const [key, value] = item

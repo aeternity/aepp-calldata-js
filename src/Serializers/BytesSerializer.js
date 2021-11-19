@@ -1,7 +1,7 @@
-const FateTag = require('../FateTag.js')
-const Int2ByteArray = require('../utils/Int2ByteArray.js')
-const ByteArraySerializer = require('./ByteArraySerializer.js')
-const FateBytes = require('../types/FateBytes.js')
+const FateTag = require('../FateTag')
+const Int2ByteArray = require('../utils/Int2ByteArray')
+const ByteArraySerializer = require('./ByteArraySerializer')
+const FateBytes = require('../types/FateBytes')
 
 const byteArraySerializer = new ByteArraySerializer()
 

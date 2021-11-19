@@ -1,6 +1,6 @@
-const FateTag = require('../FateTag.js')
-const FateInt = require('../types/FateInt.js')
-const FateList = require('../types/FateList.js')
+const FateTag = require('../FateTag')
+const FateInt = require('../types/FateInt')
+const FateList = require('../types/FateList')
 
 class ListSerializer {
     constructor(globalSerializer) {

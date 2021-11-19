@@ -1,6 +1,6 @@
-const test = require('./test.js');
-const Encoder = require('../src/Encoder.js')
-const HexStringToByteArray = require('../src/utils/HexStringToByteArray.js')
+const test = require('./test');
+const Encoder = require('../src/Encoder')
+const HexStringToByteArray = require('../src/utils/HexStringToByteArray')
 const aci = require('../build/contracts/Test.json')
 
 const CONTRACT = 'Test'

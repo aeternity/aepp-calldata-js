@@ -1,6 +1,6 @@
 const RLP = require('rlp')
-const FateTag = require('../FateTag.js')
-const FateAccountAddress = require('../types/FateAccountAddress.js')
+const FateTag = require('../FateTag')
+const FateAccountAddress = require('../types/FateAccountAddress')
 
 class AddressSerializer {
     serialize(data) {

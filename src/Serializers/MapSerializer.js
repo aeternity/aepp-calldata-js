@@ -1,9 +1,9 @@
 const RLP = require('rlp')
-const FateTag = require('../FateTag.js')
-const RLPInt = require('../utils/RLPInt.js')
-const {ByteArray2Int} = require('../utils/Int2ByteArray.js')
-const FateComparator = require('../FateComparator.js')
-const FateMap = require('../types/FateMap.js')
+const FateTag = require('../FateTag')
+const RLPInt = require('../utils/RLPInt')
+const {ByteArray2Int} = require('../utils/Int2ByteArray')
+const FateComparator = require('../FateComparator')
+const FateMap = require('../types/FateMap')
 
 class MapSerializer {
     constructor(globalSerializer) {

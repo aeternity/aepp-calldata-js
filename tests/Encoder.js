@@ -1,5 +1,5 @@
-const test = require('./test.js');
-const Encoder = require('../src/Encoder.js')
+const test = require('./test');
+const Encoder = require('../src/Encoder')
 const aci = require('../build/contracts/Test.json')
 
 const CONTRACT = 'Test'

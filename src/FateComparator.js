@@ -1,6 +1,6 @@
-const FateList = require('./types/FateList.js')
-const FateTuple = require('./types/FateTuple.js')
-const {FateTypeTuple, FateTypeInt} = require('./FateTypes.js')
+const FateList = require('./types/FateList')
+const FateTuple = require('./types/FateTuple')
+const {FateTypeTuple, FateTypeInt} = require('./FateTypes')
 
 // TODO types comparator
 const listComparator = (a, b) => {

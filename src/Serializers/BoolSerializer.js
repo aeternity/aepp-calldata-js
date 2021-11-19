@@ -1,5 +1,5 @@
-const FateTag = require('../FateTag.js')
-const FateBool = require('../types/FateBool.js')
+const FateTag = require('../FateTag')
+const FateBool = require('../types/FateBool')
 
 class BoolSerializer {
     serialize(data) {

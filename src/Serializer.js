@@ -1,5 +1,5 @@
-const TypeFactory = require('./TypeFactory.js')
-const FateData = require('./types/FateData.js')
+const TypeFactory = require('./TypeFactory')
+const FateData = require('./types/FateData')
 const AddressSerializer = require('./Serializers/AddressSerializer')
 const BitsSerializer = require('./Serializers/BitsSerializer')
 const BoolSerializer = require('./Serializers/BoolSerializer')

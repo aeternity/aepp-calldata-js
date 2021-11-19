@@ -1,4 +1,4 @@
-const FateVoid = require('../types/FateVoid.js')
+const FateVoid = require('../types/FateVoid')
 
 class VoidSerializer {
     serialize(data) {

@@ -1,6 +1,6 @@
-const test = require('../test.js')
-const FateBool = require('../../src/types/FateBool.js')
-const BoolSerializer = require('../../src/Serializers/BoolSerializer.js')
+const test = require('../test')
+const FateBool = require('../../src/types/FateBool')
+const BoolSerializer = require('../../src/Serializers/BoolSerializer')
 
 const s = new BoolSerializer()
 

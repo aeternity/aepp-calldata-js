@@ -1,6 +1,6 @@
-const test = require('../test.js')
-const OracleSerializer = require('../../src/Serializers/OracleSerializer.js')
-const FateOracleAddress = require('../../src/types/FateOracleAddress.js')
+const test = require('../test')
+const OracleSerializer = require('../../src/Serializers/OracleSerializer')
+const FateOracleAddress = require('../../src/types/FateOracleAddress')
 
 const s = new OracleSerializer()
 

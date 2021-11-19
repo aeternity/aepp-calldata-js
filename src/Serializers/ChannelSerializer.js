@@ -1,6 +1,6 @@
 const RLP = require('rlp')
-const FateTag = require('../FateTag.js')
-const FateChannelAddress = require('../types/FateChannelAddress.js')
+const FateTag = require('../FateTag')
+const FateChannelAddress = require('../types/FateChannelAddress')
 
 class ChannelSerializer {
     serialize(data) {

@@ -1,6 +1,6 @@
-const test = require('../test.js')
-const ContractSerializer = require('../../src/Serializers/ContractSerializer.js')
-const FateContractAddress = require('../../src/types/FateContractAddress.js')
+const test = require('../test')
+const ContractSerializer = require('../../src/Serializers/ContractSerializer')
+const FateContractAddress = require('../../src/types/FateContractAddress')
 
 const s = new ContractSerializer()
 

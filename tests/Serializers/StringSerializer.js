@@ -1,6 +1,6 @@
-const test = require('../test.js')
-const FateString = require('../../src/types/FateString.js')
-const StringSerializer = require('../../src/Serializers/StringSerializer.js')
+const test = require('../test')
+const FateString = require('../../src/types/FateString')
+const StringSerializer = require('../../src/Serializers/StringSerializer')
 
 const s = new StringSerializer()
 

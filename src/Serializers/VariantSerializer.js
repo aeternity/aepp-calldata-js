@@ -1,7 +1,7 @@
 const RLP = require('rlp')
-const FateTag = require('../FateTag.js')
-const FateTuple = require('../types/FateTuple.js')
-const FateVariant = require('../types/FateVariant.js')
+const FateTag = require('../FateTag')
+const FateTuple = require('../types/FateTuple')
+const FateVariant = require('../types/FateVariant')
 
 class VariantSerializer {
     constructor(globalSerializer) {

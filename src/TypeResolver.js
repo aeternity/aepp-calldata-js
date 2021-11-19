@@ -23,7 +23,7 @@ const {
     FateTypeChainBaseTx,
     FateTypeAENSPointee,
     FateTypeAENSName,
-} = require('./FateTypes.js')
+} = require('./FateTypes')
 
 const isObject = (value) => {
     return value && typeof value === 'object' && value.constructor === Object;

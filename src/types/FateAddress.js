@@ -1,4 +1,4 @@
-const FateBytes = require('./FateBytes.js')
+const FateBytes = require('./FateBytes')
 const bs58check = require('bs58check')
 
 const base58Decode = (prefix, value) => {

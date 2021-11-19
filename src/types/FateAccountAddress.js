@@ -1,4 +1,4 @@
-const FateAddress = require('./FateAddress.js')
+const FateAddress = require('./FateAddress')
 
 class FateAccountAddress extends FateAddress {
   constructor(value) {

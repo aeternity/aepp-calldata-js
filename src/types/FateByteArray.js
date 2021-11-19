@@ -1,5 +1,5 @@
-const FateData = require('./FateData.js')
-const {FateTypeByteArray} = require('../FateTypes.js')
+const FateData = require('./FateData')
+const {FateTypeByteArray} = require('../FateTypes')
 
 class FateByteArray extends FateData {
   constructor(value = []) {
