@@ -12,13 +12,13 @@ const Int2ByteArray = (value) => {
 }
 
 const ByteArray2Int = (data) => {
-    const hex = [];
+    const hex = []
 
     data.forEach(i => {
         let h = i.toString(16)
 
         if (h.length % 2) {
-            h = '0' + h;
+            h = '0' + h
         }
 
         hex.push(h)

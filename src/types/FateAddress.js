@@ -15,9 +15,9 @@ const base58Decode = (prefix, value) => {
 
 class FateAddress extends FateBytes {
   constructor(value, size, name, prefix) {
-    //eventually decode the value
-    value = base58Decode(prefix, value)
-    super(value, size, name)
+    // eventually decode the value
+    const decoded = base58Decode(prefix, value)
+    super(decoded, size, name)
 
     this._prefix = prefix
   }

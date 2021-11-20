@@ -1,6 +1,6 @@
 // TODO consider using Buffer.from(<string>, 'hex') instead
-const HexStringToByteArray = function (str) {
-    const match = str.match(new RegExp(/^(0x)?([a-f0-9]*)$/, 'i'))
+const HexStringToByteArray = (str) => {
+    const match = str.match(/^(0x)?([a-f0-9]*)$/i)
     if (!match) {
         throw new Error(`Invalid hex string: ${str}`)
     }

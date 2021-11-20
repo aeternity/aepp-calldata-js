@@ -12,7 +12,7 @@ test('Serialize', t => {
         s.serialize("x".repeat(64)),
         [1,0].concat(Array(64).fill(120))
     )
-});
+})
 
 test('Deserialize', t => {
     t.plan(3)
@@ -22,4 +22,4 @@ test('Deserialize', t => {
         new FateString("x".repeat(64))
     )
     t.deepEqual(s.deserialize([95]), new FateString(""))
-});
+})

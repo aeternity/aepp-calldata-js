@@ -24,8 +24,7 @@ test('Serialize', t => {
         s.serialize(new FateInt("0xfedcba9876543210")),
         [111,136,254,220,186,152,118,84,49,208]
     )
-});
-
+})
 
 test('Deserialize Stream', t => {
     t.plan(4)
@@ -48,7 +47,7 @@ test('Deserialize Stream', t => {
         s.deserializeStream([111,136,254,220,186,152,118,84,49,208,5,5,5]),
         [new FateInt("0xfedcba9876543210"), new Uint8Array([5,5,5])]
     )
-});
+})
 
 test('Deserialize', t => {
     t.plan(12)
@@ -67,4 +66,4 @@ test('Deserialize', t => {
         s.deserialize([111,136,254,220,186,152,118,84,49,208]),
         new FateInt("0xfedcba9876543210")
     )
-});
+})

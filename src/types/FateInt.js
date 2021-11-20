@@ -17,7 +17,7 @@ class FateInt extends FateData {
   }
 
   valueOf() {
-    return this._value 
+    return this._value
   }
 }
 

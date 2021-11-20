@@ -2,7 +2,7 @@ const FateData = require('./FateData')
 const {FateTypeVoid} = require('../FateTypes')
 
 class FateVoid extends FateData {
-  constructor(value) {
+  constructor() {
     super('void')
 
     this._value = undefined

@@ -3,8 +3,7 @@ const FateTag = require('../FateTag')
 const RLPInt = require('../utils/RLPInt')
 const FateInt = require('../types/FateInt')
 const {ByteArray2Int} = require('../utils/Int2ByteArray')
-
-const abs = (val) => val > 0 ? val : val * -1n
+const abs = require('../utils/abs')
 
 const SMALL_INT_MASK = 0b00000001
 
@@ -38,16 +37,18 @@ class IntSerializer {
             ...RLPInt(absVal - 64n)
         ]
     }
+
     deserialize(data) {
-        const [value, rest] = this.deserializeStream(data)
+        const [value, _rest] = this.deserializeStream(data)
 
         return value
     }
-    deserializeStream(data) {
-        data = new Uint8Array(data)
+
+    deserializeStream(stream) {
+        const data = new Uint8Array(stream)
         const prefix = data[0]
 
-        //small int
+        // small int
         if ((prefix & SMALL_INT_MASK) === 0) {
             // positive
             if ((prefix & 0b10000000) === 0) {

@@ -16,7 +16,7 @@ test('Serialize', t => {
     t.deepEqual(s.serialize(new FateBool(false)), [127])
     t.throws(() => s.serialize(new FateBool(0)), { message: '"0" must be a boolean' })
     t.throws(() => s.serialize(new FateBool("")), { message: '"" must be a boolean' })
-});
+})
 
 test('Deserialize', t => {
     t.plan(4)
@@ -28,4 +28,4 @@ test('Deserialize', t => {
 
     t.deepEqual(s.deserialize(new Uint8Array([255])), T)
     t.deepEqual(s.deserialize(new Uint8Array([127])), F)
-});
+})

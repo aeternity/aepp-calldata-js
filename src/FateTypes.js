@@ -38,10 +38,6 @@ const FateTypeContractAddress = () => {
     return {name: 'contract_address'}
 }
 
-const FateTypeChannelAddress = () => {
-    return {name: 'channel_address'}
-}
-
 const FateTypeOracleAddress = (questionType, answerType) => {
     return {
         name: 'oracle_address',
@@ -65,14 +61,14 @@ const FateTypeByteArray = () => {
 const FateTypeList = (valuesType) => {
     return {
         name: 'list',
-        valuesType: valuesType
+        valuesType,
     }
 }
 
 const FateTypeTuple = (valueTypes) => {
     return {
         name: 'tuple',
-        valueTypes: valueTypes
+        valueTypes
     }
 }
 
@@ -87,18 +83,18 @@ const FateTypeRecord = (keys, valueTypes) => {
 const FateTypeMap = (keyType, valueType) => {
     return {
         name: 'map',
-        keyType: keyType,
-        valueType: valueType,
+        keyType,
+        valueType,
     }
 }
 
 const FateTypeVariant = (arities, variantType, variants) => {
     return {
         name: 'variant',
-        variants,
         aritiesType: FateTypeInt(),
         arities,
         variantType: FateTypeTuple(variantType),
+        variants,
     }
 }
 
@@ -135,7 +131,6 @@ const FateTypeChainPayingForTx = () => {
 
     return FateTypeVariant(0, null, variants)
 }
-
 
 const FateTypeChainBaseTx = () => {
     const variants = [
@@ -178,13 +173,13 @@ const FateTypeAENSPointee = () => {
 }
 
 const FateTypeAENSName = () => {
-    const variants = [
-        {'AENS.Name': [
+    const variants = [{
+        'AENS.Name': [
             FateTypeAccountAddress(),
             FateTypeChainTTL(),
             FateTypeMap(FateTypeString(), FateTypeAENSPointee())
-        ]},
-    ]
+        ]
+    }]
 
     return FateTypeVariant(0, null, variants)
 }

@@ -16,7 +16,7 @@ const FateOracleAddress = require('./types/FateOracleAddress')
 const FateOracleQueryAddress = require('./types/FateOracleQueryAddress')
 
 const zip = (arr, ...arrs) => {
-  return arr.map((val, i) => arrs.reduce((a, arr) => [...a, arr[i]], [val]));
+  return arr.map((val, i) => arrs.reduce((a, curr) => [...a, curr[i]], [val]))
 }
 
 class DataFactory {
@@ -27,8 +27,7 @@ class DataFactory {
     create(types, values) {
         if (types.length !== values.length) {
             throw new Error(
-                'Non matching number of arguments. ' +
-                `Got ${values.length} but expected ${types.length}`
+                `Non matching number of arguments. Got ${values.length} but expected ${types.length}`
             )
         }
 
@@ -136,7 +135,7 @@ class DataFactory {
         })
 
         const tag = type.variants.findIndex(e => {
-            const [[key,]] = Object.entries(e)
+            const [[key, _]] = Object.entries(e)
             return key === variantCtor
         })
 

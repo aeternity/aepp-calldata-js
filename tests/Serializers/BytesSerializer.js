@@ -30,7 +30,7 @@ test('Serialize', t => {
         s.serialize(new FateBytes("0xfedcba9876543210")),
         [159,1,33,254,220,186,152,118,84,50,16]
     )
-});
+})
 
 test('Deserialize', t => {
     t.plan(1)
@@ -38,4 +38,4 @@ test('Deserialize', t => {
         s.deserialize([159,1,9,190,239]),
         new FateBytes(0xbeef)
     )
-});
+})

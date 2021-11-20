@@ -31,7 +31,6 @@ test('Serialize', t => {
         'long list'
     )
 
-
     t.deepEqual(
         s.serialize(new FateList(
             FateTypeList(FateTypeInt()),
@@ -44,7 +43,7 @@ test('Serialize', t => {
         [51,35,2,4,35,6,8,35,10,12],
         'nested list'
     )
-});
+})
 
 test('Deserialize', t => {
     t.plan(4)
@@ -82,4 +81,4 @@ test('Deserialize', t => {
         ),
         'nested list'
     )
-});
+})

@@ -21,7 +21,7 @@ test('Serialize FateByteArray', t => {
         [1, 0].concat(longBytes),
         'long byte_array > 64, short int (len - 64 < 64)'
     )
-});
+})
 
 test('Serialize plain array', t => {
     t.plan(5)
@@ -54,7 +54,7 @@ test('Serialize plain array', t => {
         [1, 111, 122].concat(hugeBytes),
         'very long byte_array > 63'
     )
-});
+})
 
 test('Deserialize Stream', t => {
     t.plan(3)
@@ -74,7 +74,7 @@ test('Deserialize Stream', t => {
 
     t.deepEqual(
         s.deserializeStream([
-           1,  0,  0,  1,  2,  3,  4,  5,  6,  7,  8,  9,
+          1, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
           10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
           22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33,
           34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45,
@@ -84,7 +84,7 @@ test('Deserialize Stream', t => {
         [new FateByteArray(longBytes), new Uint8Array([5,5,5])],
         'long byte_array'
     )
-});
+})
 
 test('Deserialize', t => {
     t.plan(5)
@@ -116,4 +116,4 @@ test('Deserialize', t => {
         new FateByteArray(hugeBytes),
         'very long byte_array > 63'
     )
-});
+})

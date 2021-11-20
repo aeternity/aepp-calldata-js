@@ -2,7 +2,12 @@ const FateData = require('./FateData')
 const {FateTypeTuple} = require('../FateTypes')
 
 const zipObject = (keys, values) => {
-  return keys.reduce((acc, k, i) => (acc[k] = values[i], acc), {})
+  const reducer = (acc, k, i) => {
+    acc[k] = values[i]
+    return acc
+  }
+
+  return keys.reduce(reducer, {})
 }
 
 class FateTuple extends FateData {

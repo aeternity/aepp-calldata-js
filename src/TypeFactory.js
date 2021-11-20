@@ -4,8 +4,6 @@ const {
     FateTypeString,
     FateTypeBits,
     FateTypeBytes,
-    FateTypeHash,
-    FateTypeSignature,
     FateTypeAccountAddress,
     FateTypeContractAddress,
     FateTypeOracleAddress,
@@ -64,7 +62,7 @@ class TypeFactory {
         if (tag === FateTag.OBJECT) {
             const obj = data[1]
 
-            switch(obj) {
+            switch (obj) {
                 case 0:
                     return FateTypeAccountAddress()
                 case 1:
@@ -76,11 +74,11 @@ class TypeFactory {
                 case 4:
                     return FateTypeOracleQueryAddress()
                 default:
-                    throw new Error("Unsupported object type: " + obj)
+                    throw new Error('Unsupported object type: ' + obj)
             }
         }
 
-        throw new Error("Unknown tag: 0b" + tag.toString(2))
+        throw new Error('Unknown tag: 0b' + tag.toString(2))
     }
 }
 

@@ -18,7 +18,7 @@ test('Serialize', t => {
         s.serialize(new FateVariant([0, 0, 1, 0], 2, [new FateInt(7)], [FateTypeInt()])),
         [175,132,0,0,1,0,2,27,14]
     )
-});
+})
 
 test('Deserialize', t => {
     t.plan(2)
@@ -31,4 +31,4 @@ test('Deserialize', t => {
         s.deserialize([175,132,0,0,1,0,2,27,14]),
         new FateVariant([0, 0, 1, 0], 2, [new FateInt(7)], [FateTypeInt()])
     )
-});
+})

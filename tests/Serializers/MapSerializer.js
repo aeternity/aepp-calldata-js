@@ -30,14 +30,17 @@ test('Serialize', t => {
                 FTInt,
                 FateTypeMap(FTInt, FTBool),
                 [
-                    [new FateInt(0), new FateMap(
-                        FTInt, FTBool, [[new FateInt(0), new FateBool(false)]])
+                    [
+                        new FateInt(0),
+                        new FateMap(FTInt, FTBool, [[new FateInt(0), new FateBool(false)]])
                     ],
-                    [new FateInt(1), new FateMap(
-                        FTInt, FTBool, [[new FateInt(1), new FateBool(true)]])
+                    [
+                        new FateInt(1),
+                        new FateMap(FTInt, FTBool, [[new FateInt(1), new FateBool(true)]])
                     ],
-                    [new FateInt(2), new FateMap(
-                        FTInt, FTBool, [[new FateInt(8), new FateBool(true)]])
+                    [
+                        new FateInt(2),
+                        new FateMap(FTInt, FTBool, [[new FateInt(8), new FateBool(true)]])
                     ],
                 ]
             )
@@ -64,7 +67,7 @@ test('Serialize', t => {
         ])),
         [47,3,2,255,6,127,10,255]
     )
-});
+})
 
 test('Deserialize', t => {
     t.plan(3)
@@ -86,17 +89,20 @@ test('Deserialize', t => {
             FTInt,
             FateTypeMap(FTInt, FTBool),
             [
-                [new FateInt(0), new FateMap(
-                    FTInt, FTBool, [[new FateInt(0), new FateBool(false)]])
+                [
+                    new FateInt(0),
+                    new FateMap(FTInt, FTBool, [[new FateInt(0), new FateBool(false)]])
                 ],
-                [new FateInt(1), new FateMap(
-                    FTInt, FTBool, [[new FateInt(1), new FateBool(true)]])
+                [
+                    new FateInt(1),
+                    new FateMap(FTInt, FTBool, [[new FateInt(1), new FateBool(true)]])
                 ],
-                [new FateInt(2), new FateMap(
-                    FTInt, FTBool, [[new FateInt(8), new FateBool(true)]])
+                [
+                    new FateInt(2),
+                    new FateMap(FTInt, FTBool, [[new FateInt(8), new FateBool(true)]])
                 ],
             ]
         ),
         'nested map'
     )
-});
+})
