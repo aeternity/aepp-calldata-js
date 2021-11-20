@@ -1,5 +1,5 @@
-const TypeFactory = require('./TypeFactory.js')
-const FateData = require('./types/FateData.js')
+const TypeFactory = require('./TypeFactory')
+const FateData = require('./types/FateData')
 const AddressSerializer = require('./Serializers/AddressSerializer')
 const BitsSerializer = require('./Serializers/BitsSerializer')
 const BoolSerializer = require('./Serializers/BoolSerializer')
@@ -23,34 +23,38 @@ class Serializer {
     static register(type, instance) {
         _serializers[type] = instance
     }
+
     constructor() {
         this.typeFactory = new TypeFactory()
     }
+
     serialize(data) {
         if (typeof data !== 'object') {
             throw new Error('Only object serialization is supported.')
         }
 
-        if (!data instanceof FateData) {
+        if (!(data instanceof FateData)) {
             throw new Error('Only instances of FateData is supported.')
         }
 
         const typeName = data.name
         if (!_serializers.hasOwnProperty(typeName)) {
-            throw new Error(`Unsupported type: ` + JSON.stringify(typeName));
+            throw new Error('Unsupported type: ' + JSON.stringify(typeName))
         }
 
         return _serializers[typeName].serialize(data)
     }
+
     deserialize(type, data) {
-        if (!data instanceof Uint8Array) {
+        if (!(data instanceof Uint8Array)) {
             throw new Error('Only instances of Uint8Array is supported.')
         }
 
         return this._getSerializer(type).deserialize(data, type)
     }
+
     deserializeStream(data, typeInfo) {
-        if (!data instanceof Uint8Array) {
+        if (!(data instanceof Uint8Array)) {
             throw new Error('Only instances of Uint8Array is supported.')
         }
 
@@ -71,14 +75,15 @@ class Serializer {
 
         return serializer.deserializeStream(data, typeInfo)
     }
+
     _getSerializer(type) {
         if (!type.hasOwnProperty('name')) {
             throw new Error('Unsupported type: ' + JSON.stringify(type))
         }
 
-        const typeName = type.name;
+        const typeName = type.name
         if (!_serializers.hasOwnProperty(typeName)) {
-            throw new Error(`Unsupported type: ` + JSON.stringify(typeName));
+            throw new Error('Unsupported type: ' + JSON.stringify(typeName))
         }
 
         return _serializers[typeName]

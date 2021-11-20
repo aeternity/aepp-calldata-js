@@ -1,6 +1,6 @@
 const RLP = require('rlp')
-const FateTag = require('../FateTag.js')
-const FateContractAddress = require('../types/FateContractAddress.js')
+const FateTag = require('../FateTag')
+const FateContractAddress = require('../types/FateContractAddress')
 
 class ContractSerializer {
     serialize(data) {
@@ -10,11 +10,13 @@ class ContractSerializer {
             ...RLP.encode(data.value)
         ]
     }
+
     deserialize(data) {
-        const [value, rest] = this.deserializeStream(data)
+        const [value, _rest] = this.deserializeStream(data)
 
         return value
     }
+
     deserializeStream(data) {
         const buffer = new Uint8Array(data)
         const decoded = RLP.decode(buffer.slice(2), true)

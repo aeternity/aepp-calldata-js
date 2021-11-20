@@ -1,6 +1,8 @@
-const FateList = require('./types/FateList.js')
-const FateTuple = require('./types/FateTuple.js')
-const {FateTypeTuple, FateTypeInt} = require('./FateTypes.js')
+const FateList = require('./types/FateList')
+const FateTuple = require('./types/FateTuple')
+const {FateTypeTuple, FateTypeInt} = require('./FateTypes')
+
+/* eslint-disable no-use-before-define */
 
 // TODO types comparator
 const listComparator = (a, b) => {
@@ -14,7 +16,6 @@ const listComparator = (a, b) => {
 
     const cmp = FateComparator(a.itemsType)
     for (let i = 0; i < a.length; i++) {
-
         // second list is shorter but matches as prefix of the first one
         if (typeof b.items[i] === 'undefined') {
             return 1
@@ -86,9 +87,9 @@ const variantComparator = (a, b) => {
     }
 
     // equal arities and tags - compare elements
-    const tupleComparator = FateComparator(FateTypeTuple())
+    const elementsComparator = FateComparator(FateTypeTuple())
 
-    return tupleComparator(
+    return elementsComparator(
         new FateTuple(a.valueTypes, a.value),
         new FateTuple(b.valueTypes, b.value)
     )
@@ -147,8 +148,10 @@ const bytesComparator = (a, b) => {
 
 const intComparator = (a, b) => Number(BigInt(a) - BigInt(b))
 const stringComparator = (a, b) => a.toString().localeCompare(b.toString())
-const bitsComparator = (a, b) => (a < 0 || b < 0) ? -intComparator(a, b) : intComparator(a, b)
 const boolComparator = (a, b) => a - b
+const bitsComparator = (a, b) => {
+    return (a < 0 || b < 0) ? -intComparator(a, b) : intComparator(a, b)
+}
 
 const comparators = {
     'int': intComparator,

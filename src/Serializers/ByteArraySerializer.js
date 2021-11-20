@@ -1,6 +1,6 @@
-const FateTag = require('../FateTag.js')
-const FateByteArray = require('../types/FateByteArray.js')
-const IntSerializer = require('./IntSerializer.js')
+const FateTag = require('../FateTag')
+const FateByteArray = require('../types/FateByteArray')
+const IntSerializer = require('./IntSerializer')
 
 const intSerializer = new IntSerializer()
 
@@ -25,13 +25,15 @@ class ByteArraySerializer {
             ...data.valueOf()
         ]
     }
+
     deserialize(data) {
-        const [value, rest] = this.deserializeStream(data)
+        const [value, _rest] = this.deserializeStream(data)
 
         return value
     }
-    deserializeStream(data) {
-        data = new Uint8Array(data)
+
+    deserializeStream(stream) {
+        const data = new Uint8Array(stream)
         const prefix = data[0]
 
         if (prefix === FateTag.EMPTY_STRING) {
@@ -51,7 +53,7 @@ class ByteArraySerializer {
             ]
         }
 
-        //short string
+        // short string
         const offset = (prefix >> 2) + 1
 
         return [

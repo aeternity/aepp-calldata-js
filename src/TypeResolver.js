@@ -23,10 +23,10 @@ const {
     FateTypeChainBaseTx,
     FateTypeAENSPointee,
     FateTypeAENSName,
-} = require('./FateTypes.js')
+} = require('./FateTypes')
 
 const isObject = (value) => {
-    return value && typeof value === 'object' && value.constructor === Object;
+    return value && typeof value === 'object' && value.constructor === Object
 }
 
 class TypeResolver {
@@ -67,7 +67,7 @@ class TypeResolver {
             return false
         }
 
-        const [namespace, localType] = type.split('.')
+        const [namespace, _localType] = type.split('.')
         const namespaceData = this.getNamespaceAci(namespace)
 
         return !!namespaceData
@@ -75,11 +75,13 @@ class TypeResolver {
 
     getNamespaceAci(name) {
         for (const e of this.aci) {
-            const [[type, data]] = Object.entries(e)
+            const [[_type, data]] = Object.entries(e)
             if (data.name === name) {
                 return data
             }
         }
+
+        return null
     }
 
     resolveType(type, vars = {}) {
@@ -244,15 +246,15 @@ class TypeResolver {
                 typedef: namespaceData.state,
                 vars: []
             }] : []
-        ].find(e => e.name === localType);
+        ].find(e => e.name === localType)
 
         if (!def) {
             throw new Error('Unknown type definition: ' + JSON.stringify(type))
         }
 
-        let vars = {}
+        const vars = {}
         def.vars.forEach((e, i) => {
-            const [[,k]] = Object.entries(e)
+            const [[_, k]] = Object.entries(e)
             vars[k] = params[i]
         })
 

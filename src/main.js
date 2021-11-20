@@ -1,4 +1,4 @@
-const Encoder = require('./Encoder.js')
+const Encoder = require('./Encoder')
 
 module.exports = {
     Encoder

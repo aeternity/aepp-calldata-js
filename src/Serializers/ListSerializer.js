@@ -1,11 +1,12 @@
-const FateTag = require('../FateTag.js')
-const FateInt = require('../types/FateInt.js')
-const FateList = require('../types/FateList.js')
+const FateTag = require('../FateTag')
+const FateInt = require('../types/FateInt')
+const FateList = require('../types/FateList')
 
 class ListSerializer {
     constructor(globalSerializer) {
         this.globalSerializer = globalSerializer
     }
+
     serialize(list) {
         const serializedElements = list.items.map(e => {
             return this.globalSerializer.serialize(e)
@@ -28,11 +29,13 @@ class ListSerializer {
             ...serializedElements
         ]
     }
+
     deserialize(data, typeInfo) {
-        const [value, rest] = this.deserializeStream(data, typeInfo)
+        const [value, _rest] = this.deserializeStream(data, typeInfo)
 
         return value
     }
+
     deserializeStream(data, typeInfo) {
         const buffer = new Uint8Array(data)
         const prefix = buffer[0]
@@ -48,13 +51,14 @@ class ListSerializer {
             len = BigInt((prefix & 0xF0) >> 4)
         }
 
-        let elements = []
-        let el = null
-        let itemsType = undefined
+        let itemsType
 
         if (typeof typeInfo !== 'undefined') {
             itemsType = typeInfo.valuesType
         }
+
+        let el
+        const elements = []
 
         for (let i = 0n; i < len; i++) {
             [el, rest] = this.globalSerializer.deserializeStream(rest, itemsType)

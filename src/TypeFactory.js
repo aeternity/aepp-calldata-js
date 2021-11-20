@@ -4,8 +4,6 @@ const {
     FateTypeString,
     FateTypeBits,
     FateTypeBytes,
-    FateTypeHash,
-    FateTypeSignature,
     FateTypeAccountAddress,
     FateTypeContractAddress,
     FateTypeOracleAddress,
@@ -14,8 +12,8 @@ const {
     FateTypeMap,
     FateTypeTuple,
     FateTypeVariant,
-} = require('./FateTypes.js')
-const FateTag = require('./FateTag.js')
+} = require('./FateTypes')
+const FateTag = require('./FateTag')
 
 class TypeFactory {
     createType(data) {
@@ -64,23 +62,23 @@ class TypeFactory {
         if (tag === FateTag.OBJECT) {
             const obj = data[1]
 
-            switch(obj) {
-                case 0:
-                    return FateTypeAccountAddress()
-                case 1:
-                    return FateTypeBytes()
-                case 2:
-                    return FateTypeContractAddress()
-                case 3:
-                    return FateTypeOracleAddress()
-                case 4:
-                    return FateTypeOracleQueryAddress()
-                default:
-                    throw new Error("Unsupported object type: " + obj)
+            switch (obj) {
+            case 0:
+                return FateTypeAccountAddress()
+            case 1:
+                return FateTypeBytes()
+            case 2:
+                return FateTypeContractAddress()
+            case 3:
+                return FateTypeOracleAddress()
+            case 4:
+                return FateTypeOracleQueryAddress()
+            default:
+                throw new Error('Unsupported object type: ' + obj)
             }
         }
 
-        throw new Error("Unknown tag: 0b" + tag.toString(2))
+        throw new Error('Unknown tag: 0b' + tag.toString(2))
     }
 }
 

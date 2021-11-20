@@ -1,34 +1,33 @@
-const FateInt = require('./types/FateInt.js')
-const FateBool = require('./types/FateBool.js')
-const FateString = require('./types/FateString.js')
-const FateHash = require('./types/FateHash.js')
-const FateSignature = require('./types/FateSignature.js')
-const FateList = require('./types/FateList.js')
-const FateMap = require('./types/FateMap.js')
-const FateTuple = require('./types/FateTuple.js')
-const FateVariant = require('./types/FateVariant.js')
-const FateBytes = require('./types/FateBytes.js')
-const FateBits = require('./types/FateBits.js')
-const FateAccountAddress = require('./types/FateAccountAddress.js')
-const FateContractAddress = require('./types/FateContractAddress.js')
-const FateChannelAddress = require('./types/FateChannelAddress.js')
-const FateOracleAddress = require('./types/FateOracleAddress.js')
-const FateOracleQueryAddress = require('./types/FateOracleQueryAddress.js')
+const FateInt = require('./types/FateInt')
+const FateBool = require('./types/FateBool')
+const FateString = require('./types/FateString')
+const FateHash = require('./types/FateHash')
+const FateSignature = require('./types/FateSignature')
+const FateList = require('./types/FateList')
+const FateMap = require('./types/FateMap')
+const FateTuple = require('./types/FateTuple')
+const FateVariant = require('./types/FateVariant')
+const FateBytes = require('./types/FateBytes')
+const FateBits = require('./types/FateBits')
+const FateAccountAddress = require('./types/FateAccountAddress')
+const FateContractAddress = require('./types/FateContractAddress')
+const FateChannelAddress = require('./types/FateChannelAddress')
+const FateOracleAddress = require('./types/FateOracleAddress')
+const FateOracleQueryAddress = require('./types/FateOracleQueryAddress')
 
 const zip = (arr, ...arrs) => {
-  return arr.map((val, i) => arrs.reduce((a, arr) => [...a, arr[i]], [val]));
+    return arr.map((val, i) => arrs.reduce((a, curr) => [...a, curr[i]], [val]))
 }
 
 class DataFactory {
     constructor(aci) {
-         this.aci = aci
+        this.aci = aci
     }
 
     create(types, values) {
         if (types.length !== values.length) {
             throw new Error(
-                'Non matching number of arguments. ' +
-                `Got ${values.length} but expected ${types.length}`
+                `Non matching number of arguments. Got ${values.length} but expected ${types.length}`
             )
         }
 
@@ -136,7 +135,7 @@ class DataFactory {
         })
 
         const tag = type.variants.findIndex(e => {
-            const [[key,]] = Object.entries(e)
+            const [[key, _]] = Object.entries(e)
             return key === variantCtor
         })
 

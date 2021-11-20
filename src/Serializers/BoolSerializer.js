@@ -1,15 +1,17 @@
-const FateTag = require('../FateTag.js')
-const FateBool = require('../types/FateBool.js')
+const FateTag = require('../FateTag')
+const FateBool = require('../types/FateBool')
 
 class BoolSerializer {
     serialize(data) {
         return (data.valueOf() === true) ? [FateTag.TRUE] : [FateTag.FALSE]
     }
+
     deserialize(data) {
-        const [value, rest] = this.deserializeStream(data)
+        const [value, _rest] = this.deserializeStream(data)
 
         return value
     }
+
     deserializeStream(data) {
         const buffer = new Uint8Array(data)
         const prefix = buffer[0]
@@ -23,7 +25,7 @@ class BoolSerializer {
             return [new FateBool(false), rest]
         }
 
-        throw new Error("Invalid prefix: " + prefix.toString(2))
+        throw new Error('Invalid prefix: ' + prefix.toString(2))
     }
 }
 

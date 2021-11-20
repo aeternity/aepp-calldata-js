@@ -1,9 +1,9 @@
-const test = require('../test.js')
-const {FateTypeInt} = require('../../src/FateTypes.js')
-const FateInt = require('../../src/types/FateInt.js')
-const FateVariant = require('../../src/types/FateVariant.js')
-const Serializer = require('../../src/Serializer.js')
-const VariantSerializer = require('../../src/Serializers/VariantSerializer.js')
+const test = require('../test')
+const {FateTypeInt} = require('../../src/FateTypes')
+const FateInt = require('../../src/types/FateInt')
+const FateVariant = require('../../src/types/FateVariant')
+const Serializer = require('../../src/Serializer')
+const VariantSerializer = require('../../src/Serializers/VariantSerializer')
 
 const s = new VariantSerializer(new Serializer())
 
@@ -18,7 +18,7 @@ test('Serialize', t => {
         s.serialize(new FateVariant([0, 0, 1, 0], 2, [new FateInt(7)], [FateTypeInt()])),
         [175,132,0,0,1,0,2,27,14]
     )
-});
+})
 
 test('Deserialize', t => {
     t.plan(2)
@@ -31,4 +31,4 @@ test('Deserialize', t => {
         s.deserialize([175,132,0,0,1,0,2,27,14]),
         new FateVariant([0, 0, 1, 0], 2, [new FateInt(7)], [FateTypeInt()])
     )
-});
+})

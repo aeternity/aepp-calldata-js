@@ -1,6 +1,6 @@
-const test = require('../test.js')
-const FateString = require('../../src/types/FateString.js')
-const StringSerializer = require('../../src/Serializers/StringSerializer.js')
+const test = require('../test')
+const FateString = require('../../src/types/FateString')
+const StringSerializer = require('../../src/Serializers/StringSerializer')
 
 const s = new StringSerializer()
 
@@ -12,7 +12,7 @@ test('Serialize', t => {
         s.serialize("x".repeat(64)),
         [1,0].concat(Array(64).fill(120))
     )
-});
+})
 
 test('Deserialize', t => {
     t.plan(3)
@@ -22,4 +22,4 @@ test('Deserialize', t => {
         new FateString("x".repeat(64))
     )
     t.deepEqual(s.deserialize([95]), new FateString(""))
-});
+})

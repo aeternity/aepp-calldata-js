@@ -1,10 +1,9 @@
 const RLP = require('rlp')
-const FateTag = require('../FateTag.js')
-const RLPInt = require('../utils/RLPInt.js')
-const FateBits = require('../types/FateBits.js')
-const {ByteArray2Int} = require('../utils/Int2ByteArray.js')
-
-const abs = (val) => val > 0 ? val : val * -1n
+const FateTag = require('../FateTag')
+const RLPInt = require('../utils/RLPInt')
+const FateBits = require('../types/FateBits')
+const {ByteArray2Int} = require('../utils/Int2ByteArray')
+const abs = require('../utils/abs')
 
 class BitsSerializer {
     serialize(data) {
@@ -15,11 +14,13 @@ class BitsSerializer {
             ...RLPInt(abs(data.value))
         ]
     }
+
     deserialize(data) {
-        const [value, rest] = this.deserializeStream(data)
+        const [value, _rest] = this.deserializeStream(data)
 
         return value
     }
+
     deserializeStream(data) {
         const buffer = new Uint8Array(data)
         const sign = buffer[0] === FateTag.POS_BITS ? 1n : -1n

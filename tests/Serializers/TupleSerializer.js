@@ -1,13 +1,14 @@
-const test = require('../test.js')
-const Serializer = require('../../src/Serializer.js')
-const TupleSerializer = require('../../src/Serializers/TupleSerializer.js')
-const FateInt = require('../../src/types/FateInt.js')
-const FateBool = require('../../src/types/FateBool.js')
-const FateTuple = require('../../src/types/FateTuple.js')
-const {FateTypeInt, FateTypeBool} = require('../../src/FateTypes.js')
+const test = require('../test')
+const Serializer = require('../../src/Serializer')
+const TupleSerializer = require('../../src/Serializers/TupleSerializer')
+const FateInt = require('../../src/types/FateInt')
+const FateBool = require('../../src/types/FateBool')
+const FateTuple = require('../../src/types/FateTuple')
+const {FateTypeInt, FateTypeBool} = require('../../src/FateTypes')
 
 const s = new TupleSerializer(new Serializer())
-const FTInt = FateTypeInt(), FTBool = FateTypeBool()
+const FTInt = FateTypeInt()
+const FTBool = FateTypeBool()
 
 test('Serialize', t => {
     t.plan(4)
@@ -26,8 +27,8 @@ test('Serialize', t => {
         'short tuple'
     )
 
-    let longTuple = [...Array(16).keys()].map(e => new FateInt(e))
-    let types = Array(16).fill(FTInt)
+    const longTuple = [...Array(16).keys()].map(e => new FateInt(e))
+    const types = Array(16).fill(FTInt)
 
     t.deepEqual(
         s.serialize(new FateTuple(types, longTuple)),
@@ -52,7 +53,7 @@ test('Serialize', t => {
         [43,43,127,0,43,255,2],
         'nested tuple'
     )
-});
+})
 
 test('Deserialize', t => {
     t.plan(4)
@@ -71,8 +72,8 @@ test('Deserialize', t => {
         'short tuple'
     )
 
-    let longTuple = [...Array(16).keys()].map(e => new FateInt(e))
-    let types = Array(16).fill(FTInt)
+    const longTuple = [...Array(16).keys()].map(e => new FateInt(e))
+    const types = Array(16).fill(FTInt)
 
     t.deepEqual(
         s.deserialize([11,0,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30]),
@@ -97,4 +98,4 @@ test('Deserialize', t => {
         ),
         'nested tuple'
     )
-});
+})

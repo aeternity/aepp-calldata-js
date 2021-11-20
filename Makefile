@@ -47,6 +47,9 @@ integration-tests:
 coverage: node_modules $(BUILDDIR)/$(JSON_ACIS)
 	npm run coverage
 
+lint: node_modules
+	npm run lint
+
 clean:
 	rm -f $(BUILDDIR)/$(BYTECODES)
 	rm -f $(BUILDDIR)/$(JSON_ACIS)

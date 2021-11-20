@@ -1,24 +1,24 @@
-const FateData = require('./FateData.js')
-const {FateTypeString} = require('../FateTypes.js')
+const FateData = require('./FateData')
+const {FateTypeString} = require('../FateTypes')
 
 class FateString extends FateData {
-  constructor(value) {
-    super('string')
+    constructor(value) {
+        super('string')
 
-    this._value = value.toString()
-  }
+        this._value = value.toString()
+    }
 
-  get type() {
-    return FateTypeString()
-  }
+    get type() {
+        return FateTypeString()
+    }
 
-  toString() {
-    return this._value
-  }
+    toString() {
+        return this._value
+    }
 
-  valueOf() {
-    return this._value
-  }
+    valueOf() {
+        return this._value
+    }
 }
 
 module.exports = FateString

@@ -1,5 +1,5 @@
-const test = require('../test.js')
-const RLPInt = require('../../src/utils/RLPInt.js')
+const test = require('../test')
+const RLPInt = require('../../src/utils/RLPInt')
 
 const b = (value) => new Uint8Array(value)
 
@@ -16,4 +16,4 @@ test('RLP Encode Integer', t => {
         RLPInt(10000000000000009999999n),
         b([138,2,30,25,224,201,186,178,216,150,127])
     )
-});
+})

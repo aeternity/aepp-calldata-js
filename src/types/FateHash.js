@@ -1,9 +1,9 @@
-const FateBytes = require('./FateBytes.js')
+const FateBytes = require('./FateBytes')
 
 class FateHash extends FateBytes {
-  constructor(value) {
-    super(value, 32, 'hash')
-  }
+    constructor(value) {
+        super(value, 32, 'hash')
+    }
 }
 
 module.exports = FateHash

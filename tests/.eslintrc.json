@@ -1,0 +1,15 @@
+{
+    "rules": {
+        "no-underscore-dangle": "error",
+        "no-bitwise": "error",
+        "arrow-body-style": "error",
+        "class-methods-use-this": "error",
+        "prefer-template": "error",
+        "no-restricted-syntax": "error",
+        "quote-props": "error",
+        "no-prototype-builtins": "error",
+        "no-plusplus": "error",
+        "comma-spacing": "off",
+        "quotes": "off"
+    }
+}

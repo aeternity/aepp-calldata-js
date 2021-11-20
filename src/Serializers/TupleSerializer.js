@@ -1,15 +1,12 @@
-const FateTag = require('../FateTag.js')
-const FateInt = require('../types/FateInt.js')
-const FateTuple = require('../types/FateTuple.js')
-
-const zip = (arr, ...arrs) => {
-  return arr.map((val, i) => arrs.reduce((a, arr) => [...a, arr[i]], [val]));
-}
+const FateTag = require('../FateTag')
+const FateInt = require('../types/FateInt')
+const FateTuple = require('../types/FateTuple')
 
 class TupleSerializer {
     constructor(globalSerializer) {
         this.globalSerializer = globalSerializer
     }
+
     serialize(tuple) {
         const len = tuple.size
         if (len === 0) {
@@ -35,11 +32,13 @@ class TupleSerializer {
             ...elements
         ]
     }
+
     deserialize(data, typeInfo) {
-        const [value, rest] = this.deserializeStream(data, typeInfo)
+        const [value, _rest] = this.deserializeStream(data, typeInfo)
 
         return value
     }
+
     deserializeStream(data, typeInfo) {
         const buffer = new Uint8Array(data)
         const prefix = buffer[0]
@@ -64,7 +63,7 @@ class TupleSerializer {
             valueTypes = typeInfo.valueTypes
         }
 
-        let elements = []
+        const elements = []
         let el = null
         for (let i = 0n; i < len; i++) {
             [el, rest] = this.globalSerializer.deserializeStream(rest, valueTypes[i])

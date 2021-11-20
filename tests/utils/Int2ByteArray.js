@@ -1,5 +1,5 @@
-const test = require('../test.js')
-const {Int2ByteArray, ByteArray2Int} = require('../../src/utils/Int2ByteArray.js')
+const test = require('../test')
+const {Int2ByteArray, ByteArray2Int} = require('../../src/utils/Int2ByteArray')
 
 const b = (value) => new Uint8Array(value)
 
@@ -18,7 +18,7 @@ test('Int2ByteArray', t => {
         Int2ByteArray(10000000000000009999999n),
         b([2,30,25,224,201,186,178,216,150,127])
     )
-});
+})
 
 test('ByteArray2Int', t => {
     t.plan(10)
@@ -35,4 +35,4 @@ test('ByteArray2Int', t => {
         ByteArray2Int([2,30,25,224,201,186,178,216,150,127]),
         10000000000000009999999n
     )
-});
+})

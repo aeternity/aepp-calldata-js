@@ -1,5 +1,5 @@
-const test = require('./test.js');
-const TypeResolver = require('../src/TypeResolver.js')
+const test = require('./test')
+const TypeResolver = require('../src/TypeResolver')
 const aci = require('../build/contracts/Test.json')
 const {
     FateTypeInt,
@@ -20,13 +20,12 @@ const {
     FateTypeVariant,
     FateTypeOption,
     FateTypeChainTTL,
-    FateTypeAENSPointee,
-    FateTypeChainGAMetaTx,
-} = require('../src/FateTypes.js')
+    FateTypeAENSPointee
+} = require('../src/FateTypes')
 
 const CONTRACT = 'Test'
 const resolver = new TypeResolver(aci)
-const ns = (name) => CONTRACT + '.' + name
+const ns = (name) => `${CONTRACT}.${name}`
 
 test('Get implicit empty init argument types', t => {
     t.plan(1)
@@ -34,7 +33,7 @@ test('Get implicit empty init argument types', t => {
         resolver.getCallTypes(CONTRACT, 'init'),
         []
     )
-});
+})
 
 test('Get function argument types', t => {
     t.plan(1)
@@ -42,7 +41,7 @@ test('Get function argument types', t => {
         resolver.getCallTypes(CONTRACT, 'test_bool'),
         [FateTypeBool(), FateTypeBool()]
     )
-});
+})
 
 test('Get function return type', t => {
     t.plan(1)
@@ -50,7 +49,7 @@ test('Get function return type', t => {
         resolver.getReturnType(CONTRACT, 'test_bool'),
         FateTypeBool()
     )
-});
+})
 
 test('Resolve bool', t => {
     t.plan(1)
@@ -58,7 +57,7 @@ test('Resolve bool', t => {
         resolver.resolveType('bool'),
         FateTypeBool()
     )
-});
+})
 
 test('Resolve int', t => {
     t.plan(1)
@@ -66,7 +65,7 @@ test('Resolve int', t => {
         resolver.resolveType('int'),
         FateTypeInt()
     )
-});
+})
 
 test('Resolve string', t => {
     t.plan(1)
@@ -74,7 +73,7 @@ test('Resolve string', t => {
         resolver.resolveType('string'),
         FateTypeString()
     )
-});
+})
 
 test('Resolve bits', t => {
     t.plan(1)
@@ -82,7 +81,7 @@ test('Resolve bits', t => {
         resolver.resolveType('bits'),
         FateTypeBits()
     )
-});
+})
 
 test('Resolve hash', t => {
     t.plan(1)
@@ -90,7 +89,7 @@ test('Resolve hash', t => {
         resolver.resolveType('hash'),
         FateTypeHash()
     )
-});
+})
 
 test('Resolve signature', t => {
     t.plan(1)
@@ -98,7 +97,7 @@ test('Resolve signature', t => {
         resolver.resolveType('signature'),
         FateTypeSignature()
     )
-});
+})
 
 test('Resolve account address', t => {
     t.plan(1)
@@ -106,7 +105,7 @@ test('Resolve account address', t => {
         resolver.resolveType('address'),
         FateTypeAccountAddress()
     )
-});
+})
 
 test('Resolve contract address', t => {
     t.plan(1)
@@ -114,7 +113,7 @@ test('Resolve contract address', t => {
         resolver.resolveType('RemoteTest'),
         FateTypeContractAddress()
     )
-});
+})
 
 test('Resolve oracle address', t => {
     t.plan(1)
@@ -122,7 +121,7 @@ test('Resolve oracle address', t => {
         resolver.resolveType({oracle: ['int', 'string']}),
         FateTypeOracleAddress(FateTypeInt(), FateTypeString())
     )
-});
+})
 
 test('Resolve oracle query address', t => {
     t.plan(1)
@@ -130,7 +129,7 @@ test('Resolve oracle query address', t => {
         resolver.resolveType({oracle_query: ['int', 'string']}),
         FateTypeOracleQueryAddress(FateTypeInt(), FateTypeString())
     )
-});
+})
 
 test('Resolve bytes', t => {
     t.plan(1)
@@ -138,7 +137,7 @@ test('Resolve bytes', t => {
         resolver.resolveType({bytes: 32}),
         FateTypeBytes(32)
     )
-});
+})
 
 test('Resolve type defs', t => {
     t.plan(1)
@@ -146,7 +145,7 @@ test('Resolve type defs', t => {
         resolver.resolveType('Test.number'),
         FateTypeInt()
     )
-});
+})
 
 test('Resolve list', t => {
     t.plan(1)
@@ -154,7 +153,7 @@ test('Resolve list', t => {
         resolver.resolveType({list: ['int']}),
         FateTypeList(FateTypeInt())
     )
-});
+})
 
 test('Resolve map', t => {
     t.plan(1)
@@ -162,7 +161,7 @@ test('Resolve map', t => {
         resolver.resolveType({map: ['int', 'bool']}),
         FateTypeMap(FateTypeInt(), FateTypeBool())
     )
-});
+})
 
 test('Resolve tuple', t => {
     t.plan(1)
@@ -170,7 +169,7 @@ test('Resolve tuple', t => {
         resolver.resolveType({tuple: ['int', 'bool']}),
         FateTypeTuple([FateTypeInt(), FateTypeBool()])
     )
-});
+})
 
 test('Resolve record', t => {
     t.plan(1)
@@ -181,7 +180,7 @@ test('Resolve record', t => {
             [FateTypeInt(), FateTypeInt()]
         )
     )
-});
+})
 
 test('Resolve nested record', t => {
     t.plan(1)
@@ -196,7 +195,7 @@ test('Resolve nested record', t => {
             ],
         )
     )
-});
+})
 
 test('Resolve variant', t => {
     t.plan(1)
@@ -208,7 +207,7 @@ test('Resolve variant', t => {
             [{Nope: []}, {No: []}, {Yep: [FateTypeInt()]}, {Yes: []}]
         )
     )
-});
+})
 
 test('Resolve variant with template vars', t => {
     t.plan(1)
@@ -222,7 +221,7 @@ test('Resolve variant with template vars', t => {
             [{Zero: []}, {Any: [FateTypeInt(), FateTypeBool(), FateTypeInt(), FateTypeInt()]}]
         )
     )
-});
+})
 
 test('Resolve Option', t => {
     t.plan(1)
@@ -230,7 +229,7 @@ test('Resolve Option', t => {
         resolver.resolveType({option: ['int']}),
         FateTypeOption([FateTypeInt()])
     )
-});
+})
 
 test('Resolve Chain.ttl', t => {
     t.plan(1)
@@ -238,7 +237,7 @@ test('Resolve Chain.ttl', t => {
         resolver.resolveType('Chain.ttl'),
         FateTypeChainTTL()
     )
-});
+})
 
 test('Resolve AENS.pointee', t => {
     t.plan(1)
@@ -246,7 +245,7 @@ test('Resolve AENS.pointee', t => {
         resolver.resolveType('AENS.pointee'),
         FateTypeAENSPointee()
     )
-});
+})
 
 test('Resolve template type', t => {
     t.plan(1)
@@ -254,7 +253,7 @@ test('Resolve template type', t => {
         resolver.resolveType({[ns('box')]: ['int']}),
         FateTypeInt()
     )
-});
+})
 
 test('Resolve state', t => {
     t.plan(1)
@@ -262,4 +261,4 @@ test('Resolve state', t => {
         resolver.resolveType('WithInit.state'),
         FateTypeRecord(['v'], [FateTypeString()])
     )
-});
+})

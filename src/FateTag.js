@@ -1,6 +1,7 @@
+/* eslint-disable key-spacing, indent */
+
 // Definition of tag scheme.
 // This has to follow the protocol specification.
-
 module.exports = Object.freeze({
     SMALL_INT    :        0b0, // sxxxxxx 0 - 6 bit integer with sign bit
                                        // 1 Set below
@@ -39,4 +40,4 @@ module.exports = Object.freeze({
     OTYPE_ORACLE        : 3,
     OTYPE_ORACLE_QUERY  : 4,
     OTYPE_CHANNEL       : 5,
-});
+})

@@ -34,6 +34,9 @@
   "devDependencies": {
     "ava": "^3.1.0",
     "browserify": "^16.5.2",
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.3",
     "nyc": "^15.0.0",
     "tape": "^5.0.1"
   },
@@ -54,6 +57,7 @@
     "browser-test-bundle": "browserify tests/**/*.js > build/js/tests.js",
     "coverage": "nyc ava",
     "test": "ava --verbose",
-    "test:watch": "ava --verbose --watch"
+    "test:watch": "ava --verbose --watch",
+    "lint": "eslint src tests"
   }
 }

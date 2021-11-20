@@ -1,10 +1,10 @@
-const test = require('../test.js')
-const Serializer = require('../../src/Serializer.js')
-const MapSerializer = require('../../src/Serializers/MapSerializer.js')
-const FateInt = require('../../src/types/FateInt.js')
-const FateBool = require('../../src/types/FateBool.js')
-const FateMap = require('../../src/types/FateMap.js')
-const {FateTypeInt, FateTypeBool, FateTypeMap} = require('../../src/FateTypes.js')
+const test = require('../test')
+const Serializer = require('../../src/Serializer')
+const MapSerializer = require('../../src/Serializers/MapSerializer')
+const FateInt = require('../../src/types/FateInt')
+const FateBool = require('../../src/types/FateBool')
+const FateMap = require('../../src/types/FateMap')
+const {FateTypeInt, FateTypeBool, FateTypeMap} = require('../../src/FateTypes')
 
 const s = new MapSerializer(new Serializer())
 const FTInt = FateTypeInt()
@@ -30,14 +30,17 @@ test('Serialize', t => {
                 FTInt,
                 FateTypeMap(FTInt, FTBool),
                 [
-                    [new FateInt(0), new FateMap(
-                        FTInt, FTBool, [[new FateInt(0), new FateBool(false)]])
+                    [
+                        new FateInt(0),
+                        new FateMap(FTInt, FTBool, [[new FateInt(0), new FateBool(false)]])
                     ],
-                    [new FateInt(1), new FateMap(
-                        FTInt, FTBool, [[new FateInt(1), new FateBool(true)]])
+                    [
+                        new FateInt(1),
+                        new FateMap(FTInt, FTBool, [[new FateInt(1), new FateBool(true)]])
                     ],
-                    [new FateInt(2), new FateMap(
-                        FTInt, FTBool, [[new FateInt(8), new FateBool(true)]])
+                    [
+                        new FateInt(2),
+                        new FateMap(FTInt, FTBool, [[new FateInt(8), new FateBool(true)]])
                     ],
                 ]
             )
@@ -64,7 +67,7 @@ test('Serialize', t => {
         ])),
         [47,3,2,255,6,127,10,255]
     )
-});
+})
 
 test('Deserialize', t => {
     t.plan(3)
@@ -86,17 +89,20 @@ test('Deserialize', t => {
             FTInt,
             FateTypeMap(FTInt, FTBool),
             [
-                [new FateInt(0), new FateMap(
-                    FTInt, FTBool, [[new FateInt(0), new FateBool(false)]])
+                [
+                    new FateInt(0),
+                    new FateMap(FTInt, FTBool, [[new FateInt(0), new FateBool(false)]])
                 ],
-                [new FateInt(1), new FateMap(
-                    FTInt, FTBool, [[new FateInt(1), new FateBool(true)]])
+                [
+                    new FateInt(1),
+                    new FateMap(FTInt, FTBool, [[new FateInt(1), new FateBool(true)]])
                 ],
-                [new FateInt(2), new FateMap(
-                    FTInt, FTBool, [[new FateInt(8), new FateBool(true)]])
+                [
+                    new FateInt(2),
+                    new FateMap(FTInt, FTBool, [[new FateInt(8), new FateBool(true)]])
                 ],
             ]
         ),
         'nested map'
     )
-});
+})

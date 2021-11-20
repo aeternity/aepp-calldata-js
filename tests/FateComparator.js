@@ -1,14 +1,14 @@
-const test = require('./test.js')
-const FateComparator = require('../src/FateComparator.js')
-const FateInt = require('../src/types/FateInt.js')
-const FateBool = require('../src/types/FateBool.js')
-const FateString = require('../src/types/FateString.js')
-const FateList = require('../src/types/FateList.js')
-const FateMap = require('../src/types/FateMap.js')
-const FateTuple = require('../src/types/FateTuple.js')
-const FateVariant = require('../src/types/FateVariant.js')
-const FateBytes = require('../src/types/FateBytes.js')
-const FateBits = require('../src/types/FateBits.js')
+const test = require('./test')
+const FateComparator = require('../src/FateComparator')
+const FateInt = require('../src/types/FateInt')
+const FateBool = require('../src/types/FateBool')
+const FateString = require('../src/types/FateString')
+const FateList = require('../src/types/FateList')
+const FateMap = require('../src/types/FateMap')
+const FateTuple = require('../src/types/FateTuple')
+const FateVariant = require('../src/types/FateVariant')
+const FateBytes = require('../src/types/FateBytes')
+const FateBits = require('../src/types/FateBits')
 const {
     FateTypeInt,
     FateTypeBool,
@@ -19,8 +19,7 @@ const {
     FateTypeMap,
     FateTypeTuple,
     FateTypeVariant,
-} = require('../src/FateTypes.js')
-
+} = require('../src/FateTypes')
 
 const sort = (type, data) => {
     data.sort(FateComparator(type))
@@ -28,7 +27,8 @@ const sort = (type, data) => {
     return data
 }
 
-const FTInt = FateTypeInt(), FTBool = FateTypeBool()
+const FTInt = FateTypeInt()
+const FTBool = FateTypeBool()
 
 test('Compare primitive types', t => {
     t.plan(5)
@@ -56,13 +56,13 @@ test('Compare primitive types', t => {
         sort(FateTypeBits(), [-1, 0, -1, new FateBits(0), 1, 1, new FateBits(1), 0, -1, 1]),
         [0, new FateBits(0), 0, 1, 1, new FateBits(1), 1, -1, -1, -1]
     )
-});
+})
 
 test('Compare bytes', t => {
     t.plan(2)
     t.deepEqual(
         sort(FateTypeBytes(), [
-            new FateBytes(0xfedcba9876543210),
+            new FateBytes(BigInt('0xfedcba9876543210')),
             new FateBytes(0x10000000000000000000000000),
             new FateBytes(0xdeadfeed),
             new FateBytes(0xdeadbeef),
@@ -73,7 +73,7 @@ test('Compare bytes', t => {
             new FateBytes(0x10000000000000000000000000),
             new FateBytes(0xdeadbeef),
             new FateBytes(0xdeadfeed),
-            new FateBytes(0xfedcba9876543210),
+            new FateBytes(BigInt('0xfedcba9876543210')),
         ]
     )
 
@@ -91,9 +91,9 @@ test('Compare bytes', t => {
             new FateBytes("0xfedcba9876543210"),
         ]
     )
-});
+})
 
-//TODO support nested inner types
+// TODO support nested inner types
 test('Compare lists', t => {
     t.plan(1)
     t.deepEqual(
@@ -116,9 +116,9 @@ test('Compare lists', t => {
             new FateList(FateTypeInt(), [0,1,2,3]),
         ]
     )
-});
+})
 
-//TODO support nested inner types
+// TODO support nested inner types
 test('Compare tuples', t => {
     t.plan(1)
     t.deepEqual(
@@ -137,7 +137,7 @@ test('Compare tuples', t => {
             new FateTuple([FTBool, FTInt], [true, 1]),
         ]
     )
-});
+})
 
 test('Compare variants', t => {
     t.plan(1)
@@ -169,7 +169,7 @@ test('Compare variants', t => {
             new FateVariant([0, 0, 1, 0], 2, [7], [FateTypeInt()]),
         ]
     )
-});
+})
 
 test('Compare maps', t => {
     t.plan(1)
@@ -191,4 +191,4 @@ test('Compare maps', t => {
             new FateMap(FTInt, FTBool, [[1,true], [3,true], [2,false], [0,true]]),
         ]
     )
-});
+})

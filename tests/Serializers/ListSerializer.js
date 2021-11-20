@@ -1,9 +1,9 @@
-const test = require('../test.js')
-const Serializer = require('../../src/Serializer.js')
-const ListSerializer = require('../../src/Serializers/ListSerializer.js')
-const {FateTypeInt, FateTypeList} = require('../../src/FateTypes.js')
-const FateInt = require('../../src/types/FateInt.js')
-const FateList = require('../../src/types/FateList.js')
+const test = require('../test')
+const Serializer = require('../../src/Serializer')
+const ListSerializer = require('../../src/Serializers/ListSerializer')
+const {FateTypeInt, FateTypeList} = require('../../src/FateTypes')
+const FateInt = require('../../src/types/FateInt')
+const FateList = require('../../src/types/FateList')
 
 const s = new ListSerializer(new Serializer())
 
@@ -31,7 +31,6 @@ test('Serialize', t => {
         'long list'
     )
 
-
     t.deepEqual(
         s.serialize(new FateList(
             FateTypeList(FateTypeInt()),
@@ -44,7 +43,7 @@ test('Serialize', t => {
         [51,35,2,4,35,6,8,35,10,12],
         'nested list'
     )
-});
+})
 
 test('Deserialize', t => {
     t.plan(4)
@@ -82,4 +81,4 @@ test('Deserialize', t => {
         ),
         'nested list'
     )
-});
+})

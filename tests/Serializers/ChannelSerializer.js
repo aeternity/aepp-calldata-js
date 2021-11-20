@@ -1,6 +1,6 @@
-const test = require('../test.js')
-const ChannelSerializer = require('../../src/Serializers/ChannelSerializer.js')
-const FateChannelAddress = require('../../src/types/FateChannelAddress.js')
+const test = require('../test')
+const ChannelSerializer = require('../../src/Serializers/ChannelSerializer')
+const FateChannelAddress = require('../../src/types/FateChannelAddress')
 
 const s = new ChannelSerializer()
 
@@ -13,9 +13,10 @@ test('Serialize', t => {
 
     t.deepEqual(
         s.serialize(new FateChannelAddress("ch_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt")),
-        [159,5,160,222,104,191,225,178,3,229,31,82,53,27,160,135,247,155,120,40,230,161,64,240,195,20,166,112,199,0,59,63,245,112,117]
+        [159,5,160,222,104,191,225,178,3,229,31,82,53,27,160,135,247,155,
+            120,40,230,161,64,240,195,20,166,112,199,0,59,63,245,112,117]
     )
-});
+})
 
 test('Deserialize', t => {
     t.plan(2)
@@ -25,7 +26,10 @@ test('Deserialize', t => {
     )
 
     t.is(
-        s.deserialize([159,5,160,222,104,191,225,178,3,229,31,82,53,27,160,135,247,155,120,40,230,161,64,240,195,20,166,112,199,0,59,63,245,112,117]).valueOf(),
+        s.deserialize(
+            [159,5,160,222,104,191,225,178,3,229,31,82,53,27,160,135,247,155,
+                120,40,230,161,64,240,195,20,166,112,199,0,59,63,245,112,117]
+        ).valueOf(),
         "ch_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt"
     )
-});
+})
