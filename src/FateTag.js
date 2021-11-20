@@ -1,4 +1,4 @@
-/* eslint-disable key-spacing */
+/* eslint-disable key-spacing, indent */
 
 // Definition of tag scheme.
 // This has to follow the protocol specification.

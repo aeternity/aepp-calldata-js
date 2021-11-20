@@ -1,6 +1,5 @@
 {
     "rules": {
-        "semi": ["error", "never"],
         "no-underscore-dangle": "error",
         "no-bitwise": "error",
         "arrow-body-style": "error",

@@ -63,18 +63,18 @@ class TypeFactory {
             const obj = data[1]
 
             switch (obj) {
-                case 0:
-                    return FateTypeAccountAddress()
-                case 1:
-                    return FateTypeBytes()
-                case 2:
-                    return FateTypeContractAddress()
-                case 3:
-                    return FateTypeOracleAddress()
-                case 4:
-                    return FateTypeOracleQueryAddress()
-                default:
-                    throw new Error('Unsupported object type: ' + obj)
+            case 0:
+                return FateTypeAccountAddress()
+            case 1:
+                return FateTypeBytes()
+            case 2:
+                return FateTypeContractAddress()
+            case 3:
+                return FateTypeOracleAddress()
+            case 4:
+                return FateTypeOracleQueryAddress()
+            default:
+                throw new Error('Unsupported object type: ' + obj)
             }
         }
 

@@ -13,7 +13,7 @@
     },
     "rules": {
         "semi": ["error", "never"],
-        "indent": "off",
+        "indent": ["error", 4],
         "no-underscore-dangle": "off",
         "object-curly-spacing": "off",
         "no-bitwise": "off",

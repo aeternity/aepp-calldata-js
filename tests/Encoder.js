@@ -358,7 +358,7 @@ test('Encode AENS.pointee arguments', t => {
     const encoded3 = encoder.encode(
         CONTRACT,
         'test_pointee',
-         [{'AENS.ContractPt': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']}]
+        [{'AENS.ContractPt': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']}]
     )
     t.is(
         encoded3,
@@ -369,7 +369,7 @@ test('Encode AENS.pointee arguments', t => {
     const encoded4 = encoder.encode(
         CONTRACT,
         'test_pointee',
-         [{'AENS.ChannelPt': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']}]
+        [{'AENS.ChannelPt': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']}]
     )
     t.is(
         encoded4,

@@ -2,37 +2,37 @@ const FateBytes = require('./FateBytes')
 const bs58check = require('bs58check')
 
 const base58Decode = (prefix, value) => {
-  if (typeof value === 'string' && value.charAt(2) === '_') {
-    if (!value.startsWith(prefix)) {
-      throw new Error('Invalid prefix: ' + value.substring(0, 2))
+    if (typeof value === 'string' && value.charAt(2) === '_') {
+        if (!value.startsWith(prefix)) {
+            throw new Error('Invalid prefix: ' + value.substring(0, 2))
+        }
+
+        return bs58check.decode(value.substring(prefix.length + 1))
     }
 
-    return bs58check.decode(value.substring(prefix.length + 1))
-  }
-
-  return value
+    return value
 }
 
 class FateAddress extends FateBytes {
-  constructor(value, size, name, prefix) {
+    constructor(value, size, name, prefix) {
     // eventually decode the value
-    const decoded = base58Decode(prefix, value)
-    super(decoded, size, name)
+        const decoded = base58Decode(prefix, value)
+        super(decoded, size, name)
 
-    this._prefix = prefix
-  }
+        this._prefix = prefix
+    }
 
-  get prefix() {
-    return this._prefix
-  }
+    get prefix() {
+        return this._prefix
+    }
 
-  valueOf() {
-    return this.base58Encode()
-  }
+    valueOf() {
+        return this.base58Encode()
+    }
 
-  base58Encode() {
-    return this.prefix + '_' + bs58check.encode(this.value)
-  }
+    base58Encode() {
+        return this.prefix + '_' + bs58check.encode(this.value)
+    }
 }
 
 module.exports = FateAddress

@@ -16,12 +16,12 @@ const FateOracleAddress = require('./types/FateOracleAddress')
 const FateOracleQueryAddress = require('./types/FateOracleQueryAddress')
 
 const zip = (arr, ...arrs) => {
-  return arr.map((val, i) => arrs.reduce((a, curr) => [...a, curr[i]], [val]))
+    return arr.map((val, i) => arrs.reduce((a, curr) => [...a, curr[i]], [val]))
 }
 
 class DataFactory {
     constructor(aci) {
-         this.aci = aci
+        this.aci = aci
     }
 
     create(types, values) {
