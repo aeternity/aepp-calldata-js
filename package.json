@@ -25,6 +25,9 @@
   "files": [
     "src/*"
   ],
+  "browser": {
+    "./tests/test.js": "./tests/browser/test.js"
+  },
   "dependencies": {
     "base64check": "^2.1.3",
     "blakejs": "^1.1.0",
@@ -43,7 +46,8 @@
   "ava": {
     "files": [
       "tests/**/*",
-      "!tests/test.js"
+      "!tests/test.js",
+      "!tests/browser/test.js"
     ]
   },
   "nyc": {
