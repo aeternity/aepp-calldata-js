@@ -202,6 +202,15 @@ test('Decode nested map arguments', t => {
     )
 })
 
+test('Decode map with optional key', t => {
+    t.plan(1)
+    t.deepEqual(
+        encoder.decode(CONTRACT, 'test_fancy_map', 'cb_LwGvggABAD8CMr9vhg=='),
+        new Map([[{None: []}, 1n]]),
+        'test_fancy_map({[None] = 1}, {[Some(0)] = 2})'
+    )
+})
+
 test('Decode simple variant arguments', t => {
     t.plan(1)
     t.deepEqual(
