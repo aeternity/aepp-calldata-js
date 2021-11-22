@@ -1,14 +1,16 @@
 const test = require('../test')
 const OracleSerializer = require('../../src/Serializers/OracleSerializer')
 const FateOracleAddress = require('../../src/types/FateOracleAddress')
+const FateOracleAddressRaw = require('../../src/types/FateOracleAddressRaw')
 
 const s = new OracleSerializer()
 
 test('Serialize', t => {
     t.plan(2)
     t.deepEqual(
-        s.serialize(new FateOracleAddress("0xfedcba9876543210")),
-        [159,3,136,254,220,186,152,118,84,50,16]
+        s.serialize(new FateOracleAddressRaw("0xfedcba9876543210fedcba9876543210fedcba9876543210fedcba9876543210")),
+        [159,3,160,254,220,186,152,118,84,50,16,254,220,186,152,118,84,50,16,254,220,186,152,
+            118,84,50,16,254,220,186,152,118,84,50,16]
     )
 
     t.deepEqual(
@@ -21,8 +23,9 @@ test('Serialize', t => {
 test('Deserialize', t => {
     t.plan(2)
     t.deepEqual(
-        s.deserialize([159,3,136,254,220,186,152,118,84,50,16]),
-        new FateOracleAddress("0xfedcba9876543210")
+        s.deserialize([159,3,160,254,220,186,152,118,84,50,16,254,220,186,152,118,84,50,16,254,220,
+            186,152,118,84,50,16,254,220,186,152,118,84,50,16]),
+        new FateOracleAddressRaw("0xfedcba9876543210fedcba9876543210fedcba9876543210fedcba9876543210")
     )
 
     t.is(

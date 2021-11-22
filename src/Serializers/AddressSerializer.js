@@ -1,6 +1,6 @@
 const RLP = require('rlp')
 const FateTag = require('../FateTag')
-const FateAccountAddress = require('../types/FateAccountAddress')
+const FateAccountAddressRaw = require('../types/FateAccountAddressRaw')
 
 class AddressSerializer {
     serialize(data) {
@@ -22,7 +22,7 @@ class AddressSerializer {
         const decoded = RLP.decode(buffer.slice(2), true)
 
         return [
-            new FateAccountAddress(decoded.data),
+            new FateAccountAddressRaw(decoded.data),
             new Uint8Array(decoded.remainder)
         ]
     }
