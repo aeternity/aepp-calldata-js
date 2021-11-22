@@ -1,37 +1,15 @@
-const FateBytes = require('./FateBytes')
+const FateAddressRaw = require('./FateAddressRaw')
 const bs58check = require('bs58check')
 
-const base58Decode = (prefix, value) => {
-    if (typeof value === 'string' && value.charAt(2) === '_') {
-        if (!value.startsWith(prefix)) {
-            throw new Error('Invalid prefix: ' + value.substring(0, 2))
+class FateAddress extends FateAddressRaw {
+    constructor(value, name, prefix) {
+        const asString = value.toString()
+        if (!asString.startsWith(prefix + '_')) {
+            throw new Error(`Address should start with ${prefix}_, got ${asString} instead`)
         }
+        const asBytes = bs58check.decode(asString.substring(prefix.length + 1))
 
-        return bs58check.decode(value.substring(prefix.length + 1))
-    }
-
-    return value
-}
-
-class FateAddress extends FateBytes {
-    constructor(value, size, name, prefix) {
-    // eventually decode the value
-        const decoded = base58Decode(prefix, value)
-        super(decoded, size, name)
-
-        this._prefix = prefix
-    }
-
-    get prefix() {
-        return this._prefix
-    }
-
-    valueOf() {
-        return this.base58Encode()
-    }
-
-    base58Encode() {
-        return this.prefix + '_' + bs58check.encode(this.value)
+        super(asBytes, name, prefix)
     }
 }
 

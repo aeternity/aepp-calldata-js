@@ -87,35 +87,20 @@ test('Encode account address arguments', t => {
         encoder.encode(
             CONTRACT,
             'test_account_address',
-            ["0xDE68BFE1B203E51F52351BA087F79B7828E6A140F0C314A670C7003B3FF57075"]
-        ),
-        'cb_KxHgYyOEG58AoN5ov+GyA+UfUjUboIf3m3go5qFA8MMUpnDHADs/9XB1FYw7tQ==',
-        'test_account_address(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt)'
-    )
-
-    t.is(
-        encoder.encode(
-            CONTRACT,
-            'test_account_address',
             ["ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt"]
         ),
         'cb_KxHgYyOEG58AoN5ov+GyA+UfUjUboIf3m3go5qFA8MMUpnDHADs/9XB1FYw7tQ==',
         'test_account_address(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt)'
     )
+
+    t.throws(
+        () => encoder.encode(CONTRACT, 'test_account_address', ['test-string']),
+        { message: 'Address should start with ak_, got test-string instead' }
+    )
 })
 
 test('Encode contract address arguments', t => {
-    t.plan(2)
-    t.is(
-        encoder.encode(
-            CONTRACT,
-            'test_contract_address',
-            ["0x1FC0D099EC5A13CB9328A317FCECD852B1F7489E5E00BA09573C3C2DB6985553"]
-        ),
-        'cb_KxELEfrsG58CoB/A0JnsWhPLkyijF/zs2FKx90ieXgC6CVc8PC22mFVTzM0KJQ==',
-        'test_contract_address(ct_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ)'
-    )
-
+    t.plan(1)
     t.is(
         encoder.encode(
             CONTRACT,
@@ -128,17 +113,7 @@ test('Encode contract address arguments', t => {
 })
 
 test('Encode oracle address arguments', t => {
-    t.plan(2)
-    t.is(
-        encoder.encode(
-            CONTRACT,
-            'test_oracle_address',
-            ["0xCAF22A244EDAC03D26F02A17D923942D055CFC862328B25A51C284BC9D420E49"]
-        ),
-        'cb_KxGPms0RG58DoMryKiRO2sA9JvAqF9kjlC0FXPyGIyiyWlHChLydQg5Jyfi1MA==',
-        'test_oracle_address(ok_2YNyxd6TRJPNrTcEDCe9ra59SVUdp9FR9qWC5msKZWYD9bP9z5)'
-    )
-
+    t.plan(1)
     t.is(
         encoder.encode(
             CONTRACT,
@@ -151,17 +126,7 @@ test('Encode oracle address arguments', t => {
 })
 
 test('Encode oracle query address arguments', t => {
-    t.plan(2)
-    t.is(
-        encoder.encode(
-            CONTRACT,
-            'test_oracle_query_address',
-            ["0xED1EE7DC0278D05CE9509473C50A93D43A28B28D5032F6DF7DAA442FE1371348"]
-        ),
-        'cb_KxFBufYfG58EoO0e59wCeNBc6VCUc8UKk9Q6KLKNUDL2332qRC/hNxNIgI8x6g==',
-        'test_oracle_query_address(oq_2oRvyowJuJnEkxy58Ckkw77XfWJrmRgmGaLzhdqb67SKEL1gPY)'
-    )
-
+    t.plan(1)
     t.is(
         encoder.encode(
             CONTRACT,

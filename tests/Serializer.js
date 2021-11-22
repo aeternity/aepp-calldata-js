@@ -9,11 +9,11 @@ const FateList = require('../src/types/FateList')
 const FateMap = require('../src/types/FateMap')
 const FateVariant = require('../src/types/FateVariant')
 const FateBytes = require('../src/types/FateBytes')
-const FateAccountAddress = require('../src/types/FateAccountAddress')
-const FateContractAddress = require('../src/types/FateContractAddress')
-const FateOracleAddress = require('../src/types/FateOracleAddress')
-const FateOracleQueryAddress = require('../src/types/FateOracleQueryAddress')
-const FateChannelAddress = require('../src/types/FateChannelAddress')
+const FateAccountAddressRaw = require('../src/types/FateAccountAddressRaw')
+const FateContractAddressRaw = require('../src/types/FateContractAddressRaw')
+const FateOracleAddressRaw = require('../src/types/FateOracleAddressRaw')
+const FateOracleQueryAddressRaw = require('../src/types/FateOracleQueryAddressRaw')
+const FateChannelAddressRaw = require('../src/types/FateChannelAddressRaw')
 const {FateTypeInt, FateTypeBool} = require('../src/FateTypes')
 
 const serializer = new Serializer()
@@ -48,23 +48,28 @@ test('Serialize all types', t => {
         [159,1,9,190,239]
     )
     t.deepEqual(
-        ser(t, new FateAccountAddress("0xfedcba9876543210")),
-        [159,0,136,254,220,186,152,118,84,50,16]
+        ser(t, new FateAccountAddressRaw("0xfedcba9876543210fedcba9876543210fedcba9876543210fedcba9876543210")),
+        [159,0,160,254,220,186,152,118,84,50,16,254,220,186,152,118,84,50,16,254,220,186,152,118,
+            84,50,16,254,220,186,152,118,84,50,16]
     )
     t.deepEqual(
-        ser(t, new FateContractAddress("0xfedcba9876543210")),
-        [159,2,136,254,220,186,152,118,84,50,16]
+        ser(t, new FateContractAddressRaw("0xfedcba9876543210fedcba9876543210fedcba9876543210fedcba9876543210")),
+        [159,2,160,254,220,186,152,118,84,50,16,254,220,186,152,118,84,50,16,254,220,186,152,118,
+            84,50,16,254,220,186,152,118,84,50,16]
     )
     t.deepEqual(
-        ser(t, new FateOracleAddress("0xfedcba9876543210")),
-        [159,3,136,254,220,186,152,118,84,50,16]
+        ser(t, new FateOracleAddressRaw("0xfedcba9876543210fedcba9876543210fedcba9876543210fedcba9876543210")),
+        [159,3,160,254,220,186,152,118,84,50,16,254,220,186,152,118,84,50,16,254,220,186,152,118,
+            84,50,16,254,220,186,152,118,84,50,16]
     )
     t.deepEqual(
-        ser(t, new FateOracleQueryAddress("0xfedcba9876543210")),
-        [159,4,136,254,220,186,152,118,84,50,16]
+        ser(t, new FateOracleQueryAddressRaw("0xfedcba9876543210fedcba9876543210fedcba9876543210fedcba9876543210")),
+        [159,4,160,254,220,186,152,118,84,50,16,254,220,186,152,118,84,50,16,254,220,186,152,118,
+            84,50,16,254,220,186,152,118,84,50,16]
     )
     t.deepEqual(
-        ser(t, new FateChannelAddress("0xfedcba9876543210")),
-        [159,5,136,254,220,186,152,118,84,50,16]
+        ser(t, new FateChannelAddressRaw("0xfedcba9876543210fedcba9876543210fedcba9876543210fedcba9876543210")),
+        [159,5,160,254,220,186,152,118,84,50,16,254,220,186,152,118,84,50,16,254,220,186,152,118,
+            84,50,16,254,220,186,152,118,84,50,16]
     )
 })

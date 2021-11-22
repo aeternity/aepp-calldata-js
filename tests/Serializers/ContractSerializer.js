@@ -1,14 +1,16 @@
 const test = require('../test')
 const ContractSerializer = require('../../src/Serializers/ContractSerializer')
 const FateContractAddress = require('../../src/types/FateContractAddress')
+const FateContractAddressRaw = require('../../src/types/FateContractAddressRaw')
 
 const s = new ContractSerializer()
 
 test('Serialize', t => {
     t.plan(2)
     t.deepEqual(
-        s.serialize(new FateContractAddress("0xfedcba9876543210")),
-        [159,2,136,254,220,186,152,118,84,50,16]
+        s.serialize(new FateContractAddressRaw("0xfedcba9876543210fedcba9876543210fedcba9876543210fedcba9876543210")),
+        [159,2,160,254,220,186,152,118,84,50,16,254,220,186,152,118,84,50,16,254,220,186,152,118,
+            84,50,16,254,220,186,152,118,84,50,16]
     )
 
     t.deepEqual(
@@ -21,8 +23,9 @@ test('Serialize', t => {
 test('Deserialize', t => {
     t.plan(2)
     t.deepEqual(
-        s.deserialize([159,2,136,254,220,186,152,118,84,50,16]),
-        new FateContractAddress("0xfedcba9876543210")
+        s.deserialize([159,2,160,254,220,186,152,118,84,50,16,254,220,186,152,118,84,50,16,254,220,
+            186,152,118,84,50,16,254,220,186,152,118,84,50,16]),
+        new FateContractAddressRaw("0xfedcba9876543210fedcba9876543210fedcba9876543210fedcba9876543210")
     )
 
     t.is(

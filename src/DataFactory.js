@@ -76,11 +76,11 @@ class DataFactory {
         }
 
         if (type.name === 'oracle_address') {
-            return new FateOracleAddress(value, type.valueTypes)
+            return new FateOracleAddress(value)
         }
 
         if (type.name === 'oracle_query_address') {
-            return new FateOracleQueryAddress(value, type.valueTypes)
+            return new FateOracleQueryAddress(value)
         }
 
         if (type.name === 'list') {

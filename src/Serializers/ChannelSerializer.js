@@ -1,6 +1,6 @@
 const RLP = require('rlp')
 const FateTag = require('../FateTag')
-const FateChannelAddress = require('../types/FateChannelAddress')
+const FateChannelAddressRaw = require('../types/FateChannelAddressRaw')
 
 class ChannelSerializer {
     serialize(data) {
@@ -22,7 +22,7 @@ class ChannelSerializer {
         const decoded = RLP.decode(buffer.slice(2), true)
 
         return [
-            new FateChannelAddress(decoded.data),
+            new FateChannelAddressRaw(decoded.data),
             new Uint8Array(decoded.remainder)
         ]
     }
