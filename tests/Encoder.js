@@ -77,6 +77,14 @@ test('Encode hash arguments', t => {
     )
 })
 
+test('Ensures hash in a proper format', t => {
+    t.plan(1)
+    t.throws(
+        () => encoder.encode(CONTRACT, 'test_hash', [{}]),
+        { message: 'Should be one of: Array, ArrayBuffer, hex string, Number, BigInt; got [object Object] instead' }
+    )
+})
+
 test('Encode signature arguments', t => {
     t.plan(1)
     const encoded = encoder.encode(

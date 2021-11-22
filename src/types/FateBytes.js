@@ -12,7 +12,11 @@ const toByteArray = (value) => {
         return HexStringToByteArray(value)
     }
 
-    return Int2ByteArray(BigInt(value))
+    if (typeof value !== 'bigint' && !Number.isInteger(value)) {
+        throw new Error(`Should be one of: Array, ArrayBuffer, hex string, Number, BigInt; got ${value} instead`)
+    }
+
+    return Int2ByteArray(value)
 }
 
 class FateBytes extends FateData {
