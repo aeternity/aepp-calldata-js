@@ -80,6 +80,24 @@ The `serialize` method return a byte array while the `deserialize` method return
 **Wrapper objects are not backward compatible guaranteed interface.**
 Each data type wrapper implements `valueOf` Javascript method that should be used to unbox the primitive (Javascript) type. 
 
+## Contract call errors
+
+FATE contract call errors (revert, error) are represented as `cb_` prefixed base64check encoded string,
+to get the error as string one can use `decodeString` shorthand method instead of doing it in their codebase.
+
+Example:
+```javascript
+const {Encoder} = require('@aeternity/aepp-calldata')
+
+const decoded = Encoder.decodeString('cb_VHlwZSBlcnJvciBvbiBjYWxsOiBbe2J5dGVzLDw8MjQwLDIsLi4uPj59XSBpcyBub3Qgb2YgdHlwZSBbe2J5dGVzLDMyfV3EtJjU')
+console.log(`Decoded: ${decoded}`)
+```
+
+Expected output:
+```
+Decoded: Type error on call: [{bytes,<<240,2,...>>}] is not of type [{bytes,32}]
+```
+
 ## Data types
 
 Using the library involves data types and their mappings from Sophia to JavaScript and vice versa.
@@ -119,6 +137,7 @@ The public API namely consist of:
 - `decode(contractName: string, functionName: string, encodedData: string): Data`
 - `serialize(contractName: string, functionName: string, arguments: Array<Data>): string`
 - `deserialize(contractName: string, functionName: string, encodedData: Uint8Array): Data`
+- `decodeString(data: string): Buffer`
 
 where `Data: Boolean | BigInt | String | Array | Map | Object`
 

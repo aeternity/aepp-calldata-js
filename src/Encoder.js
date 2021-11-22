@@ -21,17 +21,9 @@ class Encoder {
     }
 
     decode(contract, funName, data) {
-        return this.decodeWithType(contract, funName, data).valueOf()
-    }
+        const binData = Encoder.decodeString(data)
 
-    decodeWithType(contract, funName, data) {
-        if (!data.startsWith('cb_')) {
-            throw new Error('Invalid data format (missing cb_ prefix)')
-        }
-
-        const binData = base64check.decode(data.substring(3))
-
-        return this.deserialize(contract, funName, binData)
+        return this.deserialize(contract, funName, binData).valueOf()
     }
 
     serialize(contract, funName, args) {
@@ -62,6 +54,14 @@ class Encoder {
         const hash = Array.from(blake.blake2b(funName, null, HASH_BYTES))
 
         return hash.slice(0, 4)
+    }
+
+    static decodeString(data) {
+        if (!data.startsWith('cb_')) {
+            throw new Error('Invalid data format (missing cb_ prefix)')
+        }
+
+        return base64check.decode(data.substring(3))
     }
 }
 
