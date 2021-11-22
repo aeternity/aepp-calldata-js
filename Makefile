@@ -37,7 +37,7 @@ $(BUILDDIR)/js/tests.js: node_modules $(BUILDDIR)/$(JSON_ACIS) $(BUILDDIR)/js
 	npm run browser-test-bundle
 
 browser-tests: $(BUILDDIR)/js/tests.js
-	@echo Make sure to change the test runner to "tape" in "src/test.js" prior running this command.
+	@echo Make sure to change the test runner to "tape" in "tests/test.js" prior running this command.
 	@echo Open "tests/index.html" in your browser.
 
 integration-tests:
