@@ -1,13 +1,9 @@
-const blake = require('blakejs')
 const base64check = require('base64check')
 const Serializer = require('./Serializer')
-const FateByteArray = require('./types/FateByteArray')
-const FateTuple = require('./types/FateTuple')
 const TypeResolver = require('./TypeResolver')
 const DataFactory = require('./DataFactory')
+const Calldata = require('./Calldata')
 const {FateTypeString} = require('./FateTypes')
-
-const HASH_BYTES = 32
 
 class Encoder {
     constructor(aci) {
@@ -28,16 +24,9 @@ class Encoder {
     }
 
     serialize(contract, funName, args) {
-        const functionId = this.symbolIdentifier(funName)
         const argTypes = this.typeResolver.getCallTypes(contract, funName)
         const argsData = this.dataFactory.create(argTypes, args)
-
-        const funcBytes = new FateByteArray(functionId)
-        const argsTuple = new FateTuple(argTypes, argsData)
-        const calldata = new FateTuple(
-            [funcBytes.type, argsTuple.type],
-            [funcBytes, argsTuple]
-        )
+        const calldata = Calldata(funName, argTypes, argsData)
 
         const serialized = this.serializer.serialize(calldata)
 
@@ -48,13 +37,6 @@ class Encoder {
         const type = this.typeResolver.getReturnType(contract, funName)
 
         return this.serializer.deserialize(type, data)
-    }
-
-    symbolIdentifier(funName) {
-        // First 4 bytes of 32 bytes blake hash
-        const hash = Array.from(blake.blake2b(funName, null, HASH_BYTES))
-
-        return hash.slice(0, 4)
     }
 
     decodeString(data) {
