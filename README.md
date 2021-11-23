@@ -93,7 +93,7 @@ const ACI = require('./Test.json')
 
 const encoder = new Encoder(ACI)
 
-// error mesasge
+// error message
 const error = encoder.decodeString('cb_VHlwZSBlcnJvciBvbiBjYWxsOiBbe2J5dGVzLDw8MjQwLDIsLi4uPj59XSBpcyBub3Qgb2YgdHlwZSBbe2J5dGVzLDMyfV3EtJjU')
 // note that decodeString returns a Buffer that has to be converted to string
 console.log('Error: ' + error.toString())
