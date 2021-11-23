@@ -8,6 +8,7 @@ class FateBool extends FateData {
         if (typeof value !== 'boolean') {
             throw new Error(`"${value}" must be a boolean`)
         }
+
         this._value = value
     }
 

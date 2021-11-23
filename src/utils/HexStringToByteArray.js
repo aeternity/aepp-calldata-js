@@ -4,6 +4,7 @@ const HexStringToByteArray = (str) => {
     if (!match) {
         throw new Error(`Invalid hex string: ${str}`)
     }
+
     return new Uint8Array(match[2]
         .split(/(.{1,2})/)
         .filter(el => el)
