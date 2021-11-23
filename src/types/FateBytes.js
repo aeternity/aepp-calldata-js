@@ -24,6 +24,7 @@ class FateBytes extends FateData {
         if (size && this._value.byteLength !== size) {
             throw new Error(`Invalid length: got ${this._value.byteLength} bytes instead of ${size} bytes`)
         }
+
         this._size = size
     }
 
