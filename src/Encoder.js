@@ -1,4 +1,4 @@
-const base64check = require('base64check')
+const base64check = require('./utils/base64check')
 const Serializer = require('./Serializer')
 const TypeResolver = require('./TypeResolver')
 const DataFactory = require('./DataFactory')
