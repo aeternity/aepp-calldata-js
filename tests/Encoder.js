@@ -13,7 +13,7 @@ test('Decode FATE errors', t => {
     )
     t.is(error.toString(), 'Type error on call: [{bytes,<<240,2,...>>}] is not of type [{bytes,32}]')
 
-    // revert messages are FATE string ecnoded
+    // revert messages are FATE string encoded
     const revert = encoder.decodeFateString('cb_OXJlcXVpcmUgZmFpbGVkarP9mg==')
     t.is(revert, 'require failed')
 })
