@@ -21,6 +21,8 @@
             { "blankLine": "always", "prev": "block-like", "next": "*" },
             { "blankLine": "any",    "prev": ["const", "let", "var"], "next": "block-like"}
         ],
+        "no-negated-condition": "error",
+        "no-else-return": "error",
         "no-underscore-dangle": "off",
         "object-curly-spacing": "off",
         "no-bitwise": "off",
