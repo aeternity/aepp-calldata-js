@@ -98,7 +98,7 @@ const error = encoder.decodeString('cb_VHlwZSBlcnJvciBvbiBjYWxsOiBbe2J5dGVzLDw8M
 // note that decodeString returns a Buffer that has to be converted to string
 console.log('Error: ' + error.toString())
 
-// revert mesasge
+// revert message
 const revert = encoder.decodeFateString('cb_OXJlcXVpcmUgZmFpbGVkarP9mg==')
 console.log('Revert: ' + revert)
 ```
