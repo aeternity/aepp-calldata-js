@@ -5,6 +5,7 @@ const FateByteArray = require('./types/FateByteArray')
 const FateTuple = require('./types/FateTuple')
 const TypeResolver = require('./TypeResolver')
 const DataFactory = require('./DataFactory')
+const {FateTypeString} = require('./FateTypes')
 
 const HASH_BYTES = 32
 
@@ -21,17 +22,9 @@ class Encoder {
     }
 
     decode(contract, funName, data) {
-        return this.decodeWithType(contract, funName, data).valueOf()
-    }
+        const binData = this.decodeString(data)
 
-    decodeWithType(contract, funName, data) {
-        if (!data.startsWith('cb_')) {
-            throw new Error('Invalid data format (missing cb_ prefix)')
-        }
-
-        const binData = base64check.decode(data.substring(3))
-
-        return this.deserialize(contract, funName, binData)
+        return this.deserialize(contract, funName, binData).valueOf()
     }
 
     serialize(contract, funName, args) {
@@ -62,6 +55,20 @@ class Encoder {
         const hash = Array.from(blake.blake2b(funName, null, HASH_BYTES))
 
         return hash.slice(0, 4)
+    }
+
+    decodeString(data) {
+        if (!data.startsWith('cb_')) {
+            throw new Error('Invalid data format (missing cb_ prefix)')
+        }
+
+        return base64check.decode(data.substring(3))
+    }
+
+    decodeFateString(data) {
+        const binData = this.decodeString(data)
+
+        return this.serializer.deserialize(FateTypeString(), binData).valueOf()
     }
 }
 
