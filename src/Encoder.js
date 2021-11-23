@@ -5,6 +5,7 @@ const FateByteArray = require('./types/FateByteArray')
 const FateTuple = require('./types/FateTuple')
 const TypeResolver = require('./TypeResolver')
 const DataFactory = require('./DataFactory')
+const {FateTypeString} = require('./FateTypes')
 
 const HASH_BYTES = 32
 
@@ -21,7 +22,7 @@ class Encoder {
     }
 
     decode(contract, funName, data) {
-        const binData = Encoder.decodeString(data)
+        const binData = this.decodeString(data)
 
         return this.deserialize(contract, funName, binData).valueOf()
     }
@@ -56,12 +57,18 @@ class Encoder {
         return hash.slice(0, 4)
     }
 
-    static decodeString(data) {
+    decodeString(data) {
         if (!data.startsWith('cb_')) {
             throw new Error('Invalid data format (missing cb_ prefix)')
         }
 
         return base64check.decode(data.substring(3))
+    }
+
+    decodeFateString(data) {
+        const binData = this.decodeString(data)
+
+        return this.serializer.deserialize(FateTypeString(), binData).valueOf()
     }
 }
 

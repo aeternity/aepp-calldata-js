@@ -82,20 +82,31 @@ Each data type wrapper implements `valueOf` Javascript method that should be use
 
 ## Contract call errors
 
-FATE contract call errors (revert, error) are represented as `cb_` prefixed base64check encoded string,
+FATE contract call error message is represented as `cb_` prefixed base64check encoded string,
 to get the error as string one can use `decodeString` shorthand method instead of doing it in their codebase.
+However, revert messages are FATE string encoded, so a different helper method `decodeFateString` should be used.
 
 Example:
 ```javascript
 const {Encoder} = require('@aeternity/aepp-calldata')
+const ACI = require('./Test.json')
 
-const decoded = Encoder.decodeString('cb_VHlwZSBlcnJvciBvbiBjYWxsOiBbe2J5dGVzLDw8MjQwLDIsLi4uPj59XSBpcyBub3Qgb2YgdHlwZSBbe2J5dGVzLDMyfV3EtJjU')
-console.log(`Decoded: ${decoded}`)
+const encoder = new Encoder(ACI)
+
+// error mesasge
+const error = encoder.decodeString('cb_VHlwZSBlcnJvciBvbiBjYWxsOiBbe2J5dGVzLDw8MjQwLDIsLi4uPj59XSBpcyBub3Qgb2YgdHlwZSBbe2J5dGVzLDMyfV3EtJjU')
+// note that decodeString returns a Buffer that has to be converted to string
+console.log('Error: ' + error.toString())
+
+// revert mesasge
+const revert = encoder.decodeFateString('cb_OXJlcXVpcmUgZmFpbGVkarP9mg==')
+console.log('Revert: ' + revert)
 ```
 
 Expected output:
 ```
-Decoded: Type error on call: [{bytes,<<240,2,...>>}] is not of type [{bytes,32}]
+Error: Type error on call: [{bytes,<<240,2,...>>}] is not of type [{bytes,32}]
+Revert: require failed
 ```
 
 ## Data types
@@ -138,6 +149,7 @@ The public API namely consist of:
 - `serialize(contractName: string, functionName: string, arguments: Array<Data>): string`
 - `deserialize(contractName: string, functionName: string, encodedData: Uint8Array): Data`
 - `decodeString(data: string): Buffer`
+- `decodeFateString(data: string): string`
 
 where `Data: Boolean | BigInt | String | Array | Map | Object`
 
