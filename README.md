@@ -44,42 +44,6 @@ Encoded data: cb_KxHwzCuVGyl3aG9vbHltb2x5zwMSnw==
 Decoded data: whoolymoly
 ```
 
-## Serialization
-
-The `encode` and `decode` methods of the `Encoder` accept and return contract byte arrays (a `cb_` prefixed string with base64check encoded binary data).
-
-The library also provides serialization and deserialization methods to work with binary data, i.e.:
-
-```javascript
-const {Encoder} = require('@aeternity/aepp-calldata')
-const ACI = require('./Test.json')
-const CONTRACT = 'Test'
-
-const encoder = new Encoder(ACI)
-
-const encodedBin = encoder.serialize(CONTRACT, 'test_string', ["whoolymoly"])
-console.log(encodedBin)
-
-const binData = new Uint8Array([0x29, 0x77, 0x68, 0x6f, 0x6f, 0x6c, 0x79, 0x6d, 0x6f, 0x6c, 0x79])
-const decodedBin = encoder.deserialize(CONTRACT, 'test_string', binData)
-console.log(decodedBin)
-```
-
-Expected output:
-```
-Uint8Array(18) [
-   43,  17, 240, 204,  43, 149,
-   27,  41, 119, 104, 111, 111,
-  108, 121, 109, 111, 108, 121
-]
-FateString { name: 'string', _value: 'whoolymoly' }
-```
-
-The `serialize` method return a byte array while the `deserialize` method returns a wrapper object of the corresponding Sophia type.
-
-**Wrapper objects are not backward compatible guaranteed interface.**
-Each data type wrapper implements `valueOf` Javascript method that should be used to unbox the primitive (Javascript) type. 
-
 ## Contract call errors
 
 FATE contract call error message is represented as `cb_` prefixed base64check encoded string,
@@ -146,8 +110,6 @@ The public API namely consist of:
 
 - `encode(contractName: string, functionName: string, arguments: Array<Data>): string`
 - `decode(contractName: string, functionName: string, encodedData: string): Data`
-- `serialize(contractName: string, functionName: string, arguments: Array<Data>): string`
-- `deserialize(contractName: string, functionName: string, encodedData: Uint8Array): Data`
 - `decodeString(data: string): Buffer`
 - `decodeFateString(data: string): string`
 
