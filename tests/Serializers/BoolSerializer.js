@@ -10,12 +10,12 @@ test('Serialize', t => {
     t.deepEqual(s.serialize(false), [127])
 
     t.deepEqual(s.serialize(new FateBool(true)), [255])
-    t.throws(() => s.serialize(new FateBool(1)), { message: '"1" must be a boolean' })
-    t.throws(() => s.serialize(new FateBool("qwe")), { message: '"qwe" must be a boolean' })
+    t.deepEqual(s.serialize(new FateBool(1)), [255])
+    t.deepEqual(s.serialize(new FateBool("qwe")), [255])
 
     t.deepEqual(s.serialize(new FateBool(false)), [127])
-    t.throws(() => s.serialize(new FateBool(0)), { message: '"0" must be a boolean' })
-    t.throws(() => s.serialize(new FateBool("")), { message: '"" must be a boolean' })
+    t.deepEqual(s.serialize(new FateBool(0)), [127])
+    t.deepEqual(s.serialize(new FateBool("")), [127])
 })
 
 test('Deserialize', t => {
