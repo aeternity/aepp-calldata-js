@@ -24,7 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Validate string in HexStringToByteArray (#80) 
 - Clarify library pupose, public API and contribution (#83)
 - Validate variant values (#79)
-- Add decodeString piblic API (#96)
+- Add decodeString public API (#96)
 
 ### Changed
 - Revamp public API (#100)
