@@ -4,11 +4,9 @@ Aeternity contract calldata encoding and results decoding **standalone** library
 
 This is Javascript imeplemtnation of data serialization specified in [aeternity protocol](https://github.com/aeternity/protocol/blob/master/serializations.md#data).
 
-While the only purpose of the library at the moment of this writing is solely to provide serialize/deserialize and ecnode/decode respectively of contracts calldata and return data it may evolve to full fledged serialization library of the full protocol specification.
+While the only purpose of the library at the moment of this writing is solely to provide ecnoding and decoding respectively of contracts calldata and return data it may evolve to full fledged serialization library of the full protocol specification.
 
 ## Installation
-
-This package is not published to NPM registry yet.
 
 ```bash
 npm install -P @aeternity/aepp-calldata
