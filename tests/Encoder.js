@@ -77,6 +77,14 @@ test('Encode hash arguments', t => {
     )
 })
 
+test('Ensures hash in a proper format', t => {
+    t.plan(1)
+    t.throws(
+        () => encoder.encode(CONTRACT, 'test_hash', [{}]),
+        { message: 'Should be one of: Array, ArrayBuffer, hex string, Number, BigInt; got [object Object] instead' }
+    )
+})
+
 test('Encode signature arguments', t => {
     t.plan(1)
     const encoded = encoder.encode(
@@ -169,6 +177,14 @@ test('Encode list arguments', t => {
     t.is(encoded, 'cb_KxFLwdBRG3MCBAYKEBoquPlTeA==', 'test_list([1, 2, 3, 5, 8, 13, 21])')
 })
 
+test('Ensures list is array', t => {
+    t.plan(1)
+    t.throws(
+        () => encoder.encode(CONTRACT, 'test_list', ['test-string']),
+        { message: 'Fate list must be an Array, got test-string instead' }
+    )
+})
+
 test('Encode nested list arguments', t => {
     t.plan(1)
     const encoded = encoder.encode(CONTRACT, 'test_nested_list', [[[1,2],[3,4],[5,6]]])
@@ -199,6 +215,14 @@ test('Encode tuple arguments', t => {
     t.plan(1)
     const encoded = encoder.encode(CONTRACT, 'test_tuple', [[true, false]])
     t.is(encoded, 'cb_KxFbdB1sGyv/fzQzK9M=', 'test_tuple((true, false))')
+})
+
+test('Ensures tuple is array', t => {
+    t.plan(1)
+    t.throws(
+        () => encoder.encode(CONTRACT, 'test_tuple', ['test-string']),
+        { message: 'Fate tuple must be an Array, got test-string instead' }
+    )
 })
 
 test('Encode nested tuple arguments', t => {

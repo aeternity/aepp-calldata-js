@@ -88,6 +88,10 @@ class DataFactory {
         }
 
         if (type.name === 'list') {
+            if (!Array.isArray(value)) {
+                throw new Error(`Fate list must be an Array, got ${value} instead`)
+            }
+
             const resolvedValues = value.map(v => this.createData(type.valuesType, v))
 
             return new FateList(type.valuesType, resolvedValues)
@@ -106,6 +110,10 @@ class DataFactory {
         }
 
         if (type.name === 'tuple') {
+            if (!Array.isArray(value)) {
+                throw new Error(`Fate tuple must be an Array, got ${value} instead`)
+            }
+
             const resolvedValue = type.valueTypes.map((t, i) => {
                 return this.createData(t, value[i])
             })
