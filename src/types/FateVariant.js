@@ -42,9 +42,11 @@ class FateVariant extends FateData {
         return this._type.variants
     }
 
-    static isFateTypeOption = ({ name, variants }) => name === 'variant'
-        && variants.some(({ None }) => None && None.length === 0)
-        && variants.some(({ Some }) => Some)
+    static isFateTypeOption({ name, variants }) {
+        return name === 'variant'
+            && variants.some(({ None }) => None && None.length === 0)
+            && variants.some(({ Some }) => Some)
+    }
 
     valueOf() {
         if (this.variants.length === 0) {
