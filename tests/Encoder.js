@@ -241,12 +241,18 @@ test('Encode type aliases', t => {
 })
 
 test('Encode fancy map', t => {
-    t.plan(1)
-    const encodedMap = encoder.encode(CONTRACT, 'test_fancy_map', [
+    t.plan(2)
+    const encodedMap1 = encoder.encode(CONTRACT, 'test_fancy_map', [
         new Map([[{None: []}, 1]]),
         new Map([[{Some: [0]}, 2]])
     ])
-    t.is(encodedMap, 'cb_KxETMqtuKy8Br4IAAQA/Ai8Br4IAAQEbAASjVMXT', 'test_fancy_map({[None()] = 1}, {[Some(0)] = 2})')
+    t.is(encodedMap1, 'cb_KxETMqtuKy8Br4IAAQA/Ai8Br4IAAQEbAASjVMXT', 'test_fancy_map({[None()] = 1}, {[Some(0)] = 2})')
+
+    const encodedMap2 = encoder.encode(CONTRACT, 'test_fancy_map', [
+        new Map([[undefined, 1]]),
+        new Map([[0, 2]])
+    ])
+    t.is(encodedMap2, encodedMap1, 'test_fancy_map({[None()] = 1}, {[Some(0)] = 2})')
 })
 
 test('Encode template type', t => {
@@ -301,12 +307,24 @@ test('Encode namespaced arguments', t => {
 })
 
 test('Encode optional arguments', t => {
-    t.plan(2)
+    t.plan(6)
     const encoded1 = encoder.encode(CONTRACT, 'test_optional', [{None: []}])
     t.is(encoded1, 'cb_KxG0+HBxG6+CAAEAP4sG0gs=', 'test_optional(None)')
 
     const encoded2 = encoder.encode(CONTRACT, 'test_optional', [{Some: [404]}])
     t.is(encoded2, 'cb_KxG0+HBxG6+CAAEBG2+CAVSsnrJE', 'test_optional(Some(404))')
+
+    const encodedUndefined = encoder.encode(CONTRACT, 'test_optional', [undefined])
+    t.is(encodedUndefined, 'cb_KxG0+HBxG6+CAAEAP4sG0gs=', 'test_optional(None)')
+
+    const encodedNull = encoder.encode(CONTRACT, 'test_optional', [null])
+    t.is(encodedNull, 'cb_KxG0+HBxG6+CAAEAP4sG0gs=', 'test_optional(None)')
+
+    const encodedEmpty = encoder.encode(CONTRACT, 'test_optional', [])
+    t.is(encodedEmpty, 'cb_KxG0+HBxG6+CAAEAP4sG0gs=', 'test_optional(None)')
+
+    const encoded = encoder.encode(CONTRACT, 'test_optional', [404])
+    t.is(encoded, 'cb_KxG0+HBxG6+CAAEBG2+CAVSsnrJE', 'test_optional(Some(404))')
 })
 
 test('Encode Chain.ttl arguments', t => {
