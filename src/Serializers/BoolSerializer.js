@@ -1,5 +1,7 @@
 const FateTag = require('../FateTag')
 const FateBool = require('../types/FateBool')
+const BaseSerializer = require('./BaseSerializer')
+const FatePrefixError = require('../Errors/FatePrefixError')
 
 class BoolSerializer {
     serialize(data) {
@@ -25,7 +27,7 @@ class BoolSerializer {
             return [new FateBool(false), rest]
         }
 
-        throw new Error('Invalid prefix: ' + prefix.toString(2))
+        throw new FatePrefixError(prefix)
     }
 }
 

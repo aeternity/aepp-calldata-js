@@ -16,6 +16,7 @@ const OracleSerializer = require('./Serializers/OracleSerializer')
 const StringSerializer = require('./Serializers/StringSerializer')
 const TupleSerializer = require('./Serializers/TupleSerializer')
 const VariantSerializer = require('./Serializers/VariantSerializer')
+const SerializerError = require('./Errors/SerializerError')
 
 const _serializers = {}
 
@@ -30,16 +31,16 @@ class Serializer {
 
     serialize(data) {
         if (typeof data !== 'object') {
-            throw new Error('Only object serialization is supported. Got: ' + JSON.stringify(data))
+            throw new SerializerError('Only object serialization is supported. Got: ' + JSON.stringify(data))
         }
 
         if (!(data instanceof FateData)) {
-            throw new Error('Only instances of FateData is supported.')
+            throw new SerializerError('Only instances of FateData is supported.')
         }
 
         const typeName = data.name
         if (!_serializers.hasOwnProperty(typeName)) {
-            throw new Error('Unsupported type: ' + JSON.stringify(typeName))
+            throw new SerializerError('Unsupported type: ' + JSON.stringify(typeName))
         }
 
         return _serializers[typeName].serialize(data)
@@ -47,7 +48,7 @@ class Serializer {
 
     deserialize(type, data) {
         if (!(data instanceof Uint8Array)) {
-            throw new Error('Only instances of Uint8Array is supported.')
+            throw new SerializerError('Only instances of Uint8Array is supported.')
         }
 
         return this._getSerializer(type).deserialize(data, type)
@@ -55,7 +56,7 @@ class Serializer {
 
     deserializeStream(data, typeInfo) {
         if (!(data instanceof Uint8Array)) {
-            throw new Error('Only instances of Uint8Array is supported.')
+            throw new SerializerError('Only instances of Uint8Array is supported.')
         }
 
         // in general the type factory needs to support only composite types
@@ -70,7 +71,7 @@ class Serializer {
         const serializer = this._getSerializer(type)
 
         if (typeof serializer.deserializeStream !== 'function') {
-            throw new Error('Unsupported stream deserialization for type: ' + JSON.stringify(type))
+            throw new SerializerError('Unsupported stream deserialization for type: ' + JSON.stringify(type))
         }
 
         return serializer.deserializeStream(data, typeInfo)
@@ -78,12 +79,12 @@ class Serializer {
 
     _getSerializer(type) {
         if (!type.hasOwnProperty('name')) {
-            throw new Error('Unsupported type: ' + JSON.stringify(type))
+            throw new SerializerError('Unsupported type: ' + JSON.stringify(type))
         }
 
         const typeName = type.name
         if (!_serializers.hasOwnProperty(typeName)) {
-            throw new Error('Unsupported type: ' + JSON.stringify(typeName))
+            throw new SerializerError('Unsupported type: ' + JSON.stringify(typeName))
         }
 
         return _serializers[typeName]

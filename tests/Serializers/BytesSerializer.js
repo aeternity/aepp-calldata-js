@@ -5,7 +5,7 @@ const FateBytes = require('../../src/types/FateBytes')
 const s = new BytesSerializer()
 
 test('Serialize', t => {
-    t.plan(5)
+    t.plan(7)
     t.deepEqual(
         s.serialize(new FateBytes([0xbe, 0xef])),
         [159,1,9,190,239]
@@ -29,6 +29,16 @@ test('Serialize', t => {
     t.deepEqual(
         s.serialize(new FateBytes("0xfedcba9876543210")),
         [159,1,33,254,220,186,152,118,84,50,16]
+    )
+
+    t.throws(
+        () => s.serialize(new FateBytes("0xfedcba9876543210", 32)),
+        { name: 'FateTypeError' }
+    )
+
+    t.throws(
+        () => s.serialize(new FateBytes({})),
+        { name: 'FateTypeError' }
     )
 })
 

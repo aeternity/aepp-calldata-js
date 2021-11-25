@@ -1,6 +1,7 @@
 const FateTag = require('../FateTag')
 const ByteArraySerializer = require('./ByteArraySerializer')
 const FateString = require('../types/FateString')
+const FatePrefixError = require('../Errors/FatePrefixError')
 
 const byteArraySerializer = new ByteArraySerializer()
 
@@ -26,7 +27,7 @@ class StringSerializer {
             (prefix & 0b11) !== FateTag.SHORT_STRING
             && ![FateTag.EMPTY_STRING, FateTag.LONG_STRING].includes(prefix)
         ) {
-            throw new Error('Unsupported prefix: 0b' + prefix.toString(2).padStart(8, '0'))
+            throw new FatePrefixError(prefix)
         }
 
         const decoder = new TextDecoder()

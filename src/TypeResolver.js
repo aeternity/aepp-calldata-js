@@ -1,3 +1,4 @@
+const TypeResolveError = require('./Errors/TypeResolveError')
 const {
     FateTypeVoid,
     FateTypeInt,
@@ -29,6 +30,16 @@ const isObject = (value) => {
     return value && typeof value === 'object' && value.constructor === Object
 }
 
+const isOption = ({type}) => {
+    let key = type
+    let _
+    if (isObject(key)) {
+        [[key, _]] = Object.entries(key)
+    }
+
+    return key === 'option'
+}
+
 class TypeResolver {
     constructor(aci) {
         this.aci = aci
@@ -38,14 +49,19 @@ class TypeResolver {
         const funcAci = this.getNamespaceAci(contract).functions.find(e => e.name === funName)
 
         if (funcAci) {
-            return funcAci.arguments.map(e => this.resolveType(e.type))
+            const types = funcAci.arguments.map(e => this.resolveType(e.type))
+            const options = funcAci.arguments.filter(isOption)
+            return {
+                types,
+                required: types.length - options.length,
+            }
         }
 
         if (funName === 'init') {
-            return []
+            return {types: [], required: 0}
         }
 
-        throw new Error(`Unknown function ${funName}`)
+        throw new TypeResolveError(`Unknown function ${funName}`)
     }
 
     getReturnType(contract, funName) {
@@ -56,7 +72,7 @@ class TypeResolver {
         const funcAci = this.getNamespaceAci(contract).functions.find(e => e.name === funName)
 
         if (!funcAci) {
-            throw new Error(`Unknown function ${funName}`)
+            throw new TypeResolveError(`Unknown function ${funName}`)
         }
 
         return this.resolveType(funcAci.returns)
@@ -201,7 +217,7 @@ class TypeResolver {
             return FateTypeOracleQueryAddress(...resolvedTypes)
         }
 
-        throw new Error('Cannot resolve type: ' + JSON.stringify(type))
+        throw new TypeResolveError('Cannot resolve type: ' + JSON.stringify(type))
     }
 
     resolveVariant(valueTypes, vars) {
@@ -215,7 +231,7 @@ class TypeResolver {
             return {[variant]: resolvedArgs}
         })
 
-        // junk first 2 args for BC
+        // TODO: junk first 2 args for BC
         return FateTypeVariant(0, null, variants)
     }
 
@@ -232,7 +248,7 @@ class TypeResolver {
 
         // not a custom type
         if (!namespaceData) {
-            throw new Error('Unknown namespace for ' + JSON.stringify(type))
+            throw new TypeResolveError('Unknown namespace for ' + JSON.stringify(type))
         }
 
         if (namespaceData.name === type) {
@@ -249,7 +265,7 @@ class TypeResolver {
         ].find(e => e.name === localType)
 
         if (!def) {
-            throw new Error('Unknown type definition: ' + JSON.stringify(type))
+            throw new TypeResolveError('Unknown type definition: ' + JSON.stringify(type))
         }
 
         const vars = {}

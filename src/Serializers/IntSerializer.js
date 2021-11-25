@@ -3,11 +3,12 @@ const FateTag = require('../FateTag')
 const RLPInt = require('../utils/RLPInt')
 const FateInt = require('../types/FateInt')
 const {ByteArray2Int} = require('../utils/Int2ByteArray')
+const FatePrefixError = require('../Errors/FatePrefixError')
 const abs = require('../utils/abs')
 
 const SMALL_INT_MASK = 0b00000001
 
-class IntSerializer {
+class IntSerializer extends BaseSerializer {
     serialize(data) {
         const bigValue = (data instanceof FateInt) ? data.value : BigInt(data)
         const absVal = abs(bigValue)
@@ -36,12 +37,6 @@ class IntSerializer {
             FateTag.POS_BIG_INT,
             ...RLPInt(absVal - 64n)
         ]
-    }
-
-    deserialize(data) {
-        const [value, _rest] = this.deserializeStream(data)
-
-        return value
     }
 
     deserializeStream(stream) {
@@ -78,7 +73,7 @@ class IntSerializer {
             ]
         }
 
-        throw new Error('Unsupported byte sequence for ' + prefix.toString(2))
+        throw new FatePrefixError(prefix)
     }
 }
 

@@ -4,6 +4,8 @@ const TypeResolver = require('./TypeResolver')
 const DataFactory = require('./DataFactory')
 const Calldata = require('./Calldata')
 const {FateTypeString} = require('./FateTypes')
+const EncoderError = require('./Errors/EncoderError')
+const FormatError = require('./Errors/FormatError')
 
 class Encoder {
     /** @type {Object} */
@@ -49,9 +51,22 @@ class Encoder {
      * @returns {string} Encoded calldata
     */
     encode(contract, funName, args) {
-        const argTypes = this.#typeResolver.getCallTypes(contract, funName)
-        const argsData = this.#dataFactory.create(argTypes, args)
-        const calldata = Calldata(funName, argTypes, argsData)
+        const {types, required} = this.#typeResolver.getCallTypes(contract, funName)
+
+        if (args.length > types.length || args.length < required) {
+            throw new EncoderError(
+                'Non matching number of arguments. '
+                + `${funName} expects between ${required} and ${types.length} number of arguments but got ${args.length}`
+            )
+        }
+
+        // fill in the options arguments
+        while (args.length < types.length) {
+            args.push(undefined)
+        }
+
+        const argsData = this.#dataFactory.create(types, args)
+        const calldata = Calldata(funName, types, argsData)
         const serialized = this.#serializer.serialize(calldata)
         const data = new Uint8Array(serialized.flat(Infinity))
 
@@ -97,7 +112,7 @@ class Encoder {
     */
     decodeString(data) {
         if (!data.startsWith('cb_')) {
-            throw new Error('Invalid data format (missing cb_ prefix)')
+            throw new FormatError('Invalid data format (missing cb_ prefix)')
         }
 
         return base64check.decode(data.substring(3))

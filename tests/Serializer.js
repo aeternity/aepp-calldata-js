@@ -73,3 +73,41 @@ test('Serialize all types', t => {
             84,50,16,254,220,186,152,118,84,50,16]
     )
 })
+
+test('Serialize errors', t => {
+    t.plan(3)
+
+    t.throws(
+        () => serializer.serialize('invalid data'),
+        { name: 'SerializerError' }
+    )
+
+    t.throws(
+        () => serializer.serialize({invalid: 'data'}),
+        { name: 'SerializerError' }
+    )
+
+    t.throws(
+        () => serializer.serialize(new FateData('invalid type')),
+        { name: 'SerializerError' }
+    )
+})
+
+test('Deserialize errors', t => {
+    t.plan(3)
+
+    t.throws(
+        () => serializer.deserialize('invalid data'),
+        { name: 'SerializerError' }
+    )
+
+    t.throws(
+        () => serializer.deserialize(new FateData('invalid type')),
+        { name: 'SerializerError' }
+    )
+
+    t.throws(
+        () => serializer.deserializeStream('invalid data'),
+        { name: 'SerializerError' }
+    )
+})

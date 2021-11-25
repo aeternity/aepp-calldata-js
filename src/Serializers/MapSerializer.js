@@ -4,6 +4,7 @@ const RLPInt = require('../utils/RLPInt')
 const {ByteArray2Int} = require('../utils/Int2ByteArray')
 const FateComparator = require('../FateComparator')
 const FateMap = require('../types/FateMap')
+const FatePrefixError = require('../Errors/FatePrefixError')
 
 class MapSerializer {
     constructor(globalSerializer) {
@@ -42,7 +43,7 @@ class MapSerializer {
         const prefix = buffer[0]
 
         if (prefix !== FateTag.MAP) {
-            throw new Error('Invalid Map prefix: ' + prefix.toString(2))
+            throw new FatePrefixError(prefix)
         }
 
         const decoded = RLP.decode(buffer.slice(1), true)

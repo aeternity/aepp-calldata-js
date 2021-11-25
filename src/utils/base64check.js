@@ -1,4 +1,5 @@
 const shajs = require('sha.js')
+const FormatError = require('../Errors/FormatError')
 
 const sha256hash = (input) => {
     return shajs('sha256').update(input).digest()
@@ -35,7 +36,7 @@ const decode = (str) => {
     const newChecksum = checkSumFn(payload)
 
     if (!checksum.equals(newChecksum)) {
-        throw new Error('Invalid checksum')
+        throw new FormatError('Invalid base64 checksum')
     }
 
     return Buffer.from(payload)
