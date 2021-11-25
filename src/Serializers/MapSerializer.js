@@ -1,16 +1,13 @@
 const RLP = require('rlp')
 const FateTag = require('../FateTag')
 const RLPInt = require('../utils/RLPInt')
+const BaseSerializer = require('./BaseSerializer')
 const {ByteArray2Int} = require('../utils/Int2ByteArray')
 const FateComparator = require('../FateComparator')
 const FateMap = require('../types/FateMap')
 const FatePrefixError = require('../Errors/FatePrefixError')
 
-class MapSerializer {
-    constructor(globalSerializer) {
-        this.globalSerializer = globalSerializer
-    }
-
+class MapSerializer extends BaseSerializer {
     serialize(map) {
         const len = map.length
         const cmp = FateComparator(map.keyType)
@@ -30,12 +27,6 @@ class MapSerializer {
             ...RLPInt(len),
             ...serializedItems.flat(Infinity)
         ]
-    }
-
-    deserialize(data, typeInfo) {
-        const [value, _rest] = this.deserializeStream(data, typeInfo)
-
-        return value
     }
 
     deserializeStream(data, typeInfo) {

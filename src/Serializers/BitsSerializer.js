@@ -2,10 +2,11 @@ const RLP = require('rlp')
 const FateTag = require('../FateTag')
 const RLPInt = require('../utils/RLPInt')
 const FateBits = require('../types/FateBits')
+const BaseSerializer = require('./BaseSerializer')
 const {ByteArray2Int} = require('../utils/Int2ByteArray')
 const abs = require('../utils/abs')
 
-class BitsSerializer {
+class BitsSerializer extends BaseSerializer {
     serialize(data) {
         const prefix = data.value >= 0 ? FateTag.POS_BITS : FateTag.NEG_BITS
 
@@ -13,12 +14,6 @@ class BitsSerializer {
             prefix,
             ...RLPInt(abs(data.value))
         ]
-    }
-
-    deserialize(data) {
-        const [value, _rest] = this.deserializeStream(data)
-
-        return value
     }
 
     deserializeStream(data) {

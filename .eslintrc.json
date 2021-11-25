@@ -36,6 +36,6 @@
         "no-prototype-builtins": "off",
         "import/order": "off",
         "no-plusplus": "off",
-        "no-unused-vars": ["error", { "varsIgnorePattern": "^_.*$" }]
+        "no-unused-vars": ["error", { "varsIgnorePattern": "^_.*$", "argsIgnorePattern": "^_.*$" }]
     }
 }

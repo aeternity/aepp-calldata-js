@@ -1,22 +1,17 @@
 const FateTag = require('../FateTag')
+const BaseSerializer = require('./BaseSerializer')
 const ByteArraySerializer = require('./ByteArraySerializer')
 const FateString = require('../types/FateString')
 const FatePrefixError = require('../Errors/FatePrefixError')
 
 const byteArraySerializer = new ByteArraySerializer()
 
-class StringSerializer {
+class StringSerializer extends BaseSerializer {
     serialize(value) {
         const encoder = new TextEncoder()
         const bytes = encoder.encode(value)
 
         return byteArraySerializer.serialize(bytes)
-    }
-
-    deserialize(data) {
-        const [value, _rest] = this.deserializeStream(data)
-
-        return value
     }
 
     deserializeStream(data) {

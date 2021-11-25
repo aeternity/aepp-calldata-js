@@ -2,12 +2,9 @@ const RLP = require('rlp')
 const FateTag = require('../FateTag')
 const FateTuple = require('../types/FateTuple')
 const FateVariant = require('../types/FateVariant')
+const BaseSerializer = require('./BaseSerializer')
 
-class VariantSerializer {
-    constructor(globalSerializer) {
-        this.globalSerializer = globalSerializer
-    }
-
+class VariantSerializer extends BaseSerializer {
     serialize(variant) {
         const valueTuple = new FateTuple(variant.valueTypes, variant.value)
 
@@ -17,12 +14,6 @@ class VariantSerializer {
             variant.tag,
             ...this.globalSerializer.serialize(valueTuple)
         ]
-    }
-
-    deserialize(data, typeInfo) {
-        const [value, _rest] = this.deserializeStream(data, typeInfo)
-
-        return value
     }
 
     deserializeStream(stream, typeInfo) {

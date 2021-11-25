@@ -1,20 +1,15 @@
 const RLP = require('rlp')
 const FateTag = require('../FateTag')
+const BaseSerializer = require('./BaseSerializer')
 const FateAccountAddressRaw = require('../types/FateAccountAddressRaw')
 
-class AddressSerializer {
+class AddressSerializer extends BaseSerializer {
     serialize(data) {
         return [
             FateTag.OBJECT,
             FateTag.OTYPE_ADDRESS,
             ...RLP.encode(data.value)
         ]
-    }
-
-    deserialize(data) {
-        const [value, _rest] = this.deserializeStream(data)
-
-        return value
     }
 
     deserializeStream(data) {

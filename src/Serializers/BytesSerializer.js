@@ -1,22 +1,17 @@
 const FateTag = require('../FateTag')
 const ByteArraySerializer = require('./ByteArraySerializer')
 const FateBytes = require('../types/FateBytes')
+const BaseSerializer = require('./BaseSerializer')
 
 const byteArraySerializer = new ByteArraySerializer()
 
-class BytesSerializer {
+class BytesSerializer extends BaseSerializer {
     serialize(bytes) {
         return [
             FateTag.OBJECT,
             FateTag.OTYPE_BYTES,
             ...byteArraySerializer.serialize(bytes.value)
         ]
-    }
-
-    deserialize(data) {
-        const [value, _rest] = this.deserializeStream(data)
-
-        return value
     }
 
     deserializeStream(data) {
