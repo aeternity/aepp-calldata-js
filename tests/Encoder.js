@@ -314,7 +314,7 @@ test('Encode fancy map', t => {
         new Map([[undefined, 1]]),
         new Map([[0, 2]])
     ])
-    t.is(encodedMap2, encodedMap1, 'test_fancy_map({[None()] = 1}, {[Some(0)] = 2})')
+    t.is(encodedMap2, 'cb_KxETMqtuKy8Br4IAAQA/Ai8Br4IAAQEbAASjVMXT', 'test_fancy_map({[None()] = 1}, {[Some(0)] = 2})')
 })
 
 test('Encode template type', t => {

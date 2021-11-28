@@ -48,30 +48,27 @@ class FateVariant extends FateData {
         return Object.keys(variant)[0]
     }
 
-    static isFateTypeOption({ name, variants }) {
-        return name === 'variant'
-            && variants.some(({ None }) => None && None.length === 0)
-            && variants.some(({ Some }) => Some)
-    }
-
     valueOf() {
         if (this.variants.length === 0) {
             return this
         }
 
-        const variantName = this.variantName
         const value = this._value.map(e => e.valueOf())
 
         return {
-            [variantName]: value
+            [this.variantName]: value
         }
     }
 
     toCanonical() {
-        const value = this._value.map(e => e.toCanonical())
+        if (this.variantName === 'None') {
+            return undefined
+        }
 
-        if (FateVariant.isFateTypeOption(this.type)) {
-            return this.variantName === 'None' ? undefined : value[0]
+        if (this.variantName === 'Some') {
+            const value = this._value.map(e => e.toCanonical())
+
+            return value[0]
         }
 
         return this.valueOf()

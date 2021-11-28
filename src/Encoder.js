@@ -32,8 +32,8 @@ class Encoder {
     constructor(aci) {
         this.#aci = aci
         this.#serializer = new Serializer()
+        this.#dataFactory = new DataFactory()
         this.#typeResolver = new TypeResolver(aci)
-        this.#dataFactory = new DataFactory(aci)
     }
 
     /**

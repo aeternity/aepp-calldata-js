@@ -1,12 +1,27 @@
 const assert = require('./utils/assert')
+const PrimitiveDataFactory = require('./DataFactory/PrimitiveDataFactory')
+const ListDataFactory = require('./DataFactory/ListDataFactory')
+const MapDataFactory = require('./DataFactory/MapDataFactory')
+const TupleDataFactory = require('./DataFactory/TupleDataFactory')
+const RecordDataFactory = require('./DataFactory/RecordDataFactory')
+const VariantDataFactory = require('./DataFactory/VariantDataFactory')
 
 const zip = (arr, ...arrs) => {
     return arr.map((val, i) => arrs.reduce((a, curr) => [...a, curr[i]], [val]))
 }
 
 class DataFactory {
-    constructor(aci) {
-        this.aci = aci
+    #factories
+
+    constructor() {
+        this.#factories = [
+            new PrimitiveDataFactory(this),
+            new ListDataFactory(this),
+            new MapDataFactory(this),
+            new TupleDataFactory(this),
+            new RecordDataFactory(this),
+            new VariantDataFactory(this),
+        ]
     }
 
     create(types, values) {
