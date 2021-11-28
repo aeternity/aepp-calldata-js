@@ -93,7 +93,7 @@ class Encoder {
         const binData = this.decodeString(data)
         const deserialized = this.#serializer.deserialize(type, binData)
 
-        return deserialized.valueOf()
+        return deserialized.toCanonical()
     }
 
     /* eslint-disable max-len */

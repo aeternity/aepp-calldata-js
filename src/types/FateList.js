@@ -24,6 +24,10 @@ class FateList extends FateData {
     valueOf() {
         return this.items.map(e => e.valueOf())
     }
+
+    toCanonical() {
+        return this.items.map(e => e.toCanonical())
+    }
 }
 
 module.exports = FateList

@@ -12,12 +12,12 @@ class FateAddressRaw extends FateBytes {
         return this._prefix
     }
 
-    valueOf() {
-        return this.base58Encode()
+    _base58Encode() {
+        return this.prefix + '_' + bs58check.encode(this.value)
     }
 
-    base58Encode() {
-        return this.prefix + '_' + bs58check.encode(this.value)
+    toCanonical() {
+        return this._base58Encode()
     }
 }
 

@@ -44,6 +44,15 @@ class FateMap extends FateData {
 
         return rawMap
     }
+
+    toCanonical() {
+        const rawMap = new Map()
+        this._value.forEach((v, k) => {
+            rawMap.set(k.toCanonical(), v.toCanonical())
+        })
+
+        return rawMap
+    }
 }
 
 module.exports = FateMap
