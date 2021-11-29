@@ -2,6 +2,8 @@ const base64check = require('./utils/base64check')
 const Serializer = require('./Serializer')
 const TypeResolver = require('./TypeResolver')
 const DataFactory = require('./DataFactory')
+const CanonicalMapper = require('./Mapper/CanonicalMapper')
+const InternalMapper = require('./Mapper/InternalMapper')
 const Calldata = require('./Calldata')
 const {FateTypeString} = require('./FateTypes')
 const EncoderError = require('./Errors/EncoderError')
@@ -20,6 +22,9 @@ class Encoder {
     /** @type {DataFactory} */
     #dataFactory
 
+    /** @type {CanonicalMapper} */
+    #mapper
+
     /**
      * Creates contract encoder
      *
@@ -32,8 +37,9 @@ class Encoder {
     constructor(aci) {
         this.#aci = aci
         this.#serializer = new Serializer()
-        this.#dataFactory = new DataFactory()
+        this.#dataFactory = new DataFactory(new InternalMapper())
         this.#typeResolver = new TypeResolver(aci)
+        this.#mapper = new CanonicalMapper()
     }
 
     /**
@@ -93,7 +99,7 @@ class Encoder {
         const binData = this.decodeString(data)
         const deserialized = this.#serializer.deserialize(type, binData)
 
-        return deserialized.toCanonical()
+        return deserialized.accept(this.#mapper)
     }
 
     /* eslint-disable max-len */
@@ -135,7 +141,7 @@ class Encoder {
         const binData = this.decodeString(data)
         const deserialized = this.#serializer.deserialize(FateTypeString(), binData)
 
-        return deserialized.valueOf()
+        return deserialized.accept(this.#mapper)
     }
 }
 

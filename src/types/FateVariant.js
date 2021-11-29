@@ -60,18 +60,8 @@ class FateVariant extends FateData {
         }
     }
 
-    toCanonical() {
-        if (this.variantName === 'None') {
-            return undefined
-        }
-
-        if (this.variantName === 'Some') {
-            const value = this._value.map(e => e.toCanonical())
-
-            return value[0]
-        }
-
-        return this.valueOf()
+    accept(visitor) {
+        return visitor.visitVariant(this)
     }
 }
 

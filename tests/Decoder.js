@@ -237,8 +237,8 @@ test('Decode variant arguments with non-zero arity', t => {
     )
 })
 
-test('Decode variant arguments with nested variant', t => {
-    t.plan(1)
+test('Decode variant arguments with nested variants', t => {
+    t.plan(2)
     t.deepEqual(
         encoder.decode(
             CONTRACT,
@@ -247,6 +247,26 @@ test('Decode variant arguments with nested variant', t => {
         ),
         {One: [{RelativeTTL: [7n]}]},
         'test_nested_variants(One(RelativeTTL(7)))'
+    )
+
+    t.deepEqual(
+        encoder.decode(
+            CONTRACT,
+            'test_nested_variants',
+            'cb_r4IBAQEbrwMAO58AoN5ov+GyA+UfUjUboIf3m3go5qFA8MMUpnDHADs/9XB1r4IBAQAbDi8BHXBvaW50ZXKvhAEBAQECG58AoB/A0JnsWhPLkyijF/zs2FKx90ieXgC6CVc8PC22mFVTOxp1fA=='
+        ),
+        {
+            Two: [{
+                'AENS.Name': [
+                    'ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt',
+                    {RelativeTTL: [7n]},
+                    new Map([
+                        ['pointer', {'AENS.ContractPt': ['ak_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ']}]
+                    ])
+                ]
+            }]
+        },
+        'test_nested_variants(Two(AENS.Name(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt, RelativeTTL(7), {["pointer"] = AENS.ContractPt(ak_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ)})))'
     )
 })
 

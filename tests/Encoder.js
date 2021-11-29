@@ -282,9 +282,31 @@ test('Encode variant arguments with non-zero arity', t => {
 })
 
 test('Encode variant arguments with nested variant', t => {
-    t.plan(1)
+    t.plan(2)
     const encoded1 = encoder.encode(CONTRACT, 'test_nested_variants', [{One: [{RelativeTTL: [7]}]}])
     t.is(encoded1, 'cb_KxF1qXomG6+CAQEAG6+CAQEAGw7cNGqs', 'test_nested_variants(One(RelativeTTL(7)))')
+
+    const encoded2 = encoder.encode(
+        CONTRACT,
+        'test_nested_variants',
+        [{
+            Two: [{
+                'AENS.Name': [
+                    'ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt',
+                    {RelativeTTL: [7]},
+                    new Map([
+                        ['pointer', {'AENS.ContractPt': ['ak_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ']}]
+                    ])
+                ]
+            }]
+        }]
+    )
+
+    t.is(
+        encoded2,
+        'cb_KxF1qXomG6+CAQEBG68DADufAKDeaL/hsgPlH1I1G6CH95t4KOahQPDDFKZwxwA7P/Vwda+CAQEAGw4vAR1wb2ludGVyr4QBAQEBAhufAKAfwNCZ7FoTy5Mooxf87NhSsfdInl4AuglXPDwttphVU1S4wEY=',
+        'test_nested_variants(Two(AENS.Name(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt, RelativeTTL(7), {["pointer"] = AENS.ContractPt(ak_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ)})))'
+    )
 })
 
 test('Encode variant with template arguments', t => {

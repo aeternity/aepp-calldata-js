@@ -25,8 +25,8 @@ class FateList extends FateData {
         return this.items.map(e => e.valueOf())
     }
 
-    toCanonical() {
-        return this.items.map(e => e.toCanonical())
+    accept(visitor) {
+        return visitor.visitList(this)
     }
 }
 

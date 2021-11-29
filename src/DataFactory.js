@@ -13,7 +13,10 @@ const zip = (arr, ...arrs) => {
 class DataFactory {
     #factories
 
-    constructor() {
+    #mapper
+
+    constructor(mapper) {
+        this.#mapper = mapper
         this.#factories = [
             new PrimitiveDataFactory(this),
             new ListDataFactory(this),

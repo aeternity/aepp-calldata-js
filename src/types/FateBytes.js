@@ -1,4 +1,3 @@
-const bs58check = require('bs58check')
 const FateData = require('./FateData')
 const {Int2ByteArray} = require('../utils/Int2ByteArray')
 const HexStringToByteArray = require('../utils/HexStringToByteArray')
@@ -45,10 +44,6 @@ class FateBytes extends FateData {
 
     get size() {
         return this._size
-    }
-
-    base58Encode(prefix) {
-        return prefix + '_' + bs58check.encode(this.value)
     }
 
     valueOf() {

@@ -36,22 +36,21 @@ class FateMap extends FateData {
         return this._value.size
     }
 
-    valueOf() {
-        const rawMap = new Map()
-        this._value.forEach((v, k) => {
-            rawMap.set(k.valueOf(), v.valueOf())
-        })
-
-        return rawMap
+    get iterator() {
+        return this._value[Symbol.iterator]()
     }
 
-    toCanonical() {
-        const rawMap = new Map()
-        this._value.forEach((v, k) => {
-            rawMap.set(k.toCanonical(), v.toCanonical())
-        })
+    valueOf() {
+        const map = new Map()
+        for (const [key, value] of this.iterator) {
+            map.set(key.valueOf(), value.valueOf())
+        }
 
-        return rawMap
+        return map
+    }
+
+    accept(visitor) {
+        return visitor.visitMap(this)
     }
 }
 
