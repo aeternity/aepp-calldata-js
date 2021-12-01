@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Custom errors
 - Clarify Errors backward compatibility promise in the docs
+- Add Events support and public API
 
 ### Changed
 ### Deprecated

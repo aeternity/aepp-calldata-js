@@ -444,3 +444,74 @@ test('Decode complex tuple', t => {
         'test_complex_tuple(({x = 1, y = 1}, Yep(3), [1, 2, 3], {[1] = 2, [3] = 4}, (5, 6)))'
     )
 })
+
+test('Decode events', t => {
+    t.plan(4)
+    t.deepEqual(
+        encoder.decodeEvent(
+            CONTRACT,
+            'cb_dHJpZ2dlcmVk1FYuYA==',
+            [
+                34853523142692495808479485503424878684430196596020091237715106250497712463899n,
+                17
+            ]
+        ),
+        {EventTwo: [17n, 'triggered']}
+    )
+
+    t.deepEqual(
+        encoder.decodeEvent(
+            CONTRACT,
+            'cb_dHJpZ2dlciAzIGRhdGGEhtnk',
+            [
+                31681207293023881403488055235089918158550553865217088186518345674953571854592n,
+                1337n,
+                0,
+                1
+            ]
+        ),
+        {EventThree: [1337n, false, 'trigger 3 data', 0b00000001n]}
+    )
+
+    t.deepEqual(
+        encoder.decodeEvent(
+            CONTRACT,
+            'cb_AAECAwQFBgcICQoLDA0ODwABAgMEBQYHCAkKCwwNDg8AAQIDBAUGBwgJCgsMDQ4PAAECAwQFBgcICQoLDA0ODwAx+Sc=',
+            [
+                37536694928074887618788845902443693572461880487987867102331072713458132149167n,
+                78876037347534273874947325679n,
+                1780731860627700044960722568376592179391279163832551066649583786025356815n,
+                100598528798509517526571160460879105275813542426365099212297795570240408875125n,
+            ]
+        ),
+        {
+            EventFour: [
+                HexStringToByteArray("0xfedcba9876543210deadbeef"),
+                HexStringToByteArray("0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f"),
+                HexStringToByteArray("0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f"),
+                'ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt'
+            ]
+        }
+    )
+
+    t.deepEqual(
+        encoder.decodeEvent(
+            CONTRACT,
+            'cb_dHJpZ2dlciA1IGRhdGHUCNNt',
+            [
+                3185384254601604808758985712725166327926049022179140726175527582565167826658n,
+                14362372655521436838170755271847218341882561275649283336261918563942507500883n,
+                91795063255705172344756673568691065400082428174303230431501479273130556001865n,
+                107252750761032185514125154622280566678392879123784198680081054042150971839304n,
+            ]
+        ),
+        {
+            EventFive: [
+                "trigger 5 data",
+                'ct_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ',
+                'ok_2YNyxd6TRJPNrTcEDCe9ra59SVUdp9FR9qWC5msKZWYD9bP9z5',
+                'oq_2oRvyowJuJnEkxy58Ckkw77XfWJrmRgmGaLzhdqb67SKEL1gPY'
+            ]
+        }
+    )
+})

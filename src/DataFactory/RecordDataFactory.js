@@ -9,7 +9,7 @@ class RecordDataFactory extends BaseDataFactory {
     create(type, value) {
         const resolvedValue = type.valueTypes.map((t, i) => {
             const key = type.keys[i]
-            return this.valueFactory.createData(t, value[key])
+            return this.valueFactory.create(t, value[key])
         })
 
         return new FateTuple(type.valueTypes, resolvedValue)

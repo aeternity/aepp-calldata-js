@@ -71,6 +71,27 @@ Error: Type error on call: [{bytes,<<240,2,...>>}] is not of type [{bytes,32}]
 Revert: require failed
 ```
 
+## Events
+
+Example:
+```javascript
+const {Encoder} = require('@aeternity/aepp-calldata')
+const ACI = require('./Test.json')
+
+const encoder = new Encoder(ACI)
+
+ const data = encoder.decodeEvent('Test', 'cb_dHJpZ2dlcmVk1FYuYA==', [
+     34853523142692495808479485503424878684430196596020091237715106250497712463899n,
+     17
+ ])
+console.log(data)
+```
+
+Expected output:
+```
+{EventTwo: [17n, 'triggered']}
+```
+
 ## Data types
 
 Using the library involves data types and their mappings from Sophia to JavaScript and vice versa.
@@ -108,6 +129,7 @@ The public API namely consist of:
 
 - `encode(contractName: string, functionName: string, arguments: Array<Data>): string`
 - `decode(contractName: string, functionName: string, encodedData: string): Data`
+- `decodeEvent(contractName: string, data: string, topics: Array<BigInt>): string`
 - `decodeString(data: string): Buffer`
 - `decodeFateString(data: string): string`
 
