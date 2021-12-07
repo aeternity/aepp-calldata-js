@@ -1,8 +1,9 @@
 const RLP = require('rlp')
 const FateTag = require('../FateTag')
-const FateOracleQueryAddressRaw = require('../types/FateOracleQueryAddressRaw')
+const BaseSerializer = require('./BaseSerializer')
+const FateOracleQueryAddress = require('../types/FateOracleQueryAddress')
 
-class OracleQuerySerializer {
+class OracleQuerySerializer extends BaseSerializer {
     serialize(data) {
         return [
             FateTag.OBJECT,
@@ -11,18 +12,12 @@ class OracleQuerySerializer {
         ]
     }
 
-    deserialize(data) {
-        const [value, _rest] = this.deserializeStream(data)
-
-        return value
-    }
-
     deserializeStream(data) {
         const buffer = new Uint8Array(data)
         const decoded = RLP.decode(buffer.slice(2), true)
 
         return [
-            new FateOracleQueryAddressRaw(decoded.data),
+            new FateOracleQueryAddress(decoded.data),
             new Uint8Array(decoded.remainder)
         ]
     }

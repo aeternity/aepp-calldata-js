@@ -70,7 +70,7 @@ test('Serialize', t => {
 })
 
 test('Deserialize', t => {
-    t.plan(3)
+    t.plan(4)
     t.deepEqual(
         s.deserialize([47,0]),
         new FateMap(),
@@ -105,4 +105,6 @@ test('Deserialize', t => {
         ),
         'nested map'
     )
+
+    t.throws(() => s.deserialize([0b01010101]), { name: 'FatePrefixError' })
 })

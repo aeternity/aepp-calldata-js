@@ -1,12 +1,9 @@
 const FateTag = require('../FateTag')
 const FateInt = require('../types/FateInt')
 const FateList = require('../types/FateList')
+const BaseSerializer = require('./BaseSerializer')
 
-class ListSerializer {
-    constructor(globalSerializer) {
-        this.globalSerializer = globalSerializer
-    }
-
+class ListSerializer extends BaseSerializer {
     serialize(list) {
         const serializedElements = list.items.map(e => {
             return this.globalSerializer.serialize(e)
@@ -28,12 +25,6 @@ class ListSerializer {
             ...this.globalSerializer.serialize(new FateInt(len - 16)),
             ...serializedElements
         ]
-    }
-
-    deserialize(data, typeInfo) {
-        const [value, _rest] = this.deserializeStream(data, typeInfo)
-
-        return value
     }
 
     deserializeStream(data, typeInfo) {

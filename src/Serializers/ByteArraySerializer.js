@@ -1,10 +1,11 @@
 const FateTag = require('../FateTag')
+const BaseSerializer = require('./BaseSerializer')
 const FateByteArray = require('../types/FateByteArray')
 const IntSerializer = require('./IntSerializer')
 
 const intSerializer = new IntSerializer()
 
-class ByteArraySerializer {
+class ByteArraySerializer extends BaseSerializer {
     serialize(data) {
         if (data.length === 0) {
             return [FateTag.EMPTY_STRING]
@@ -24,12 +25,6 @@ class ByteArraySerializer {
             ...intSerializer.serialize(data.length - 64),
             ...data.valueOf()
         ]
-    }
-
-    deserialize(data) {
-        const [value, _rest] = this.deserializeStream(data)
-
-        return value
     }
 
     deserializeStream(stream) {

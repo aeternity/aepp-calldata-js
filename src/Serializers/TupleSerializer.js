@@ -1,12 +1,9 @@
 const FateTag = require('../FateTag')
 const FateInt = require('../types/FateInt')
 const FateTuple = require('../types/FateTuple')
+const BaseSerializer = require('./BaseSerializer')
 
-class TupleSerializer {
-    constructor(globalSerializer) {
-        this.globalSerializer = globalSerializer
-    }
-
+class TupleSerializer extends BaseSerializer {
     serialize(tuple) {
         const len = tuple.size
         if (len === 0) {
@@ -31,12 +28,6 @@ class TupleSerializer {
             ...this.globalSerializer.serialize(new FateInt(len - 16)),
             ...elements
         ]
-    }
-
-    deserialize(data, typeInfo) {
-        const [value, _rest] = this.deserializeStream(data, typeInfo)
-
-        return value
     }
 
     deserializeStream(data, typeInfo) {

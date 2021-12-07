@@ -2,8 +2,12 @@ const base64check = require('./utils/base64check')
 const Serializer = require('./Serializer')
 const TypeResolver = require('./TypeResolver')
 const DataFactory = require('./DataFactory')
+const CanonicalMapper = require('./Mapper/CanonicalMapper')
+const InternalMapper = require('./Mapper/InternalMapper')
 const Calldata = require('./Calldata')
 const {FateTypeString} = require('./FateTypes')
+const EncoderError = require('./Errors/EncoderError')
+const FormatError = require('./Errors/FormatError')
 
 class Encoder {
     /** @type {Object} */
@@ -18,6 +22,9 @@ class Encoder {
     /** @type {DataFactory} */
     #dataFactory
 
+    /** @type {CanonicalMapper} */
+    #mapper
+
     /**
      * Creates contract encoder
      *
@@ -30,8 +37,9 @@ class Encoder {
     constructor(aci) {
         this.#aci = aci
         this.#serializer = new Serializer()
+        this.#dataFactory = new DataFactory(new InternalMapper())
         this.#typeResolver = new TypeResolver(aci)
-        this.#dataFactory = new DataFactory(aci)
+        this.#mapper = new CanonicalMapper()
     }
 
     /**
@@ -49,9 +57,22 @@ class Encoder {
      * @returns {string} Encoded calldata
     */
     encode(contract, funName, args) {
-        const argTypes = this.#typeResolver.getCallTypes(contract, funName)
-        const argsData = this.#dataFactory.create(argTypes, args)
-        const calldata = Calldata(funName, argTypes, argsData)
+        const {types, required} = this.#typeResolver.getCallTypes(contract, funName)
+
+        if (args.length > types.length || args.length < required) {
+            throw new EncoderError(
+                'Non matching number of arguments. '
+                + `${funName} expects between ${required} and ${types.length} number of arguments but got ${args.length}`
+            )
+        }
+
+        // fill in the options arguments
+        while (args.length < types.length) {
+            args.push(undefined)
+        }
+
+        const argsData = this.#dataFactory.create(types, args)
+        const calldata = Calldata(funName, types, argsData)
         const serialized = this.#serializer.serialize(calldata)
         const data = new Uint8Array(serialized.flat(Infinity))
 
@@ -78,7 +99,7 @@ class Encoder {
         const binData = this.decodeString(data)
         const deserialized = this.#serializer.deserialize(type, binData)
 
-        return deserialized.valueOf()
+        return deserialized.accept(this.#mapper)
     }
 
     /* eslint-disable max-len */
@@ -97,7 +118,7 @@ class Encoder {
     */
     decodeString(data) {
         if (!data.startsWith('cb_')) {
-            throw new Error('Invalid data format (missing cb_ prefix)')
+            throw new FormatError('Invalid data format (missing cb_ prefix)')
         }
 
         return base64check.decode(data.substring(3))
@@ -120,7 +141,7 @@ class Encoder {
         const binData = this.decodeString(data)
         const deserialized = this.#serializer.deserialize(FateTypeString(), binData)
 
-        return deserialized.valueOf()
+        return deserialized.accept(this.#mapper)
     }
 }
 

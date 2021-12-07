@@ -36,6 +36,7 @@
         "no-prototype-builtins": "off",
         "import/order": "off",
         "no-plusplus": "off",
-        "no-unused-vars": ["error", { "varsIgnorePattern": "^_.*$" }]
+        "yoda": "off",
+        "no-unused-vars": ["error", { "varsIgnorePattern": "^_.*$", "argsIgnorePattern": "^_.*$" }]
     }
 }

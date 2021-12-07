@@ -1,3 +1,4 @@
+const assert = require('./utils/assert')
 const FateList = require('./types/FateList')
 const FateTuple = require('./types/FateTuple')
 const {FateTypeTuple, FateTypeInt} = require('./FateTypes')
@@ -173,16 +174,10 @@ const comparators = {
 }
 
 const FateComparator = (type) => {
-    if (!type.hasOwnProperty('name')) {
-        throw new Error(`Cannot determine type name of ${JSON.stringify(type)}`)
-    }
+    assert(type.hasOwnProperty('name'), `Cannot determine type name of ${JSON.stringify(type)}`)
+    assert(comparators.hasOwnProperty(type.name), `Unsupported comparator for ${type.name}`)
 
-    const typeName = type.name
-    if (!comparators.hasOwnProperty(typeName)) {
-        throw new Error(`Unsupported comparator for ${typeName}`)
-    }
-
-    return comparators[typeName]
+    return comparators[type.name]
 }
 
 module.exports = FateComparator

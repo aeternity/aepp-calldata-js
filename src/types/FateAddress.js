@@ -1,16 +1,18 @@
-const FateAddressRaw = require('./FateAddressRaw')
-const bs58check = require('bs58check')
+const FateBytes = require('./FateBytes')
 
-class FateAddress extends FateAddressRaw {
+class FateAddress extends FateBytes {
     constructor(value, name, prefix) {
-        const asString = value.toString()
-        if (!asString.startsWith(prefix + '_')) {
-            throw new Error(`Address should start with ${prefix}_, got ${asString} instead`)
-        }
+        super(value, 32, name)
 
-        const asBytes = bs58check.decode(asString.substring(prefix.length + 1))
+        this._prefix = prefix
+    }
 
-        super(asBytes, name, prefix)
+    get prefix() {
+        return this._prefix
+    }
+
+    accept(visitor) {
+        return visitor.visitAddress(this)
     }
 }
 

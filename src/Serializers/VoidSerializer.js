@@ -1,6 +1,7 @@
 const FateVoid = require('../types/FateVoid')
+const BaseSerializer = require('./BaseSerializer')
 
-class VoidSerializer {
+class VoidSerializer extends BaseSerializer {
     serialize() {
         return ''
     }

@@ -24,6 +24,10 @@ class FateList extends FateData {
     valueOf() {
         return this.items.map(e => e.valueOf())
     }
+
+    accept(visitor) {
+        return visitor.visitList(this)
+    }
 }
 
 module.exports = FateList

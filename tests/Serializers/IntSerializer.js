@@ -50,7 +50,7 @@ test('Deserialize Stream', t => {
 })
 
 test('Deserialize', t => {
-    t.plan(12)
+    t.plan(13)
     t.deepEqual(s.deserialize([0]), new FateInt(0))
     t.deepEqual(s.deserialize([2]), new FateInt(1))
     t.deepEqual(s.deserialize([130]), new FateInt(-1))
@@ -66,4 +66,6 @@ test('Deserialize', t => {
         s.deserialize([111,136,254,220,186,152,118,84,49,208]),
         new FateInt("0xfedcba9876543210")
     )
+
+    t.throws(() => s.deserialize([0b01010101]), { name: 'FatePrefixError' })
 })

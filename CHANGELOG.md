@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 ### Fixed
 ### Added
+- Custom errors
+- Clarify Errors backward compatibility promise in the docs
+
 ### Changed
 ### Deprecated
 ### Removed

@@ -6,12 +6,17 @@ const CONTRACT = 'Test'
 const encoder = new Encoder(aci)
 
 test('Decode FATE errors', t => {
-    t.plan(2)
+    t.plan(3)
     // error message is just string, no FATE encoding
     const error = encoder.decodeString(
         'cb_VHlwZSBlcnJvciBvbiBjYWxsOiBbe2J5dGVzLDw8MjQwLDIsLi4uPj59XSBpcyBub3Qgb2YgdHlwZSBbe2J5dGVzLDMyfV3EtJjU'
     )
     t.is(error.toString(), 'Type error on call: [{bytes,<<240,2,...>>}] is not of type [{bytes,32}]')
+
+    t.throws(
+        () => encoder.decodeString('err_abc'),
+        { name: 'FormatError' }
+    )
 
     // revert messages are FATE string encoded
     const revert = encoder.decodeFateString('cb_OXJlcXVpcmUgZmFpbGVkarP9mg==')
@@ -28,6 +33,20 @@ test('Encode empty arguments', t => {
     t.plan(1)
     const encoded = encoder.encode(CONTRACT, 'test_empty', [])
     t.is(encoded, 'cb_KxFLLL5rP7TGyoM=', 'test_empty()')
+})
+
+test('Number of arguments validation', t => {
+    t.plan(2)
+
+    t.throws(
+        () => encoder.encode(CONTRACT, 'test_bool', [true]),
+        { name: 'EncoderError' }
+    )
+
+    t.throws(
+        () => encoder.encode(CONTRACT, 'test_bool', [true, true, false]),
+        { name: 'EncoderError' }
+    )
 })
 
 test('Encode boolean arguments', t => {
@@ -231,6 +250,25 @@ test('Encode nested tuple arguments', t => {
     t.is(encoded, 'cb_KxHkKCkeGysr/38rf/+ZQRDt', 'test_nested_tuple(((true, false), (false, true)))')
 })
 
+test('Variant validation', t => {
+    const invalidData = [
+        0xdead,
+        null,
+        {One: [], Two: []},
+        {Fail: 'me'},
+        {Yep: [1,2,3]}
+    ]
+
+    t.plan(invalidData.length)
+
+    invalidData.forEach(arg => {
+        t.throws(
+            () => encoder.encode(CONTRACT, 'test_variants', [arg]),
+            { name: 'FateTypeError' }
+        )
+    })
+})
+
 test('Encode simple variant arguments', t => {
     t.plan(1)
     const encoded1 = encoder.encode(CONTRACT, 'test_variants', [{No: []}])
@@ -244,9 +282,31 @@ test('Encode variant arguments with non-zero arity', t => {
 })
 
 test('Encode variant arguments with nested variant', t => {
-    t.plan(1)
+    t.plan(2)
     const encoded1 = encoder.encode(CONTRACT, 'test_nested_variants', [{One: [{RelativeTTL: [7]}]}])
     t.is(encoded1, 'cb_KxF1qXomG6+CAQEAG6+CAQEAGw7cNGqs', 'test_nested_variants(One(RelativeTTL(7)))')
+
+    const encoded2 = encoder.encode(
+        CONTRACT,
+        'test_nested_variants',
+        [{
+            Two: [{
+                'AENS.Name': [
+                    'ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt',
+                    {RelativeTTL: [7]},
+                    new Map([
+                        ['pointer', {'AENS.ContractPt': ['ak_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ']}]
+                    ])
+                ]
+            }]
+        }]
+    )
+
+    t.is(
+        encoded2,
+        'cb_KxF1qXomG6+CAQEBG68DADufAKDeaL/hsgPlH1I1G6CH95t4KOahQPDDFKZwxwA7P/Vwda+CAQEAGw4vAR1wb2ludGVyr4QBAQEBAhufAKAfwNCZ7FoTy5Mooxf87NhSsfdInl4AuglXPDwttphVU1S4wEY=',
+        'test_nested_variants(Two(AENS.Name(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt, RelativeTTL(7), {["pointer"] = AENS.ContractPt(ak_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ)})))'
+    )
 })
 
 test('Encode variant with template arguments', t => {
@@ -276,7 +336,7 @@ test('Encode fancy map', t => {
         new Map([[undefined, 1]]),
         new Map([[0, 2]])
     ])
-    t.is(encodedMap2, encodedMap1, 'test_fancy_map({[None()] = 1}, {[Some(0)] = 2})')
+    t.is(encodedMap2, 'cb_KxETMqtuKy8Br4IAAQA/Ai8Br4IAAQEbAASjVMXT', 'test_fancy_map({[None()] = 1}, {[Some(0)] = 2})')
 })
 
 test('Encode template type', t => {
@@ -330,13 +390,10 @@ test('Encode namespaced arguments', t => {
     t.is(encoded1, 'cb_KxGExpeGG2+CAVT2R/aU', 'test_lib_type(404)')
 })
 
-test('Encode optional arguments', t => {
+test.only('Encode optional arguments', t => {
     t.plan(6)
     const encoded1 = encoder.encode(CONTRACT, 'test_optional', [{None: []}])
     t.is(encoded1, 'cb_KxG0+HBxG6+CAAEAP4sG0gs=', 'test_optional(None)')
-
-    const encoded2 = encoder.encode(CONTRACT, 'test_optional', [{Some: [404]}])
-    t.is(encoded2, 'cb_KxG0+HBxG6+CAAEBG2+CAVSsnrJE', 'test_optional(Some(404))')
 
     const encodedUndefined = encoder.encode(CONTRACT, 'test_optional', [undefined])
     t.is(encodedUndefined, 'cb_KxG0+HBxG6+CAAEAP4sG0gs=', 'test_optional(None)')
@@ -346,6 +403,9 @@ test('Encode optional arguments', t => {
 
     const encodedEmpty = encoder.encode(CONTRACT, 'test_optional', [])
     t.is(encodedEmpty, 'cb_KxG0+HBxG6+CAAEAP4sG0gs=', 'test_optional(None)')
+
+    const encoded2 = encoder.encode(CONTRACT, 'test_optional', [{Some: [404]}])
+    t.is(encoded2, 'cb_KxG0+HBxG6+CAAEBG2+CAVSsnrJE', 'test_optional(Some(404))')
 
     const encoded = encoder.encode(CONTRACT, 'test_optional', [404])
     t.is(encoded, 'cb_KxG0+HBxG6+CAAEBG2+CAVSsnrJE', 'test_optional(Some(404))')

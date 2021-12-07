@@ -113,6 +113,12 @@ The public API namely consist of:
 
 where `Data: Boolean | BigInt | String | Array | Map | Object`
 
+### Errors
+
+Error names are also part of the public API and it is guaranteed to get the same error name between compatible versions.
+Since error classes are not exported as public API, the library users should rely **only** on `Error.name` property to handle exceptions.
+Please also note that **error messages are NOT part of the public API** and they may change any time between versions without notice.
+
 ## Development
 
 Please make sure you get familiar with [Contributing Guidelines](CONTRIBUTING.md) first.

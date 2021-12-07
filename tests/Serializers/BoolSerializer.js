@@ -19,7 +19,7 @@ test('Serialize', t => {
 })
 
 test('Deserialize', t => {
-    t.plan(4)
+    t.plan(5)
     const T = new FateBool(true)
     const F = new FateBool(false)
 
@@ -28,4 +28,6 @@ test('Deserialize', t => {
 
     t.deepEqual(s.deserialize(new Uint8Array([255])), T)
     t.deepEqual(s.deserialize(new Uint8Array([127])), F)
+
+    t.throws(() => s.deserialize([0b01010101]), { name: 'FatePrefixError' })
 })

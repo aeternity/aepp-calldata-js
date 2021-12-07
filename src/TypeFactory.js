@@ -1,3 +1,6 @@
+const assert = require('./utils/assert')
+const FateTag = require('./FateTag')
+const FatePrefixError = require('./Errors/FatePrefixError')
 const {
     FateTypeInt,
     FateTypeBool,
@@ -13,7 +16,14 @@ const {
     FateTypeTuple,
     FateTypeVariant,
 } = require('./FateTypes')
-const FateTag = require('./FateTag')
+
+const OBJECT_TYPES = {
+    0: FateTypeAccountAddress(),
+    1: FateTypeBytes(),
+    2: FateTypeContractAddress(),
+    3: FateTypeOracleAddress(),
+    4: FateTypeOracleQueryAddress(),
+}
 
 class TypeFactory {
     createType(data) {
@@ -61,24 +71,12 @@ class TypeFactory {
 
         if (tag === FateTag.OBJECT) {
             const obj = data[1]
+            assert(OBJECT_TYPES.hasOwnProperty(obj), `Unsupported object type "${obj}"`)
 
-            switch (obj) {
-            case 0:
-                return FateTypeAccountAddress()
-            case 1:
-                return FateTypeBytes()
-            case 2:
-                return FateTypeContractAddress()
-            case 3:
-                return FateTypeOracleAddress()
-            case 4:
-                return FateTypeOracleQueryAddress()
-            default:
-                throw new Error('Unsupported object type: ' + obj)
-            }
+            return OBJECT_TYPES[obj]
         }
 
-        throw new Error('Unknown tag: 0b' + tag.toString(2))
+        throw new FatePrefixError(tag)
     }
 }
 

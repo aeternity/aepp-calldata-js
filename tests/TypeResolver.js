@@ -31,7 +31,7 @@ test('Get implicit empty init argument types', t => {
     t.plan(1)
     t.deepEqual(
         resolver.getCallTypes(CONTRACT, 'init'),
-        []
+        {types: [], required: 0}
     )
 })
 
@@ -39,7 +39,10 @@ test('Get function argument types', t => {
     t.plan(1)
     t.deepEqual(
         resolver.getCallTypes(CONTRACT, 'test_bool'),
-        [FateTypeBool(), FateTypeBool()]
+        {
+            types: [FateTypeBool(), FateTypeBool()],
+            required: 2
+        }
     )
 })
 

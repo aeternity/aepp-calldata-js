@@ -36,13 +36,21 @@ class FateTuple extends FateData {
     }
 
     valueOf() {
-        const items = this._items.map(e => e.valueOf())
+        return this.prepareItems(e => e.valueOf())
+    }
+
+    prepareItems(callback) {
+        const items = this._items.map(callback)
 
         if (this._type.name === 'record') {
             return zipObject(this._type.keys, items)
         }
 
         return items
+    }
+
+    accept(visitor) {
+        return visitor.visitTuple(this)
     }
 }
 
