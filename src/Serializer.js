@@ -20,13 +20,11 @@ const VariantSerializer = require('./Serializers/VariantSerializer')
 const SerializerError = require('./Errors/SerializerError')
 
 class Serializer extends BaseSerializer {
-    #serializers
-
     constructor() {
         super()
 
         this.typeFactory = new TypeFactory()
-        this.#serializers = {
+        this._serializers = {
             'void': new VoidSerializer(),
             'bool': new BoolSerializer(),
             'int': new IntSerializer(),
@@ -49,17 +47,17 @@ class Serializer extends BaseSerializer {
         }
     }
 
-    #getSerializer(type) {
+    _getSerializer(type) {
         if (!type.hasOwnProperty('name')) {
             throw new SerializerError('Unsupported type: ' + JSON.stringify(type))
         }
 
         const typeName = type.name
-        if (!this.#serializers.hasOwnProperty(typeName)) {
+        if (!this._serializers.hasOwnProperty(typeName)) {
             throw new SerializerError('Unsupported type: ' + JSON.stringify(typeName))
         }
 
-        return this.#serializers[typeName]
+        return this._serializers[typeName]
     }
 
     serialize(data) {
@@ -71,7 +69,7 @@ class Serializer extends BaseSerializer {
             throw new SerializerError('Only instances of FateData is supported.')
         }
 
-        return this.#getSerializer(data).serialize(data)
+        return this._getSerializer(data).serialize(data)
     }
 
     deserialize(type, data) {
@@ -79,7 +77,7 @@ class Serializer extends BaseSerializer {
             throw new SerializerError('Only instances of Uint8Array is supported.')
         }
 
-        return this.#getSerializer(type).deserialize(data, type)
+        return this._getSerializer(type).deserialize(data, type)
     }
 
     deserializeStream(data, typeInfo) {
@@ -92,7 +90,7 @@ class Serializer extends BaseSerializer {
             type = this.typeFactory.createType(data)
         }
 
-        return this.#getSerializer(type).deserializeStream(data, typeInfo)
+        return this._getSerializer(type).deserializeStream(data, typeInfo)
     }
 }
 

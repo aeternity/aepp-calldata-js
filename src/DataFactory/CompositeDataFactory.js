@@ -12,11 +12,9 @@ const zip = (arr, ...arrs) => {
 }
 
 class CompositeDataFactory {
-    #factories
-
     constructor() {
         const variantFactory = new VariantDataFactory(this)
-        this.#factories = [
+        this._factories = [
             new PrimitiveDataFactory(this),
             new ListDataFactory(this),
             new MapDataFactory(this),
@@ -37,7 +35,7 @@ class CompositeDataFactory {
     }
 
     create(type, value) {
-        const factory = this.#factories.find(f => f.supports(type))
+        const factory = this._factories.find(f => f.supports(type))
         assert(factory, `Unsupported type: ${JSON.stringify(type)}`)
 
         return factory.create(type, value)

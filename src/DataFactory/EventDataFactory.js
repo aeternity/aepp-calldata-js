@@ -10,12 +10,10 @@ const DATA_TYPES = [
 ]
 
 class EventDataFactory extends BaseDataFactory {
-    #variantFactory
-
     constructor(valueFactory, variantFactory) {
         super(valueFactory)
 
-        this.#variantFactory = variantFactory
+        this._variantFactory = variantFactory
     }
 
     supports({ name, _valueTypes }) {
@@ -41,17 +39,17 @@ class EventDataFactory extends BaseDataFactory {
         const variantName = Object.keys(variant)[0]
         const [argTypes] = Object.values(variant)
         const resolvedArgs = argTypes.map(t => {
-            if (this.#isData(t)) {
+            if (this._isData(t)) {
                 return data
             }
 
             return args.shift()
         })
 
-        return this.#variantFactory.create(variantType, {[variantName]: resolvedArgs})
+        return this._variantFactory.create(variantType, {[variantName]: resolvedArgs})
     }
 
-    #isData(type) {
+    _isData(type) {
         if (!DATA_TYPES.includes(type.name)) {
             return false
         }
