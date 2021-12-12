@@ -1,15 +1,6 @@
-const blake = require('blakejs')
 const FateByteArray = require('./types/FateByteArray')
 const FateTuple = require('./types/FateTuple')
-
-const HASH_BYTES = 32
-
-const symbolIdentifier = (funName) => {
-    // First 4 bytes of 32 bytes blake hash
-    const hash = Array.from(blake.blake2b(funName, null, HASH_BYTES))
-
-    return hash.slice(0, 4)
-}
+const {symbolIdentifier} = require('./utils/hash')
 
 const Calldata = (funName, argTypes, argsData) => {
     const functionId = symbolIdentifier(funName)

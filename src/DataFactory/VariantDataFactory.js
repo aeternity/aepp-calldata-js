@@ -50,7 +50,7 @@ class VariantDataFactory extends BaseDataFactory {
             )
         }
 
-        const variantValue = this.valueFactory.create(variantTypes, variantArgs)
+        const variantValue = this.valueFactory.createMultiple(variantTypes, variantArgs)
 
         return new FateVariant(arities, tag, variantValue, variantTypes, type.variants)
     }

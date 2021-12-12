@@ -1,7 +1,8 @@
 const base64check = require('./utils/base64check')
 const Serializer = require('./Serializer')
 const TypeResolver = require('./TypeResolver')
-const DataFactory = require('./DataFactory')
+const CompositeDataFactory = require('./DataFactory/CompositeDataFactory')
+const ExternalDataFactory = require('./ExternalDataFactory')
 const CanonicalMapper = require('./Mapper/CanonicalMapper')
 const InternalMapper = require('./Mapper/InternalMapper')
 const Calldata = require('./Calldata')
@@ -19,11 +20,17 @@ class Encoder {
     /** @type {TypeResolver} */
     #typeResolver
 
-    /** @type {DataFactory} */
+    /** @type {CompositeDataFactory} */
     #dataFactory
 
+    /** @type {ExternalDataFactory} */
+    #externalDataFactory
+
+    /** @type {InternalMapper} */
+    #internalMapper
+
     /** @type {CanonicalMapper} */
-    #mapper
+    #canonicalMapper
 
     /**
      * Creates contract encoder
@@ -37,9 +44,11 @@ class Encoder {
     constructor(aci) {
         this.#aci = aci
         this.#serializer = new Serializer()
-        this.#dataFactory = new DataFactory(new InternalMapper())
+        this.#dataFactory = new CompositeDataFactory()
+        this.#externalDataFactory = new ExternalDataFactory(new InternalMapper())
         this.#typeResolver = new TypeResolver(aci)
-        this.#mapper = new CanonicalMapper()
+        this.#internalMapper = new InternalMapper()
+        this.#canonicalMapper = new CanonicalMapper()
     }
 
     /**
@@ -71,7 +80,7 @@ class Encoder {
             args.push(undefined)
         }
 
-        const argsData = this.#dataFactory.create(types, args)
+        const argsData = this.#externalDataFactory.createMultiple(types, args)
         const calldata = Calldata(funName, types, argsData)
         const serialized = this.#serializer.serialize(calldata)
         const data = new Uint8Array(serialized.flat(Infinity))
@@ -99,7 +108,7 @@ class Encoder {
         const binData = this.decodeString(data)
         const deserialized = this.#serializer.deserialize(type, binData)
 
-        return deserialized.accept(this.#mapper)
+        return deserialized.accept(this.#canonicalMapper)
     }
 
     /* eslint-disable max-len */
@@ -141,7 +150,33 @@ class Encoder {
         const binData = this.decodeString(data)
         const deserialized = this.#serializer.deserialize(FateTypeString(), binData)
 
-        return deserialized.accept(this.#mapper)
+        return deserialized.accept(this.#canonicalMapper)
+    }
+
+    /**
+     * Decodes contract event
+     *
+     * @example
+     * const data = encoder.decodeEvent('Test', 'cb_dHJpZ2dlcmVk1FYuYA==', [
+     *     34853523142692495808479485503424878684430196596020091237715106250497712463899n,
+     *     17
+     * ])
+     * console.log(data)
+     * // Outputs:
+     * // {EventTwo: [17n, 'triggered']}
+     *
+     * @param {string} contarct - The contarct name as defined in the ACI.
+     * @param {string} encodedData - Event encoded data
+     * @param {Array} topics - A list of event topics.
+     * First element should be the implicit topic that carry the event constructor name.
+     */
+    decodeEvent(contract, encodedData, topics) {
+        const data = this.decodeString(encodedData)
+        const type = this.#typeResolver.getEventType(contract)
+        const event = {topics, data}
+        const variant = this.#dataFactory.create(type, event)
+
+        return variant.accept(this.#canonicalMapper)
     }
 }
 

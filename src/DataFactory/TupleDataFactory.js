@@ -16,7 +16,7 @@ class TupleDataFactory extends BaseDataFactory {
         }
 
         const resolvedValue = type.valueTypes.map((t, i) => {
-            return this.valueFactory.createData(t, value[i])
+            return this.valueFactory.create(t, value[i])
         })
 
         return new FateTuple(type.valueTypes, resolvedValue)

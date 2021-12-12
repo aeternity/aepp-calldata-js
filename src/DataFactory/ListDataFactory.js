@@ -15,7 +15,7 @@ class ListDataFactory extends BaseDataFactory {
             )
         }
 
-        const resolvedValues = value.map(v => this.valueFactory.createData(type.valuesType, v))
+        const resolvedValues = value.map(v => this.valueFactory.create(type.valuesType, v))
 
         return new FateList(type.valuesType, resolvedValues)
     }

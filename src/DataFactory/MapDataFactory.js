@@ -10,8 +10,8 @@ class MapDataFactory extends BaseDataFactory {
         const resolvedValues = []
         for (const item of value) {
             resolvedValues.push([
-                this.valueFactory.createData(type.keyType, item[0]),
-                this.valueFactory.createData(type.valueType, item[1]),
+                this.valueFactory.create(type.keyType, item[0]),
+                this.valueFactory.create(type.valueType, item[1]),
             ])
         }
 

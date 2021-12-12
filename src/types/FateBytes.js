@@ -3,7 +3,7 @@ const {Int2ByteArray} = require('../utils/Int2ByteArray')
 const HexStringToByteArray = require('../utils/HexStringToByteArray')
 const FateTypeError = require('../Errors/FateTypeError')
 
-const toByteArray = (value) => {
+const toByteArray = (value, size = 0) => {
     if (Array.isArray(value) || ArrayBuffer.isView(value)) {
         return new Uint8Array(value)
     }
@@ -19,14 +19,23 @@ const toByteArray = (value) => {
         )
     }
 
-    return Int2ByteArray(value)
+    const bytes = Int2ByteArray(value)
+    if (bytes.length >= size) {
+        return bytes
+    }
+
+    // pad the byte array with 0 significant bytes, because int representation lost
+    const fixedSize = new Uint8Array(size)
+    fixedSize.set(bytes, size - bytes.length)
+
+    return fixedSize
 }
 
 class FateBytes extends FateData {
     constructor(value, size, name = 'bytes') {
         super(name)
 
-        this._value = toByteArray(value)
+        this._value = toByteArray(value, size)
 
         if (size && this._value.byteLength !== size) {
             throw new FateTypeError(

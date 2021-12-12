@@ -25,6 +25,13 @@ main contract Test =
     datatype really_t = Nope | No | Yep(int) | Yes
     datatype nested_t = One(Chain.ttl) | Two(AENS.name)
     datatype amount_t('a, 'b) = Zero | Any('a, 'b, int, 'a)
+    datatype event
+        = EventZero
+        | EventOne(int)
+        | EventTwo(int, string)
+        | EventThree(int, bool, string, bits)
+        | EventFour(bytes(12), signature, hash, address)
+        | EventFive(string, RemoteTest, oracle_id, query_id)
 
     entrypoint test_empty() = 1
     entrypoint test_bool(a:bool, b:bool) = a
@@ -69,3 +76,16 @@ main contract Test =
     entrypoint test_primitives_tuple(a: int * bool * string * bits * bytes(2) * hash * signature) = a
     entrypoint test_addresses_tuple(a: address * RemoteTest * oracle_id * query_id) = a
     entrypoint test_complex_tuple(a: point * really_t * list(int) * map(int, int) * (int * int)) = a
+    entrypoint test_events() =
+        Chain.event(EventTwo(17, "triggered"))
+        Chain.event(EventThree(1337, false, "trigger 3 data", Bits.set(Bits.none, 0)))
+        Chain.event(EventFour(
+            #fedcba9876543210deadbeef,
+            #000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f,
+            #000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f,
+            ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt))
+        Chain.event(EventFive(
+            "trigger 5 data",
+            ct_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ,
+            ok_2YNyxd6TRJPNrTcEDCe9ra59SVUdp9FR9qWC5msKZWYD9bP9z5,
+            oq_2oRvyowJuJnEkxy58Ckkw77XfWJrmRgmGaLzhdqb67SKEL1gPY))

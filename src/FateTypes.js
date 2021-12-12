@@ -184,6 +184,13 @@ const FateTypeAENSName = () => {
     return FateTypeVariant(0, null, variants)
 }
 
+const FateTypeEvent = (variantType) => {
+    return {
+        name: 'event',
+        variantType,
+    }
+}
+
 module.exports = {
     FateTypeVoid,
     FateTypeInt,
@@ -210,4 +217,5 @@ module.exports = {
     FateTypeChainBaseTx,
     FateTypeAENSPointee,
     FateTypeAENSName,
+    FateTypeEvent,
 }
