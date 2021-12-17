@@ -1,12 +1,10 @@
 class BaseDataFactory {
-    #valueFactory
-
     constructor(valueFactory) {
-        this.#valueFactory = valueFactory
+        this._valueFactory = valueFactory
     }
 
     get valueFactory() {
-        return this.#valueFactory
+        return this._valueFactory
     }
 
     supports({_name, _valueTypes}) {

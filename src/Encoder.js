@@ -11,27 +11,6 @@ const EncoderError = require('./Errors/EncoderError')
 const FormatError = require('./Errors/FormatError')
 
 class Encoder {
-    /** @type {Object} */
-    #aci
-
-    /** @type {Serializer} */
-    #serializer
-
-    /** @type {TypeResolver} */
-    #typeResolver
-
-    /** @type {CompositeDataFactory} */
-    #dataFactory
-
-    /** @type {ExternalDataFactory} */
-    #externalDataFactory
-
-    /** @type {InternalMapper} */
-    #internalMapper
-
-    /** @type {CanonicalMapper} */
-    #canonicalMapper
-
     /**
      * Creates contract encoder
      *
@@ -42,13 +21,26 @@ class Encoder {
      * @param {Object} aci - The contarct ACI in a cannonical form as POJO.
     */
     constructor(aci) {
-        this.#aci = aci
-        this.#serializer = new Serializer()
-        this.#dataFactory = new CompositeDataFactory()
-        this.#externalDataFactory = new ExternalDataFactory(new InternalMapper())
-        this.#typeResolver = new TypeResolver(aci)
-        this.#internalMapper = new InternalMapper()
-        this.#canonicalMapper = new CanonicalMapper()
+        /** @type {Object} */
+        this._aci = aci
+
+        /** @type {Serializer} */
+        this._serializer = new Serializer()
+
+        /** @type {CompositeDataFactory} */
+        this._dataFactory = new CompositeDataFactory()
+
+        /** @type {ExternalDataFactory} */
+        this._externalDataFactory = new ExternalDataFactory(new InternalMapper())
+
+        /** @type {TypeResolver} */
+        this._typeResolver = new TypeResolver(aci)
+
+        /** @type {InternalMapper} */
+        this._internalMapper = new InternalMapper()
+
+        /** @type {CanonicalMapper} */
+        this._canonicalMapper = new CanonicalMapper()
     }
 
     /**
@@ -66,7 +58,7 @@ class Encoder {
      * @returns {string} Encoded calldata
     */
     encode(contract, funName, args) {
-        const {types, required} = this.#typeResolver.getCallTypes(contract, funName)
+        const {types, required} = this._typeResolver.getCallTypes(contract, funName)
 
         if (args.length > types.length || args.length < required) {
             throw new EncoderError(
@@ -80,9 +72,9 @@ class Encoder {
             args.push(undefined)
         }
 
-        const argsData = this.#externalDataFactory.createMultiple(types, args)
+        const argsData = this._externalDataFactory.createMultiple(types, args)
         const calldata = Calldata(funName, types, argsData)
-        const serialized = this.#serializer.serialize(calldata)
+        const serialized = this._serializer.serialize(calldata)
         const data = new Uint8Array(serialized.flat(Infinity))
 
         return 'cb_' + base64check.encode(data)
@@ -104,11 +96,11 @@ class Encoder {
      *  Decoded value as Javascript data structures. See README.md
     */
     decode(contract, funName, data) {
-        const type = this.#typeResolver.getReturnType(contract, funName)
+        const type = this._typeResolver.getReturnType(contract, funName)
         const binData = this.decodeString(data)
-        const deserialized = this.#serializer.deserialize(type, binData)
+        const deserialized = this._serializer.deserialize(type, binData)
 
-        return deserialized.accept(this.#canonicalMapper)
+        return deserialized.accept(this._canonicalMapper)
     }
 
     /* eslint-disable max-len */
@@ -148,9 +140,9 @@ class Encoder {
     */
     decodeFateString(data) {
         const binData = this.decodeString(data)
-        const deserialized = this.#serializer.deserialize(FateTypeString(), binData)
+        const deserialized = this._serializer.deserialize(FateTypeString(), binData)
 
-        return deserialized.accept(this.#canonicalMapper)
+        return deserialized.accept(this._canonicalMapper)
     }
 
     /**
@@ -172,11 +164,11 @@ class Encoder {
      */
     decodeEvent(contract, encodedData, topics) {
         const data = this.decodeString(encodedData)
-        const type = this.#typeResolver.getEventType(contract)
+        const type = this._typeResolver.getEventType(contract)
         const event = {topics, data}
-        const variant = this.#dataFactory.create(type, event)
+        const variant = this._dataFactory.create(type, event)
 
-        return variant.accept(this.#canonicalMapper)
+        return variant.accept(this._canonicalMapper)
     }
 }
 
