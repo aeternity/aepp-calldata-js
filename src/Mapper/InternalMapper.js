@@ -23,6 +23,8 @@ class InternalMapper {
             return this.toAddress(type, value)
         case 'variant':
             return this.toVariant(type, value)
+        case 'map':
+            return this.toMap(type, value)
         default:
             return value
         }
@@ -62,6 +64,17 @@ class InternalMapper {
     isOptionVariant({ _name, variants }) {
         return variants.some(({ None }) => None && None.length === 0)
             && variants.some(({ Some }) => Some)
+    }
+
+    toMap(type, value) {
+        if (typeof value !== 'object' || value === null) {
+            throw new FateTypeError(
+                'map',
+                `Fate map must be one of: Map, Array, Object; got ${value} instead`
+            )
+        }
+
+        return Array.isArray(value) || value instanceof Map ? value : Object.entries(value)
     }
 }
 
