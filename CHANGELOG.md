@@ -8,13 +8,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 ### Fixed
 ### Added
-- Custom errors
-- Clarify Errors backward compatibility promise in the docs
-- Add Events support and public API
-
 ### Changed
 ### Deprecated
 ### Removed
+
+## [1.1.0] - 2022-01-27
+
+### Fixed
+- Don't use ES2022 (yet) to support client application transpilers
+
+### Added
+- Custom errors
+- Clarify Errors backward compatibility promise in the docs
+- Add Events support and public API
+- Add support for POJO as Fate map parameters
 
 ## [1.0.0] - 2021-12-07
 - Same as 1.0.0-rc1
