@@ -1,4 +1,5 @@
 const shajs = require('sha.js')
+const { Buffer } = require('safe-buffer')
 const FormatError = require('../Errors/FormatError')
 
 const sha256hash = (input) => {
