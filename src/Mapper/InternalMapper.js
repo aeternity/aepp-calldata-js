@@ -1,4 +1,4 @@
-const bs58check = require('bs58check')
+const base58check = require('../utils/base58check')
 const FateTypeError = require('../Errors/FateTypeError')
 
 const ADDRESS_PREFIX_MAP = {
@@ -41,7 +41,7 @@ class InternalMapper {
             )
         }
 
-        return bs58check.decode(asString.substring(prefix.length + 1))
+        return base58check.decode(asString.substring(prefix.length + 1))
     }
 
     toVariant(type, value) {

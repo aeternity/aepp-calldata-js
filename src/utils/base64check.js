@@ -9,18 +9,32 @@ const checkSumFn = (payload) => {
     return sha256hash(sha256hash(payload)).slice(0, 4)
 }
 
+const addChecksum = (payload) => {
+    const buffer = Buffer.from(payload)
+    const checksum = checkSumFn(payload)
+    return Buffer.concat([buffer, checksum], buffer.length + 4)
+}
+
+const getPayload = (payloadWithChecksum) => {
+    const payload = payloadWithChecksum.slice(0, -4)
+    const checksum = payloadWithChecksum.slice(-4)
+    const newChecksum = checkSumFn(payload)
+
+    if (!checksum.equals(newChecksum)) {
+        throw new FormatError('Invalid checksum')
+    }
+
+    return payload
+}
+
 /**
  * Base64check encode given `input`
  * @rtype (input: String|buffer) => Buffer
- * @param {String} input - Data to encode
- * @return {Buffer} Base64check encoded data
+ * @param {String|Buffer} input - Data to encode
+ * @return {String} Base64check encoded data
  */
 const encode = (input) => {
-    const buffer = Buffer.from(input)
-    const checksum = checkSumFn(input)
-    const payloadWithChecksum = Buffer.concat([buffer, checksum], buffer.length + 4)
-
-    return payloadWithChecksum.toString('base64')
+    return addChecksum(input).toString('base64')
 }
 
 /**
@@ -30,19 +44,12 @@ const encode = (input) => {
  * @return {Buffer} Base64check decoded data
  */
 const decode = (str) => {
-    const buffer = Buffer.from(str, 'base64')
-    const payload = buffer.slice(0, -4)
-    const checksum = buffer.slice(-4)
-    const newChecksum = checkSumFn(payload)
-
-    if (!checksum.equals(newChecksum)) {
-        throw new FormatError('Invalid base64 checksum')
-    }
-
-    return Buffer.from(payload)
+    return getPayload(Buffer.from(str, 'base64'))
 }
 
 module.exports = {
+    addChecksum,
+    getPayload,
     encode,
     decode
 }
