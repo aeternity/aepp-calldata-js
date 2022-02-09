@@ -58,7 +58,7 @@
     "temp-dir": "build/.nyc_output"
   },
   "scripts": {
-    "browser-test-bundle": "browserify tests/**/*.js > build/js/tests.js",
+    "browser-test-bundle": "browserify tests/[A-Z]*.js tests/**/*.js > build/js/tests.js",
     "coverage": "nyc ava",
     "test": "ava --verbose",
     "test:watch": "ava --verbose --watch",

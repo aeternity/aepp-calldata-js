@@ -407,7 +407,7 @@ test('Encode namespaced arguments', t => {
     t.is(encoded1, 'cb_KxGExpeGG2+CAVT2R/aU', 'test_lib_type(404)')
 })
 
-test.only('Encode optional arguments', t => {
+test('Encode optional arguments', t => {
     t.plan(6)
     const encoded1 = encoder.encode(CONTRACT, 'test_optional', [{None: []}])
     t.is(encoded1, 'cb_KxG0+HBxG6+CAAEAP4sG0gs=', 'test_optional(None)')
