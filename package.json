@@ -29,7 +29,7 @@
     "./tests/test.js": "./tests/browser/test.js"
   },
   "dependencies": {
-    "blakejs": "^1.1.1",
+    "blakejs": "github:aeternity/blakejs",
     "bs58": "^4.0.1",
     "rlp": "^3.0.0",
     "safe-buffer": "^5.2.1",
