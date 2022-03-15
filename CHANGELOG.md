@@ -12,6 +12,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deprecated
 ### Removed
 
+## [1.1.1] - 2022-03-15
+
+## Fixed
+- Depend on Buffer ponyfill for browser compatibility (#122)
+
+## Added
+- Add tests from root to browser bundle (#120)
+
+## Changed
+- Use own implementation of base58check (#122)
+- Use blakejs version that doesn't refer to Buffer (#122)
+- Update dependencies (#121)
+
 ## [1.1.0] - 2022-01-27
 
 ### Fixed
