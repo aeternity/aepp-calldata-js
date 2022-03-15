@@ -1,4 +1,4 @@
-const bs58check = require('bs58check')
+const base58check = require('../utils/base58check')
 
 /**
  * Map the internal representation FATE data structure to Aesophia canonical structures and formats.
@@ -10,7 +10,7 @@ class CanonicalMapper {
     }
 
     visitAddress(acceptor) {
-        return acceptor.prefix + '_' + bs58check.encode(acceptor.value)
+        return acceptor.prefix + '_' + base58check.encode(acceptor.value)
     }
 
     visitList(acceptor) {

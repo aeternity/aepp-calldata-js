@@ -1,4 +1,4 @@
-const blake = require('blakejs')
+const blake = require('@aeternity/blakejs')
 
 const HASH_BYTES = 32
 
