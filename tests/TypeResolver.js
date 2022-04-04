@@ -54,6 +54,22 @@ test('Get function return type', t => {
     )
 })
 
+test('Resolve unit', t => {
+    t.plan(1)
+    t.deepEqual(
+        resolver.resolveType('unit'),
+        FateTypeTuple()
+    )
+})
+
+test('Return type unit', t => {
+    t.plan(1)
+    t.deepEqual(
+        resolver.getReturnType(CONTRACT, 'test_unit'),
+        FateTypeTuple()
+    )
+})
+
 test('Resolve bool', t => {
     t.plan(1)
     t.deepEqual(

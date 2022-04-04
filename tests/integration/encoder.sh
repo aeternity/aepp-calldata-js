@@ -19,6 +19,7 @@ function test_encoder() {
 
 test_encoder 'init()'
 test_encoder 'test_empty()'
+test_encoder 'test_unit(())'
 test_encoder 'test_bool(true, false)'
 test_encoder 'test_single_int(63)'
 test_encoder 'test_single_int(-63)'

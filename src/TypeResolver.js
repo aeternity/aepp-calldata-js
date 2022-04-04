@@ -139,6 +139,10 @@ class TypeResolver {
             return FateTypeVoid()
         }
 
+        if (key === 'unit') {
+            return FateTypeTuple([])
+        }
+
         if (key === 'int') {
             return FateTypeInt()
         }

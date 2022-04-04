@@ -34,6 +34,7 @@ main contract Test =
         | EventFour(bytes(12), signature, hash, address)
         | EventFive(string, RemoteTest, oracle_id, query_id)
 
+    entrypoint test_unit(a:unit) = a
     entrypoint test_empty() = 1
     entrypoint test_bool(a:bool, b:bool) = a
     entrypoint test_single_int(a:int) = a

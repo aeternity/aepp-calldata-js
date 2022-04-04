@@ -14,6 +14,14 @@ test('Decode implicit init (void)', t => {
     )
 })
 
+test('Decode unit return', t => {
+    t.plan(1)
+    t.deepEqual(
+        encoder.decode(CONTRACT, 'test_unit', 'cb_P4fvHVw='),
+        [] // ()
+    )
+})
+
 test('Decode boolean return', t => {
     t.plan(1)
     t.is(

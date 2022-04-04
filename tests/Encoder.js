@@ -49,6 +49,12 @@ test('Number of arguments validation', t => {
     )
 })
 
+test('Encode unit arguments', t => {
+    t.plan(1)
+    const encoded = encoder.encode(CONTRACT, 'test_unit', [[]])
+    t.is(encoded, 'cb_KxFnQZBhGz+2JrXN', 'test_unit(())')
+})
+
 test('Encode boolean arguments', t => {
     t.plan(1)
     const encoded = encoder.encode(CONTRACT, 'test_bool', [true, false])

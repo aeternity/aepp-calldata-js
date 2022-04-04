@@ -17,6 +17,7 @@ function test_decoder() {
     grep -FA 2 "$1" ${TESTS_PATH:-} | grep -qF "$DECODED"
 }
 
+test_decoder 'test_unit' 'cb_P4fvHVw='
 test_decoder 'test_bool' 'cb_/8CwV/U='
 test_decoder 'test_single_int' 'cb_b4MC7W/bKkpn'
 test_decoder 'test_bytes' 'cb_nwEJvu+rlRrs'

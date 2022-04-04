@@ -65,7 +65,7 @@ const FateTypeList = (valuesType) => {
     }
 }
 
-const FateTypeTuple = (valueTypes) => {
+const FateTypeTuple = (valueTypes = []) => {
     return {
         name: 'tuple',
         valueTypes
