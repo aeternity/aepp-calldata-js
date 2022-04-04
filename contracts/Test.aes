@@ -15,6 +15,7 @@ main contract Test =
     type string_map = map(string, int)
     type fancy_map = map(option(int), int)
     type box('a) = 'a
+    type template_map('a) = map('a, string)
 
     type oracle_id = oracle(string, int)
     type query_id  = oracle_query(string, int)
@@ -49,6 +50,7 @@ main contract Test =
     entrypoint test_nested_list(a:list(list(int))) = a
     entrypoint test_simple_map(a: map(int, bool)) = a
     entrypoint test_nested_map(a: map(int, map(int, bool))) = a
+    entrypoint test_template_map(a: template_map(int)) = a
     entrypoint test_variants(a:really_t) = a
     entrypoint test_nested_variants(a:nested_t) = a
     entrypoint test_template_variants(a:amount_t(int, bool)) = a

@@ -158,6 +158,14 @@ test('Resolve list', t => {
     )
 })
 
+test('Resolve templated list', t => {
+    t.plan(1)
+    t.deepEqual(
+        resolver.resolveType({list: ["'a"]}, {"'a": "int"}),
+        FateTypeList(FateTypeInt())
+    )
+})
+
 test('Resolve map', t => {
     t.plan(1)
     t.deepEqual(
@@ -166,10 +174,26 @@ test('Resolve map', t => {
     )
 })
 
+test('Resolve templated map', t => {
+    t.plan(1)
+    t.deepEqual(
+        resolver.resolveType({map: ["'a", 'string']}, {"'a": 'int'}),
+        FateTypeMap(FateTypeInt(), FateTypeString())
+    )
+})
+
 test('Resolve tuple', t => {
     t.plan(1)
     t.deepEqual(
         resolver.resolveType({tuple: ['int', 'bool']}),
+        FateTypeTuple([FateTypeInt(), FateTypeBool()])
+    )
+})
+
+test('Resolve templated tuple', t => {
+    t.plan(1)
+    t.deepEqual(
+        resolver.resolveType({tuple: ["'a", "'b"]}, {"'a": 'int', "'b": 'bool'}),
         FateTypeTuple([FateTypeInt(), FateTypeBool()])
     )
 })

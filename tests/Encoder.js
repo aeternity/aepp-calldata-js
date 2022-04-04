@@ -247,6 +247,12 @@ test('Encode nested map arguments', t => {
     )
 })
 
+test('Encode templated map arguments', t => {
+    t.plan(1)
+    const encoded = encoder.encode(CONTRACT, 'test_template_map', [new Map([[17, "abc"]])])
+    t.is(encoded, 'cb_KxFQNXwJGy8BIg1hYmNLma/O', 'test_template_map({[17] = "abc"})')
+})
+
 test('Encode tuple arguments', t => {
     t.plan(1)
     const encoded = encoder.encode(CONTRACT, 'test_tuple', [[true, false]])

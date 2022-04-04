@@ -128,7 +128,10 @@ class TypeResolver {
 
         if (Array.isArray(valueTypes)) {
             if (key !== 'record' && key !== 'variant') {
-                resolvedTypes = valueTypes.map(t => this.resolveType(t))
+                resolvedTypes = valueTypes.map(v => {
+                    const t = vars.hasOwnProperty(v) ? vars[v] : v
+                    return this.resolveType(t, vars)
+                })
             }
         }
 
