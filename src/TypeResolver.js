@@ -207,16 +207,25 @@ class TypeResolver {
             return FateTypeList(...resolvedTypes)
         }
 
-        if (key === 'tuple') {
-            return FateTypeTuple(resolvedTypes)
-        }
-
         if (key === 'map') {
             return FateTypeMap(...resolvedTypes)
         }
 
+        // Unbox singleton tuples and records
+        // https://github.com/aeternity/aesophia/pull/205
+        // https://github.com/aeternity/aesophia/commit/a403a9d227ac56266cf5bb8fbc916f17e6141d15
+        if ((key === 'tuple' || key === 'record') && resolvedTypes.length === 1) {
+            return resolvedTypes[0]
+        }
+
+        if (key === 'tuple') {
+            return FateTypeTuple(resolvedTypes)
+        }
+
         if (key === 'record') {
-            return this.resolveRecord(valueTypes)
+            const keys = valueTypes.map(e => e.name)
+
+            return FateTypeRecord(keys, resolvedTypes)
         }
 
         if (key === 'variant') {

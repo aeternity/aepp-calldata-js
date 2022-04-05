@@ -7,8 +7,8 @@ contract interface RemoteTest =
     entrypoint test_remote : (int) => int
 
 contract WithInit =
-    record state = {v: string}
-    entrypoint init() = {v = "test"}
+    record state = {v: string, z: string}
+    entrypoint init() = {v = "test", z = "echo"}
 
 main contract Test =
     type number = int
@@ -22,6 +22,7 @@ main contract Test =
 
     record point = {x: int, y: int}
     record rectangle = {origin: point, a: int, b: int}
+    record singleton = {x: int}
 
     datatype really_t = Nope | No | Yep(int) | Yes
     datatype nested_t = One(Chain.ttl) | Two(AENS.name)
@@ -58,6 +59,7 @@ main contract Test =
     entrypoint test_tuple(a: bool * bool) = a
     entrypoint test_nested_tuple(a: (bool * bool) * (bool * bool)) = a
     entrypoint test_record(a: point) = a
+    entrypoint test_singleton_record(a: singleton) = a
     entrypoint test_nested_record(a: rectangle) = a
     entrypoint test_records_list(a:list(point)) = a
     entrypoint test_records_map(a: map(point, point)) = a

@@ -413,6 +413,13 @@ test('Encode records', t => {
     )
 })
 
+test('Encode singleton record arguments', t => {
+    t.plan(1)
+
+    const encoded = encoder.encode(CONTRACT, 'test_singleton_record', [0])
+    t.is(encoded, 'cb_KxE4cPprGwBIAy+t', 'test_singleton_record({x = 0})')
+})
+
 test('Encode namespaced arguments', t => {
     t.plan(1)
     const encoded1 = encoder.encode(CONTRACT, 'test_lib_type', [404])

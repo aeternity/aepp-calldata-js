@@ -7,6 +7,7 @@ const FateByteArray = require('../src/types/FateByteArray')
 const FateBits = require('../src/types/FateBits')
 const FateList = require('../src/types/FateList')
 const FateMap = require('../src/types/FateMap')
+const FateTuple = require('../src/types/FateTuple')
 const FateVariant = require('../src/types/FateVariant')
 const FateBytes = require('../src/types/FateBytes')
 const FateData = require('../src/types/FateData')
@@ -24,7 +25,7 @@ function ser(t, input) {
 }
 
 test('Serialize all types', t => {
-    t.plan(14)
+    t.plan(15)
     // primitive types
     t.deepEqual(ser(t, new FateInt(0)), [0])
     t.deepEqual(ser(t, new FateBool(true)), [255])
@@ -38,6 +39,15 @@ test('Serialize all types', t => {
 
     t.deepEqual(ser(t, new FateList(FTInt)), [3])
     t.deepEqual(ser(t, new FateMap(FTInt, FTBool, [])), [47,0])
+
+    t.deepEqual(
+        ser(t, new FateTuple(
+            [FTBool, FTBool, FTInt],
+            [new FateBool(true), new FateBool(false), new FateInt(0)]
+        )),
+        [59,255,127,0]
+    )
+
     t.deepEqual(
         ser(t, new FateVariant([0, 0, 1, 0], 1)),
         [175,132,0,0,1,0,1,63]

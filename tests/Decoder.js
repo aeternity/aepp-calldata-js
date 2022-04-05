@@ -453,6 +453,19 @@ test('Decode complex tuple', t => {
     )
 })
 
+test('Decode singleton record (optimized)', t => {
+    t.plan(1)
+    t.deepEqual(
+        encoder.decode(
+            CONTRACT,
+            'test_singleton_record',
+            'cb_ABQG4Fg='
+        ),
+        0n,
+        'test_singleton_record({x = 0})'
+    )
+})
+
 test('Decode events', t => {
     t.plan(4)
     t.deepEqual(

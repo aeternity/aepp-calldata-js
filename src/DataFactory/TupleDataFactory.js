@@ -19,6 +19,13 @@ class TupleDataFactory extends BaseDataFactory {
             return this.valueFactory.create(t, value[i])
         })
 
+        // Unbox singleton tuples and records
+        // https://github.com/aeternity/aesophia/pull/205
+        // https://github.com/aeternity/aesophia/commit/a403a9d227ac56266cf5bb8fbc916f17e6141d15
+        if (resolvedValue.length === 1) {
+            return resolvedValue[0]
+        }
+
         return new FateTuple(type.valueTypes, resolvedValue)
     }
 }
