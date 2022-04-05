@@ -23,6 +23,7 @@ main contract Test =
     record point = {x: int, y: int}
     record rectangle = {origin: point, a: int, b: int}
     record singleton = {x: int}
+    record tpl_point('a, 'b) = {x: 'a, y: 'b}
 
     datatype really_t = Nope | No | Yep(int) | Yes
     datatype nested_t = One(Chain.ttl) | Two(AENS.name)
@@ -60,6 +61,7 @@ main contract Test =
     entrypoint test_nested_tuple(a: (bool * bool) * (bool * bool)) = a
     entrypoint test_record(a: point) = a
     entrypoint test_singleton_record(a: singleton) = a
+    entrypoint test_template_record(a: tpl_point(int, int)) = a
     entrypoint test_nested_record(a: rectangle) = a
     entrypoint test_records_list(a:list(point)) = a
     entrypoint test_records_map(a: map(point, point)) = a

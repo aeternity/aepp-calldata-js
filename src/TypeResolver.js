@@ -127,9 +127,11 @@ class TypeResolver {
         }
 
         if (Array.isArray(valueTypes)) {
-            if (key !== 'record' && key !== 'variant') {
+            if (key !== 'variant') {
                 resolvedTypes = valueTypes.map(v => {
-                    const t = vars.hasOwnProperty(v) ? vars[v] : v
+                    const tpl = v.hasOwnProperty('type') ? v.type : v
+                    const t = vars.hasOwnProperty(tpl) ? vars[tpl] : tpl
+
                     return this.resolveType(t, vars)
                 })
             }
@@ -260,13 +262,6 @@ class TypeResolver {
 
         // TODO: junk first 2 args for BC
         return FateTypeVariant(0, null, variants)
-    }
-
-    resolveRecord(valueTypes) {
-        const keys = valueTypes.map(e => e.name)
-        const resolvedTypes = valueTypes.map(e => this.resolveType(e.type))
-
-        return FateTypeRecord(keys, resolvedTypes)
     }
 
     resolveTypeDef(type, params = []) {
