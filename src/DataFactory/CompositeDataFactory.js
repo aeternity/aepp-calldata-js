@@ -1,6 +1,7 @@
 const assert = require('../utils/assert')
 const PrimitiveDataFactory = require('./PrimitiveDataFactory')
 const ListDataFactory = require('./ListDataFactory')
+const SetDataFactory = require('./SetDataFactory')
 const MapDataFactory = require('./MapDataFactory')
 const TupleDataFactory = require('./TupleDataFactory')
 const RecordDataFactory = require('./RecordDataFactory')
@@ -17,6 +18,7 @@ class CompositeDataFactory {
         this._factories = [
             new PrimitiveDataFactory(this),
             new ListDataFactory(this),
+            new SetDataFactory(this),
             new MapDataFactory(this),
             new TupleDataFactory(this),
             new RecordDataFactory(this),

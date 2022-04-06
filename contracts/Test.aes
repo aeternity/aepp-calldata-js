@@ -1,5 +1,7 @@
 @compiler >= 6
 
+include "Set.aes"
+
 namespace Lib =
     type data = int
 
@@ -83,6 +85,7 @@ main contract Test =
     entrypoint test_primitives_tuple(a: int * bool * string * bits * bytes(2) * hash * signature) = a
     entrypoint test_addresses_tuple(a: address * RemoteTest * oracle_id * query_id) = a
     entrypoint test_complex_tuple(a: point * really_t * list(int) * map(int, int) * (int * int)) = a
+    entrypoint test_set(a: Set.set(int)) = a
     entrypoint test_events() =
         Chain.event(EventTwo(17, "triggered"))
         Chain.event(EventThree(1337, false, "trigger 3 data", Bits.set(Bits.none, 0)))

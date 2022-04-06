@@ -575,3 +575,44 @@ test('Encode Chain.base_tx arguments', t => {
         'test_base_tx(Chain.SpendTx(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt, 42, "foo"))'
     )
 })
+
+test('Encode Set.set arguments', t => {
+    t.plan(1)
+    const encoded1 = encoder.encode(CONTRACT, 'test_set', [new Set([21, 13, 8, 5, 3, 2, 1])])
+    t.is(
+        encoded1,
+        'cb_KxGKQqpqGy8HAj8EPwY/Cj8QPxo/Kj/NtsHo',
+        'test_set({to_map = {[21] = (), [13] = (), [8] = (), [5] = (), [3] = (), [2] = (), [1] = () }})'
+    )
+})
+
+test('Encode Set.set arguments as array', t => {
+    t.plan(1)
+    const encoded1 = encoder.encode(CONTRACT, 'test_set', [[21, 13, 8, 5, 3, 2, 1]])
+    t.is(
+        encoded1,
+        'cb_KxGKQqpqGy8HAj8EPwY/Cj8QPxo/Kj/NtsHo',
+        'test_set({to_map = {[21] = (), [13] = (), [8] = (), [5] = (), [3] = (), [2] = (), [1] = () }})'
+    )
+})
+
+test('Encode Set.set arguments filters unique', t => {
+    t.plan(1)
+    const encoded1 = encoder.encode(CONTRACT, 'test_set', [[1, 1, 2, 2, 3, 3]])
+    t.is(
+        encoded1,
+        'cb_KxGKQqpqGy8DAj8EPwY/4zqmUA==',
+        'test_set({to_map = {[1] = (), [2] = (), [3] = ()}})'
+    )
+})
+
+test('Validate Set.set arguments', t => {
+    t.plan(1)
+    t.throws(
+        () => encoder.encode(CONTRACT, 'test_set', ['test-string']),
+        {
+            name: 'FateTypeError',
+            message: `Fate set must be a Set or Array, got "test-string" instead`
+        }
+    )
+})

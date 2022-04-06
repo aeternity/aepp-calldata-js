@@ -68,3 +68,4 @@ test_encoder 'test_aens_name(AENS.Name(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS
 test_encoder 'test_ga_meta_tx(Chain.GAMetaTx(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt, 42))'
 test_encoder 'test_paying_for_tx(Chain.PayingForTx(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt, 42))'
 test_encoder 'test_base_tx(Chain.SpendTx(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt, 42, "foo"))'
+test_encoder 'test_set({to_map = {[21] = (), [13] = (), [8] = (), [5] = (), [3] = (), [2] = (), [1] = () }})'

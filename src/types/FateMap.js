@@ -40,6 +40,10 @@ class FateMap extends FateData {
         return this._value[Symbol.iterator]()
     }
 
+    get keys() {
+        return this._value.keys()
+    }
+
     valueOf() {
         const map = new Map()
         for (const [key, value] of this.iterator) {

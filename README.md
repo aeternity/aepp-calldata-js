@@ -103,6 +103,7 @@ Using the library involves data types and their mappings from Sophia to JavaScri
 | string      | `"whoolymoly"`                                          | String             | `"whoolymoly"`                                          |
 | bytes       | `#beef`                                                 | BigInt             | `BigInt("0xbeef")`                                      |
 | list        | `[1, 2, 3, 5, 8, 13, 21]`                               | Array              | `[1,2,3,5,8,13,21]`                                     |
+| Set.set     | `Set.from_list([1, 2, 3])`                              | Set, Array         | `new Set([1,2,3])`,`[1,2,3]`                            |
 | tuple       | `(true, false)`                                         | Array              | `[true, false]`                                         |
 | map         | `{[7] = false}`                                         | Map, Object, Array | `new Map([[7, false]])`, `{7: false}`, `[[7, false]]`   |
 | record      | `{x = 0, y = 0}`                                        | Object (POJO)      | `{x: 0, y: 0}`                                          |

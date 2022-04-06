@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix support of templated records
 ### Added
 - Add support for `unit` type
+- Add support for `Set.set` stdlib type
 ### Changed
 ### Deprecated
 ### Removed

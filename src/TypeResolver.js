@@ -16,6 +16,7 @@ const {
     FateTypeMap,
     FateTypeTuple,
     FateTypeRecord,
+    FateTypeSet,
     FateTypeVariant,
     FateTypeOption,
     FateTypeChainTTL,
@@ -94,10 +95,22 @@ class TypeResolver {
             return false
         }
 
+        if (this.isStdType(type)) {
+            return false
+        }
+
         const [namespace, _localType] = type.split('.')
         const namespaceData = this.getNamespaceAci(namespace)
 
         return !!namespaceData
+    }
+
+    isStdType(type) {
+        if (type === 'Set.set') {
+            return true
+        }
+
+        return false
     }
 
     getNamespaceAci(name) {
@@ -199,6 +212,10 @@ class TypeResolver {
 
         if (key === 'AENS.name') {
             return FateTypeAENSName()
+        }
+
+        if (key === 'Set.set') {
+            return FateTypeSet(...resolvedTypes)
         }
 
         if (key === 'bytes') {

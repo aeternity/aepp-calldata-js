@@ -11,6 +11,7 @@ const ContractSerializer = require('./Serializers/ContractSerializer')
 const IntSerializer = require('./Serializers/IntSerializer')
 const VoidSerializer = require('./Serializers/VoidSerializer')
 const ListSerializer = require('./Serializers/ListSerializer')
+const SetSerializer = require('./Serializers/SetSerializer')
 const MapSerializer = require('./Serializers/MapSerializer')
 const OracleQuerySerializer = require('./Serializers/OracleQuerySerializer')
 const OracleSerializer = require('./Serializers/OracleSerializer')
@@ -31,6 +32,7 @@ class Serializer extends BaseSerializer {
             'tuple': new TupleSerializer(this),
             'record': new TupleSerializer(this),
             'list': new ListSerializer(this),
+            'set': new SetSerializer(this),
             'map': new MapSerializer(this),
             'byte_array': new ByteArraySerializer(),
             'string': new StringSerializer(),

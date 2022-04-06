@@ -466,6 +466,19 @@ test('Decode singleton record (optimized)', t => {
     )
 })
 
+test('Decode Set.set', t => {
+    t.plan(1)
+    t.deepEqual(
+        encoder.decode(
+            CONTRACT,
+            'test_set',
+            'cb_LwQKPxA/Gj8qPwZjWoo='
+        ),
+        new Set([5n, 8n, 13n, 21n]),
+        'test_set({to_map = {[5] = (), [8] = (), [13] = (), [21] = ()}})'
+    )
+})
+
 test('Decode events', t => {
     t.plan(4)
     t.deepEqual(
