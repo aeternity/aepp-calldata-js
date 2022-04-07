@@ -27,4 +27,5 @@ jobs:
           sudo apt --fix-broken install
     - run: make tests
     - run: make integration-tests
+    - run: make benchmark-tests
     - run: make lint
