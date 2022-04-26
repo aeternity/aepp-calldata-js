@@ -5,24 +5,6 @@ const aci = require('../build/contracts/Test.json')
 const CONTRACT = 'Test'
 const encoder = new Encoder(aci)
 
-test('Decode FATE errors', t => {
-    t.plan(3)
-    // error message is just string, no FATE encoding
-    const error = encoder.decodeString(
-        'cb_VHlwZSBlcnJvciBvbiBjYWxsOiBbe2J5dGVzLDw8MjQwLDIsLi4uPj59XSBpcyBub3Qgb2YgdHlwZSBbe2J5dGVzLDMyfV3EtJjU'
-    )
-    t.is(error.toString(), 'Type error on call: [{bytes,<<240,2,...>>}] is not of type [{bytes,32}]')
-
-    t.throws(
-        () => encoder.decodeString('err_abc'),
-        { name: 'FormatError' }
-    )
-
-    // revert messages are FATE string encoded
-    const revert = encoder.decodeFateString('cb_OXJlcXVpcmUgZmFpbGVkarP9mg==')
-    t.is(revert, 'require failed')
-})
-
 test('Encode implicit init', t => {
     t.plan(1)
     const encoded = encoder.encode(CONTRACT, 'init', [])

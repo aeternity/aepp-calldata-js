@@ -5,6 +5,8 @@ BYTECODES=$(SOURCES:.aes=.aeb)
 JSON_ACIS=$(SOURCES:.aes=.json)
 ADDRESSES=$(SOURCES:.aes=.addr)
 BUILDDIR = build
+INTEGRATION_TESTS=./tests/integration/*.sh
+BENCHMARK_TESTS=./tests/benchmark/*.js
 
 all: $(BUILDDIR)/$(BYTECODES) $(BUILDDIR)/$(JSON_ACIS)
 
@@ -43,9 +45,11 @@ else
 	@echo Open "tests/browser/index.html" in your browser.
 endif
 
-integration-tests:
-	./tests/integration/encoder.sh
-	./tests/integration/decoder.sh
+integration-tests: $(INTEGRATION_TESTS)
+	@for file in $^; do bash $${file}; done
+
+benchmark-tests: $(BENCHMARK_TESTS)
+	@for file in $^; do node $${file}; done
 
 coverage: node_modules $(BUILDDIR)/$(JSON_ACIS)
 	npm run coverage
