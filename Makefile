@@ -45,10 +45,10 @@ else
 	@echo Open "tests/browser/index.html" in your browser.
 endif
 
-integration-tests: $(INTEGRATION_TESTS)
+integration-tests: $(INTEGRATION_TESTS) | node_modules $(BUILDDIR)/$(JSON_ACIS)
 	@for file in $^; do bash $${file}; done
 
-benchmark-tests: $(BENCHMARK_TESTS)
+benchmark-tests: $(BENCHMARK_TESTS) | node_modules $(BUILDDIR)/$(JSON_ACIS)
 	@for file in $^; do node $${file}; done
 
 coverage: node_modules $(BUILDDIR)/$(JSON_ACIS)
