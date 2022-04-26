@@ -17,6 +17,10 @@ class CanonicalMapper {
         return acceptor.items.map(e => e.accept(this))
     }
 
+    visitSet(acceptor) {
+        return new Set(acceptor.items.map(e => e.accept(this)))
+    }
+
     visitMap(acceptor) {
         const map = new Map()
         for (const [key, value] of acceptor.iterator) {

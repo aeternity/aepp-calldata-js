@@ -49,6 +49,12 @@ test('Number of arguments validation', t => {
     )
 })
 
+test('Encode unit arguments', t => {
+    t.plan(1)
+    const encoded = encoder.encode(CONTRACT, 'test_unit', [[]])
+    t.is(encoded, 'cb_KxFnQZBhGz+2JrXN', 'test_unit(())')
+})
+
 test('Encode boolean arguments', t => {
     t.plan(1)
     const encoded = encoder.encode(CONTRACT, 'test_bool', [true, false])
@@ -247,6 +253,12 @@ test('Encode nested map arguments', t => {
     )
 })
 
+test('Encode templated map arguments', t => {
+    t.plan(1)
+    const encoded = encoder.encode(CONTRACT, 'test_template_map', [new Map([[17, "abc"]])])
+    t.is(encoded, 'cb_KxFQNXwJGy8BIg1hYmNLma/O', 'test_template_map({[17] = "abc"})')
+})
+
 test('Encode tuple arguments', t => {
     t.plan(1)
     const encoded = encoder.encode(CONTRACT, 'test_tuple', [[true, false]])
@@ -401,6 +413,20 @@ test('Encode records', t => {
     )
 })
 
+test('Encode singleton record arguments', t => {
+    t.plan(1)
+
+    const encoded = encoder.encode(CONTRACT, 'test_singleton_record', [0])
+    t.is(encoded, 'cb_KxE4cPprGwBIAy+t', 'test_singleton_record({x = 0})')
+})
+
+test('Encode template record arguments', t => {
+    t.plan(1)
+
+    const encoded = encoder.encode(CONTRACT, 'test_template_record', [{x: 0, y: 0}])
+    t.is(encoded, 'cb_KxGua0Q7GysAANAfuis=', 'test_template_record({x = 0, y = 0})')
+})
+
 test('Encode namespaced arguments', t => {
     t.plan(1)
     const encoded1 = encoder.encode(CONTRACT, 'test_lib_type', [404])
@@ -547,5 +573,46 @@ test('Encode Chain.base_tx arguments', t => {
         encoded1,
         'cb_KxHC9sshG6+WAwAAAAAAAQEBAgECAgEBAQEBAQECAAA7nwCg3mi/4bID5R9SNRugh/ebeCjmoUDwwxSmcMcAOz/1cHVUDWZvb5zbO1o=',
         'test_base_tx(Chain.SpendTx(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt, 42, "foo"))'
+    )
+})
+
+test('Encode Set.set arguments', t => {
+    t.plan(1)
+    const encoded1 = encoder.encode(CONTRACT, 'test_set', [new Set([21, 13, 8, 5, 3, 2, 1])])
+    t.is(
+        encoded1,
+        'cb_KxGKQqpqGy8HAj8EPwY/Cj8QPxo/Kj/NtsHo',
+        'test_set({to_map = {[21] = (), [13] = (), [8] = (), [5] = (), [3] = (), [2] = (), [1] = () }})'
+    )
+})
+
+test('Encode Set.set arguments as array', t => {
+    t.plan(1)
+    const encoded1 = encoder.encode(CONTRACT, 'test_set', [[21, 13, 8, 5, 3, 2, 1]])
+    t.is(
+        encoded1,
+        'cb_KxGKQqpqGy8HAj8EPwY/Cj8QPxo/Kj/NtsHo',
+        'test_set({to_map = {[21] = (), [13] = (), [8] = (), [5] = (), [3] = (), [2] = (), [1] = () }})'
+    )
+})
+
+test('Encode Set.set arguments filters unique', t => {
+    t.plan(1)
+    const encoded1 = encoder.encode(CONTRACT, 'test_set', [[1, 1, 2, 2, 3, 3]])
+    t.is(
+        encoded1,
+        'cb_KxGKQqpqGy8DAj8EPwY/4zqmUA==',
+        'test_set({to_map = {[1] = (), [2] = (), [3] = ()}})'
+    )
+})
+
+test('Validate Set.set arguments', t => {
+    t.plan(1)
+    t.throws(
+        () => encoder.encode(CONTRACT, 'test_set', ['test-string']),
+        {
+            name: 'FateTypeError',
+            message: `Fate set must be a Set or Array, got "test-string" instead`
+        }
     )
 })

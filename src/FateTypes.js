@@ -65,7 +65,7 @@ const FateTypeList = (valuesType) => {
     }
 }
 
-const FateTypeTuple = (valueTypes) => {
+const FateTypeTuple = (valueTypes = []) => {
     return {
         name: 'tuple',
         valueTypes
@@ -77,6 +77,13 @@ const FateTypeRecord = (keys, valueTypes) => {
         name: 'record',
         keys,
         valueTypes,
+    }
+}
+
+const FateTypeSet = (valuesType) => {
+    return {
+        name: 'set',
+        valuesType,
     }
 }
 
@@ -208,6 +215,7 @@ module.exports = {
     FateTypeList,
     FateTypeTuple,
     FateTypeRecord,
+    FateTypeSet,
     FateTypeMap,
     FateTypeVariant,
     FateTypeOption,

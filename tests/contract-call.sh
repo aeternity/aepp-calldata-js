@@ -2,10 +2,15 @@
 
 set -eu -o pipefail
 
+# Examples:
+# contract-call.sh test_empty
+# contract-call.sh test_bool "true" "false"
+
 CONTRACT_SRC="contracts/Test.aes"
 ADDRESS_SRC="build/${CONTRACT_SRC//.aes/.addr}"
 WALLET_PATH="build/wallet"
 WALLET_PASS="123"
+# init() calldata
 CALLDATA="cb_KxFE1kQfP4oEp9E="
 
 if ! aecli account address -P $WALLET_PASS $WALLET_PATH > /dev/null; then

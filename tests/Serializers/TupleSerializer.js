@@ -11,11 +11,20 @@ const FTInt = FateTypeInt()
 const FTBool = FateTypeBool()
 
 test('Serialize', t => {
-    t.plan(4)
+    t.plan(5)
     t.deepEqual(
         s.serialize(new FateTuple()),
         [63],
         'empty tuple'
+    )
+
+    t.deepEqual(
+        s.serialize(new FateTuple(
+            [FTInt],
+            [new FateInt(0)]
+        )),
+        [27,0],
+        'single element tuple'
     )
 
     t.deepEqual(

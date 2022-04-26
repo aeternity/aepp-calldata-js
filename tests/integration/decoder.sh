@@ -17,6 +17,7 @@ function test_decoder() {
     grep -FA 2 "$1" ${TESTS_PATH:-} | grep -qF "$DECODED"
 }
 
+test_decoder 'test_unit' 'cb_P4fvHVw='
 test_decoder 'test_bool' 'cb_/8CwV/U='
 test_decoder 'test_single_int' 'cb_b4MC7W/bKkpn'
 test_decoder 'test_bytes' 'cb_nwEJvu+rlRrs'
@@ -48,9 +49,11 @@ test_decoder 'test_template_type' 'cb_DtbN98k='
 test_decoder 'test_optional' 'cb_r4IAAQA/aHG2bw=='
 test_decoder 'test_optional' 'cb_r4IAAQEbb4IBVPA+5jI='
 test_decoder 'test_record' 'cb_KwAAUjeM0Q=='
+test_decoder 'test_singleton_record' 'cb_ABQG4Fg='
 test_decoder 'test_nested_record' 'cb_OysCBAYISeTR0A=='
 test_decoder 'test_records_list' 'cb_MysAACsCAisEBMjzXEk='
 test_decoder 'test_records_map' 'cb_LwMrAAArAgIrAgQrBggrbyQYKy5vIzf5arA='
 test_decoder 'test_primitives_tuple' 'cb_ewL/EXRlc3RPAJ8BCb7vnwGBAAECAwQFBgcICQoLDA0ODwABAgMEBQYHCAkKCwwNDg+fAQEAAAECAwQFBgcICQoLDA0ODwABAgMEBQYHCAkKCwwNDg8AAQIDBAUGBwgJCgsMDQ4PAAECAwQFBgcICQoLDA0ODzwY0fk='
 test_decoder 'test_addresses_tuple' 'cb_S58AoN5ov+GyA+UfUjUboIf3m3go5qFA8MMUpnDHADs/9XB1nwKgH8DQmexaE8uTKKMX/OzYUrH3SJ5eALoJVzw8LbaYVVOfA6DK8iokTtrAPSbwKhfZI5QtBVz8hiMoslpRwoS8nUIOSZ8EoO0e59wCeNBc6VCUc8UKk9Q6KLKNUDL2332qRC/hNxNI/pLnKw=='
 test_decoder 'test_complex_tuple' 'cb_WysCAq+EAAABAAIbBjMCBAYvAgIEBggrCgyRsE4R'
+test_decoder 'test_set' 'cb_LwQKPxA/Gj8qPwZjWoo='

@@ -25,6 +25,8 @@ class InternalMapper {
             return this.toVariant(type, value)
         case 'map':
             return this.toMap(type, value)
+        case 'set':
+            return this.toSet(type, value)
         default:
             return value
         }
@@ -75,6 +77,21 @@ class InternalMapper {
         }
 
         return Array.isArray(value) || value instanceof Map ? value : Object.entries(value)
+    }
+
+    toSet(type, value) {
+        if (value instanceof Set) {
+            return value
+        }
+
+        if (Array.isArray(value)) {
+            return new Set(value)
+        }
+
+        throw new FateTypeError(
+            'set',
+            `Fate set must be a Set or Array, got "${value}" instead`
+        )
     }
 }
 

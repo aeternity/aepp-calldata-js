@@ -54,6 +54,22 @@ test('Get function return type', t => {
     )
 })
 
+test('Resolve unit', t => {
+    t.plan(1)
+    t.deepEqual(
+        resolver.resolveType('unit'),
+        FateTypeTuple()
+    )
+})
+
+test('Return type unit', t => {
+    t.plan(1)
+    t.deepEqual(
+        resolver.getReturnType(CONTRACT, 'test_unit'),
+        FateTypeTuple()
+    )
+})
+
 test('Resolve bool', t => {
     t.plan(1)
     t.deepEqual(
@@ -158,6 +174,14 @@ test('Resolve list', t => {
     )
 })
 
+test('Resolve templated list', t => {
+    t.plan(1)
+    t.deepEqual(
+        resolver.resolveType({list: ["'a"]}, {"'a": "int"}),
+        FateTypeList(FateTypeInt())
+    )
+})
+
 test('Resolve map', t => {
     t.plan(1)
     t.deepEqual(
@@ -166,10 +190,26 @@ test('Resolve map', t => {
     )
 })
 
+test('Resolve templated map', t => {
+    t.plan(1)
+    t.deepEqual(
+        resolver.resolveType({map: ["'a", 'string']}, {"'a": 'int'}),
+        FateTypeMap(FateTypeInt(), FateTypeString())
+    )
+})
+
 test('Resolve tuple', t => {
     t.plan(1)
     t.deepEqual(
         resolver.resolveType({tuple: ['int', 'bool']}),
+        FateTypeTuple([FateTypeInt(), FateTypeBool()])
+    )
+})
+
+test('Resolve templated tuple', t => {
+    t.plan(1)
+    t.deepEqual(
+        resolver.resolveType({tuple: ["'a", "'b"]}, {"'a": 'int', "'b": 'bool'}),
         FateTypeTuple([FateTypeInt(), FateTypeBool()])
     )
 })
@@ -262,6 +302,6 @@ test('Resolve state', t => {
     t.plan(1)
     t.deepEqual(
         resolver.resolveType('WithInit.state'),
-        FateTypeRecord(['v'], [FateTypeString()])
+        FateTypeRecord(['v', 'z'], [FateTypeString(), FateTypeString()])
     )
 })

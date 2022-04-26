@@ -16,6 +16,7 @@ const {
     FateTypeMap,
     FateTypeTuple,
     FateTypeRecord,
+    FateTypeSet,
     FateTypeVariant,
     FateTypeOption,
     FateTypeChainTTL,
@@ -94,10 +95,22 @@ class TypeResolver {
             return false
         }
 
+        if (this.isStdType(type)) {
+            return false
+        }
+
         const [namespace, _localType] = type.split('.')
         const namespaceData = this.getNamespaceAci(namespace)
 
         return !!namespaceData
+    }
+
+    isStdType(type) {
+        if (type === 'Set.set') {
+            return true
+        }
+
+        return false
     }
 
     getNamespaceAci(name) {
@@ -127,13 +140,22 @@ class TypeResolver {
         }
 
         if (Array.isArray(valueTypes)) {
-            if (key !== 'record' && key !== 'variant') {
-                resolvedTypes = valueTypes.map(t => this.resolveType(t))
+            if (key !== 'variant') {
+                resolvedTypes = valueTypes.map(v => {
+                    const tpl = v.hasOwnProperty('type') ? v.type : v
+                    const t = vars.hasOwnProperty(tpl) ? vars[tpl] : tpl
+
+                    return this.resolveType(t, vars)
+                })
             }
         }
 
         if (key === 'void') {
             return FateTypeVoid()
+        }
+
+        if (key === 'unit') {
+            return FateTypeTuple([])
         }
 
         if (key === 'int') {
@@ -192,6 +214,10 @@ class TypeResolver {
             return FateTypeAENSName()
         }
 
+        if (key === 'Set.set') {
+            return FateTypeSet(...resolvedTypes)
+        }
+
         if (key === 'bytes') {
             return FateTypeBytes(valueTypes)
         }
@@ -200,16 +226,25 @@ class TypeResolver {
             return FateTypeList(...resolvedTypes)
         }
 
-        if (key === 'tuple') {
-            return FateTypeTuple(resolvedTypes)
-        }
-
         if (key === 'map') {
             return FateTypeMap(...resolvedTypes)
         }
 
+        // Unbox singleton tuples and records
+        // https://github.com/aeternity/aesophia/pull/205
+        // https://github.com/aeternity/aesophia/commit/a403a9d227ac56266cf5bb8fbc916f17e6141d15
+        if ((key === 'tuple' || key === 'record') && resolvedTypes.length === 1) {
+            return resolvedTypes[0]
+        }
+
+        if (key === 'tuple') {
+            return FateTypeTuple(resolvedTypes)
+        }
+
         if (key === 'record') {
-            return this.resolveRecord(valueTypes)
+            const keys = valueTypes.map(e => e.name)
+
+            return FateTypeRecord(keys, resolvedTypes)
         }
 
         if (key === 'variant') {
@@ -244,13 +279,6 @@ class TypeResolver {
 
         // TODO: junk first 2 args for BC
         return FateTypeVariant(0, null, variants)
-    }
-
-    resolveRecord(valueTypes) {
-        const keys = valueTypes.map(e => e.name)
-        const resolvedTypes = valueTypes.map(e => this.resolveType(e.type))
-
-        return FateTypeRecord(keys, resolvedTypes)
     }
 
     resolveTypeDef(type, params = []) {

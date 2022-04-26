@@ -14,6 +14,14 @@ test('Decode implicit init (void)', t => {
     )
 })
 
+test('Decode unit return', t => {
+    t.plan(1)
+    t.deepEqual(
+        encoder.decode(CONTRACT, 'test_unit', 'cb_P4fvHVw='),
+        [] // ()
+    )
+})
+
 test('Decode boolean return', t => {
     t.plan(1)
     t.is(
@@ -442,6 +450,32 @@ test('Decode complex tuple', t => {
             [5n, 6n]
         ],
         'test_complex_tuple(({x = 1, y = 1}, Yep(3), [1, 2, 3], {[1] = 2, [3] = 4}, (5, 6)))'
+    )
+})
+
+test('Decode singleton record (optimized)', t => {
+    t.plan(1)
+    t.deepEqual(
+        encoder.decode(
+            CONTRACT,
+            'test_singleton_record',
+            'cb_ABQG4Fg='
+        ),
+        0n,
+        'test_singleton_record({x = 0})'
+    )
+})
+
+test('Decode Set.set', t => {
+    t.plan(1)
+    t.deepEqual(
+        encoder.decode(
+            CONTRACT,
+            'test_set',
+            'cb_LwQKPxA/Gj8qPwZjWoo='
+        ),
+        new Set([5n, 8n, 13n, 21n]),
+        'test_set({to_map = {[5] = (), [8] = (), [13] = (), [21] = ()}})'
     )
 })
 

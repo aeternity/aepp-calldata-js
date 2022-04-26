@@ -1,5 +1,7 @@
 @compiler >= 6
 
+include "Set.aes"
+
 namespace Lib =
     type data = int
 
@@ -7,20 +9,23 @@ contract interface RemoteTest =
     entrypoint test_remote : (int) => int
 
 contract WithInit =
-    record state = {v: string}
-    entrypoint init() = {v = "test"}
+    record state = {v: string, z: string}
+    entrypoint init() = {v = "test", z = "echo"}
 
 main contract Test =
     type number = int
     type string_map = map(string, int)
     type fancy_map = map(option(int), int)
     type box('a) = 'a
+    type template_map('a) = map('a, string)
 
     type oracle_id = oracle(string, int)
     type query_id  = oracle_query(string, int)
 
     record point = {x: int, y: int}
     record rectangle = {origin: point, a: int, b: int}
+    record singleton = {x: int}
+    record tpl_point('a, 'b) = {x: 'a, y: 'b}
 
     datatype really_t = Nope | No | Yep(int) | Yes
     datatype nested_t = One(Chain.ttl) | Two(AENS.name)
@@ -33,6 +38,7 @@ main contract Test =
         | EventFour(bytes(12), signature, hash, address)
         | EventFive(string, RemoteTest, oracle_id, query_id)
 
+    entrypoint test_unit(a:unit) = a
     entrypoint test_empty() = 1
     entrypoint test_bool(a:bool, b:bool) = a
     entrypoint test_single_int(a:int) = a
@@ -49,12 +55,15 @@ main contract Test =
     entrypoint test_nested_list(a:list(list(int))) = a
     entrypoint test_simple_map(a: map(int, bool)) = a
     entrypoint test_nested_map(a: map(int, map(int, bool))) = a
+    entrypoint test_template_map(a: template_map(int)) = a
     entrypoint test_variants(a:really_t) = a
     entrypoint test_nested_variants(a:nested_t) = a
     entrypoint test_template_variants(a:amount_t(int, bool)) = a
     entrypoint test_tuple(a: bool * bool) = a
     entrypoint test_nested_tuple(a: (bool * bool) * (bool * bool)) = a
     entrypoint test_record(a: point) = a
+    entrypoint test_singleton_record(a: singleton) = a
+    entrypoint test_template_record(a: tpl_point(int, int)) = a
     entrypoint test_nested_record(a: rectangle) = a
     entrypoint test_records_list(a:list(point)) = a
     entrypoint test_records_map(a: map(point, point)) = a
@@ -76,6 +85,7 @@ main contract Test =
     entrypoint test_primitives_tuple(a: int * bool * string * bits * bytes(2) * hash * signature) = a
     entrypoint test_addresses_tuple(a: address * RemoteTest * oracle_id * query_id) = a
     entrypoint test_complex_tuple(a: point * really_t * list(int) * map(int, int) * (int * int)) = a
+    entrypoint test_set(a: Set.set(int)) = a
     entrypoint test_events() =
         Chain.event(EventTwo(17, "triggered"))
         Chain.event(EventThree(1337, false, "trigger 3 data", Bits.set(Bits.none, 0)))
