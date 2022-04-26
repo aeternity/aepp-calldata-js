@@ -18,6 +18,7 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
+        cache: npm
     - run: |
           wget https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_21.3.8.13-1~debian~stretch_amd64.deb
           sudo apt install ./esl-erlang_21.3.8.13-1~debian~stretch_amd64.deb || true
@@ -38,6 +39,7 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
+        cache: npm
     - run: |
           wget https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_21.3.8.13-1~debian~stretch_amd64.deb
           sudo apt install ./esl-erlang_21.3.8.13-1~debian~stretch_amd64.deb || true
