@@ -2,30 +2,47 @@ name: Build, Test
 
 on:
   push:
-    branches: [ master, develop ]
+    branches: [ master ]
   pull_request:
-    branches: [ master, develop ]
+    branches: [ master ]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        node-version: [14.x]
-
+        node-version: [16.x]
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
+        cache: npm
     - run: |
           wget https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_21.3.8.13-1~debian~stretch_amd64.deb
           sudo apt install ./esl-erlang_21.3.8.13-1~debian~stretch_amd64.deb || true
           sudo apt --fix-broken install
+    - run: npm config set fund false
     - run: make tests
     - run: make integration-tests
-    - run: make benchmark-tests
     - run: make lint
+  benchmark:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: npm
+    - run: |
+          wget https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_21.3.8.13-1~debian~stretch_amd64.deb
+          sudo apt install ./esl-erlang_21.3.8.13-1~debian~stretch_amd64.deb || true
+          sudo apt --fix-broken install
+    - run: npm config set fund false
+    - run: make benchmark-tests
