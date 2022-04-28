@@ -479,6 +479,37 @@ test('Decode Set.set', t => {
     )
 })
 
+test('Decode BLS12_381.fr', t => {
+    t.plan(1)
+    t.deepEqual(
+        encoder.decode(CONTRACT, 'test_bls12_381_fr', 'cb_nwGBxHFEFDqOu+s9/hWhDQxmnzSFvfQ6dkSwETqb5Rgy7EblqaTu'),
+        0XDEADBEEFn,
+        'test_bls12_381_fr(3735928559)'
+    )
+})
+
+test('Decode BLS12_381.fp', t => {
+    t.plan(1)
+    t.deepEqual(
+        encoder.decode(CONTRACT, 'test_bls12_381_fp', 'cb_nwHBA/Xt2rba+aow52i/Vr/nGSDbg1ErD/oOVs0LOV1F83sEMEfueZoY+Ng3idzNLTcU1fPMEQ=='),
+        0XDEADBEEFn,
+        'test_bls12_381_fp(3735928559)'
+    )
+})
+
+test('Decode BLS12_381.g1', t => {
+    t.plan(1)
+    t.deepEqual(
+        encoder.decode(CONTRACT, 'test_bls12_381_g1', 'cb_O58Bwf3/AgAAAAl2AgAMxAsA9Ou6WMdTV5hIX0VXUnBTWM53bexWopcaB1yT5ID6w172FZ8BwU9VBgAAABMyBQDE1hgAPLlRu92wDV5gV8ubH+0hZSWLAyxiAXmN8myM4oG7navrEZ8BwaGqCQAAAB3uBwB86SUAhIboHfQNxCN4T1Hg7GnwcXyemWttYFoA3n2F4IJ8d/jgDT13HE8='),
+        {
+            x: 1n,
+            y: 2n,
+            z: 3n
+        },
+        'test_bls12_381_g1(1, 2, 3)'
+    )
+})
+
 test('Decode FATE errors', t => {
     t.plan(3)
     // error message is just string, no FATE encoding

@@ -7,6 +7,7 @@ const TupleDataFactory = require('./TupleDataFactory')
 const RecordDataFactory = require('./RecordDataFactory')
 const VariantDataFactory = require('./VariantDataFactory')
 const EventDataFactory = require('./EventDataFactory')
+const Bls12381DataFactory = require('./Bls12381DataFactory')
 
 const zip = (arr, ...arrs) => {
     return arr.map((val, i) => arrs.reduce((a, curr) => [...a, curr[i]], [val]))
@@ -24,6 +25,7 @@ class CompositeDataFactory {
             new RecordDataFactory(this),
             new EventDataFactory(this, variantFactory),
             variantFactory,
+            new Bls12381DataFactory(this),
         ]
     }
 

@@ -1,4 +1,5 @@
 const base58check = require('../utils/base58check')
+const {MontBytes2Int} = require('../utils/Bls12381')
 
 /**
  * Map the internal representation FATE data structure to Aesophia canonical structures and formats.
@@ -48,6 +49,14 @@ class CanonicalMapper {
         return {
             [acceptor.variantName]: value
         }
+    }
+
+    visitBls12381Fr(acceptor) {
+        return MontBytes2Int(acceptor.valueOf(), 'r')
+    }
+
+    visitBls12381Fp(acceptor) {
+        return MontBytes2Int(acceptor.valueOf(), 'p')
     }
 }
 

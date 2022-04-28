@@ -18,6 +18,7 @@ const OracleSerializer = require('./Serializers/OracleSerializer')
 const StringSerializer = require('./Serializers/StringSerializer')
 const TupleSerializer = require('./Serializers/TupleSerializer')
 const VariantSerializer = require('./Serializers/VariantSerializer')
+const Bls12381FieldSerializer = require('./Serializers/Bls12381FieldSerializer')
 const SerializerError = require('./Errors/SerializerError')
 
 class Serializer extends BaseSerializer {
@@ -46,6 +47,8 @@ class Serializer extends BaseSerializer {
             'oracle_address': new OracleSerializer(),
             'oracle_query_address': new OracleQuerySerializer(),
             'channel_address': new ChannelSerializer(),
+            'bls12_381.fr': new Bls12381FieldSerializer(),
+            'bls12_381.fp': new Bls12381FieldSerializer(),
         }
     }
 

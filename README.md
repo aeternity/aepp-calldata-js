@@ -103,7 +103,6 @@ Using the library involves data types and their mappings from Sophia to JavaScri
 | string      | `"whoolymoly"`                                          | String             | `"whoolymoly"`                                          |
 | bytes       | `#beef`                                                 | BigInt             | `BigInt("0xbeef")`                                      |
 | list        | `[1, 2, 3, 5, 8, 13, 21]`                               | Array              | `[1,2,3,5,8,13,21]`                                     |
-| Set.set     | `Set.from_list([1, 2, 3])`                              | Set, Array         | `new Set([1,2,3])`,`[1,2,3]`                            |
 | tuple       | `(true, false)`                                         | Array              | `[true, false]`                                         |
 | map         | `{[7] = false}`                                         | Map, Object, Array | `new Map([[7, false]])`, `{7: false}`, `[[7, false]]`   |
 | record      | `{x = 0, y = 0}`                                        | Object (POJO)      | `{x: 0, y: 0}`                                          |
@@ -112,6 +111,9 @@ Using the library involves data types and their mappings from Sophia to JavaScri
 | hash        | `#001234d`                                              | BigInt             | `BigInt("0x001234d")`                                   |
 | signature   | `#001234d`                                              | BigInt             | `BigInt("0x001234d")`                                   |
 | address     | `ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt` | String             | `ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt` |
+| Set.set     | `Set.from_list([1, 2, 3])`                              | Set, Array         | `new Set([1,2,3])`,`[1,2,3]`                            |
+| BLS12_381.fr| `BLS12_381.int_to_fr(3735928559)`                       | BigInt             | `3735928559n`                                           |
+| BLS12_381.fp| `BLS12_381.int_to_fp(3735928559)`                       | BigInt             | `3735928559n`                                           |
 
 - note the fixed structure of variant object with a single key - the variant constructor (i.e. `Some`) and array of variant arguments as it's value.
 - while Javascript Number and primitive `int` types can be used as well when `BigInt` type is expected it's not recommended because of it's `Number.MAX_SAFE_INTEGER` limitation.
@@ -134,7 +136,7 @@ The public API namely consist of:
 - `decodeString(data: string): Buffer`
 - `decodeFateString(data: string): string`
 
-where `Data: Boolean | BigInt | String | Array | Map | Object`
+where `Data: Boolean | BigInt | String | Array | Map | Set | Object`
 
 ### Errors
 
@@ -154,8 +156,22 @@ npm install
 
 ### Tests
 
+Unit tests can be run with:
+
 ```bash
 make tests
+```
+
+Integration tests:
+
+```bash
+make integration-tests
+```
+
+One can use the benchmarks to do relative comparison on performance for a given change:
+
+```bash
+make benchmark-tests
 ```
 
 Verify browser compatibility with:

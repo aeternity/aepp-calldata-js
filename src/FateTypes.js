@@ -198,6 +198,14 @@ const FateTypeEvent = (variantType) => {
     }
 }
 
+const FateTypeBls12381Fr = () => {
+    return {name: 'bls12_381.fr'}
+}
+
+const FateTypeBls12381Fp = () => {
+    return {name: 'bls12_381.fp'}
+}
+
 module.exports = {
     FateTypeVoid,
     FateTypeInt,
@@ -226,4 +234,6 @@ module.exports = {
     FateTypeAENSPointee,
     FateTypeAENSName,
     FateTypeEvent,
+    FateTypeBls12381Fr,
+    FateTypeBls12381Fp
 }
