@@ -598,3 +598,23 @@ test('Validate Set.set arguments', t => {
         }
     )
 })
+
+test('Encode BLS12_381.fr arguments', t => {
+    t.plan(1)
+    const encoded1 = encoder.encode(CONTRACT, 'test_bls12_381_fr_param', [3735928559n])
+    t.is(
+        encoded1,
+        'cb_KxGGqIQmG58BgUbsMhjlmzoRsER2OvS9hTSfZgwNoRX+Peu7jjoURHHErUZRAg==',
+        'test_bls12_381_fr_param(BLS12_381.int_to_fr(3735928559))'
+    )
+})
+
+test('Encode BLS12_381.fp arguments', t => {
+    t.plan(1)
+    const encoded1 = encoder.encode(CONTRACT, 'test_bls12_381_fp_param', [3735928559n])
+    t.is(
+        encoded1,
+        'cb_KxHF76MoG58BwRQ3Lc3ciTfY+Biaee5HMAR780VdOQvNVg76DytRg9sgGee/Vr9o5zCq+dq22u31A6vdFQI=',
+        'test_bls12_381_fp_param(BLS12_381.int_to_fp(3735928559))'
+    )
+})

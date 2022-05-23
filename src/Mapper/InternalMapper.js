@@ -1,4 +1,5 @@
 const base58check = require('../utils/base58check')
+const {Int2MontBytes} = require('../utils/Bls12381')
 const FateTypeError = require('../Errors/FateTypeError')
 
 const ADDRESS_PREFIX_MAP = {
@@ -27,6 +28,10 @@ class InternalMapper {
             return this.toMap(type, value)
         case 'set':
             return this.toSet(type, value)
+        case 'bls12_381.fr':
+            return this.toBls12381Fr(type, value)
+        case 'bls12_381.fp':
+            return this.toBls12381Fp(type, value)
         default:
             return value
         }
@@ -92,6 +97,27 @@ class InternalMapper {
             'set',
             `Fate set must be a Set or Array, got "${value}" instead`
         )
+    }
+
+    validateBls12381Field(type, value) {
+        if (typeof value !== 'bigint' && !Number.isInteger(value)) {
+            throw new FateTypeError(
+                type.name,
+                `Should be one of: BigInt or Number; got ${value} instead`
+            )
+        }
+    }
+
+    toBls12381Fr(type, value) {
+        this.validateBls12381Field(type, value)
+
+        return Int2MontBytes(value, 'r')
+    }
+
+    toBls12381Fp(type, value) {
+        this.validateBls12381Field(type, value)
+
+        return Int2MontBytes(value, 'p')
     }
 }
 

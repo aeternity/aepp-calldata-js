@@ -57,3 +57,7 @@ test_decoder 'test_primitives_tuple' 'cb_ewL/EXRlc3RPAJ8BCb7vnwGBAAECAwQFBgcICQo
 test_decoder 'test_addresses_tuple' 'cb_S58AoN5ov+GyA+UfUjUboIf3m3go5qFA8MMUpnDHADs/9XB1nwKgH8DQmexaE8uTKKMX/OzYUrH3SJ5eALoJVzw8LbaYVVOfA6DK8iokTtrAPSbwKhfZI5QtBVz8hiMoslpRwoS8nUIOSZ8EoO0e59wCeNBc6VCUc8UKk9Q6KLKNUDL2332qRC/hNxNI/pLnKw=='
 test_decoder 'test_complex_tuple' 'cb_WysCAq+EAAABAAIbBjMCBAYvAgIEBggrCgyRsE4R'
 test_decoder 'test_set' 'cb_LwQKPxA/Gj8qPwZjWoo='
+# https://github.com/aeternity/aesophia_cli/issues/61
+# test_decoder 'test_bls12_381_fr' 'cb_nwGBxHFEFDqOu+s9/hWhDQxmnzSFvfQ6dkSwETqb5Rgy7EblqaTu'
+# test_decoder 'test_bls12_381_fp' 'cb_nwHBA/Xt2rba+aow52i/Vr/nGSDbg1ErD/oOVs0LOV1F83sEMEfueZoY+Ng3idzNLTcU1fPMEQ=='
+# test_decoder 'test_bls12_381_g1' 'cb_O58Bwf3/AgAAAAl2AgAMxAsA9Ou6WMdTV5hIX0VXUnBTWM53bexWopcaB1yT5ID6w172FZ8BwU9VBgAAABMyBQDE1hgAPLlRu92wDV5gV8ubH+0hZSWLAyxiAXmN8myM4oG7navrEZ8BwaGqCQAAAB3uBwB86SUAhIboHfQNxCN4T1Hg7GnwcXyemWttYFoA3n2F4IJ8d/jgDT13HE8='

@@ -26,6 +26,8 @@ const {
     FateTypeAENSPointee,
     FateTypeAENSName,
     FateTypeEvent,
+    FateTypeBls12381Fr,
+    FateTypeBls12381Fp
 } = require('./FateTypes')
 
 const isObject = (value) => {
@@ -216,6 +218,14 @@ class TypeResolver {
 
         if (key === 'Set.set') {
             return FateTypeSet(...resolvedTypes)
+        }
+
+        if (key === 'MCL_BLS12_381.fr') {
+            return FateTypeBls12381Fr()
+        }
+
+        if (key === 'MCL_BLS12_381.fp') {
+            return FateTypeBls12381Fp()
         }
 
         if (key === 'bytes') {
