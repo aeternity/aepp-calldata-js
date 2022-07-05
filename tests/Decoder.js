@@ -357,6 +357,15 @@ test('Decode records', t => {
     )
 })
 
+test('Decode option record', t => {
+    t.plan(1)
+    t.deepEqual(
+        encoder.decode(CONTRACT, 'test_option_record', 'cb_K1SvggABAD98wIfX'),
+        {x: 42n, y: undefined},
+        'test_option_record({x = 42, y = None})'
+    )
+})
+
 test('Decode list of records', t => {
     t.plan(1)
     t.deepEqual(

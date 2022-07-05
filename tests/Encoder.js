@@ -409,6 +409,12 @@ test('Encode template record arguments', t => {
     t.is(encoded, 'cb_KxGua0Q7GysAANAfuis=', 'test_template_record({x = 0, y = 0})')
 })
 
+test('Encode option record arguments', t => {
+    t.plan(1)
+    const encoded = encoder.encode(CONTRACT, 'test_option_record', [{x: 42}])
+    t.is(encoded, 'cb_KxHYGGWQGytUr4IAAQA/vClLIw==', 'test_option_record({x = 42, y = None})')
+})
+
 test('Encode namespaced arguments', t => {
     t.plan(1)
     const encoded1 = encoder.encode(CONTRACT, 'test_lib_type', [404])

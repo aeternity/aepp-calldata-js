@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix encoding and decoding of singular tuples and records (optimization)
 - Fix support of templated records
+- Fix omitting of optional record fields 
 ### Added
 - Add support for `unit` type
 - Add support for `Set.set` stdlib type
