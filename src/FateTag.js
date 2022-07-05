@@ -17,7 +17,7 @@ module.exports = Object.freeze({
     LONG_TUPLE   : 0b00001011, // 0000 1011 | RLP encoded (size - 16) | [encoded elements],
     SHORT_TUPLE  :     0b1011, // xxxx 1011 | [encoded elements] when 0  <  size < 16
                                     // 1111 Set below
-    LONG_LIST    : 0b00011111, // 0001 1111 | RLP encoded (length - 16) | [encoded lements]
+    LONG_LIST    : 0b00011111, // 0001 1111 | RLP encoded (length - 16) | [encoded elements]
     MAP          : 0b00101111, // 0010 1111 | RLP encoded size | [encoded key, encoded value]
     EMPTY_TUPLE  : 0b00111111, // 0011 1111
     POS_BITS     : 0b01001111, // 0100 1111 | RLP encoded integer (to be interpreted as bitfield)
