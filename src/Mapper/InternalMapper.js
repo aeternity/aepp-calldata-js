@@ -1,5 +1,6 @@
 const base58check = require('../utils/base58check')
 const {Int2MontBytes} = require('../utils/Bls12381')
+const isOptionVariant = require('../utils/isOptionVariant')
 const FateTypeError = require('../Errors/FateTypeError')
 
 const ADDRESS_PREFIX_MAP = {
@@ -52,7 +53,7 @@ class InternalMapper {
     }
 
     toVariant(type, value) {
-        if (!this.isOptionVariant(type)) {
+        if (!isOptionVariant(type)) {
             return value
         }
 
@@ -66,11 +67,6 @@ class InternalMapper {
         }
 
         return {Some: [value]}
-    }
-
-    isOptionVariant({ _name, variants }) {
-        return variants.some(({ None }) => None && None.length === 0)
-            && variants.some(({ Some }) => Some)
     }
 
     toMap(type, value) {

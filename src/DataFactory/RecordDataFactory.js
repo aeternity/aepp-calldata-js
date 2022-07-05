@@ -2,6 +2,8 @@ const BaseDataFactory = require('./BaseDataFactory')
 const FateTuple = require('../types/FateTuple')
 const {FateTypeRecord} = require('../FateTypes')
 const FateTypeError = require('../Errors/FateTypeError')
+const isOptionVariant = require('../utils/isOptionVariant')
+const zip = require('../utils/zip')
 
 class RecordDataFactory extends BaseDataFactory {
     supports({ name, _valueTypes }) {
@@ -16,12 +18,12 @@ class RecordDataFactory extends BaseDataFactory {
             )
         }
 
-        const keyLen = Object.keys(value).length
-        if (keyLen !== type.keys.length) {
-            throw new FateTypeError(
-                type.name,
-                `Number of expected keys (${type.keys.length}) and actual keys (${keyLen}) should match`
-            )
+        const missedKeys = zip(type.keys, type.valueTypes)
+            .filter(([, valueType]) => !isOptionVariant(valueType))
+            .map(([name]) => name)
+            .filter((name) => !(name in value))
+        if (missedKeys.length) {
+            throw new FateTypeError(type.name, `Missed required keys: ${missedKeys.join(', ')}`)
         }
 
         const resolvedValue = type.valueTypes.map((t, i) => {

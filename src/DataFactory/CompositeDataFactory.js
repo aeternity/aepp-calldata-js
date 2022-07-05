@@ -1,4 +1,5 @@
 const assert = require('../utils/assert')
+const zip = require('../utils/zip')
 const PrimitiveDataFactory = require('./PrimitiveDataFactory')
 const ListDataFactory = require('./ListDataFactory')
 const SetDataFactory = require('./SetDataFactory')
@@ -8,10 +9,6 @@ const RecordDataFactory = require('./RecordDataFactory')
 const VariantDataFactory = require('./VariantDataFactory')
 const EventDataFactory = require('./EventDataFactory')
 const Bls12381DataFactory = require('./Bls12381DataFactory')
-
-const zip = (arr, ...arrs) => {
-    return arr.map((val, i) => arrs.reduce((a, curr) => [...a, curr[i]], [val]))
-}
 
 class CompositeDataFactory {
     constructor() {
