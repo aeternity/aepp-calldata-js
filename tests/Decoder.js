@@ -155,6 +155,18 @@ test('Decode list arguments', t => {
     t.deepEqual(decoded, ints, 'test_list([1, 2, 3, 5, 8, 13, 21])')
 })
 
+test('Decode long list arguments', t => {
+    t.plan(1)
+    const decoded = encoder.decode(CONTRACT, 'test_list', 'cb_HwFUVFRUVFRUVFRUVFRUVFRUVBiJdZ4=')
+    const ints = new Array(17).fill(42n)
+
+    t.deepEqual(
+        decoded,
+        ints,
+        'test_list([42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42])'
+    )
+})
+
 test('Decode nested list arguments', t => {
     t.plan(1)
     const decoded = encoder.decode(CONTRACT, 'test_nested_list', 'cb_MyMCBCMGCCMKDPLAUC0=')
