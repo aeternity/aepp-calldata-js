@@ -24,6 +24,7 @@ jobs:
           sudo apt install --allow-downgrades ./esl-erlang_21.3.8.17-1~ubuntu~bionic_amd64.deb || true
           sudo apt --fix-broken install
     - run: npm config set fund false
+    - run: ./bin/aesophia_cli --create_json_aci contracts/Test.aes
     - run: make tests
     - run: make integration-tests
     - run: make lint
