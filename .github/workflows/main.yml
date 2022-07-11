@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     strategy:
       matrix:
         node-version: [16.x]
@@ -20,15 +20,15 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: npm
     - run: |
-          wget https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_21.3.8.13-1~debian~stretch_amd64.deb
-          sudo apt install ./esl-erlang_21.3.8.13-1~debian~stretch_amd64.deb || true
+          wget https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_21.3.8.17-1~ubuntu~bionic_amd64.deb
+          sudo apt install ./esl-erlang_21.3.8.17-1~ubuntu~bionic_amd64.deb || true
           sudo apt --fix-broken install
     - run: npm config set fund false
     - run: make tests
     - run: make integration-tests
     - run: make lint
   benchmark:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     if: github.ref == 'refs/heads/master'
     strategy:
       matrix:
@@ -41,8 +41,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: npm
     - run: |
-          wget https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_21.3.8.13-1~debian~stretch_amd64.deb
-          sudo apt install ./esl-erlang_21.3.8.13-1~debian~stretch_amd64.deb || true
+          wget https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_21.3.8.17-1~ubuntu~bionic_amd64.deb
+          sudo apt install ./esl-erlang_21.3.8.17-1~ubuntu~bionic_amd64.deb || true
           sudo apt --fix-broken install
     - run: npm config set fund false
     - run: make benchmark-tests
