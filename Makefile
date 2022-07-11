@@ -20,7 +20,7 @@ $(BUILDDIR)/$(BYTECODES): $(SOURCES) | $(BUILDDIR)/$(SOURCEDIR)
 	$(COMPILER) $< -o $@
 
 $(BUILDDIR)/$(JSON_ACIS): $(SOURCES) | $(BUILDDIR)/$(SOURCEDIR)
-	$(COMPILER) --create_json_aci $< | jq -M > $@
+	$(COMPILER) --create_json_aci $< | jq . > $@
 
 watch:
 	@echo Watching for file changes in current directory ...
