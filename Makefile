@@ -19,6 +19,7 @@ $(BUILDDIR)/$(SOURCEDIR): | $(BUILDDIR)
 $(BUILDDIR)/$(BYTECODES): $(SOURCES) | $(BUILDDIR)/$(SOURCEDIR)
 	$(COMPILER) $< -o $@
 
+# Note on jq default filter: https://github.com/stedolan/jq/issues/1110
 $(BUILDDIR)/$(JSON_ACIS): $(SOURCES) | $(BUILDDIR)/$(SOURCEDIR)
 	$(COMPILER) --create_json_aci $< | jq . > $@
 
