@@ -21,7 +21,7 @@ jobs:
         cache: npm
     - run: |
           wget https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_21.3.8.17-1~ubuntu~bionic_amd64.deb
-          sudo apt install ./esl-erlang_21.3.8.17-1~ubuntu~bionic_amd64.deb || true
+          sudo apt install --allow-downgrades ./esl-erlang_21.3.8.17-1~ubuntu~bionic_amd64.deb || true
           sudo apt --fix-broken install
     - run: npm config set fund false
     - run: make tests
@@ -42,7 +42,7 @@ jobs:
         cache: npm
     - run: |
           wget https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_21.3.8.17-1~ubuntu~bionic_amd64.deb
-          sudo apt install ./esl-erlang_21.3.8.17-1~ubuntu~bionic_amd64.deb || true
+          sudo apt install --allow-downgrades ./esl-erlang_21.3.8.17-1~ubuntu~bionic_amd64.deb || true
           sudo apt --fix-broken install
     - run: npm config set fund false
     - run: make benchmark-tests
