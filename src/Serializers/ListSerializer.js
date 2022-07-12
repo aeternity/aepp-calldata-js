@@ -1,5 +1,5 @@
+const RLPInt = require('../utils/RLPInt')
 const FateTag = require('../FateTag')
-const FateInt = require('../types/FateInt')
 const FateList = require('../types/FateList')
 const BaseSerializer = require('./BaseSerializer')
 
@@ -22,7 +22,7 @@ class ListSerializer extends BaseSerializer {
 
         return [
             FateTag.LONG_LIST,
-            ...this.globalSerializer.serialize(new FateInt(len - 16)),
+            ...RLPInt.encode(len - 16),
             ...serializedElements
         ]
     }
@@ -34,7 +34,7 @@ class ListSerializer extends BaseSerializer {
         let rest = buffer.slice(1)
 
         if (prefix === FateTag.LONG_LIST) {
-            [len, rest] = this.globalSerializer.deserializeStream(buffer.slice(1))
+            [len, rest] = RLPInt.decode(buffer.slice(1))
             len += 16n
         }
 
