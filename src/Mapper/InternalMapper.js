@@ -1,6 +1,7 @@
 const base58check = require('../utils/base58check')
 const {Int2MontBytes} = require('../utils/Bls12381')
 const FateTypeError = require('../Errors/FateTypeError')
+const zip = require('../utils/zip')
 
 const ADDRESS_PREFIX_MAP = {
     account_address: 'ak',
@@ -28,6 +29,8 @@ class InternalMapper {
             return this.toMap(type, value)
         case 'set':
             return this.toSet(type, value)
+        case 'record':
+            return this.toRecord(type, value)
         case 'bls12_381.fr':
             return this.toBls12381Fr(type, value)
         case 'bls12_381.fp':
@@ -96,6 +99,13 @@ class InternalMapper {
         throw new FateTypeError(
             'set',
             `Fate set must be a Set or Array, got "${value}" instead`
+        )
+    }
+
+    toRecord(type, record) {
+        return zip(type.keys, type.valueTypes).reduce(
+            (v, [name, fieldType]) => ({ ...v, [name]: this.toInternal(fieldType, record[name]) }),
+            record
         )
     }
 
