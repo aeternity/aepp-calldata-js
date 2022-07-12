@@ -64,6 +64,7 @@ main contract Test =
     entrypoint test_template_variants(a:amount_t(int, bool)) = a
     entrypoint test_tuple(a: bool * bool) = a
     entrypoint test_nested_tuple(a: (bool * bool) * (bool * bool)) = a
+    entrypoint test_long_tuple(a: int * int * int * int * int * int * int * int * int * int * int * int * int * int * int * int * int) = a
     entrypoint test_record(a: point) = a
     entrypoint test_singleton_record(a: singleton) = a
     entrypoint test_template_record(a: tpl_point(int, int)) = a

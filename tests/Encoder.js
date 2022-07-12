@@ -184,6 +184,16 @@ test('Encode list arguments', t => {
     t.is(encoded, 'cb_KxFLwdBRG3MCBAYKEBoquPlTeA==', 'test_list([1, 2, 3, 5, 8, 13, 21])')
 })
 
+test('Encode long list arguments', t => {
+    t.plan(1)
+    const encoded = encoder.encode(CONTRACT, 'test_list', [new Array(17).fill(42)])
+    t.is(
+        encoded,
+        'cb_KxFLwdBRGx8BVFRUVFRUVFRUVFRUVFRUVFQudVVq',
+        'test_list([42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42])'
+    )
+})
+
 test('Ensures list is array', t => {
     t.plan(1)
     t.throws(
@@ -259,6 +269,16 @@ test('Encode nested tuple arguments', t => {
     t.plan(1)
     const encoded = encoder.encode(CONTRACT, 'test_nested_tuple', [[[true, false], [false, true]]])
     t.is(encoded, 'cb_KxHkKCkeGysr/38rf/+ZQRDt', 'test_nested_tuple(((true, false), (false, true)))')
+})
+
+test('Encode long tuple arguments', t => {
+    t.plan(1)
+    const encoded = encoder.encode(CONTRACT, 'test_long_tuple', [new Array(17).fill(42)])
+    t.is(
+        encoded,
+        'cb_KxFNdSEgGwsBVFRUVFRUVFRUVFRUVFRUVFSv7rmw',
+        'test_long_tuple((42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42))'
+    )
 })
 
 test('Variant validation', t => {

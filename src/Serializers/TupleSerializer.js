@@ -1,7 +1,7 @@
 const FateTag = require('../FateTag')
-const FateInt = require('../types/FateInt')
 const FateTuple = require('../types/FateTuple')
 const BaseSerializer = require('./BaseSerializer')
+const RLPInt = require('../utils/RLPInt')
 
 class TupleSerializer extends BaseSerializer {
     serialize(tuple) {
@@ -25,7 +25,7 @@ class TupleSerializer extends BaseSerializer {
 
         return [
             FateTag.LONG_TUPLE,
-            ...this.globalSerializer.serialize(new FateInt(len - 16)),
+            ...RLPInt.encode(len - 16),
             ...elements
         ]
     }
@@ -45,7 +45,7 @@ class TupleSerializer extends BaseSerializer {
         }
 
         if (prefix === FateTag.LONG_TUPLE) {
-            [len, rest] = this.globalSerializer.deserializeStream(buffer.slice(1))
+            [len, rest] = RLPInt.decode(buffer.slice(1))
             len += 16n
         }
 

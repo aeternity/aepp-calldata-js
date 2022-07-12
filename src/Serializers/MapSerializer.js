@@ -1,8 +1,6 @@
-const RLP = require('rlp')
 const FateTag = require('../FateTag')
 const RLPInt = require('../utils/RLPInt')
 const BaseSerializer = require('./BaseSerializer')
-const {ByteArray2Int} = require('../utils/Int2ByteArray')
 const FateComparator = require('../FateComparator')
 const FateMap = require('../types/FateMap')
 const FatePrefixError = require('../Errors/FatePrefixError')
@@ -24,7 +22,7 @@ class MapSerializer extends BaseSerializer {
 
         return [
             FateTag.MAP,
-            ...RLPInt(len),
+            ...RLPInt.encode(len),
             ...serializedItems.flat(Infinity)
         ]
     }
@@ -37,9 +35,8 @@ class MapSerializer extends BaseSerializer {
             throw new FatePrefixError(prefix)
         }
 
-        const decoded = RLP.decode(buffer.slice(1), true)
-        const len = ByteArray2Int(decoded.data)
-        let rest = decoded.remainder
+        const [len, remainder] = RLPInt.decode(buffer.slice(1))
+        let rest = remainder
 
         if (len === 0n) {
             return [new FateMap(), rest]
