@@ -1,5 +1,3 @@
-const RLP = require('rlp')
-const { ByteArray2Int } = require('../utils/Int2ByteArray')
 const RLPInt = require('../utils/RLPInt')
 const FateTag = require('../FateTag')
 const FateList = require('../types/FateList')
@@ -24,7 +22,7 @@ class ListSerializer extends BaseSerializer {
 
         return [
             FateTag.LONG_LIST,
-            ...RLPInt(len - 16),
+            ...RLPInt.encode(len - 16),
             ...serializedElements
         ]
     }
@@ -36,9 +34,8 @@ class ListSerializer extends BaseSerializer {
         let rest = buffer.slice(1)
 
         if (prefix === FateTag.LONG_LIST) {
-            const decoded = RLP.decode(buffer.slice(1), true)
-            len = ByteArray2Int(decoded.data) + 16n
-            rest = decoded.remainder
+            [len, rest] = RLPInt.decode(buffer.slice(1))
+            len += 16n
         }
 
         if ((prefix & 0x0F) === FateTag.SHORT_LIST) {

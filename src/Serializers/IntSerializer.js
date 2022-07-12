@@ -1,9 +1,7 @@
-const RLP = require('rlp')
 const FateTag = require('../FateTag')
 const RLPInt = require('../utils/RLPInt')
 const FateInt = require('../types/FateInt')
 const BaseSerializer = require('./BaseSerializer')
-const {ByteArray2Int} = require('../utils/Int2ByteArray')
 const FatePrefixError = require('../Errors/FatePrefixError')
 const abs = require('../utils/abs')
 
@@ -29,14 +27,14 @@ class IntSerializer extends BaseSerializer {
         if (bigValue < 0) {
             return [
                 FateTag.NEG_BIG_INT,
-                ...RLPInt(absVal - 64n)
+                ...RLPInt.encode(absVal - 64n)
             ]
         }
 
         // large positive integer
         return [
             FateTag.POS_BIG_INT,
-            ...RLPInt(absVal - 64n)
+            ...RLPInt.encode(absVal - 64n)
         ]
     }
 
@@ -65,12 +63,11 @@ class IntSerializer extends BaseSerializer {
 
         if (prefix === FateTag.POS_BIG_INT || prefix === FateTag.NEG_BIG_INT) {
             const sign = prefix === FateTag.POS_BIG_INT ? 1n : -1n
-            const decoded = RLP.decode(data.slice(1), true)
-            const i = ByteArray2Int(decoded.data)
+            const [i, remainder] = RLPInt.decode(data.slice(1))
 
             return [
                 new FateInt((i + 64n) * sign),
-                new Uint8Array(decoded.remainder)
+                new Uint8Array(remainder)
             ]
         }
 
