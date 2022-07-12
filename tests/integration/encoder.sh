@@ -43,6 +43,7 @@ test_encoder 'test_nested_map({[0] = {[0] = false}, [1] = {[1] = true}, [2] = {[
 test_encoder 'test_template_map({[17] = "abc"})'
 test_encoder 'test_tuple((true, false))'
 test_encoder 'test_nested_tuple(((true, false), (false, true)))'
+test_encoder 'test_long_tuple((42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42))'
 test_encoder 'test_variants(No)'
 test_encoder 'test_variants(Yep(7))'
 test_encoder 'test_nested_variants(One(RelativeTTL(7)))'

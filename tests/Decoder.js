@@ -200,6 +200,15 @@ test('Decode nested tuple arguments', t => {
     )
 })
 
+test('Decode long tuple arguments', t => {
+    t.plan(1)
+    t.deepEqual(
+        encoder.decode(CONTRACT, 'test_long_tuple', 'cb_CwFUVFRUVFRUVFRUVFRUVFRUVPz3ok8='),
+        new Array(17).fill(42n),
+        'test_long_tuple((42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42))'
+    )
+})
+
 test('Decode map arguments', t => {
     t.plan(1)
     t.deepEqual(

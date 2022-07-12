@@ -271,6 +271,16 @@ test('Encode nested tuple arguments', t => {
     t.is(encoded, 'cb_KxHkKCkeGysr/38rf/+ZQRDt', 'test_nested_tuple(((true, false), (false, true)))')
 })
 
+test('Encode long tuple arguments', t => {
+    t.plan(1)
+    const encoded = encoder.encode(CONTRACT, 'test_long_tuple', [new Array(17).fill(42)])
+    t.is(
+        encoded,
+        'cb_KxFNdSEgGwsBVFRUVFRUVFRUVFRUVFRUVFSv7rmw',
+        'test_long_tuple((42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42, 42))'
+    )
+})
+
 test('Variant validation', t => {
     const invalidData = [
         0xdead,
