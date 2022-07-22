@@ -7,16 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Security
 ### Fixed
-- Fix encoding and decoding of singular tuples and records (optimization)
-- Fix support of templated records
-- Fix omitting of optional record fields 
-- Fix encoding and decoding of long lists and tuples
 ### Added
-- Add support for `unit` type
-- Add support for `Set.set` stdlib type
 ### Changed
 ### Deprecated
 ### Removed
+
+## [1.2.0] - 2022-07-22
+
+### Fixed
+- Fix encoding and decoding of singular tuples and records (optimization) (#127)
+- Fix support of template records (#127)
+- Fix encoding and decoding of long lists and tuples (#146)
+- Fix omitting of optional record fields (#147)
+
+### Added
+- Add support for `unit` type (#127)
+- Add support for `Set.set` stdlib type (#127)
+- Add support for `BLS12_381` types (#133)
 
 ## [1.1.1] - 2022-03-15
 

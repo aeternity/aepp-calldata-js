@@ -1,7 +1,7 @@
 {
   "name": "@aeternity/aepp-calldata",
   "description": "Aeternity data serialization library",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "author": "aeternity",
   "license": "ISC",
   "homepage": "https://github.com/aeternity/aepp-calldata-js#readme",
