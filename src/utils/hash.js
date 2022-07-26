@@ -1,4 +1,4 @@
-const blake = require('blakejs')
+const blake = require('blakejs/blake2b')
 
 const HASH_BYTES = 32
 

@@ -1,9 +1,9 @@
-const shajs = require('sha.js')
+const Sha256 = require('sha.js/sha256')
 const { Buffer } = require('safe-buffer')
 const FormatError = require('../Errors/FormatError')
 
 const sha256hash = (input) => {
-    return shajs('sha256').update(input).digest()
+    return new Sha256().update(input).digest()
 }
 
 const checkSumFn = (payload) => {
