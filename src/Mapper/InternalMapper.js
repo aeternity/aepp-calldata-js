@@ -1,7 +1,6 @@
 const base58check = require('../utils/base58check')
 const {Int2MontBytes} = require('../utils/Bls12381')
 const FateTypeError = require('../Errors/FateTypeError')
-const zip = require('../utils/zip')
 
 const ADDRESS_PREFIX_MAP = {
     account_address: 'ak',
@@ -103,10 +102,7 @@ class InternalMapper {
     }
 
     toRecord(type, record) {
-        return zip(type.keys, type.valueTypes).reduce(
-            (v, [name, fieldType]) => ({ ...v, [name]: this.toInternal(fieldType, record[name]) }),
-            record
-        )
+        return type.keys.reduce((v, name) => ({ ...v, [name]: record[name] }), {})
     }
 
     validateBls12381Field(type, value) {

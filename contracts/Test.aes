@@ -29,6 +29,7 @@ main contract Test =
     record tpl_point('a, 'b) = {x: 'a, y: 'b}
     type option_int = option(int)
     record option_point = {x: int, y: option_int}
+    record allowance = {account: address, amount: int}
 
     datatype really_t = Nope | No | Yep(int) | Yes
     datatype nested_t = One(Chain.ttl) | Two(AENS.name)
@@ -70,6 +71,7 @@ main contract Test =
     entrypoint test_template_record(a: tpl_point(int, int)) = a
     entrypoint test_nested_record(a: rectangle) = a
     entrypoint test_option_record(a: option_point) = a
+    entrypoint test_address_record(a: allowance) = a
     entrypoint test_records_list(a:list(point)) = a
     entrypoint test_records_map(a: map(point, point)) = a
     entrypoint test_int_type(a: number) = a
