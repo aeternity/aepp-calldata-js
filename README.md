@@ -2,9 +2,9 @@
 
 Aeternity contract calldata encoding and results decoding **standalone** library.
 
-This is Javascript imeplemtnation of data serialization specified in [aeternity protocol](https://github.com/aeternity/protocol/blob/master/serializations.md#data).
+This is Javascript implementation of data serialization specified in [aeternity protocol](https://github.com/aeternity/protocol/blob/master/serializations.md#data).
 
-While the only purpose of the library at the moment of this writing is solely to provide ecnoding and decoding respectively of contracts calldata and return data it may evolve to full fledged serialization library of the full protocol specification.
+While the only purpose of the library at the moment of this writing is solely to provide encoding and decoding respectively of contracts calldata and return data it may evolve to full-fledged serialization library of the full protocol specification.
 
 ## Installation
 
@@ -14,11 +14,11 @@ npm install -P @aeternity/aepp-calldata
 
 ## Quick Start
 
-There is single module `Encoder` that should be imported and instanciated. The constructor takes a single argument - [Sophia ACI](https://github.com/aeternity/aesophia/blob/master/docs/aeso_aci.md) as string.
+There is single module `Encoder` that should be imported and instantiated. The constructor takes a single argument - [Sophia ACI](https://github.com/aeternity/aesophia/blob/master/docs/aeso_aci.md) as string.
 
 The `encode` method is used to encode calldata taking the contract name as first argument, then function name and list of contract call arguments as last argument.
 
-The `decode` method is used to decode contract call results while the first two arguments are the same as the encoding method the last one is the actuall result to be decoded.
+The `decode` method is used to decode contract call results while the first two arguments are the same as the encoding method the last one is the actual result to be decoded.
 
 NodeJS example:
 

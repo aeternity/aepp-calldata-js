@@ -18,7 +18,7 @@ class Encoder {
      * const ACI = require('./Test.json')
      * const encoder = new Encoder(ACI)
      *
-     * @param {Object} aci - The contarct ACI in a cannonical form as POJO.
+     * @param {Object} aci - The contract ACI in a canonical form as POJO.
     */
     constructor(aci) {
         /** @type {Object} */
@@ -52,7 +52,7 @@ class Encoder {
      * // Outputs:
      * // Encoded data: cb_KxHwzCuVGyl3aG9vbHltb2x5zwMSnw==
      *
-     * @param {string} contarct - The contarct name as defined in the ACI.
+     * @param {string} contract - The contract name as defined in the ACI.
      * @param {string} funName - The function name as defined in the ACI.
      * @param {Array} args - An array of call arguments as Javascript data structures. See README.md
      * @returns {string} Encoded calldata
@@ -89,9 +89,9 @@ class Encoder {
      * // Outputs:
      * // Decoded data: whoolymoly
      *
-     * @param {string} contarct - The contarct name as defined in the ACI.
+     * @param {string} contract - The contract name as defined in the ACI.
      * @param {string} funName - The function name as defined in the ACI.
-     * @param {string} data - The call return value in a cannonical format.
+     * @param {string} data - The call return value in a canonical format.
      * @returns {boolean|string|BigInt|Array|Map|Object}
      *  Decoded value as Javascript data structures. See README.md
     */
@@ -157,7 +157,7 @@ class Encoder {
      * // Outputs:
      * // {EventTwo: [17n, 'triggered']}
      *
-     * @param {string} contarct - The contarct name as defined in the ACI.
+     * @param {string} contract - The contract name as defined in the ACI.
      * @param {string} encodedData - Event encoded data
      * @param {Array} topics - A list of event topics.
      * First element should be the implicit topic that carry the event constructor name.
