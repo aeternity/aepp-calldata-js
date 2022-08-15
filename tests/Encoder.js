@@ -435,6 +435,20 @@ test('Encode option record arguments', t => {
     t.is(encoded, 'cb_KxHYGGWQGytUr4IAAQA/vClLIw==', 'test_option_record({x = 42, y = None})')
 })
 
+test('Encode record with address and int in arguments', t => {
+    t.plan(1)
+    const encoded = encoder.encode(
+        CONTRACT,
+        'test_address_record',
+        [{account: 'ak_2kE1RxHzsRE4LxDFu6WKi35BwPvrEawBjNtV788Gje3yqADvwR', amount: 42}]
+    )
+    t.is(
+        encoded,
+        'cb_KxF7CJtTGyufAKDl15J29uSuZc3z1ZG2rDJhj05+ymUb+Vx+U6wgnnIIalQBp8sy',
+        'test_address_record({account = ak_2kE1RxHzsRE4LxDFu6WKi35BwPvrEawBjNtV788Gje3yqADvwR, amount = 42})'
+    )
+})
+
 test('Encode namespaced arguments', t => {
     t.plan(1)
     const encoded1 = encoder.encode(CONTRACT, 'test_lib_type', [404])

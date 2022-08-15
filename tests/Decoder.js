@@ -387,6 +387,19 @@ test('Decode option record', t => {
     )
 })
 
+test('Decode record with address and int', t => {
+    t.plan(1)
+    t.deepEqual(
+        encoder.decode(
+            CONTRACT,
+            'test_address_record',
+            'cb_K58AoOXXknb25K5lzfPVkbasMmGPTn7KZRv5XH5TrCCecghqVPPeH80=',
+        ),
+        {account: 'ak_2kE1RxHzsRE4LxDFu6WKi35BwPvrEawBjNtV788Gje3yqADvwR', amount: 42n},
+        'test_address_record({account = ak_2kE1RxHzsRE4LxDFu6WKi35BwPvrEawBjNtV788Gje3yqADvwR, amount = 42})'
+    )
+})
+
 test('Decode list of records', t => {
     t.plan(1)
     t.deepEqual(
