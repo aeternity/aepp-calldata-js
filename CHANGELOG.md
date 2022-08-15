@@ -56,13 +56,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fix resolving of contract state type (#71)
-- Fix deserialisation of empty string (#78)
+- Fix deserialization of empty string (#78)
 - Fix decoding of nested variants
 - Don't refer to class name to allow minification
 
 ### Added
 - Validate string in HexStringToByteArray (#80) 
-- Clarify library pupose, public API and contribution (#83)
+- Clarify library purpose, public API and contribution (#83)
 - Validate variant values (#79)
 - Add decodeString public API (#96)
 
