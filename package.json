@@ -22,6 +22,7 @@
     "serialization"
   ],
   "main": "src/main.js",
+  "types": "src/main.d.ts",
   "files": [
     "src/*"
   ],
