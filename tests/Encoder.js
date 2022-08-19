@@ -340,6 +340,12 @@ test('Encode variant arguments with nested variant', t => {
     )
 })
 
+test('Encode map variants arguments', t => {
+    t.plan(1)
+    const encoded1 = encoder.encode(CONTRACT, 'test_map_variants', [{MyMap: [[["foo", "boo"]]]}])
+    t.is(encoded1, 'cb_KxF7oardG68BABsvAQ1mb28NYm9v+Zmjog==', 'test_map_variants(MyMap({["foo"] = "boo"}))')
+})
+
 test('Encode variant with template arguments', t => {
     t.plan(1)
     const encoded = encoder.encode(CONTRACT, 'test_template_variants', [{Any: [7, true, 9, 21]}])

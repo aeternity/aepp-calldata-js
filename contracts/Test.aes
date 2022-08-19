@@ -34,6 +34,7 @@ main contract Test =
     datatype really_t = Nope | No | Yep(int) | Yes
     datatype nested_t = One(Chain.ttl) | Two(AENS.name)
     datatype amount_t('a, 'b) = Zero | Any('a, 'b, int, 'a)
+    datatype map_t = MyMap(map(string, string))
     datatype event
         = EventZero
         | EventOne(int)
@@ -63,6 +64,7 @@ main contract Test =
     entrypoint test_variants(a:really_t) = a
     entrypoint test_nested_variants(a:nested_t) = a
     entrypoint test_template_variants(a:amount_t(int, bool)) = a
+    entrypoint test_map_variants(a:map_t) = a
     entrypoint test_tuple(a: bool * bool) = a
     entrypoint test_nested_tuple(a: (bool * bool) * (bool * bool)) = a
     entrypoint test_long_tuple(a: int * int * int * int * int * int * int * int * int * int * int * int * int * int * int * int * int) = a
