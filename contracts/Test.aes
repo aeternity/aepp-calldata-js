@@ -34,7 +34,7 @@ main contract Test =
     datatype really_t = Nope | No | Yep(int) | Yes
     datatype nested_t = One(Chain.ttl) | Two(AENS.name)
     datatype amount_t('a, 'b) = Zero | Any('a, 'b, int, 'a)
-    datatype map_t = MyMap(map(string, string))
+    datatype map_t = MyMap(map(string, string)) | EmptyMap
     datatype event
         = EventZero
         | EventOne(int)
