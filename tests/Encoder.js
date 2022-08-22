@@ -214,6 +214,11 @@ test('Encode map arguments', t => {
     t.is(encoded, 'cb_KxHLN316Gy8BDn+vbmBO', 'test_simple_map({[7] = false})')
 })
 
+test('Encode map arguments with sorted keys', t => {
+    const encoded = encoder.encode(CONTRACT, 'test_string_map', [[["fo", "a"], ["s", "a"]]])
+    t.is(encoded, 'cb_KxFFPju5Gy8CBXMFYQlmbwVhMOIQaw==', 'test_string_map({["fo"] = "a", ["s"] = "a"})')
+})
+
 test('Encode map arguments by object', t => {
     t.plan(1)
     const encoded = encoder.encode(CONTRACT, 'test_simple_map', [{ 7: false }])
@@ -338,12 +343,6 @@ test('Encode variant arguments with nested variant', t => {
         'cb_KxF1qXomG6+CAQEBG68DADufAKDeaL/hsgPlH1I1G6CH95t4KOahQPDDFKZwxwA7P/Vwda+CAQEAGw4vAR1wb2ludGVyr4QBAQEBAhufAKAfwNCZ7FoTy5Mooxf87NhSsfdInl4AuglXPDwttphVU1S4wEY=',
         'test_nested_variants(Two(AENS.Name(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt, RelativeTTL(7), {["pointer"] = AENS.ContractPt(ak_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ)})))'
     )
-})
-
-test('Encode map variants arguments', t => {
-    t.plan(1)
-    const encoded1 = encoder.encode(CONTRACT, 'test_map_variants', [{MyMap: [[["foo", "boo"]]]}])
-    t.is(encoded1, 'cb_KxF7oardG68BABsvAQ1mb28NYm9v+Zmjog==', 'test_map_variants(MyMap({["foo"] = "boo"}))')
 })
 
 test('Encode variant with template arguments', t => {
