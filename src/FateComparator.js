@@ -147,8 +147,18 @@ const bytesComparator = (a, b) => {
     return listComparator(aList, bList)
 }
 
+const stringComparator = (a, b) => {
+    const as = a.toString()
+    const bs = b.toString()
+
+    if (as.length === bs.length) {
+        return as.localeCompare(bs)
+    }
+
+    return as.length - bs.length
+}
+
 const intComparator = (a, b) => Number(BigInt(a) - BigInt(b))
-const stringComparator = (a, b) => a.toString().localeCompare(b.toString())
 const boolComparator = (a, b) => a - b
 const bitsComparator = (a, b) => {
     return (a < 0 || b < 0) ? -intComparator(a, b) : intComparator(a, b)
