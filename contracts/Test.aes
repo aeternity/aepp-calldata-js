@@ -58,6 +58,7 @@ main contract Test =
     entrypoint test_list(a:list(int)) = a
     entrypoint test_nested_list(a:list(list(int))) = a
     entrypoint test_simple_map(a: map(int, bool)) = a
+    entrypoint test_string_map(a: map(string, string)) = a
     entrypoint test_nested_map(a: map(int, map(int, bool))) = a
     entrypoint test_template_map(a: template_map(int)) = a
     entrypoint test_variants(a:really_t) = a

@@ -214,6 +214,11 @@ test('Encode map arguments', t => {
     t.is(encoded, 'cb_KxHLN316Gy8BDn+vbmBO', 'test_simple_map({[7] = false})')
 })
 
+test('Encode map arguments with sorted keys', t => {
+    const encoded = encoder.encode(CONTRACT, 'test_string_map', [[["fo", "a"], ["s", "a"]]])
+    t.is(encoded, 'cb_KxFFPju5Gy8CBXMFYQlmbwVhMOIQaw==', 'test_string_map({["fo"] = "a", ["s"] = "a"})')
+})
+
 test('Encode map arguments by object', t => {
     t.plan(1)
     const encoded = encoder.encode(CONTRACT, 'test_simple_map', [{ 7: false }])

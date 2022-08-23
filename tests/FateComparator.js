@@ -31,7 +31,7 @@ const FTInt = FateTypeInt()
 const FTBool = FateTypeBool()
 
 test('Compare primitive types', t => {
-    t.plan(5)
+    t.plan(4)
     t.deepEqual(
         sort(FateTypeInt(), [3, new FateInt(3), 5, -7, 1, 0]),
         [-7, 0, 1, 3, new FateInt(3), 5]
@@ -43,13 +43,8 @@ test('Compare primitive types', t => {
     )
 
     t.deepEqual(
-        sort(FateTypeString(), ['Z', 'abc', '~', 'a', 'bab', new FateString('bab'), 'B', 'ab', 'b', 'aa', 'abd', 'abcd']),
-        ['~', 'a', 'aa', 'ab', 'abc', 'abcd', 'abd', 'b', 'B', 'bab', new FateString('bab'), 'Z']
-    )
-
-    t.deepEqual(
-        sort(FateTypeString(), ['Z', 'abc', '~', 'a', 'bab', 'B', 'ab', 'b', 'aa', 'abd', 'abcd']),
-        ['~', 'a', 'aa', 'ab', 'abc', 'abcd', 'abd', 'b', 'B', 'bab', 'Z']
+        sort(FateTypeString(), ['Z', 'abc', '~', 'a', 'abcd', 'bab', new FateString('bab'), 'B', 'ab', 'b', 'aa', 'abd']),
+        ['~', 'a', 'b', 'B', 'Z', 'aa', 'ab', 'abc', 'abd', 'bab', new FateString('bab'), 'abcd']
     )
 
     t.deepEqual(
