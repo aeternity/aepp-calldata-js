@@ -12,6 +12,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deprecated
 ### Removed
 
+## [1.3.0] - 2022-08-24
+### Fixed
+- Fix string comparator by taking into account string length (#162)
+- Fix encoding of record with address (#156)
+- Fix typos (#157)
+
+### Added
+- Add types for TypeScript (#158)
+
+### Changed
+- Import specific versions of blakejs and sha.js (#153)
+
 ## [1.2.0] - 2022-07-22
 
 ### Fixed
