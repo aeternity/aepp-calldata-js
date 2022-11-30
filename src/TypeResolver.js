@@ -188,7 +188,7 @@ class TypeResolver {
             return FateTypeAccountAddress()
         }
 
-        if (key === 'contract_address') {
+        if (key === 'contract_pubkey') {
             return FateTypeContractAddress()
         }
 
@@ -301,7 +301,7 @@ class TypeResolver {
         }
 
         if (namespaceData.name === type) {
-            return ['contract_address', []]
+            return ['contract_pubkey', []]
         }
 
         const def = [

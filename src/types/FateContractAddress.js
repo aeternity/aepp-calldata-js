@@ -2,7 +2,7 @@ const FateAddress = require('./FateAddress')
 
 class FateContractAddress extends FateAddress {
     constructor(value) {
-        super(value, 'contract_address', 'ct')
+        super(value, 'contract_pubkey', 'ct')
     }
 }
 

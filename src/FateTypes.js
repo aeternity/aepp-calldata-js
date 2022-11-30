@@ -35,7 +35,7 @@ const FateTypeAccountAddress = () => {
 }
 
 const FateTypeContractAddress = () => {
-    return {name: 'contract_address'}
+    return {name: 'contract_pubkey'}
 }
 
 const FateTypeChannelAddress = () => {
@@ -44,7 +44,7 @@ const FateTypeChannelAddress = () => {
 
 const FateTypeOracleAddress = (questionType, answerType) => {
     return {
-        name: 'oracle_address',
+        name: 'oracle_pubkey',
         questionType,
         answerType
     }
@@ -52,7 +52,7 @@ const FateTypeOracleAddress = (questionType, answerType) => {
 
 const FateTypeOracleQueryAddress = (questionType, answerType) => {
     return {
-        name: 'oracle_query_address',
+        name: 'oracle_query_id',
         questionType,
         answerType
     }

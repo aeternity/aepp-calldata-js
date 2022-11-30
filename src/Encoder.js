@@ -1,6 +1,6 @@
-const base64check = require('./utils/base64check')
 const Serializer = require('./Serializer')
 const TypeResolver = require('./TypeResolver')
+const ApiEncoder = require('./ApiEncoder')
 const CompositeDataFactory = require('./DataFactory/CompositeDataFactory')
 const ExternalDataFactory = require('./ExternalDataFactory')
 const CanonicalMapper = require('./Mapper/CanonicalMapper')
@@ -35,6 +35,9 @@ class Encoder {
 
         /** @type {TypeResolver} */
         this._typeResolver = new TypeResolver(aci)
+
+        /** @type {ApiEncoder} */
+        this._apiEncoder = new ApiEncoder()
 
         /** @type {InternalMapper} */
         this._internalMapper = new InternalMapper()
@@ -77,7 +80,7 @@ class Encoder {
         const serialized = this._serializer.serialize(calldata)
         const data = new Uint8Array(serialized.flat(Infinity))
 
-        return 'cb_' + base64check.encode(data)
+        return this._apiEncoder.encode('contract_bytearray', data)
     }
 
     /**
@@ -138,11 +141,7 @@ class Encoder {
      * @returns {Uint8Array} Decoded value as byte array.
     */
     decodeString(data) {
-        if (!data.startsWith('cb_')) {
-            throw new FormatError('Invalid data format (missing cb_ prefix)')
-        }
-
-        return base64check.decode(data.substring(3))
+        return this._apiEncoder.decode(data)
     }
     /* eslint-enable max-len */
 
