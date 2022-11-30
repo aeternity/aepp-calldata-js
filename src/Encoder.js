@@ -98,7 +98,27 @@ class Encoder {
     decode(contract, funName, data) {
         const type = this._typeResolver.getReturnType(contract, funName)
         const binData = this.decodeString(data)
-        const deserialized = this._serializer.deserialize(type, binData)
+        const deserialized = this._serializer.deserializeWithType(binData, type)
+
+        return deserialized.accept(this._canonicalMapper)
+    }
+
+    /**
+     * Decodes arbitrary contract bytearray data. Variants are not annotated with names.
+     *
+     * @example
+     * const decoded = encoder.decodeContractByteArray('cb_KXdob29seW1vbHlGazSE')
+     * console.log(`Decoded data: ${decoded}`)
+     * // Outputs:
+     * // Decoded data: whoolymoly
+     *
+     * @param {string} data - Contract bytearray data in a canonical format.
+     * @returns {boolean|string|BigInt|Array|Map|Object}
+     *  Decoded value as Javascript data structures. See README.md
+    */
+    decodeContractByteArray(data) {
+        const binData = this.decodeString(data)
+        const deserialized = this._serializer.deserialize(binData)
 
         return deserialized.accept(this._canonicalMapper)
     }
@@ -140,7 +160,7 @@ class Encoder {
     */
     decodeFateString(data) {
         const binData = this.decodeString(data)
-        const deserialized = this._serializer.deserialize(FateTypeString(), binData)
+        const deserialized = this._serializer.deserializeWithType(binData, FateTypeString())
 
         return deserialized.accept(this._canonicalMapper)
     }

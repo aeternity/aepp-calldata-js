@@ -49,7 +49,7 @@ test('Deserialize', t => {
     t.plan(4)
     t.deepEqual(
         s.deserialize([3]),
-        new FateList(null, []),
+        new FateList(),
         'empty list'
     )
 

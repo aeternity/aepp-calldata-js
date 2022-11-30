@@ -57,7 +57,7 @@ class ListSerializer extends BaseSerializer {
         }
 
         if (len === 0n) {
-            return [new FateList(null), rest]
+            return [new FateList(), rest]
         }
 
         if (typeof typeInfo === 'undefined') {

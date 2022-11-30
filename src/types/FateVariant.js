@@ -43,6 +43,10 @@ class FateVariant extends FateData {
     }
 
     get variantName() {
+        if (this.variants.length === 0) {
+            return this.tag
+        }
+
         const variant = this.variants[this.tag]
 
         return Object.keys(variant)[0]

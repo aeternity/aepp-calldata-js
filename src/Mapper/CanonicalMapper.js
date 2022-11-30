@@ -36,11 +36,11 @@ class CanonicalMapper {
     }
 
     visitVariant(acceptor) {
+        const value = acceptor.value.map(e => e.accept(this))
+
         if (acceptor.variantName === 'None') {
             return undefined
         }
-
-        const value = acceptor.value.map(e => e.accept(this))
 
         if (acceptor.variantName === 'Some') {
             return value[0]

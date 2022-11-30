@@ -38,6 +38,10 @@ const FateTypeContractAddress = () => {
     return {name: 'contract_address'}
 }
 
+const FateTypeChannelAddress = () => {
+    return {name: 'channel_address'}
+}
+
 const FateTypeOracleAddress = (questionType, answerType) => {
     return {
         name: 'oracle_address',
@@ -217,6 +221,7 @@ module.exports = {
     FateTypeSignature,
     FateTypeAccountAddress,
     FateTypeContractAddress,
+    FateTypeChannelAddress,
     FateTypeOracleAddress,
     FateTypeOracleQueryAddress,
     FateTypeByteArray,
