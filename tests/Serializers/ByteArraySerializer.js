@@ -34,7 +34,6 @@ test('Serialize plain array', t => {
     )
 
     const longBytes = [...Array(64).keys()]
-    // console.log('long bytes', s.serialize(longBytes))
     t.deepEqual(
         s.serialize(longBytes),
         [1, 0].concat(longBytes),

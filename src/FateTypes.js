@@ -210,6 +210,14 @@ const FateTypeBls12381Fp = () => {
     return {name: 'bls12_381.fp'}
 }
 
+const FateTypeCalldata = (functionName, argumentTypes) => {
+    return {
+        name: 'calldata',
+        functionName,
+        argumentTypes,
+    }
+}
+
 module.exports = {
     FateTypeVoid,
     FateTypeInt,
@@ -240,5 +248,6 @@ module.exports = {
     FateTypeAENSName,
     FateTypeEvent,
     FateTypeBls12381Fr,
-    FateTypeBls12381Fp
+    FateTypeBls12381Fp,
+    FateTypeCalldata
 }

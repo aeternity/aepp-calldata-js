@@ -3,10 +3,8 @@ const Serializer = require('./Serializer')
 const TypeResolver = require('./TypeResolver')
 const ApiEncoder = require('./ApiEncoder')
 const CompositeDataFactory = require('./DataFactory/CompositeDataFactory')
-const ExternalDataFactory = require('./ExternalDataFactory')
 const CanonicalMapper = require('./Mapper/CanonicalMapper')
-const Calldata = require('./Calldata')
-const {FateTypeString} = require('./FateTypes')
+const {FateTypeCalldata} = require('./FateTypes')
 const EncoderError = require('./Errors/EncoderError')
 
 class Encoder {
@@ -31,9 +29,6 @@ class Encoder {
 
         /** @type {CompositeDataFactory} */
         this._dataFactory = new CompositeDataFactory()
-
-        /** @type {ExternalDataFactory} */
-        this._externalDataFactory = new ExternalDataFactory()
 
         /** @type {TypeResolver} */
         this._typeResolver = new TypeResolver(aci)
@@ -74,12 +69,7 @@ class Encoder {
             args.push(undefined)
         }
 
-        const argsData = this._externalDataFactory.createMultiple(types, args)
-        const calldata = Calldata(funName, types, argsData)
-        const serialized = this._serializer.serialize(calldata)
-        const data = new Uint8Array(serialized.flat(Infinity))
-
-        return this._apiEncoder.encode('contract_bytearray', data)
+        return this._byteArrayEncoder.encode(FateTypeCalldata(funName, types), args)
     }
 
     /**

@@ -9,6 +9,7 @@ const RecordDataFactory = require('./RecordDataFactory')
 const VariantDataFactory = require('./VariantDataFactory')
 const EventDataFactory = require('./EventDataFactory')
 const Bls12381DataFactory = require('./Bls12381DataFactory')
+const CallDataFactory = require('./CallDataFactory')
 
 class CompositeDataFactory {
     constructor() {
@@ -23,6 +24,7 @@ class CompositeDataFactory {
             new EventDataFactory(this, variantFactory),
             variantFactory,
             new Bls12381DataFactory(this),
+            new CallDataFactory(this),
         ]
     }
 
