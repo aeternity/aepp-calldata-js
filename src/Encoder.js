@@ -99,7 +99,7 @@ class Encoder {
     */
     decode(contract, funName, data) {
         const type = this._typeResolver.getReturnType(contract, funName)
-        const binData = this.decodeString(data)
+        const binData = this._apiEncoder.decode(data)
         const deserialized = this._serializer.deserializeWithType(binData, type)
 
         return deserialized.accept(this._canonicalMapper)
@@ -119,10 +119,7 @@ class Encoder {
      *  Decoded value as Javascript data structures. See README.md
     */
     decodeContractByteArray(data) {
-        const binData = this.decodeString(data)
-        const deserialized = this._serializer.deserialize(binData)
-
-        return deserialized.accept(this._canonicalMapper)
+        return this._byteArrayEncoder.decode(data)
     }
 
     /* eslint-disable max-len */
@@ -157,10 +154,7 @@ class Encoder {
      * @returns {string} Decoded string value.
     */
     decodeFateString(data) {
-        const binData = this.decodeString(data)
-        const deserialized = this._serializer.deserializeWithType(binData, FateTypeString())
-
-        return deserialized.accept(this._canonicalMapper)
+        return this._byteArrayEncoder.decode(data)
     }
 
     /**
@@ -181,7 +175,7 @@ class Encoder {
      * First element should be the implicit topic that carry the event constructor name.
      */
     decodeEvent(contract, encodedData, topics) {
-        const data = this.decodeString(encodedData)
+        const data = this._apiEncoder.decode(encodedData)
         const type = this._typeResolver.getEventType(contract)
         const event = {topics, data}
         const variant = this._dataFactory.create(type, event)

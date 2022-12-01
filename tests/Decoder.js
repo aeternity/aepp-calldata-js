@@ -6,87 +6,59 @@ const aci = require('../build/contracts/Test.json')
 const CONTRACT = 'Test'
 const encoder = new Encoder(aci)
 
-function decodeCB(data) {
-    return encoder.decodeContractByteArray(data)
-}
-
 test('Decode implicit init (void)', t => {
-    t.plan(2)
+    t.plan(1)
     t.is(
         encoder.decode(CONTRACT, 'init', 'cb_Xfbg4g=='),
         undefined
     )
-
-    t.deepEqual(decodeCB('cb_Xfbg4g=='), 0n)
 })
 
 test('Decode unit return', t => {
-    t.plan(2)
+    t.plan(1)
     t.deepEqual(
         encoder.decode(CONTRACT, 'test_unit', 'cb_P4fvHVw='),
         [] // ()
     )
-
-    t.deepEqual(decodeCB('cb_P4fvHVw='), [])
 })
 
 test('Decode boolean return', t => {
-    t.plan(2)
+    t.plan(1)
     t.is(
         encoder.decode(CONTRACT, 'test_bool', 'cb_/8CwV/U='),
         true
     )
-
-    t.is(decodeCB('cb_/8CwV/U='), true)
 })
 
 test('Decode int return', t => {
-    t.plan(2)
+    t.plan(1)
     t.is(
         encoder.decode(CONTRACT, 'test_single_int', 'cb_b4MC7W/bKkpn'),
-        191919n,
-        'test_single_int(191919)'
-    )
-
-    t.is(
-        decodeCB('cb_b4MC7W/bKkpn'),
         191919n,
         'test_single_int(191919)'
     )
 })
 
 test('Decode bytes return', t => {
-    t.plan(2)
+    t.plan(1)
     t.deepEqual(
         encoder.decode(CONTRACT, 'test_bytes', 'cb_nwEJvu+rlRrs'),
-        new Uint8Array([0xbe, 0xef]),
-        'test_bytes(#beef)'
-    )
-
-    t.deepEqual(
-        decodeCB('cb_nwEJvu+rlRrs'),
         new Uint8Array([0xbe, 0xef]),
         'test_bytes(#beef)'
     )
 })
 
 test('Decode string return', t => {
-    t.plan(2)
+    t.plan(1)
     t.deepEqual(
         encoder.decode(CONTRACT, 'test_string', 'cb_KXdob29seW1vbHlGazSE'),
-        'whoolymoly',
-        'test_string("whoolymoly")'
-    )
-
-    t.deepEqual(
-        decodeCB('cb_KXdob29seW1vbHlGazSE'),
         'whoolymoly',
         'test_string("whoolymoly")'
     )
 })
 
 test('Decode hash return', t => {
-    t.plan(2)
+    t.plan(1)
 
     const expectedHex = HexStringToByteArray("0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f")
     t.deepEqual(
@@ -98,16 +70,10 @@ test('Decode hash return', t => {
         expectedHex,
         'test_hash(#000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f)'
     )
-
-    t.deepEqual(
-        decodeCB('cb_nwGBAAECAwQFBgcICQoLDA0ODwABAgMEBQYHCAkKCwwNDg/55Yfk'),
-        expectedHex,
-        'test_hash(#000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f)'
-    )
 })
 
 test('Decode signature return', t => {
-    t.plan(2)
+    t.plan(1)
 
     const expectedHex = HexStringToByteArray("0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f")
     t.deepEqual(
@@ -119,16 +85,10 @@ test('Decode signature return', t => {
         expectedHex,
         `test_signature(#000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f)`
     )
-
-    t.deepEqual(
-        decodeCB('cb_nwEBAAABAgMEBQYHCAkKCwwNDg8AAQIDBAUGBwgJCgsMDQ4PAAECAwQFBgcICQoLDA0ODwABAgMEBQYHCAkKCwwNDg/EV2+8'),
-        expectedHex,
-        `test_signature(#000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f)`
-    )
 })
 
 test('Decode account address return', t => {
-    t.plan(2)
+    t.plan(1)
     t.deepEqual(
         encoder.decode(
             CONTRACT,
@@ -138,16 +98,10 @@ test('Decode account address return', t => {
         'ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt',
         'test_account_address(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt)'
     )
-
-    t.deepEqual(
-        decodeCB('cb_nwCg3mi/4bID5R9SNRugh/ebeCjmoUDwwxSmcMcAOz/1cHVYbXWK'),
-        'ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt',
-        'test_account_address(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt)'
-    )
 })
 
 test('Decode contract address return', t => {
-    t.plan(2)
+    t.plan(1)
     t.deepEqual(
         encoder.decode(
             CONTRACT,
@@ -157,16 +111,10 @@ test('Decode contract address return', t => {
         'ct_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ',
         'test_contract_address(ct_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ)'
     )
-
-    t.deepEqual(
-        decodeCB('cb_nwKgH8DQmexaE8uTKKMX/OzYUrH3SJ5eALoJVzw8LbaYVVPlirXw'),
-        'ct_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ',
-        'test_contract_address(ct_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ)'
-    )
 })
 
 test('Decode oracle address return', t => {
-    t.plan(2)
+    t.plan(1)
     t.deepEqual(
         encoder.decode(
             CONTRACT,
@@ -176,16 +124,10 @@ test('Decode oracle address return', t => {
         'ok_2YNyxd6TRJPNrTcEDCe9ra59SVUdp9FR9qWC5msKZWYD9bP9z5',
         'test_oracle_address(ok_2YNyxd6TRJPNrTcEDCe9ra59SVUdp9FR9qWC5msKZWYD9bP9z5)'
     )
-
-    t.deepEqual(
-        decodeCB('cb_nwOgyvIqJE7awD0m8CoX2SOULQVc/IYjKLJaUcKEvJ1CDkkkbvWd'),
-        'ok_2YNyxd6TRJPNrTcEDCe9ra59SVUdp9FR9qWC5msKZWYD9bP9z5',
-        'test_oracle_address(ok_2YNyxd6TRJPNrTcEDCe9ra59SVUdp9FR9qWC5msKZWYD9bP9z5)'
-    )
 })
 
 test('Decode oracle query address return', t => {
-    t.plan(2)
+    t.plan(1)
     t.deepEqual(
         encoder.decode(
             CONTRACT,
@@ -195,16 +137,10 @@ test('Decode oracle query address return', t => {
         'oq_2oRvyowJuJnEkxy58Ckkw77XfWJrmRgmGaLzhdqb67SKEL1gPY',
         'test_oracle_query_address(oq_2oRvyowJuJnEkxy58Ckkw77XfWJrmRgmGaLzhdqb67SKEL1gPY)'
     )
-
-    t.deepEqual(
-        decodeCB('cb_nwSg7R7n3AJ40FzpUJRzxQqT1Dooso1QMvbffapEL+E3E0g6bqyq'),
-        'oq_2oRvyowJuJnEkxy58Ckkw77XfWJrmRgmGaLzhdqb67SKEL1gPY',
-        'test_oracle_query_address(oq_2oRvyowJuJnEkxy58Ckkw77XfWJrmRgmGaLzhdqb67SKEL1gPY)'
-    )
 })
 
 test('Decode bits return', t => {
-    t.plan(6)
+    t.plan(3)
     const decoded = encoder.decode(CONTRACT, 'test_bits', 'cb_TwBixWzt')
     t.deepEqual(decoded, 0b0n, 'test_bits(Bits.none)')
 
@@ -213,19 +149,14 @@ test('Decode bits return', t => {
 
     const decoded3 = encoder.decode(CONTRACT, 'test_bits', 'cb_TwEPbJQb')
     t.deepEqual(decoded3, 0b00000001n, 'test_bits(Bits.set(Bits.none, 0)')
-
-    t.deepEqual(decodeCB('cb_TwBixWzt'), 0b0n, 'test_bits(Bits.none)')
-    t.deepEqual(decodeCB('cb_zwH34yVW'), -1n, 'test_bits(Bits.none)')
-    t.deepEqual(decodeCB('cb_TwEPbJQb'), 0b00000001n, 'test_bits(Bits.none)')
 })
 
 test('Decode list arguments', t => {
-    t.plan(2)
+    t.plan(1)
     const decoded = encoder.decode(CONTRACT, 'test_list', 'cb_cwIEBgoQGiqNmBRX')
     const ints = [1, 2, 3, 5, 8, 13, 21].map(i => BigInt(i))
 
     t.deepEqual(decoded, ints, 'test_list([1, 2, 3, 5, 8, 13, 21])')
-    t.deepEqual(decodeCB('cb_cwIEBgoQGiqNmBRX'), ints, 'test_list([1, 2, 3, 5, 8, 13, 21])')
 })
 
 test('Decode long list arguments', t => {
@@ -253,14 +184,12 @@ test('Decode nested list arguments', t => {
 })
 
 test('Decode tuple arguments', t => {
-    t.plan(2)
+    t.plan(1)
     t.deepEqual(
         encoder.decode(CONTRACT, 'test_tuple', 'cb_K/9/fDzeoA=='),
         [true, false],
         'test_tuple((true, false))'
     )
-
-    t.deepEqual(decodeCB('cb_K/9/fDzeoA=='), [true, false], 'test_tuple((true, false))')
 })
 
 test('Decode nested tuple arguments', t => {
@@ -285,14 +214,12 @@ test('Decode long tuple arguments', t => {
 })
 
 test('Decode map arguments', t => {
-    t.plan(2)
+    t.plan(1)
     t.deepEqual(
         encoder.decode(CONTRACT, 'test_simple_map', 'cb_LwEOfzGit9U='),
         new Map([[7n, false]]),
         'test_simple_map({[7] = false})'
     )
-
-    t.deepEqual(decodeCB('cb_LwEOfzGit9U='), new Map([[7n, false]]), 'test_simple_map({[7] = false})')
 })
 
 test('Decode nested map arguments', t => {
@@ -318,7 +245,7 @@ test('Decode map with optional key', t => {
 })
 
 test('Decode simple variant arguments', t => {
-    t.plan(2)
+    t.plan(1)
     t.deepEqual(
         encoder.decode(
             CONTRACT,
@@ -328,8 +255,6 @@ test('Decode simple variant arguments', t => {
         {No: []},
         'test_variants(No)'
     )
-
-    t.deepEqual(decodeCB('cb_r4QAAAEAAT8xtJ9f'), {"1": []}, 'test_variants(No)')
 })
 
 test('Decode variant arguments with non-zero arity', t => {
@@ -630,6 +555,11 @@ test('Decode BLS12_381.g1', t => {
         },
         'test_bls12_381_g1(1, 2, 3)'
     )
+})
+
+test('Decode generic contract byte array', t => {
+    // just make sure the method exists
+    t.is(encoder.decodeContractByteArray('cb_/8CwV/U='), true)
 })
 
 test('Decode FATE errors', t => {
