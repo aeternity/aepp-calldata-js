@@ -22,7 +22,7 @@ const TYPES = [
     'signature',
     'account_address',
     'contract_pubkey',
-    'channel_address',
+    'channel',
     'oracle_pubkey',
     'oracle_query_id'
 ]
@@ -52,7 +52,7 @@ class PrimitiveDataFactory extends BaseDataFactory {
             return new FateAccountAddress(value)
         case 'contract_pubkey':
             return new FateContractAddress(value)
-        case 'channel_address':
+        case 'channel':
             return new FateChannelAddress(value)
         case 'oracle_pubkey':
             return new FateOracleAddress(value)

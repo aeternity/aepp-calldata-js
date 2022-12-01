@@ -39,7 +39,7 @@ const FateTypeContractAddress = () => {
 }
 
 const FateTypeChannelAddress = () => {
-    return {name: 'channel_address'}
+    return {name: 'channel'}
 }
 
 const FateTypeOracleAddress = (questionType, answerType) => {

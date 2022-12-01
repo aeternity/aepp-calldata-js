@@ -1,14 +1,13 @@
+const ContractByteArrayEncoder = require('./ContractByteArrayEncoder')
 const Serializer = require('./Serializer')
 const TypeResolver = require('./TypeResolver')
 const ApiEncoder = require('./ApiEncoder')
 const CompositeDataFactory = require('./DataFactory/CompositeDataFactory')
 const ExternalDataFactory = require('./ExternalDataFactory')
 const CanonicalMapper = require('./Mapper/CanonicalMapper')
-const InternalMapper = require('./Mapper/InternalMapper')
 const Calldata = require('./Calldata')
 const {FateTypeString} = require('./FateTypes')
 const EncoderError = require('./Errors/EncoderError')
-const FormatError = require('./Errors/FormatError')
 
 class Encoder {
     /**
@@ -24,6 +23,9 @@ class Encoder {
         /** @type {Object} */
         this._aci = aci
 
+        /** @type {ContractByteArrayEncoder} */
+        this._byteArrayEncoder = new ContractByteArrayEncoder()
+
         /** @type {Serializer} */
         this._serializer = new Serializer()
 
@@ -31,16 +33,13 @@ class Encoder {
         this._dataFactory = new CompositeDataFactory()
 
         /** @type {ExternalDataFactory} */
-        this._externalDataFactory = new ExternalDataFactory(new InternalMapper())
+        this._externalDataFactory = new ExternalDataFactory()
 
         /** @type {TypeResolver} */
         this._typeResolver = new TypeResolver(aci)
 
         /** @type {ApiEncoder} */
         this._apiEncoder = new ApiEncoder()
-
-        /** @type {InternalMapper} */
-        this._internalMapper = new InternalMapper()
 
         /** @type {CanonicalMapper} */
         this._canonicalMapper = new CanonicalMapper()

@@ -46,7 +46,7 @@ class Serializer extends BaseSerializer {
             'contract_pubkey': new ContractSerializer(),
             'oracle_pubkey': new OracleSerializer(),
             'oracle_query_id': new OracleQuerySerializer(),
-            'channel_address': new ChannelSerializer(),
+            'channel': new ChannelSerializer(),
             'bls12_381.fr': new Bls12381FieldSerializer(),
             'bls12_381.fp': new Bls12381FieldSerializer(),
         }

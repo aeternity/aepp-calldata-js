@@ -2,14 +2,6 @@ const ApiEncoder = require('../ApiEncoder')
 const {Int2MontBytes} = require('../utils/Bls12381')
 const FateTypeError = require('../Errors/FateTypeError')
 
-const ADDRESS_PREFIX_MAP = {
-    account_address: 'ak',
-    contract_pubkey: 'ct',
-    channel_address: 'ch',
-    oracle_pubkey: 'ok',
-    oracle_query_id: 'oq'
-}
-
 /**
  * Map Aesophia canonical structures and formats to internal representation FATE data structures.
  */
@@ -22,7 +14,7 @@ class InternalMapper {
         switch (type.name) {
         case 'account_address':
         case 'contract_pubkey':
-        case 'channel_address':
+        case 'channel':
         case 'oracle_pubkey':
         case 'oracle_query_id':
             return this.toAddress(type, value)
