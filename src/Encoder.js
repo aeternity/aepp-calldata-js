@@ -92,7 +92,7 @@ class Encoder {
         const binData = this._apiEncoder.decode(data)
         const deserialized = this._serializer.deserializeWithType(binData, type)
 
-        return deserialized.accept(this._canonicalMapper)
+        return this._canonicalMapper.toCanonical(deserialized)
     }
 
     /**
@@ -170,7 +170,7 @@ class Encoder {
         const event = {topics, data}
         const variant = this._dataFactory.create(type, event)
 
-        return variant.accept(this._canonicalMapper)
+        return this._canonicalMapper.toCanonical(variant)
     }
 }
 

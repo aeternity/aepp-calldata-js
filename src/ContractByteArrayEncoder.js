@@ -61,7 +61,7 @@ class ContractByteArrayEncoder {
         const binData = this._apiEncoder.decodeWithType(data, 'contract_bytearray')
         const deserialized = this._serializer.deserialize(binData)
 
-        return deserialized.accept(this._canonicalMapper)
+        return this._canonicalMapper.toCanonical(deserialized)
     }
 }
 

@@ -10,6 +10,10 @@ class CanonicalMapper {
         this._apiEncoder = new ApiEncoder()
     }
 
+    toCanonical(data) {
+        return data.accept(this)
+    }
+
     visitData(acceptor) {
         return acceptor.valueOf()
     }
