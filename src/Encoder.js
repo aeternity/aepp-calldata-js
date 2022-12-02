@@ -1,5 +1,4 @@
 const ContractByteArrayEncoder = require('./ContractByteArrayEncoder')
-const Serializer = require('./Serializer')
 const TypeResolver = require('./TypeResolver')
 const ApiEncoder = require('./ApiEncoder')
 const CompositeDataFactory = require('./DataFactory/CompositeDataFactory')
@@ -23,9 +22,6 @@ class Encoder {
 
         /** @type {ContractByteArrayEncoder} */
         this._byteArrayEncoder = new ContractByteArrayEncoder()
-
-        /** @type {Serializer} */
-        this._serializer = new Serializer()
 
         /** @type {CompositeDataFactory} */
         this._dataFactory = new CompositeDataFactory()
@@ -89,10 +85,8 @@ class Encoder {
     */
     decode(contract, funName, data) {
         const type = this._typeResolver.getReturnType(contract, funName)
-        const binData = this._apiEncoder.decode(data)
-        const deserialized = this._serializer.deserializeWithType(binData, type)
 
-        return this._canonicalMapper.toCanonical(deserialized)
+        return this._byteArrayEncoder.decodeWithType(data, type)
     }
 
     /**

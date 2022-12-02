@@ -63,6 +63,26 @@ class ContractByteArrayEncoder {
 
         return this._canonicalMapper.toCanonical(deserialized)
     }
+
+    /**
+     * Decodes arbitrary contract bytearray data with type information.
+     *
+     * @example
+     * const decoded = encoder.decode('cb_KXdob29seW1vbHlGazSE')
+     * console.log(`Decoded data: ${decoded}`)
+     * // Outputs:
+     * // Decoded data: whoolymoly
+     *
+     * @param {string} data - Contract bytearray data in a canonical format.
+     * @returns {boolean|string|BigInt|Array|Map|Object}
+     *  Decoded value as Javascript data structures. See README.md
+    */
+    decodeWithType(data, type) {
+        const binData = this._apiEncoder.decodeWithType(data, 'contract_bytearray')
+        const deserialized = this._serializer.deserializeWithType(binData, type)
+
+        return this._canonicalMapper.toCanonical(deserialized)
+    }
 }
 
 module.exports = ContractByteArrayEncoder
