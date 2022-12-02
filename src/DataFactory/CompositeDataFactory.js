@@ -13,7 +13,6 @@ const CallDataFactory = require('./CallDataFactory')
 
 class CompositeDataFactory {
     constructor() {
-        const variantFactory = new VariantDataFactory(this)
         this._factories = [
             new PrimitiveDataFactory(this),
             new ListDataFactory(this),
@@ -21,8 +20,8 @@ class CompositeDataFactory {
             new MapDataFactory(this),
             new TupleDataFactory(this),
             new RecordDataFactory(this),
-            new EventDataFactory(this, variantFactory),
-            variantFactory,
+            new EventDataFactory(this),
+            new VariantDataFactory(this),
             new Bls12381DataFactory(this),
             new CallDataFactory(this),
         ]
@@ -39,7 +38,7 @@ class CompositeDataFactory {
 
     create(type, value) {
         const factory = this._factories.find(f => f.supports(type))
-        assert(factory, `Unsupported type: ${JSON.stringify(type)}`)
+        assert(factory, `Unsupported type "${type.name}"`)
 
         return factory.create(type, value)
     }

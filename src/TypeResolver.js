@@ -82,14 +82,14 @@ class TypeResolver {
         return this.resolveType(funcAci.returns)
     }
 
-    getEventType(contract) {
+    getEventType(contract, topics) {
         const aci = this.getNamespaceAci(contract)
 
         if (!aci.hasOwnProperty('event')) {
             throw new TypeResolveError('Missing event declaration')
         }
 
-        return FateTypeEvent(this.resolveType(aci.event))
+        return FateTypeEvent(this.resolveType(aci.event), topics)
     }
 
     isCustomType(type) {

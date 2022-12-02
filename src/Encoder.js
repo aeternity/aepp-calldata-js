@@ -1,7 +1,7 @@
 const ContractByteArrayEncoder = require('./ContractByteArrayEncoder')
 const TypeResolver = require('./TypeResolver')
 const ApiEncoder = require('./ApiEncoder')
-const CompositeDataFactory = require('./DataFactory/CompositeDataFactory')
+const EventEncoder = require('./EventEncoder')
 const CanonicalMapper = require('./Mapper/CanonicalMapper')
 const {FateTypeCalldata} = require('./FateTypes')
 const EncoderError = require('./Errors/EncoderError')
@@ -17,20 +17,17 @@ class Encoder {
      * @param {Object} aci - The contract ACI in a canonical form as POJO.
     */
     constructor(aci) {
-        /** @type {Object} */
-        this._aci = aci
-
         /** @type {ContractByteArrayEncoder} */
         this._byteArrayEncoder = new ContractByteArrayEncoder()
-
-        /** @type {CompositeDataFactory} */
-        this._dataFactory = new CompositeDataFactory()
 
         /** @type {TypeResolver} */
         this._typeResolver = new TypeResolver(aci)
 
         /** @type {ApiEncoder} */
         this._apiEncoder = new ApiEncoder()
+
+        /** @type {EventEncoder} */
+        this._eventEncoder = new EventEncoder()
 
         /** @type {CanonicalMapper} */
         this._canonicalMapper = new CanonicalMapper()
@@ -158,13 +155,10 @@ class Encoder {
      * @param {Array} topics - A list of event topics.
      * First element should be the implicit topic that carry the event constructor name.
      */
-    decodeEvent(contract, encodedData, topics) {
-        const data = this._apiEncoder.decode(encodedData)
-        const type = this._typeResolver.getEventType(contract)
-        const event = {topics, data}
-        const variant = this._dataFactory.create(type, event)
+    decodeEvent(contract, data, topics) {
+        const type = this._typeResolver.getEventType(contract, topics)
 
-        return this._canonicalMapper.toCanonical(variant)
+        return this._eventEncoder.decodeWithType(data, type)
     }
 }
 

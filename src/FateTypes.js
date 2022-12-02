@@ -195,10 +195,11 @@ const FateTypeAENSName = () => {
     return FateTypeVariant(0, null, variants)
 }
 
-const FateTypeEvent = (variantType) => {
+const FateTypeEvent = (variantType, topics) => {
     return {
         name: 'event',
         variantType,
+        topics,
     }
 }
 
