@@ -219,6 +219,17 @@ const FateTypeCalldata = (functionName, argumentTypes) => {
     }
 }
 
+const FateTypeVar = (id) => {
+    return {
+        name: 'tvar',
+        id
+    }
+}
+
+const FateTypeAny = () => {
+    return {name: 'any'}
+}
+
 module.exports = {
     FateTypeVoid,
     FateTypeInt,
@@ -250,5 +261,7 @@ module.exports = {
     FateTypeEvent,
     FateTypeBls12381Fr,
     FateTypeBls12381Fp,
-    FateTypeCalldata
+    FateTypeCalldata,
+    FateTypeVar,
+    FateTypeAny,
 }
