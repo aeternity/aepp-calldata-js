@@ -12,19 +12,7 @@ const Int2ByteArray = (value) => {
 }
 
 const ByteArrayToHexArray = (data) => {
-    const hex = []
-
-    data.forEach(i => {
-        let h = i.toString(16)
-
-        if (h.length % 2) {
-            h = '0' + h
-        }
-
-        hex.push(h)
-    })
-
-    return hex
+    return [...data].map(x => x.toString(16).padStart(2, '0'))
 }
 
 const ByteArray2Int = (data) => {
@@ -39,8 +27,13 @@ const ByteArray2IntBE = (data) => {
     return BigInt('0x' + hex.join(''))
 }
 
+const ByteArray2Hex = (data) => {
+    return ByteArrayToHexArray(data).join('')
+}
+
 module.exports = {
     Int2ByteArray,
     ByteArray2Int,
-    ByteArray2IntBE
+    ByteArray2IntBE,
+    ByteArray2Hex,
 }
