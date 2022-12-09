@@ -5,6 +5,8 @@ export class Encoder {
 
   decode(contract: string, funName: string, data: `cb_${string}`): any;
 
+  decodeContractByteArray(data: `cb_${string}`): any;
+
   decodeString(data: `cb_${string}`): Uint8Array;
 
   decodeFateString(data: `cb_${string}`): string;
