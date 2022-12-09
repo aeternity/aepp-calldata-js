@@ -99,7 +99,7 @@ test('Decode errors', t => {
 
     t.throws(
         () => encoder.decode('ak_123'),
-        { name: 'FormatError', 'message': 'Invalid checksum'}
+        { name: 'FormatError', message: 'Invalid checksum'}
     )
 
     t.throws(

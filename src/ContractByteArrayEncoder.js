@@ -25,7 +25,7 @@ class ContractByteArrayEncoder {
      * const encoded = encoder.encode("whoolymoly")
      * console.log(`Encoded data: ${encoded}`)
      * // Outputs:
-     * // Encoded data: CHANGE ME
+     * // Encoded data: cb_KXdob29seW1vbHlGazSE
      *
      * @param {Array} data - Data as Javascript data structures. See README.md
      * @returns {string} Encoded contract byte array

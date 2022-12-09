@@ -1,6 +1,5 @@
 const test = require('./test')
 const ContractByteArrayEncoder = require('../src/ContractByteArrayEncoder')
-const HexStringToByteArray = require('../src/utils/HexStringToByteArray')
 const {
     FateTypeBool,
     FateTypeInt,
@@ -66,31 +65,24 @@ test('Encode addresses', t => {
 
 test('Encode composite types', t => {
     t.plan(4)
-    t.deepEqual(encoder.encode(
-            FateTypeList(FateTypeInt()),
-            [1, 2, 3, 5, 8, 13, 21].map(i => BigInt(i))
-        ),
+    t.deepEqual(
+        encoder.encode(FateTypeList(FateTypeInt()), [1, 2, 3, 5, 8, 13, 21].map(i => BigInt(i))),
         'cb_cwIEBgoQGiqNmBRX'
     )
 
-    t.deepEqual(encoder.encode(
-            FateTypeTuple([FateTypeBool(), FateTypeBool()]),
-            [true, false]
-        ),
+    t.deepEqual(
+        encoder.encode(FateTypeTuple([FateTypeBool(), FateTypeBool()]), [true, false]),
         'cb_K/9/fDzeoA=='
     )
 
-    t.deepEqual(encoder.encode(
-            FateTypeMap(FateTypeInt(), FateTypeBool()),
-            new Map([[7n, false]])
-        ),
+    t.deepEqual(
+        encoder.encode(FateTypeMap(FateTypeInt(), FateTypeBool()), new Map([[7n, false]])),
         'cb_LwEOfzGit9U='
     )
 
-    t.deepEqual(encoder.encode(
-            FateTypeVariant(0, null, [{Nope: []}, {No: []}, {Yep: [FateTypeInt()]}, {Yes: []}]),
-            {No: []}
-        ),
+    const variants = [{Nope: []}, {No: []}, {Yep: [FateTypeInt()]}, {Yes: []}]
+    t.deepEqual(
+        encoder.encode(FateTypeVariant(0, null, variants), {No: []}),
         'cb_r4QAAAEAAT8xtJ9f'
     )
 })
@@ -147,5 +139,5 @@ test('Decode composite types', t => {
     t.deepEqual(encoder.decode('cb_cwIEBgoQGiqNmBRX'), ints, 'list')
     t.deepEqual(encoder.decode('cb_K/9/fDzeoA=='), [true, false], 'tuple')
     t.deepEqual(encoder.decode('cb_LwEOfzGit9U='), new Map([[7n, false]]), 'map')
-    t.deepEqual(encoder.decode('cb_r4QAAAEAAT8xtJ9f'), {"1": []}, 'variant (Nope | No | Yep(int) | Yes)')
+    t.deepEqual(encoder.decode('cb_r4QAAAEAAT8xtJ9f'), {1: []}, 'variant (Nope | No | Yep(int) | Yes)')
 })

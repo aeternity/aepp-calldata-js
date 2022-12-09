@@ -572,7 +572,7 @@ test('Decode FATE errors', t => {
 
     t.throws(
         () => encoder.decodeString('err_abc'),
-        { name: 'FormatError' }
+        { name: 'FateTypeError' }
     )
 
     // revert messages are FATE string encoded

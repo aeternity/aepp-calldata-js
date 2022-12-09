@@ -33,18 +33,36 @@ test('Deserialize basic types', t => {
 
 test('Deserialize object types', t => {
     t.plan(5)
-    t.deepEqual(s.deserialize([FateTag.TYPE_OBJECT, FateTag.OTYPE_ADDRESS]), FateTypeAccountAddress())
-    t.deepEqual(s.deserialize([FateTag.TYPE_OBJECT, FateTag.OTYPE_CONTRACT]), FateTypeContractAddress())
-    t.deepEqual(s.deserialize([FateTag.TYPE_OBJECT, FateTag.OTYPE_ORACLE]), FateTypeOracleAddress())
-    t.deepEqual(s.deserialize([FateTag.TYPE_OBJECT, FateTag.OTYPE_ORACLE_QUERY]), FateTypeOracleQueryAddress())
-    t.deepEqual(s.deserialize([FateTag.TYPE_OBJECT, FateTag.OTYPE_CHANNEL]), FateTypeChannelAddress())
+    t.deepEqual(
+        s.deserialize([FateTag.TYPE_OBJECT, FateTag.OTYPE_ADDRESS]),
+        FateTypeAccountAddress()
+    )
+    t.deepEqual(
+        s.deserialize([FateTag.TYPE_OBJECT, FateTag.OTYPE_CONTRACT]),
+        FateTypeContractAddress()
+    )
+    t.deepEqual(
+        s.deserialize([FateTag.TYPE_OBJECT, FateTag.OTYPE_ORACLE]),
+        FateTypeOracleAddress()
+    )
+    t.deepEqual(
+        s.deserialize([FateTag.TYPE_OBJECT, FateTag.OTYPE_ORACLE_QUERY]),
+        FateTypeOracleQueryAddress()
+    )
+    t.deepEqual(
+        s.deserialize([FateTag.TYPE_OBJECT, FateTag.OTYPE_CHANNEL]),
+        FateTypeChannelAddress()
+    )
 })
 
 test('Deserialize composite types', t => {
     t.plan(6)
     t.deepEqual(s.deserialize([FateTag.TYPE_VAR, 123]), FateTypeVar(123))
     t.deepEqual(s.deserialize([FateTag.TYPE_BYTES, 111, 130, 1, 192]), FateTypeBytes(512n))
-    t.deepEqual(s.deserialize([FateTag.TYPE_LIST, FateTag.TYPE_INTEGER]), FateTypeList(FateTypeInt()))
+    t.deepEqual(
+        s.deserialize([FateTag.TYPE_LIST, FateTag.TYPE_INTEGER]),
+        FateTypeList(FateTypeInt())
+    )
     t.deepEqual(
         s.deserialize([FateTag.TYPE_MAP, FateTag.TYPE_STRING, FateTag.TYPE_INTEGER]),
         FateTypeMap(FateTypeString(), FateTypeInt())

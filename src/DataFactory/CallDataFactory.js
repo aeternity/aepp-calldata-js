@@ -1,4 +1,5 @@
 const {symbolIdentifier} = require('../utils/hash')
+const FateTypeError = require('../Errors/FateTypeError')
 const FateByteArray = require('../types/FateByteArray')
 const FateTuple = require('../types/FateTuple')
 const BaseDataFactory = require('./BaseDataFactory')

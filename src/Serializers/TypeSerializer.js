@@ -19,7 +19,7 @@ const {
     FateTypeVariant,
     FateTypeVar,
     FateTypeAny,
-} = require('./../FateTypes')
+} = require('../FateTypes')
 
 const BASIC_TYPES = {
     [FateTag.TYPE_INTEGER]: FateTypeInt(),
@@ -56,7 +56,7 @@ class TypeSerializer extends BaseSerializer {
             const obj = buffer[1]
 
             if (!OBJECT_TYPES.hasOwnProperty(obj)) {
-                throw new FatePrefixError(obj, `Unsupported object type`)
+                throw new FatePrefixError(obj, 'Unsupported object type')
             }
 
             return [OBJECT_TYPES[obj], buffer.slice(2)]
@@ -91,7 +91,7 @@ class TypeSerializer extends BaseSerializer {
             let rest = buffer.slice(2)
             let el
 
-            for(let i = 0; i < size; i++) {
+            for (let i = 0; i < size; i++) {
                 [el, rest] = this.deserializeStream(rest)
                 elementTypes.push(el)
             }
@@ -105,7 +105,7 @@ class TypeSerializer extends BaseSerializer {
             let rest = buffer.slice(2)
             let el
 
-            for(let i = 0; i < size; i++) {
+            for (let i = 0; i < size; i++) {
                 [el, rest] = this.deserializeStream(rest)
                 variants.push(el)
             }

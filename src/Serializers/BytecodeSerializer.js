@@ -1,7 +1,7 @@
 const RLP = require('rlp')
 const BaseSerializer = require('./BaseSerializer')
 const TypeSerializer = require('./TypeSerializer')
-const {ByteArray2Int, ByteArray2Hex} = require('../utils/Int2ByteArray')
+const {ByteArray2Hex} = require('../utils/Int2ByteArray')
 const {
     FateTypeByteArray,
     FateTypeString,
@@ -9,11 +9,11 @@ const {
 } = require('../FateTypes')
 
 class BytecodeSerializer extends BaseSerializer {
-	constructor(globalSerializer) {
-		super(globalSerializer)
+    constructor(globalSerializer) {
+        super(globalSerializer)
 
         this._typeSerializer = new TypeSerializer()
-	}
+    }
 
     deserialize(data) {
         const codeBin = RLP.decode(data, true)
@@ -28,8 +28,9 @@ class BytecodeSerializer extends BaseSerializer {
     }
 
     deserializeFunctions(data) {
-        let fun, rest = data
-        let functions = []
+        let fun = {}
+        let rest = data
+        const functions = []
 
         while (rest.length) {
             [fun, rest] = this.deserializeFunction(rest)
@@ -98,13 +99,13 @@ class BytecodeSerializer extends BaseSerializer {
 
     deserializeSymbols(data) {
         // Needs typehint with ByteArray otherwise deserializes to string
-    	const type = FateTypeMap(FateTypeByteArray(), FateTypeString())
+        const type = FateTypeMap(FateTypeByteArray(), FateTypeString())
         const symbols = this.globalSerializer.deserializeWithType(data, type).valueOf()
         const symbolsMap = {}
 
         symbols.forEach((val, key) => {
-        	const hex = ByteArray2Hex(key)
-        	symbolsMap[hex] = val
+            const hex = ByteArray2Hex(key)
+            symbolsMap[hex] = val
         })
 
         return symbolsMap

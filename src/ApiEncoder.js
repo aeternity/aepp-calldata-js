@@ -67,7 +67,7 @@ class ApiEncoder {
         const tag = data.substring(0, 2)
 
         if (!TYPES.hasOwnProperty(expectedType)) {
-            throw new FateTypeError(expectedType, `Unsupported API type`)
+            throw new FateTypeError(expectedType, 'Unsupported API type')
         }
 
         const expectedTag = TYPES[expectedType].tag

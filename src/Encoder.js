@@ -3,7 +3,7 @@ const TypeResolver = require('./TypeResolver')
 const ApiEncoder = require('./ApiEncoder')
 const EventEncoder = require('./EventEncoder')
 const CanonicalMapper = require('./Mapper/CanonicalMapper')
-const {FateTypeCalldata} = require('./FateTypes')
+const {FateTypeCalldata, FateTypeString} = require('./FateTypes')
 const EncoderError = require('./Errors/EncoderError')
 
 class Encoder {
@@ -87,7 +87,13 @@ class Encoder {
     }
 
     /**
-     * Decodes arbitrary contract bytearray data. Variants are not annotated with names.
+     * Decodes arbitrary contract bytearray data.
+     *
+     * Note that:
+     * - Record keys are lost
+     * - Variant constructor names are lost
+     * - Any user type information is lost
+     * - STL type information is lost: i.e. Chain, AENS, Set, BLS12_381
      *
      * @example
      * const decoded = encoder.decodeContractByteArray('cb_KXdob29seW1vbHlGazSE')
@@ -118,7 +124,7 @@ class Encoder {
      * @returns {Uint8Array} Decoded value as byte array.
     */
     decodeString(data) {
-        return this._apiEncoder.decode(data)
+        return this._apiEncoder.decodeWithType(data, 'contract_bytearray')
     }
     /* eslint-enable max-len */
 
@@ -135,7 +141,7 @@ class Encoder {
      * @returns {string} Decoded string value.
     */
     decodeFateString(data) {
-        return this._byteArrayEncoder.decode(data)
+        return this._byteArrayEncoder.decodeWithType(data, FateTypeString())
     }
 
     /**
