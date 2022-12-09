@@ -287,8 +287,7 @@ class TypeResolver {
             return {[variant]: resolvedArgs}
         })
 
-        // TODO: junk first 2 args for BC
-        return FateTypeVariant(0, null, variants)
+        return FateTypeVariant(variants)
     }
 
     resolveTypeDef(type, params = []) {

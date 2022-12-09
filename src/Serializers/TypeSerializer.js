@@ -110,7 +110,7 @@ class TypeSerializer extends BaseSerializer {
                 variants.push(el)
             }
 
-            return [FateTypeVariant(0, null, variants), rest]
+            return [FateTypeVariant(variants), rest]
         }
 
         throw new FatePrefixError(prefix)

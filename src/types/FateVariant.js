@@ -11,7 +11,7 @@ class FateVariant extends FateData {
         this._value = value
         this._valueTypes = valueTypes
 
-        this._type = FateTypeVariant(arities, valueTypes, variants)
+        this._type = FateTypeVariant(variants)
     }
 
     get valueTypes() {
