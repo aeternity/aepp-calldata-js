@@ -254,7 +254,10 @@ test('Resolve variant with template vars', t => {
         resolver.resolveType({
             [ns('amount_t')]: ['int', 'bool']
         }),
-        FateTypeVariant([{Zero: []}, {Any: [FateTypeInt(), FateTypeBool(), FateTypeInt(), FateTypeInt()]}])
+        FateTypeVariant([
+            {Zero: []},
+            {Any: [FateTypeInt(), FateTypeBool(), FateTypeInt(), FateTypeInt()]}
+        ])
     )
 })
 

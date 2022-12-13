@@ -1,17 +1,35 @@
-const FateTuple = require('./FateTuple')
-const FateByteArray = require('./FateByteArray')
-const {symbolIdentifier} = require('../utils/hash')
+const FateData = require('./FateData')
 
-class FateCalldata extends FateTuple {
-    constructor(funName, argTypes, argsData) {
-        const functionId = symbolIdentifier(funName)
-        const funcBytes = new FateByteArray(functionId)
-        const argsTuple = new FateTuple(argTypes, argsData)
+class FateCalldata extends FateData {
+    constructor(functionId, argTypes, argsData) {
+        super('calldata')
 
-        super(
-            [funcBytes.type, argsTuple.type],
-            [funcBytes, argsTuple]
-        )
+        this._functionId = new Uint8Array(functionId)
+        this._argTypes = argTypes
+        this._args = argsData
+    }
+
+    get functionId() {
+        return this._functionId
+    }
+
+    get argTypes() {
+        return this._argTypes
+    }
+
+    get args() {
+        return this._args
+    }
+
+    valueOf() {
+        return {
+            functionId: this._functionId,
+            args: this._args
+        }
+    }
+
+    accept(visitor) {
+        return visitor.visitCalldata(this)
     }
 }
 
