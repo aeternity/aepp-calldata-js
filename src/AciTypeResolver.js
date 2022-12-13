@@ -44,7 +44,7 @@ const isOption = ({type}) => {
     return key === 'option'
 }
 
-class TypeResolver {
+class AciTypeResolver {
     constructor(aci) {
         this.aci = aci
     }
@@ -328,4 +328,4 @@ class TypeResolver {
     }
 }
 
-module.exports = TypeResolver
+module.exports = AciTypeResolver

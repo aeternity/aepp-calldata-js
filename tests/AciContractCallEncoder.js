@@ -1,9 +1,9 @@
 const test = require('./test')
-const ContractCallAciEncoder = require('../src/ContractCallAciEncoder')
+const AciContractCallEncoder = require('../src/AciContractCallEncoder')
 const aci = require('../build/contracts/Test.json')
 
 const CONTRACT = 'Test'
-const encoder = new ContractCallAciEncoder(aci)
+const encoder = new AciContractCallEncoder(aci)
 
 test('Encode implicit init', t => {
     t.plan(1)

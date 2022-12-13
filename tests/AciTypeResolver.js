@@ -1,5 +1,5 @@
 const test = require('./test')
-const TypeResolver = require('../src/TypeResolver')
+const AciTypeResolver = require('../src/AciTypeResolver')
 const aci = require('../build/contracts/Test.json')
 const {
     FateTypeInt,
@@ -24,7 +24,7 @@ const {
 } = require('../src/FateTypes')
 
 const CONTRACT = 'Test'
-const resolver = new TypeResolver(aci)
+const resolver = new AciTypeResolver(aci)
 const ns = (name) => `${CONTRACT}.${name}`
 
 test('Get implicit empty init argument types', t => {

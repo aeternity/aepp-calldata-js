@@ -1,5 +1,5 @@
 const ContractByteArrayEncoder = require('./ContractByteArrayEncoder')
-const TypeResolver = require('./TypeResolver')
+const AciTypeResolver = require('./AciTypeResolver')
 const ApiEncoder = require('./ApiEncoder')
 const EventEncoder = require('./EventEncoder')
 const CanonicalMapper = require('./Mapper/CanonicalMapper')
@@ -20,8 +20,8 @@ class Encoder {
         /** @type {ContractByteArrayEncoder} */
         this._byteArrayEncoder = new ContractByteArrayEncoder()
 
-        /** @type {TypeResolver} */
-        this._typeResolver = new TypeResolver(aci)
+        /** @type {AciTypeResolver} */
+        this._typeResolver = new AciTypeResolver(aci)
 
         /** @type {ApiEncoder} */
         this._apiEncoder = new ApiEncoder()

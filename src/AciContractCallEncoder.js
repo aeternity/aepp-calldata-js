@@ -1,18 +1,18 @@
 const ContractByteArrayEncoder = require('./ContractByteArrayEncoder')
-const TypeResolver = require('./TypeResolver')
+const AciTypeResolver = require('./AciTypeResolver')
 const ApiEncoder = require('./ApiEncoder')
 const EventEncoder = require('./EventEncoder')
 const CanonicalMapper = require('./Mapper/CanonicalMapper')
 const {FateTypeCalldata, FateTypeString} = require('./FateTypes')
 const EncoderError = require('./Errors/EncoderError')
 
-class ContractCallAciEncoder {
+class AciContractCallEncoder {
     /**
      * Creates contract encoder using ACI as type info provider
      *
      * @example
      * const ACI = require('./Test.json')
-     * const encoder = new ContractCallAciEncoder(ACI)
+     * const encoder = new AciContractCallEncoder(ACI)
      *
      * @param {Object} aci - The contract ACI in a canonical (CLI compiler) form as POJO.
     */
@@ -20,8 +20,8 @@ class ContractCallAciEncoder {
         /** @type {ContractByteArrayEncoder} */
         this._byteArrayEncoder = new ContractByteArrayEncoder()
 
-        /** @type {TypeResolver} */
-        this._typeResolver = new TypeResolver(aci)
+        /** @type {AciTypeResolver} */
+        this._typeResolver = new AciTypeResolver(aci)
 
         /** @type {ApiEncoder} */
         this._apiEncoder = new ApiEncoder()
@@ -144,4 +144,4 @@ class ContractCallAciEncoder {
     }
 }
 
-module.exports = ContractCallAciEncoder
+module.exports = AciContractCallEncoder
