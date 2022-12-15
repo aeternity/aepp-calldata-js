@@ -30,7 +30,7 @@ watch:
 node_modules: package-lock.json
 	npm install && touch $@
 
-tests: node_modules $(BUILDDIR)/$(JSON_ACIS)
+tests: node_modules $(BUILDDIR)/$(JSON_ACIS) $(BUILDDIR)/$(BYTECODES)
 	npm test
 
 $(BUILDDIR)/js: | $(BUILDDIR)
@@ -52,7 +52,7 @@ integration-tests: $(INTEGRATION_TESTS) | node_modules $(BUILDDIR)/$(JSON_ACIS)
 benchmark-tests: $(BENCHMARK_TESTS) | node_modules $(BUILDDIR)/$(JSON_ACIS)
 	@for file in $^; do node $${file}; done
 
-coverage: node_modules $(BUILDDIR)/$(JSON_ACIS)
+coverage: node_modules $(BUILDDIR)/$(JSON_ACIS) $(BUILDDIR)/$(BYTECODES)
 	npm run coverage
 
 lint: node_modules

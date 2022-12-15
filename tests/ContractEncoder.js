@@ -1,3 +1,5 @@
+const fs = require('fs')
+const path = require('path')
 const test = require('./test')
 const ContractEncoder = require('../src/ContractEncoder')
 const {
@@ -6,6 +8,7 @@ const {
 } = require('../src/FateTypes')
 
 const encoder = new ContractEncoder()
+const testContract = fs.readFileSync(path.resolve(__dirname, '../build/contracts/Test.aeb'))
 
 test('Decode basic contract', t => {
     t.plan(9)
@@ -33,4 +36,17 @@ test('Decode basic contract', t => {
         returnType: FateTypeInt(),
         instructions: [],
     })
+})
+
+
+test.only('Decode full featured contract', t => {
+    const contract = encoder.decode(testContract.toString())
+
+    t.plan(6)
+    t.is(contract.tag, 70n)
+    t.is(contract.vsn, 3n)
+    t.is(contract.compiler_version, '6.1.0')
+    t.is(contract.payable, false)
+    t.is(Object.keys(contract.bytecode.symbols).length, contract.bytecode.functions.length)
+    t.deepEqual(contract.bytecode.annotations, new Map())
 })
