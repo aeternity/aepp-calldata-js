@@ -1,26 +1,22 @@
-const base58check = require('../utils/base58check')
+const ApiEncoder = require('../ApiEncoder')
 const {Int2MontBytes} = require('../utils/Bls12381')
 const FateTypeError = require('../Errors/FateTypeError')
-
-const ADDRESS_PREFIX_MAP = {
-    account_address: 'ak',
-    contract_address: 'ct',
-    channel_address: 'ch',
-    oracle_address: 'ok',
-    oracle_query_address: 'oq'
-}
 
 /**
  * Map Aesophia canonical structures and formats to internal representation FATE data structures.
  */
 class InternalMapper {
+    constructor() {
+        this._apiEncoder = new ApiEncoder()
+    }
+
     toInternal(type, value) {
         switch (type.name) {
         case 'account_address':
-        case 'contract_address':
-        case 'channel_address':
-        case 'oracle_address':
-        case 'oracle_query_address':
+        case 'contract_pubkey':
+        case 'channel':
+        case 'oracle_pubkey':
+        case 'oracle_query_id':
             return this.toAddress(type, value)
         case 'variant':
             return this.toVariant(type, value)
@@ -40,17 +36,7 @@ class InternalMapper {
     }
 
     toAddress({name, _}, value) {
-        const asString = value.toString()
-        const prefix = ADDRESS_PREFIX_MAP[name]
-
-        if (!asString.startsWith(prefix + '_')) {
-            throw new FateTypeError(
-                name,
-                `Address should start with ${prefix}_, got ${asString} instead`
-            )
-        }
-
-        return base58check.decode(asString.substring(prefix.length + 1))
+        return this._apiEncoder.decodeWithType(value, name)
     }
 
     toVariant(type, value) {

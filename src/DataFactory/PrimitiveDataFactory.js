@@ -21,10 +21,10 @@ const TYPES = [
     'bytes',
     'signature',
     'account_address',
-    'contract_address',
-    'channel_address',
-    'oracle_address',
-    'oracle_query_address'
+    'contract_pubkey',
+    'channel',
+    'oracle_pubkey',
+    'oracle_query_id'
 ]
 
 class PrimitiveDataFactory extends BaseDataFactory {
@@ -50,13 +50,13 @@ class PrimitiveDataFactory extends BaseDataFactory {
             return new FateSignature(value)
         case 'account_address':
             return new FateAccountAddress(value)
-        case 'contract_address':
+        case 'contract_pubkey':
             return new FateContractAddress(value)
-        case 'channel_address':
+        case 'channel':
             return new FateChannelAddress(value)
-        case 'oracle_address':
+        case 'oracle_pubkey':
             return new FateOracleAddress(value)
-        case 'oracle_query_address':
+        case 'oracle_query_id':
             return new FateOracleQueryAddress(value)
         default:
             throw new Error(`Unsupported type "${type.name}"`)

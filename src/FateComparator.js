@@ -177,10 +177,10 @@ const comparators = {
     // objects (bytes)
     'bytes': bytesComparator,
     'account_address': bytesComparator,
-    'channel_address': bytesComparator,
-    'contract_address': bytesComparator,
-    'oracle_query_address': bytesComparator,
-    'oracle_address': bytesComparator,
+    'channel': bytesComparator,
+    'contract_pubkey': bytesComparator,
+    'oracle_query_id': bytesComparator,
+    'oracle_pubkey': bytesComparator,
 }
 
 const FateComparator = (type) => {

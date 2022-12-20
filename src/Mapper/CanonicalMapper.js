@@ -1,4 +1,4 @@
-const base58check = require('../utils/base58check')
+const ApiEncoder = require('../ApiEncoder')
 const {MontBytes2Int} = require('../utils/Bls12381')
 
 /**
@@ -6,12 +6,20 @@ const {MontBytes2Int} = require('../utils/Bls12381')
  */
 
 class CanonicalMapper {
+    constructor() {
+        this._apiEncoder = new ApiEncoder()
+    }
+
+    toCanonical(data) {
+        return data.accept(this)
+    }
+
     visitData(acceptor) {
         return acceptor.valueOf()
     }
 
     visitAddress(acceptor) {
-        return acceptor.prefix + '_' + base58check.encode(acceptor.value)
+        return this._apiEncoder.encode(acceptor.name, acceptor.value)
     }
 
     visitList(acceptor) {
@@ -36,11 +44,11 @@ class CanonicalMapper {
     }
 
     visitVariant(acceptor) {
+        const value = acceptor.value.map(e => e.accept(this))
+
         if (acceptor.variantName === 'None') {
             return undefined
         }
-
-        const value = acceptor.value.map(e => e.accept(this))
 
         if (acceptor.variantName === 'Some') {
             return value[0]

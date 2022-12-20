@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 ### Fixed
 ### Added
+- Add support for arbitrary contract bytearray decoding (#179)
 ### Changed
 ### Deprecated
 ### Removed

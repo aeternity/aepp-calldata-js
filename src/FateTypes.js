@@ -35,12 +35,16 @@ const FateTypeAccountAddress = () => {
 }
 
 const FateTypeContractAddress = () => {
-    return {name: 'contract_address'}
+    return {name: 'contract_pubkey'}
+}
+
+const FateTypeChannelAddress = () => {
+    return {name: 'channel'}
 }
 
 const FateTypeOracleAddress = (questionType, answerType) => {
     return {
-        name: 'oracle_address',
+        name: 'oracle_pubkey',
         questionType,
         answerType
     }
@@ -48,7 +52,7 @@ const FateTypeOracleAddress = (questionType, answerType) => {
 
 const FateTypeOracleQueryAddress = (questionType, answerType) => {
     return {
-        name: 'oracle_query_address',
+        name: 'oracle_query_id',
         questionType,
         answerType
     }
@@ -191,10 +195,11 @@ const FateTypeAENSName = () => {
     return FateTypeVariant(0, null, variants)
 }
 
-const FateTypeEvent = (variantType) => {
+const FateTypeEvent = (variantType, topics) => {
     return {
         name: 'event',
         variantType,
+        topics,
     }
 }
 
@@ -204,6 +209,25 @@ const FateTypeBls12381Fr = () => {
 
 const FateTypeBls12381Fp = () => {
     return {name: 'bls12_381.fp'}
+}
+
+const FateTypeCalldata = (functionName, argumentTypes) => {
+    return {
+        name: 'calldata',
+        functionName,
+        argumentTypes,
+    }
+}
+
+const FateTypeVar = (id) => {
+    return {
+        name: 'tvar',
+        id
+    }
+}
+
+const FateTypeAny = () => {
+    return {name: 'any'}
 }
 
 module.exports = {
@@ -217,6 +241,7 @@ module.exports = {
     FateTypeSignature,
     FateTypeAccountAddress,
     FateTypeContractAddress,
+    FateTypeChannelAddress,
     FateTypeOracleAddress,
     FateTypeOracleQueryAddress,
     FateTypeByteArray,
@@ -235,5 +260,8 @@ module.exports = {
     FateTypeAENSName,
     FateTypeEvent,
     FateTypeBls12381Fr,
-    FateTypeBls12381Fp
+    FateTypeBls12381Fp,
+    FateTypeCalldata,
+    FateTypeVar,
+    FateTypeAny,
 }

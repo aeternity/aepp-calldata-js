@@ -1,14 +1,10 @@
-const base64check = require('./utils/base64check')
-const Serializer = require('./Serializer')
+const ContractByteArrayEncoder = require('./ContractByteArrayEncoder')
 const TypeResolver = require('./TypeResolver')
-const CompositeDataFactory = require('./DataFactory/CompositeDataFactory')
-const ExternalDataFactory = require('./ExternalDataFactory')
+const ApiEncoder = require('./ApiEncoder')
+const EventEncoder = require('./EventEncoder')
 const CanonicalMapper = require('./Mapper/CanonicalMapper')
-const InternalMapper = require('./Mapper/InternalMapper')
-const Calldata = require('./Calldata')
-const {FateTypeString} = require('./FateTypes')
+const {FateTypeCalldata, FateTypeString} = require('./FateTypes')
 const EncoderError = require('./Errors/EncoderError')
-const FormatError = require('./Errors/FormatError')
 
 class Encoder {
     /**
@@ -21,23 +17,17 @@ class Encoder {
      * @param {Object} aci - The contract ACI in a canonical form as POJO.
     */
     constructor(aci) {
-        /** @type {Object} */
-        this._aci = aci
-
-        /** @type {Serializer} */
-        this._serializer = new Serializer()
-
-        /** @type {CompositeDataFactory} */
-        this._dataFactory = new CompositeDataFactory()
-
-        /** @type {ExternalDataFactory} */
-        this._externalDataFactory = new ExternalDataFactory(new InternalMapper())
+        /** @type {ContractByteArrayEncoder} */
+        this._byteArrayEncoder = new ContractByteArrayEncoder()
 
         /** @type {TypeResolver} */
         this._typeResolver = new TypeResolver(aci)
 
-        /** @type {InternalMapper} */
-        this._internalMapper = new InternalMapper()
+        /** @type {ApiEncoder} */
+        this._apiEncoder = new ApiEncoder()
+
+        /** @type {EventEncoder} */
+        this._eventEncoder = new EventEncoder()
 
         /** @type {CanonicalMapper} */
         this._canonicalMapper = new CanonicalMapper()
@@ -72,12 +62,7 @@ class Encoder {
             args.push(undefined)
         }
 
-        const argsData = this._externalDataFactory.createMultiple(types, args)
-        const calldata = Calldata(funName, types, argsData)
-        const serialized = this._serializer.serialize(calldata)
-        const data = new Uint8Array(serialized.flat(Infinity))
-
-        return 'cb_' + base64check.encode(data)
+        return this._byteArrayEncoder.encode(FateTypeCalldata(funName, types), args)
     }
 
     /**
@@ -97,10 +82,31 @@ class Encoder {
     */
     decode(contract, funName, data) {
         const type = this._typeResolver.getReturnType(contract, funName)
-        const binData = this.decodeString(data)
-        const deserialized = this._serializer.deserialize(type, binData)
 
-        return deserialized.accept(this._canonicalMapper)
+        return this._byteArrayEncoder.decodeWithType(data, type)
+    }
+
+    /**
+     * Decodes arbitrary contract bytearray data.
+     *
+     * Note that:
+     * - Record keys are lost
+     * - Variant constructor names are lost
+     * - Any user type information is lost
+     * - STL type information is lost: i.e. Chain, AENS, Set, BLS12_381
+     *
+     * @example
+     * const decoded = encoder.decodeContractByteArray('cb_KXdob29seW1vbHlGazSE')
+     * console.log(`Decoded data: ${decoded}`)
+     * // Outputs:
+     * // Decoded data: whoolymoly
+     *
+     * @param {string} data - Contract bytearray data in a canonical format.
+     * @returns {boolean|string|BigInt|Array|Map|Object}
+     *  Decoded value as Javascript data structures. See README.md
+    */
+    decodeContractByteArray(data) {
+        return this._byteArrayEncoder.decode(data)
     }
 
     /* eslint-disable max-len */
@@ -118,11 +124,7 @@ class Encoder {
      * @returns {Uint8Array} Decoded value as byte array.
     */
     decodeString(data) {
-        if (!data.startsWith('cb_')) {
-            throw new FormatError('Invalid data format (missing cb_ prefix)')
-        }
-
-        return base64check.decode(data.substring(3))
+        return this._apiEncoder.decodeWithType(data, 'contract_bytearray')
     }
     /* eslint-enable max-len */
 
@@ -139,10 +141,7 @@ class Encoder {
      * @returns {string} Decoded string value.
     */
     decodeFateString(data) {
-        const binData = this.decodeString(data)
-        const deserialized = this._serializer.deserialize(FateTypeString(), binData)
-
-        return deserialized.accept(this._canonicalMapper)
+        return this._byteArrayEncoder.decodeWithType(data, FateTypeString())
     }
 
     /**
@@ -162,13 +161,10 @@ class Encoder {
      * @param {Array} topics - A list of event topics.
      * First element should be the implicit topic that carry the event constructor name.
      */
-    decodeEvent(contract, encodedData, topics) {
-        const data = this.decodeString(encodedData)
-        const type = this._typeResolver.getEventType(contract)
-        const event = {topics, data}
-        const variant = this._dataFactory.create(type, event)
+    decodeEvent(contract, data, topics) {
+        const type = this._typeResolver.getEventType(contract, topics)
 
-        return variant.accept(this._canonicalMapper)
+        return this._eventEncoder.decodeWithType(data, type)
     }
 }
 

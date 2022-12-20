@@ -24,6 +24,10 @@ function ser(t, input) {
     return serializer.serialize(input)
 }
 
+function deser(t, input) {
+    return serializer.deserialize(new Uint8Array(input))
+}
+
 test('Serialize all types', t => {
     t.plan(15)
     // primitive types
@@ -85,6 +89,64 @@ test('Serialize all types', t => {
     )
 })
 
+test('Deserialize all types', t => {
+    t.plan(15)
+
+    // primitive types
+    t.deepEqual(deser(t, [0]), new FateInt(0))
+    t.deepEqual(deser(t, [255]), new FateBool(true))
+    t.deepEqual(deser(t, [13,97,98,99]), new FateString("abc"))
+    t.deepEqual(deser(t, [95]), new FateString(""))
+    t.deepEqual(deser(t, [79,129,170]), new FateBits(0b10101010))
+
+    t.deepEqual(deser(t, [3]), new FateList())
+    t.deepEqual(deser(t, [47,0]), new FateMap())
+
+    t.deepEqual(
+        deser(t, [59,255,127,0]),
+        new FateTuple([], [new FateBool(true), new FateBool(false), new FateInt(0)])
+    )
+
+    t.deepEqual(deser(t, [175,132,0,0,1,0,1,63]), new FateVariant([0, 0, 1, 0], 1))
+
+    t.deepEqual(deser(t, [159,1,9,190,239]), new FateBytes(0xbeef))
+    t.deepEqual(
+        deser(t, [
+            159,0,160,254,220,186,152,118,84,50,16,254,220,186,152,118,84,50,16,254,220,186,152,118,
+            84,50,16,254,220,186,152,118,84,50,16
+        ]),
+        new FateAccountAddress("0xfedcba9876543210fedcba9876543210fedcba9876543210fedcba9876543210")
+    )
+    t.deepEqual(
+        deser(t, [
+            159,2,160,254,220,186,152,118,84,50,16,254,220,186,152,118,84,50,16,254,220,186,152,118,
+            84,50,16,254,220,186,152,118,84,50,16
+        ]),
+        new FateContractAddress("0xfedcba9876543210fedcba9876543210fedcba9876543210fedcba9876543210")
+    )
+    t.deepEqual(
+        deser(t, [
+            159,3,160,254,220,186,152,118,84,50,16,254,220,186,152,118,84,50,16,254,220,186,152,118,
+            84,50,16,254,220,186,152,118,84,50,16
+        ]),
+        new FateOracleAddress("0xfedcba9876543210fedcba9876543210fedcba9876543210fedcba9876543210")
+    )
+    t.deepEqual(
+        deser(t, [
+            159,4,160,254,220,186,152,118,84,50,16,254,220,186,152,118,84,50,16,254,220,186,152,118,
+            84,50,16,254,220,186,152,118,84,50,16
+        ]),
+        new FateOracleQueryAddress("0xfedcba9876543210fedcba9876543210fedcba9876543210fedcba9876543210")
+    )
+    t.deepEqual(
+        deser(t, [
+            159,5,160,254,220,186,152,118,84,50,16,254,220,186,152,118,84,50,16,254,220,186,152,118,
+            84,50,16,254,220,186,152,118,84,50,16
+        ]),
+        new FateChannelAddress("0xfedcba9876543210fedcba9876543210fedcba9876543210fedcba9876543210")
+    )
+})
+
 test('Serialize errors', t => {
     t.plan(3)
 
@@ -105,7 +167,12 @@ test('Serialize errors', t => {
 })
 
 test('Deserialize errors', t => {
-    t.plan(3)
+    t.plan(4)
+
+    t.throws(
+        () => serializer.deserialize('invalid data'),
+        { name: 'SerializerError' }
+    )
 
     t.throws(
         () => serializer.deserialize('invalid data'),

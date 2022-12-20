@@ -123,7 +123,7 @@ test('Encode account address arguments', t => {
 
     t.throws(
         () => encoder.encode(CONTRACT, 'test_account_address', ['test-string']),
-        { message: 'Address should start with ak_, got test-string instead' }
+        { message: 'Account address should start with ak_, got test-string instead' }
     )
 })
 

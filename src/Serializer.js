@@ -43,10 +43,10 @@ class Serializer extends BaseSerializer {
             'variant': new VariantSerializer(this),
             'bytes': new BytesSerializer(),
             'account_address': new AddressSerializer(),
-            'contract_address': new ContractSerializer(),
-            'oracle_address': new OracleSerializer(),
-            'oracle_query_address': new OracleQuerySerializer(),
-            'channel_address': new ChannelSerializer(),
+            'contract_pubkey': new ContractSerializer(),
+            'oracle_pubkey': new OracleSerializer(),
+            'oracle_query_id': new OracleQuerySerializer(),
+            'channel': new ChannelSerializer(),
             'bls12_381.fr': new Bls12381FieldSerializer(),
             'bls12_381.fp': new Bls12381FieldSerializer(),
         }
@@ -77,12 +77,22 @@ class Serializer extends BaseSerializer {
         return this._getSerializer(data).serialize(data)
     }
 
-    deserialize(type, data) {
+    deserializeWithType(data, type) {
         if (!(data instanceof Uint8Array)) {
             throw new SerializerError('Only instances of Uint8Array is supported.')
         }
 
         return this._getSerializer(type).deserialize(data, type)
+    }
+
+    deserialize(data) {
+        if (!(data instanceof Uint8Array)) {
+            throw new SerializerError('Only instances of Uint8Array is supported.')
+        }
+
+        const type = this.typeFactory.createType(data)
+
+        return this.deserializeWithType(data, type)
     }
 
     deserializeStream(data, typeInfo) {

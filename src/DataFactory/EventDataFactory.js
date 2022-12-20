@@ -10,17 +10,11 @@ const DATA_TYPES = [
 ]
 
 class EventDataFactory extends BaseDataFactory {
-    constructor(valueFactory, variantFactory) {
-        super(valueFactory)
-
-        this._variantFactory = variantFactory
-    }
-
     supports({ name, _valueTypes }) {
         return 'event' === name
     }
 
-    create({variantType}, {data, topics}) {
+    create({variantType, topics}, data) {
         const [nameHash, ...args] = topics
 
         if (typeof nameHash !== 'bigint') {
@@ -46,7 +40,7 @@ class EventDataFactory extends BaseDataFactory {
             return args.shift()
         })
 
-        return this._variantFactory.create(variantType, {[variantName]: resolvedArgs})
+        return this.valueFactory.create(variantType, {[variantName]: resolvedArgs})
     }
 
     _isData(type) {

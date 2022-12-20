@@ -25,11 +25,11 @@ class VariantSerializer extends BaseSerializer {
         let variants = []
         let valueType
 
-        if (typeof typeInfo !== 'undefined') {
+        if (typeof typeInfo !== 'undefined' && typeof typeInfo.variants !== 'undefined') {
             variants = typeInfo.variants
             valueType = {
                 ...typeInfo.variantType,
-                valueTypes: Object.values(typeInfo.variants[tag])[0]
+                valueTypes: Object.values(variants[tag])[0]
             }
         }
 

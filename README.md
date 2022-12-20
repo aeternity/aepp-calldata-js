@@ -92,6 +92,36 @@ Expected output:
 {EventTwo: [17n, 'triggered']}
 ```
 
+## Byte Arrays
+
+Any contract bytearray can be decocded using the `decodeContractByteArray` method.
+
+Node that FATE does not carry some of the type informaton with the data:
+
+- Record keys are lost
+- Variant constructor names are lost
+- Any user type information is lost
+- STL type information is lost: i.e. Chain, AENS, Set, BLS12_381
+
+Example:
+```javascript
+const {Encoder} = require('@aeternity/aepp-calldata')
+const ACI = require('./Test.json')
+
+const decodedString = encoder.decodeContractByteArray('cb_KXdob29seW1vbHlGazSE')
+console.log(`Decoded string: ${decodedString}`)
+
+const decodedMap = encoder.decodeContractByteArray('cb_LwEOfzGit9U')
+console.log('Decoded map:', decodedMap)
+
+```
+
+Expected output:
+```
+Decoded string: whoolymoly
+Decoded map: Map(1) { 7n => false }
+```
+
 ## Data types
 
 Using the library involves data types and their mappings from Sophia to JavaScript and vice versa.

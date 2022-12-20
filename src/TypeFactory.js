@@ -11,6 +11,7 @@ const {
     FateTypeContractAddress,
     FateTypeOracleAddress,
     FateTypeOracleQueryAddress,
+    FateTypeChannelAddress,
     FateTypeList,
     FateTypeMap,
     FateTypeTuple,
@@ -18,11 +19,12 @@ const {
 } = require('./FateTypes')
 
 const OBJECT_TYPES = {
-    0: FateTypeAccountAddress(),
-    1: FateTypeBytes(),
-    2: FateTypeContractAddress(),
-    3: FateTypeOracleAddress(),
-    4: FateTypeOracleQueryAddress(),
+    [FateTag.OTYPE_ADDRESS]: FateTypeAccountAddress(),
+    [FateTag.OTYPE_BYTES]: FateTypeBytes(),
+    [FateTag.OTYPE_CONTRACT]: FateTypeContractAddress(),
+    [FateTag.OTYPE_ORACLE]: FateTypeOracleAddress(),
+    [FateTag.OTYPE_ORACLE_QUERY]: FateTypeOracleQueryAddress(),
+    [FateTag.OTYPE_CHANNEL]: FateTypeChannelAddress(),
 }
 
 class TypeFactory {
@@ -42,6 +44,7 @@ class TypeFactory {
 
         if ((tag & 0x03) === FateTag.SHORT_STRING
             || tag === FateTag.LONG_STRING
+            || tag === FateTag.EMPTY_STRING
         ) {
             return FateTypeString()
         }

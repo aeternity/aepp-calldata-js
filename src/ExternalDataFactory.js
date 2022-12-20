@@ -1,10 +1,11 @@
 const CompositeDataFactory = require('./DataFactory/CompositeDataFactory')
+const InternalMapper = require('./Mapper/InternalMapper')
 
 class ExternalDataFactory extends CompositeDataFactory {
-    constructor(mapper) {
+    constructor() {
         super()
 
-        this._mapper = mapper
+        this._mapper = new InternalMapper()
     }
 
     create(type, value) {

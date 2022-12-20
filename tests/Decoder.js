@@ -9,7 +9,7 @@ const encoder = new Encoder(aci)
 test('Decode implicit init (void)', t => {
     t.plan(1)
     t.is(
-        encoder.decode(CONTRACT, 'init', 'cb_/8CwV/U='),
+        encoder.decode(CONTRACT, 'init', 'cb_Xfbg4g=='),
         undefined
     )
 })
@@ -52,33 +52,37 @@ test('Decode string return', t => {
     t.plan(1)
     t.deepEqual(
         encoder.decode(CONTRACT, 'test_string', 'cb_KXdob29seW1vbHlGazSE'),
-        "whoolymoly",
+        'whoolymoly',
         'test_string("whoolymoly")'
     )
 })
 
 test('Decode hash return', t => {
     t.plan(1)
+
+    const expectedHex = HexStringToByteArray("0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f")
     t.deepEqual(
         encoder.decode(
             CONTRACT,
             'test_hash',
             'cb_nwGBAAECAwQFBgcICQoLDA0ODwABAgMEBQYHCAkKCwwNDg/55Yfk',
         ),
-        HexStringToByteArray("0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f"),
+        expectedHex,
         'test_hash(#000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f)'
     )
 })
 
 test('Decode signature return', t => {
     t.plan(1)
+
+    const expectedHex = HexStringToByteArray("0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f")
     t.deepEqual(
         encoder.decode(
             CONTRACT,
             'test_signature',
             'cb_nwEBAAABAgMEBQYHCAkKCwwNDg8AAQIDBAUGBwgJCgsMDQ4PAAECAwQFBgcICQoLDA0ODwABAgMEBQYHCAkKCwwNDg/EV2+8',
         ),
-        HexStringToByteArray("0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f"),
+        expectedHex,
         `test_signature(#000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f)`
     )
 })
@@ -553,6 +557,11 @@ test('Decode BLS12_381.g1', t => {
     )
 })
 
+test('Decode generic contract byte array', t => {
+    // just make sure the method exists
+    t.is(encoder.decodeContractByteArray('cb_/8CwV/U='), true)
+})
+
 test('Decode FATE errors', t => {
     t.plan(3)
     // error message is just string, no FATE encoding
@@ -563,7 +572,7 @@ test('Decode FATE errors', t => {
 
     t.throws(
         () => encoder.decodeString('err_abc'),
-        { name: 'FormatError' }
+        { name: 'FateTypeError' }
     )
 
     // revert messages are FATE string encoded
