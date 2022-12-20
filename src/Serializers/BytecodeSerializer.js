@@ -20,9 +20,9 @@ const splitArgs = (data, n = 1) => {
     const args = []
     let bits = Number(ByteArray2Int(data))
 
-    for (let i = 0; i < n*2; i+=2) {
-       args.push(bits & 0b11)
-       bits = bits >> 2
+    for (let i = 0; i < n * 2; i += 2) {
+        args.push(bits & 0b11)
+        bits >>= 2
     }
 
     if (bits !== 0) {
@@ -123,16 +123,15 @@ class BytecodeSerializer extends BaseSerializer {
         }
 
         const instr = OPCODES[opcode]
-        const mnemonic = instr.mnemonic
-        const ends = instr.end
+        const {mnemonic, end} = instr
 
         if (instr.args === 0) {
-            return [{mnemonic, args: []}, rest, ends]
+            return [{mnemonic, args: []}, rest, end]
         }
 
         const [args, rest2] = this.deserializeArguments(rest, instr.args)
 
-        return [{mnemonic, args}, rest2, ends]
+        return [{mnemonic, args}, rest2, end]
     }
 
     deserializeArguments(data, n) {
@@ -141,8 +140,8 @@ class BytecodeSerializer extends BaseSerializer {
         const rest = data.slice(numBytes)
 
         const modifiers = splitArgs(modBytes, n)
+        const args = []
         let rest2 = rest
-        let args = []
         let arg
 
         modifiers.forEach(mod => {
