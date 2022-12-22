@@ -6,6 +6,9 @@ const CanonicalMapper = require('./Mapper/CanonicalMapper')
 const {FateTypeCalldata, FateTypeString} = require('./FateTypes')
 const EncoderError = require('./Errors/EncoderError')
 
+/**
+ * @deprecated Use AciContractCallEncoder
+ */
 class Encoder {
     /**
      * Creates contract encoder

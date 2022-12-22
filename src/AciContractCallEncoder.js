@@ -98,7 +98,7 @@ class AciContractCallEncoder {
      * @param {string} contract - The contract name as defined in the ACI.
      * @param {string} funName - The function name as defined in the ACI.
      * @param {string} data - The call return value in a canonical format.
-     * @param {ok|revert|error} result type - The call result type. Defaults to 'ok'.
+     * @param {'ok'|'revert'|'error'} resultType - The call result type.
      * @returns {boolean|string|BigInt|Array|Map|Object}
      *  Decoded value as Javascript data structures. See README.md
     */
@@ -117,7 +117,7 @@ class AciContractCallEncoder {
             return this._byteArrayEncoder.decodeWithType(data, FateTypeString())
         }
 
-        throw new EncoderError(`Unknown call resutls type: "${resultType}"`)
+        throw new EncoderError(`Unknown call result type: "${resultType}"`)
     }
 
     /**
@@ -134,7 +134,7 @@ class AciContractCallEncoder {
      *
      * @param {string} contract - The contract name as defined in the ACI.
      * @param {string} encodedData - Event encoded data
-     * @param {Array} topics - A list of event topics.
+     * @param {BigInt[]} topics - A list of event topics.
      * First element should be the implicit topic that carry the event constructor name.
      */
     decodeEvent(contract, data, topics) {

@@ -96,7 +96,7 @@ class BytecodeContractCallEncoder {
      * // Decoded data: whoolymoly
      *
      * @param {string} data - The call return value in a canonical format.
-     * @param {ok|revert|error} resultType - The call result type. Defaults to 'ok'.
+     * @param {'ok'|'revert'|'error'} resultType - The call result type.
      * @returns {boolean|string|BigInt|Array|Map|Object}
      *  Decoded value as Javascript data structures. See README.md
     */
