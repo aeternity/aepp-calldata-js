@@ -1,7 +1,7 @@
-const Encoder = require('./Encoder')
-const AciContractCallEncoder = require('./AciContractCallEncoder')
-const BytecodeContractCallEncoder = require('./BytecodeContractCallEncoder')
-const ContractByteArrayEncoder = require('./ContractByteArrayEncoder')
+const Encoder = require('./api/Encoder')
+const AciContractCallEncoder = require('./api/AciContractCallEncoder')
+const BytecodeContractCallEncoder = require('./api/BytecodeContractCallEncoder')
+const ContractByteArrayEncoder = require('./api/ContractByteArrayEncoder')
 
 module.exports = {
     Encoder,

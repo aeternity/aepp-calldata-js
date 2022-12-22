@@ -1,9 +1,4 @@
-const ContractByteArrayEncoder = require('./ContractByteArrayEncoder')
-const BytecodeTypeResolver = require('./BytecodeTypeResolver')
-const ApiEncoder = require('./ApiEncoder')
-const EventEncoder = require('./EventEncoder')
-const {FateTypeCalldata, FateTypeString} = require('./FateTypes')
-const EncoderError = require('./Errors/EncoderError')
+const InternalEncoder = require('../BytecodeContractCallEncoder')
 
 class BytecodeContractCallEncoder {
     /**
@@ -16,17 +11,7 @@ class BytecodeContractCallEncoder {
      * @param {string} bytecode - Contract bytecode using cannonical format.
     */
     constructor(bytecode) {
-        /** @type {ContractByteArrayEncoder} */
-        this._byteArrayEncoder = new ContractByteArrayEncoder()
-
-        /** @type {BytecodeTypeResolver} */
-        this._typeResolver = new BytecodeTypeResolver(bytecode)
-
-        /** @type {ApiEncoder} */
-        this._apiEncoder = new ApiEncoder()
-
-        /** @type {EventEncoder} */
-        this._eventEncoder = new EventEncoder()
+        this._internalEncoder = new InternalEncoder(bytecode)
     }
 
     /**
@@ -43,16 +28,7 @@ class BytecodeContractCallEncoder {
      * @returns {string} Encoded calldata
     */
     encodeCall(funName, args) {
-        const {types, required} = this._typeResolver.getCallTypes(funName)
-
-        if (args.length > types.length || args.length < required) {
-            throw new EncoderError(
-                'Non matching number of arguments. '
-                + `${funName} expects between ${required} and ${types.length} number of arguments but got ${args.length}`
-            )
-        }
-
-        return this._byteArrayEncoder.encode(FateTypeCalldata(funName, types), args)
+        return this._internalEncoder.encodeCall(funName, args)
     }
 
     /**
@@ -72,14 +48,7 @@ class BytecodeContractCallEncoder {
      * @returns {object} Decoded calldata
     */
     decodeCall(data) {
-        const {functionId, args} = this._byteArrayEncoder.decodeWithType(data, FateTypeCalldata())
-        const functionName = this._typeResolver.getFunctionName(functionId)
-
-        return {
-            functionId,
-            functionName,
-            args
-        }
+        return this._internalEncoder.decodeCall(data)
     }
 
     /**
@@ -97,19 +66,7 @@ class BytecodeContractCallEncoder {
      *  Decoded value as Javascript data structures. See README.md
     */
     decodeResult(data, resultType = 'ok') {
-        if (resultType === 'ok') {
-            return this._byteArrayEncoder.decode(data)
-        }
-
-        if (resultType === 'error') {
-            return this._apiEncoder.decodeWithType(data, 'contract_bytearray').toString()
-        }
-
-        if (resultType === 'revert') {
-            return this._byteArrayEncoder.decodeWithType(data, FateTypeString())
-        }
-
-        throw new EncoderError(`Unknown call resutls type: "${resultType}"`)
+        return this._internalEncoder.decodeResult(data, resultType)
     }
 }
 

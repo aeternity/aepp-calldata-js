@@ -19,9 +19,6 @@ const {
 
 const encoder = new ContractByteArrayEncoder()
 
-test.todo('StoreMap')
-test.todo('Type)')
-
 test('Encode primitives', t => {
     t.plan(7)
 
