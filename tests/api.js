@@ -11,7 +11,7 @@ const {
 
 const CONTRACT = 'Test'
 
-test('Encoder public API', t => {
+test('Encoder (legacy) public API', t => {
     t.plan(6)
     const encoder = new Encoder(aci)
     const error = 'cb_VHlwZSBlcnJvciBvbiBjYWxsOiBbe2J5dGVzLDw8MjQwLDIsLi4uPj59XSBpcyBub3Qgb2YgdHlwZSBbe2J5dGVzLDMyfV3EtJjU'
@@ -65,6 +65,9 @@ test('BytecodeContractCallEncoder public API', t => {
 
     const bytecode = fs.readFileSync(path.resolve(__dirname, '../build/contracts/Test.aeb'))
     const encoder = new BytecodeContractCallEncoder(bytecode.toString())
+
+    t.is(encoder.encodeCall('init', []), 'cb_KxFE1kQfP4oEp9E=')
+    t.is(encoder.decodeResult('init', 'cb_Xfbg4g=='), undefined)
 
     t.deepEqual(
         encoder.decodeCall('cb_KxGhC8WIK/9/56SENg=='),

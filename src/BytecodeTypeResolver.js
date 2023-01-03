@@ -1,8 +1,14 @@
 const ContractEncoder = require('./ContractEncoder')
 const TypeResolveError = require('./Errors/TypeResolveError')
 const {
+    FateTypeVoid,
+    FateTypeTuple,
     FateTypeEvent,
+    FateTypeList,
+    FateTypeMap,
     FateTypeVariant,
+    FateTypeOracleAddress,
+    FateTypeOracleQueryAddress,
 } = require('./FateTypes')
 
 class BytecodeTypeResolver {
@@ -56,6 +62,20 @@ class BytecodeTypeResolver {
         throw new TypeResolveError(`Unknown function ${funName}`)
     }
 
+    getReturnType(funName) {
+        if (funName === 'init') {
+            return FateTypeVoid()
+        }
+
+        const fun = this.getFunction(this.getFunctionId(funName))
+
+        if (fun) {
+            return this.resolveType(fun.returnType)
+        }
+
+        throw new TypeResolveError(`Unknown function ${funName}`)
+    }
+
     getEventType(topics) {
         const fun = this.getFunction(this.getFunctionId('Chain.event'))
 
@@ -76,6 +96,31 @@ class BytecodeTypeResolver {
             })
 
             return FateTypeVariant(variants)
+        }
+
+        let resolvedTypes = []
+        if (Array.isArray(type.valueTypes)) {
+            resolvedTypes = type.valueTypes.map(t => this.resolveType(t))
+        }
+
+        if (type.name === 'tuple') {
+            return FateTypeTuple(resolvedTypes)
+        }
+
+        if (type.name === 'list') {
+            return FateTypeList(...resolvedTypes)
+        }
+
+        if (type.name === 'map') {
+            return FateTypeMap(...resolvedTypes)
+        }
+
+        if (type.name === 'oracle') {
+            return FateTypeOracleAddress(...resolvedTypes)
+        }
+
+        if (type.name === 'oracle_query') {
+            return FateTypeOracleQueryAddress(...resolvedTypes)
         }
 
         return type

@@ -91,14 +91,17 @@ class BytecodeContractCallEncoder {
      * // Outputs:
      * // Decoded data: whoolymoly
      *
+     * @param {string} funName - The function name as defined in the bytecode.
      * @param {string} data - The call return value in a canonical format.
      * @param {'ok'|'revert'|'error'} resultType - The call result type.
      * @returns {boolean|string|BigInt|Array|Map|Object}
      *  Decoded value as Javascript data structures. See README.md
     */
-    decodeResult(data, resultType = 'ok') {
+    decodeResult(funName, data, resultType = 'ok') {
         if (resultType === 'ok') {
-            return this._byteArrayEncoder.decode(data)
+            const type = this._typeResolver.getReturnType(funName)
+
+            return this._byteArrayEncoder.decodeWithType(data, type)
         }
 
         if (resultType === 'error') {

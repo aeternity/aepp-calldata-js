@@ -113,15 +113,15 @@ test('Decode calldata', t => {
 test('Decode implicit init (void) result', t => {
     t.plan(1)
     t.is(
-        encoder.decodeResult('cb_Xfbg4g=='),
-        0n
+        encoder.decodeResult('init', 'cb_Xfbg4g=='),
+        undefined
     )
 })
 
 test('Decode unit return result', t => {
     t.plan(1)
     t.deepEqual(
-        encoder.decodeResult('cb_P4fvHVw='),
+        encoder.decodeResult('test_unit', 'cb_P4fvHVw='),
         [] // ()
     )
 })
@@ -130,6 +130,7 @@ test('Decode successful result', t => {
     t.plan(1)
     t.deepEqual(
         encoder.decodeResult(
+            'test_complex_tuple',
             'cb_WysCAq+EAAABAAIbBjMCBAYvAgIEBggrCgyRsE4R'
         ),
         [
@@ -147,13 +148,14 @@ test('Decode error result', t => {
     t.plan(2)
     // error message is just string, no FATE encoding
     const error = encoder.decodeResult(
+        'test_unit',
         'cb_VHlwZSBlcnJvciBvbiBjYWxsOiBbe2J5dGVzLDw8MjQwLDIsLi4uPj59XSBpcyBub3Qgb2YgdHlwZSBbe2J5dGVzLDMyfV3EtJjU',
         'error'
     )
     t.is(error, 'Type error on call: [{bytes,<<240,2,...>>}] is not of type [{bytes,32}]')
 
     t.throws(
-        () => encoder.decodeResult('err_abc', 'error'),
+        () => encoder.decodeResult('test_unit', 'err_abc', 'error'),
         { name: 'FateTypeError' }
     )
 })
@@ -162,7 +164,7 @@ test('Decode revert result', t => {
     t.plan(1)
 
     // revert messages are FATE string encoded
-    const revert = encoder.decodeResult('cb_OXJlcXVpcmUgZmFpbGVkarP9mg==', 'revert')
+    const revert = encoder.decodeResult('test_unit', 'cb_OXJlcXVpcmUgZmFpbGVkarP9mg==', 'revert')
     t.is(revert, 'require failed')
 })
 
@@ -170,7 +172,7 @@ test('Decode unknown result', t => {
     t.plan(1)
 
     t.throws(
-        () => encoder.decodeResult('123', 'unknown'),
+        () => encoder.decodeResult('test_unit', '123', 'unknown'),
         { name: 'EncoderError' }
     )
 })

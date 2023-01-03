@@ -50,6 +50,7 @@ export class BytecodeContractCallEncoder {
   decodeCall(data: `cb_${string}`): object;
 
   decodeResult(
+    funName: string,
     data: `cb_${string}`,
     resultType?: 'ok' | 'revert' | 'error'
   ): any;
