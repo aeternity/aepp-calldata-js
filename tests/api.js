@@ -61,7 +61,7 @@ test('AciContractCallEncoder public API', t => {
 })
 
 test('BytecodeContractCallEncoder public API', t => {
-    t.plan(1)
+    t.plan(3)
 
     const bytecode = fs.readFileSync(path.resolve(__dirname, '../build/contracts/Test.aeb'))
     const encoder = new BytecodeContractCallEncoder(bytecode.toString())
