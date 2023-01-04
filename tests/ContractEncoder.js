@@ -1,3 +1,5 @@
+const fs = require('fs')
+const path = require('path')
 const test = require('./test')
 const ContractEncoder = require('../src/ContractEncoder')
 const {
@@ -6,6 +8,7 @@ const {
 } = require('../src/FateTypes')
 
 const encoder = new ContractEncoder()
+const testContract = fs.readFileSync(path.resolve(__dirname, '../build/contracts/Test.aeb'))
 
 test('Decode basic contract', t => {
     t.plan(9)
@@ -19,18 +22,49 @@ test('Decode basic contract', t => {
     t.is(contract.payable, true)
     t.deepEqual(contract.bytecode.symbols, { '44d6441f': 'init', '62a8b48c': 'test2' })
     t.deepEqual(contract.bytecode.annotations, new Map())
+
     t.deepEqual(contract.bytecode.functions[0], {
         id: '44d6441f',
+        name: 'init',
         attributes: [],
         args: FateTypeTuple(),
         returnType: FateTypeTuple(),
-        instructions: [],
+        instructions: [[
+            {
+                mnemonic: 'STORE',
+                args: [{ mod: 'var', arg: -1n}, {mod: 'immediate', arg: 'test'}]
+            },
+            {
+                mnemonic: 'STORE',
+                args: [{mod: 'var', arg: -2n}, {mod: 'immediate', arg: 'echo'}]
+            },
+            {
+                mnemonic: 'RETURNR',
+                args: [{ mod: 'immediate', arg: []}]
+            }
+        ]],
     })
+
     t.deepEqual(contract.bytecode.functions[1], {
         id: '62a8b48c',
+        name: 'test2',
         attributes: ['payable'],
         args: FateTypeTuple(),
         returnType: FateTypeInt(),
-        instructions: [],
+        instructions: [[
+            {mnemonic: 'RETURNR', args: [{mod: 'immediate', arg: 2n}]}
+        ]]
     })
+})
+
+test('Decode full featured contract', t => {
+    const contract = encoder.decode(testContract.toString())
+
+    t.plan(6)
+    t.is(contract.tag, 70n)
+    t.is(contract.vsn, 3n)
+    t.is(contract.compiler_version, '6.1.0')
+    t.is(contract.payable, false)
+    t.is(Object.keys(contract.bytecode.symbols).length, contract.bytecode.functions.length)
+    t.deepEqual(contract.bytecode.annotations, new Map())
 })

@@ -1,5 +1,5 @@
 const test = require('./test')
-const TypeResolver = require('../src/TypeResolver')
+const AciTypeResolver = require('../src/AciTypeResolver')
 const aci = require('../build/contracts/Test.json')
 const {
     FateTypeInt,
@@ -24,7 +24,7 @@ const {
 } = require('../src/FateTypes')
 
 const CONTRACT = 'Test'
-const resolver = new TypeResolver(aci)
+const resolver = new AciTypeResolver(aci)
 const ns = (name) => `${CONTRACT}.${name}`
 
 test('Get implicit empty init argument types', t => {
@@ -244,11 +244,7 @@ test('Resolve variant', t => {
     t.plan(1)
     t.deepEqual(
         resolver.resolveType(ns('really_t')),
-        FateTypeVariant(
-            0,
-            null,
-            [{Nope: []}, {No: []}, {Yep: [FateTypeInt()]}, {Yes: []}]
-        )
+        FateTypeVariant([{Nope: []}, {No: []}, {Yep: [FateTypeInt()]}, {Yes: []}])
     )
 })
 
@@ -258,11 +254,10 @@ test('Resolve variant with template vars', t => {
         resolver.resolveType({
             [ns('amount_t')]: ['int', 'bool']
         }),
-        FateTypeVariant(
-            0,
-            null,
-            [{Zero: []}, {Any: [FateTypeInt(), FateTypeBool(), FateTypeInt(), FateTypeInt()]}]
-        )
+        FateTypeVariant([
+            {Zero: []},
+            {Any: [FateTypeInt(), FateTypeBool(), FateTypeInt(), FateTypeInt()]}
+        ])
     )
 })
 

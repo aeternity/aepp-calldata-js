@@ -1,10 +1,4 @@
-const ContractByteArrayEncoder = require('./ContractByteArrayEncoder')
-const AciTypeResolver = require('./AciTypeResolver')
-const ApiEncoder = require('./ApiEncoder')
-const EventEncoder = require('./EventEncoder')
-const CanonicalMapper = require('./Mapper/CanonicalMapper')
-const {FateTypeCalldata, FateTypeString} = require('./FateTypes')
-const EncoderError = require('./Errors/EncoderError')
+const InternalEncoder = require('../Encoder')
 
 /**
  * @deprecated Use AciContractCallEncoder
@@ -20,20 +14,7 @@ class Encoder {
      * @param {Object} aci - The contract ACI in a canonical form as POJO.
     */
     constructor(aci) {
-        /** @type {ContractByteArrayEncoder} */
-        this._byteArrayEncoder = new ContractByteArrayEncoder()
-
-        /** @type {AciTypeResolver} */
-        this._typeResolver = new AciTypeResolver(aci)
-
-        /** @type {ApiEncoder} */
-        this._apiEncoder = new ApiEncoder()
-
-        /** @type {EventEncoder} */
-        this._eventEncoder = new EventEncoder()
-
-        /** @type {CanonicalMapper} */
-        this._canonicalMapper = new CanonicalMapper()
+        this._internalEncoder = new InternalEncoder(aci)
     }
 
     /**
@@ -51,21 +32,7 @@ class Encoder {
      * @returns {string} Encoded calldata
     */
     encode(contract, funName, args) {
-        const {types, required} = this._typeResolver.getCallTypes(contract, funName)
-
-        if (args.length > types.length || args.length < required) {
-            throw new EncoderError(
-                'Non matching number of arguments. '
-                + `${funName} expects between ${required} and ${types.length} number of arguments but got ${args.length}`
-            )
-        }
-
-        // fill in the options arguments
-        while (args.length < types.length) {
-            args.push(undefined)
-        }
-
-        return this._byteArrayEncoder.encode(FateTypeCalldata(funName, types), args)
+        return this._internalEncoder.encode(contract, funName, args)
     }
 
     /**
@@ -84,9 +51,7 @@ class Encoder {
      *  Decoded value as Javascript data structures. See README.md
     */
     decode(contract, funName, data) {
-        const type = this._typeResolver.getReturnType(contract, funName)
-
-        return this._byteArrayEncoder.decodeWithType(data, type)
+        return this._internalEncoder.decode(contract, funName, data)
     }
 
     /**
@@ -109,7 +74,7 @@ class Encoder {
      *  Decoded value as Javascript data structures. See README.md
     */
     decodeContractByteArray(data) {
-        return this._byteArrayEncoder.decode(data)
+        return this._internalEncoder.decodeContractByteArray(data)
     }
 
     /* eslint-disable max-len */
@@ -127,7 +92,7 @@ class Encoder {
      * @returns {Uint8Array} Decoded value as byte array.
     */
     decodeString(data) {
-        return this._apiEncoder.decodeWithType(data, 'contract_bytearray')
+        return this._internalEncoder.decodeString(data)
     }
     /* eslint-enable max-len */
 
@@ -144,7 +109,7 @@ class Encoder {
      * @returns {string} Decoded string value.
     */
     decodeFateString(data) {
-        return this._byteArrayEncoder.decodeWithType(data, FateTypeString())
+        return this._internalEncoder.decodeFateString(data)
     }
 
     /**
@@ -165,9 +130,7 @@ class Encoder {
      * First element should be the implicit topic that carry the event constructor name.
      */
     decodeEvent(contract, data, topics) {
-        const type = this._typeResolver.getEventType(contract, topics)
-
-        return this._eventEncoder.decodeWithType(data, type)
+        return this._internalEncoder.decodeEvent(contract, data, topics)
     }
 }
 

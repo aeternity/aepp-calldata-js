@@ -73,6 +73,6 @@ test('Deserialize composite types', t => {
     )
     t.deepEqual(
         s.deserialize([FateTag.TYPE_VARIANT, 2, FateTag.TYPE_STRING, FateTag.TYPE_INTEGER]),
-        FateTypeVariant(0, null, [FateTypeString(), FateTypeInt()])
+        FateTypeVariant([FateTypeString(), FateTypeInt()])
     )
 })

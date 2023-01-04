@@ -9,8 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Added
 - Add support for arbitrary contract bytearray decoding (#179)
+- Add support for encoding/decoding of calldata using bytecode type info (`BytecodeContractCallEncoder`)
+- Add public API class `ContractByteArrayEncoder`
 ### Changed
 ### Deprecated
+- `Encoder` class has been deprecated in favour of `AciContractCallEncoder` class
 ### Removed
 
 ## [1.3.0] - 2022-08-24

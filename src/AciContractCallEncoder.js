@@ -6,18 +6,15 @@ const CanonicalMapper = require('./Mapper/CanonicalMapper')
 const {FateTypeCalldata, FateTypeString} = require('./FateTypes')
 const EncoderError = require('./Errors/EncoderError')
 
-/**
- * @deprecated Use AciContractCallEncoder
- */
-class Encoder {
+class AciContractCallEncoder {
     /**
-     * Creates contract encoder
+     * Creates contract encoder using ACI as type info provider
      *
      * @example
      * const ACI = require('./Test.json')
-     * const encoder = new Encoder(ACI)
+     * const encoder = new AciContractCallEncoder(ACI)
      *
-     * @param {Object} aci - The contract ACI in a canonical form as POJO.
+     * @param {Object} aci - The contract ACI in a canonical (CLI compiler) form as POJO.
     */
     constructor(aci) {
         /** @type {ContractByteArrayEncoder} */
@@ -37,10 +34,10 @@ class Encoder {
     }
 
     /**
-     * Creates contract calldata
+     * Creates contract call data
      *
      * @example
-     * const encoded = encoder.encode('Test', 'test_string', ["whoolymoly"])
+     * const encoded = encoder.encodeCall('Test', 'test_string', ["whoolymoly"])
      * console.log(`Encoded data: ${encoded}`)
      * // Outputs:
      * // Encoded data: cb_KxHwzCuVGyl3aG9vbHltb2x5zwMSnw==
@@ -50,7 +47,7 @@ class Encoder {
      * @param {Array} args - An array of call arguments as Javascript data structures. See README.md
      * @returns {string} Encoded calldata
     */
-    encode(contract, funName, args) {
+    encodeCall(contract, funName, args) {
         const {types, required} = this._typeResolver.getCallTypes(contract, funName)
 
         if (args.length > types.length || args.length < required) {
@@ -69,7 +66,28 @@ class Encoder {
     }
 
     /**
-     * Decodes successful (type = ok) contract call return data
+     * Decodes contract calldata
+     *
+     * @example
+     * const data = encoder.decodeCall('Test', 'test_string', 'cb_KxHwzCuVGyl3aG9vbHltb2x5zwMSnw==')
+     * console.log(`Decoded data: ${data}`)
+     * // Outputs:
+     * // Decoded data: ["whoolymoly"]
+     *
+     * @param {string} contract - The contract name as defined in the ACI.
+     * @param {string} funName - The function name as defined in the ACI.
+     * @param {string} data - Encoded calldata in canonical format.
+     * @returns {string} Decoded data
+    */
+    decodeCall(contract, funName, data) {
+        const {types, _required} = this._typeResolver.getCallTypes(contract, funName)
+        const calldataType = FateTypeCalldata(funName, types)
+
+        return this._byteArrayEncoder.decodeWithType(data, calldataType)
+    }
+
+    /**
+     * Decodes successful (resultType = ok) contract call return data
      *
      * @example
      * const decoded = encoder.decode('Test', 'test_string', 'cb_KXdob29seW1vbHlGazSE')
@@ -80,71 +98,26 @@ class Encoder {
      * @param {string} contract - The contract name as defined in the ACI.
      * @param {string} funName - The function name as defined in the ACI.
      * @param {string} data - The call return value in a canonical format.
+     * @param {'ok'|'revert'|'error'} resultType - The call result type.
      * @returns {boolean|string|BigInt|Array|Map|Object}
      *  Decoded value as Javascript data structures. See README.md
     */
-    decode(contract, funName, data) {
-        const type = this._typeResolver.getReturnType(contract, funName)
+    decodeResult(contract, funName, data, resultType = 'ok') {
+        if (resultType === 'ok') {
+            const type = this._typeResolver.getReturnType(contract, funName)
 
-        return this._byteArrayEncoder.decodeWithType(data, type)
-    }
+            return this._byteArrayEncoder.decodeWithType(data, type)
+        }
 
-    /**
-     * Decodes arbitrary contract bytearray data.
-     *
-     * Note that:
-     * - Record keys are lost
-     * - Variant constructor names are lost
-     * - Any user type information is lost
-     * - STL type information is lost: i.e. Chain, AENS, Set, BLS12_381
-     *
-     * @example
-     * const decoded = encoder.decodeContractByteArray('cb_KXdob29seW1vbHlGazSE')
-     * console.log(`Decoded data: ${decoded}`)
-     * // Outputs:
-     * // Decoded data: whoolymoly
-     *
-     * @param {string} data - Contract bytearray data in a canonical format.
-     * @returns {boolean|string|BigInt|Array|Map|Object}
-     *  Decoded value as Javascript data structures. See README.md
-    */
-    decodeContractByteArray(data) {
-        return this._byteArrayEncoder.decode(data)
-    }
+        if (resultType === 'error') {
+            return this._apiEncoder.decodeWithType(data, 'contract_bytearray').toString()
+        }
 
-    /* eslint-disable max-len */
-    /**
-     * Decodes a string
-     *
-     *
-     * @example
-     * const error = encoder.decodeString('cb_VHlwZSBlcnJvciBvbiBjYWxsOiBbe2J5dGVzLDw8MjQwLDIsLi4uPj59XSBpcyBub3Qgb2YgdHlwZSBbe2J5dGVzLDMyfV3EtJjU')
-     * console.log('Error: ' + error.toString())
-     * // Outputs:
-     * // Error: Type error on call: [{bytes,<<240,2,...>>}] is not of type [{bytes,32}]
-     *
-     * @param {string} data - The encoded string.
-     * @returns {Uint8Array} Decoded value as byte array.
-    */
-    decodeString(data) {
-        return this._apiEncoder.decodeWithType(data, 'contract_bytearray')
-    }
-    /* eslint-enable max-len */
+        if (resultType === 'revert') {
+            return this._byteArrayEncoder.decodeWithType(data, FateTypeString())
+        }
 
-    /**
-     * Decodes a FATE string
-     *
-     * @example
-     * const revert = encoder.decodeFateString('cb_OXJlcXVpcmUgZmFpbGVkarP9mg==')
-     * console.log('Revert: ' + revert)
-     * // Outputs:
-     * // Revert: require failed
-     *
-     * @param {string} data - The FATE encoded string.
-     * @returns {string} Decoded string value.
-    */
-    decodeFateString(data) {
-        return this._byteArrayEncoder.decodeWithType(data, FateTypeString())
+        throw new EncoderError(`Unknown call result type: "${resultType}"`)
     }
 
     /**
@@ -161,7 +134,7 @@ class Encoder {
      *
      * @param {string} contract - The contract name as defined in the ACI.
      * @param {string} encodedData - Event encoded data
-     * @param {Array} topics - A list of event topics.
+     * @param {BigInt[]} topics - A list of event topics.
      * First element should be the implicit topic that carry the event constructor name.
      */
     decodeEvent(contract, data, topics) {
@@ -171,4 +144,4 @@ class Encoder {
     }
 }
 
-module.exports = Encoder
+module.exports = AciContractCallEncoder

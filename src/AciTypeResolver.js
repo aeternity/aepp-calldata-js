@@ -44,7 +44,7 @@ const isOption = ({type}) => {
     return key === 'option'
 }
 
-class TypeResolver {
+class AciTypeResolver {
     constructor(aci) {
         this.aci = aci
     }
@@ -287,8 +287,7 @@ class TypeResolver {
             return {[variant]: resolvedArgs}
         })
 
-        // TODO: junk first 2 args for BC
-        return FateTypeVariant(0, null, variants)
+        return FateTypeVariant(variants)
     }
 
     resolveTypeDef(type, params = []) {
@@ -329,4 +328,4 @@ class TypeResolver {
     }
 }
 
-module.exports = TypeResolver
+module.exports = AciTypeResolver

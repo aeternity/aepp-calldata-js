@@ -14,25 +14,41 @@ npm install -P @aeternity/aepp-calldata
 
 ## Quick Start
 
-There is single module `Encoder` that should be imported and instantiated. The constructor takes a single argument - [Sophia ACI](https://github.com/aeternity/aesophia/blob/master/docs/aeso_aci.md) as string.
+To work with contract calls with type information provided by ACI the `AciContractCallEncoder` class should be used. The constructor takes a single argument - [Sophia ACI](https://github.com/aeternity/aesophia/blob/master/docs/aeso_aci.md) as string.
 
-The `encode` method is used to encode calldata taking the contract name as first argument, then function name and list of contract call arguments as last argument.
-
-The `decode` method is used to decode contract call results while the first two arguments are the same as the encoding method the last one is the actual result to be decoded.
 
 NodeJS example:
 
 ```javascript
-const {Encoder} = require('@aeternity/aepp-calldata')
+const {AciContractCallEncoder} = require('@aeternity/aepp-calldata')
 const ACI = require('./Test.json')
 const CONTRACT = 'Test'
 
-const encoder = new Encoder(ACI)
+const encoder = new AciContractCallEncoder(ACI)
+```
 
-const encoded = encoder.encode(CONTRACT, 'test_string', ["whoolymoly"])
+### Encoding calldata
+
+The `encodeCall` method is used to encode calldata taking the contract name as first argument, then function name and list of contract call arguments as last argument.
+
+Example:
+```javascript
+const encoded = encoder.encodeCall(CONTRACT, 'test_string', ["whoolymoly"])
 console.log(`Encoded data: ${encoded}`)
+```
 
-const decoded = encoder.decode(CONTRACT, 'test_string', 'cb_KXdob29seW1vbHlGazSE')
+Expected output:
+```
+Encoded data: cb_KxHwzCuVGyl3aG9vbHltb2x5zwMSnw==
+```
+
+### Decoding call result
+
+The `decodeResult` method is used to decode contract call result based on it's type. While the first two arguments are the same as the encoding method, the third one is the actual result to be decoded and last one is the result type which defaults to 'ok'.
+
+Example:
+```javascript
+const decoded = encoder.decodeResult(CONTRACT, 'test_string', 'cb_KXdob29seW1vbHlGazSE')
 console.log(`Decoded data: ${decoded}`)
 ```
 
@@ -42,26 +58,24 @@ Encoded data: cb_KxHwzCuVGyl3aG9vbHltb2x5zwMSnw==
 Decoded data: whoolymoly
 ```
 
-## Contract call errors
+### Contract call errors
 
-FATE contract call error message is represented as `cb_` prefixed base64check encoded string,
-to get the error as string one can use `decodeString` shorthand method instead of doing it in their codebase.
-However, revert messages are FATE string encoded, so a different helper method `decodeFateString` should be used.
+FATE contract call error message is represented as encoded contract bytearray (`cb_` prefixed string).
+However, revert messages are FATE string encoded, so the `decodeResult` method accepts forth argument with the result type.
 
 Example:
 ```javascript
-const {Encoder} = require('@aeternity/aepp-calldata')
-const ACI = require('./Test.json')
-
-const encoder = new Encoder(ACI)
-
 // error message
-const error = encoder.decodeString('cb_VHlwZSBlcnJvciBvbiBjYWxsOiBbe2J5dGVzLDw8MjQwLDIsLi4uPj59XSBpcyBub3Qgb2YgdHlwZSBbe2J5dGVzLDMyfV3EtJjU')
-// note that decodeString returns a Buffer that has to be converted to string
-console.log('Error: ' + error.toString())
+const error = encoder.decodeResult(
+    CONTRACT,
+    'test_string',
+    'cb_VHlwZSBlcnJvciBvbiBjYWxsOiBbe2J5dGVzLDw8MjQwLDIsLi4uPj59XSBpcyBub3Qgb2YgdHlwZSBbe2J5dGVzLDMyfV3EtJjU',
+    'error'
+)
+console.log('Error: ' + error)
 
 // revert message
-const revert = encoder.decodeFateString('cb_OXJlcXVpcmUgZmFpbGVkarP9mg==')
+const revert = encoder.decodeResult(CONTRACT, 'test_string', 'cb_OXJlcXVpcmUgZmFpbGVkarP9mg==', 'revert')
 console.log('Revert: ' + revert)
 ```
 
@@ -71,19 +85,14 @@ Error: Type error on call: [{bytes,<<240,2,...>>}] is not of type [{bytes,32}]
 Revert: require failed
 ```
 
-## Events
+### Events
 
 Example:
 ```javascript
-const {Encoder} = require('@aeternity/aepp-calldata')
-const ACI = require('./Test.json')
-
-const encoder = new Encoder(ACI)
-
- const data = encoder.decodeEvent('Test', 'cb_dHJpZ2dlcmVk1FYuYA==', [
-     34853523142692495808479485503424878684430196596020091237715106250497712463899n,
-     17
- ])
+const data = encoder.decodeEvent('Test', 'cb_dHJpZ2dlcmVk1FYuYA==', [
+    34853523142692495808479485503424878684430196596020091237715106250497712463899n,
+    17n
+])
 console.log(data)
 ```
 
@@ -94,7 +103,7 @@ Expected output:
 
 ## Byte Arrays
 
-Any contract bytearray can be decocded using the `decodeContractByteArray` method.
+Any contract bytearray can be decocded using the `ContractByteArrayEncoder` class.
 
 Node that FATE does not carry some of the type informaton with the data:
 
@@ -105,13 +114,12 @@ Node that FATE does not carry some of the type informaton with the data:
 
 Example:
 ```javascript
-const {Encoder} = require('@aeternity/aepp-calldata')
-const ACI = require('./Test.json')
+const {ContractByteArrayEncoder} = require('@aeternity/aepp-calldata')
 
-const decodedString = encoder.decodeContractByteArray('cb_KXdob29seW1vbHlGazSE')
+const decodedString = encoder.decode('cb_KXdob29seW1vbHlGazSE')
 console.log(`Decoded string: ${decodedString}`)
 
-const decodedMap = encoder.decodeContractByteArray('cb_LwEOfzGit9U')
+const decodedMap = encoder.decode('cb_LwEOfzGit9U')
 console.log('Decoded map:', decodedMap)
 
 ```
@@ -160,11 +168,11 @@ that is only the module exports and [data types](#data-types) listed above.
 
 The public API namely consist of:
 
-- `encode(contractName: string, functionName: string, arguments: Array<Data>): string`
-- `decode(contractName: string, functionName: string, encodedData: string): Data`
+`AciContractCallEncoder` class:
+
+- `encodeCall(contractName: string, functionName: string, arguments: Array<Data>): string`
+- `decodeResult(contractName: string, functionName: string, data: string, resultType: string): Data`
 - `decodeEvent(contractName: string, data: string, topics: Array<BigInt>): string`
-- `decodeString(data: string): Buffer`
-- `decodeFateString(data: string): string`
 
 where `Data: Boolean | BigInt | String | Array | Map | Set | Object`
 

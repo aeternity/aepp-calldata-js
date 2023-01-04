@@ -19,9 +19,6 @@ const {
 
 const encoder = new ContractByteArrayEncoder()
 
-test.todo('StoreMap')
-test.todo('Type)')
-
 test('Encode primitives', t => {
     t.plan(7)
 
@@ -82,7 +79,7 @@ test('Encode composite types', t => {
 
     const variants = [{Nope: []}, {No: []}, {Yep: [FateTypeInt()]}, {Yes: []}]
     t.deepEqual(
-        encoder.encode(FateTypeVariant(0, null, variants), {No: []}),
+        encoder.encode(FateTypeVariant(variants), {No: []}),
         'cb_r4QAAAEAAT8xtJ9f'
     )
 })

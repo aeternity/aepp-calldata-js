@@ -99,12 +99,9 @@ const FateTypeMap = (keyType, valueType) => {
     }
 }
 
-const FateTypeVariant = (arities, variantType, variants) => {
+const FateTypeVariant = (variants) => {
     return {
         name: 'variant',
-        aritiesType: FateTypeInt(),
-        arities,
-        variantType: FateTypeTuple(variantType),
         variants,
     }
 }
@@ -115,7 +112,7 @@ const FateTypeOption = (valueTypes) => {
         { Some: valueTypes }
     ]
 
-    return FateTypeVariant(0, null, variants)
+    return FateTypeVariant(variants)
 }
 
 const FateTypeChainTTL = () => {
@@ -124,7 +121,7 @@ const FateTypeChainTTL = () => {
         {FixedTTL: [FateTypeInt()]}
     ]
 
-    return FateTypeVariant(0, null, variants)
+    return FateTypeVariant(variants)
 }
 
 const FateTypeChainGAMetaTx = () => {
@@ -132,7 +129,7 @@ const FateTypeChainGAMetaTx = () => {
         {'Chain.GAMetaTx': [FateTypeAccountAddress(), FateTypeInt()]},
     ]
 
-    return FateTypeVariant(0, null, variants)
+    return FateTypeVariant(variants)
 }
 
 const FateTypeChainPayingForTx = () => {
@@ -140,7 +137,7 @@ const FateTypeChainPayingForTx = () => {
         {'Chain.PayingForTx': [FateTypeAccountAddress(), FateTypeInt()]},
     ]
 
-    return FateTypeVariant(0, null, variants)
+    return FateTypeVariant(variants)
 }
 
 const FateTypeChainBaseTx = () => {
@@ -169,7 +166,7 @@ const FateTypeChainBaseTx = () => {
         {'Chain.GAAttachTx': []},
     ]
 
-    return FateTypeVariant(0, null, variants)
+    return FateTypeVariant(variants)
 }
 
 const FateTypeAENSPointee = () => {
@@ -180,7 +177,7 @@ const FateTypeAENSPointee = () => {
         {'AENS.ChannelPt': [FateTypeAccountAddress()]},
     ]
 
-    return FateTypeVariant(0, null, variants)
+    return FateTypeVariant(variants)
 }
 
 const FateTypeAENSName = () => {
@@ -192,7 +189,7 @@ const FateTypeAENSName = () => {
         ]
     }]
 
-    return FateTypeVariant(0, null, variants)
+    return FateTypeVariant(variants)
 }
 
 const FateTypeEvent = (variantType, topics) => {
