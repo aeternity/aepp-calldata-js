@@ -16,7 +16,8 @@ const addChecksum = (payload) => {
     return Buffer.concat([buffer, checksum], buffer.length + 4)
 }
 
-const getPayload = (payloadWithChecksum) => {
+const getPayload = (payloadWithChecksumData) => {
+    const payloadWithChecksum = Buffer.from(payloadWithChecksumData)
     const payload = payloadWithChecksum.slice(0, -4)
     const checksum = payloadWithChecksum.slice(-4)
     const newChecksum = checkSumFn(payload)
