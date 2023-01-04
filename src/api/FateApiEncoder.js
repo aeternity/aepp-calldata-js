@@ -7,15 +7,14 @@ class FateApiEncoder {
 
     /**
      * Encode data to canonical API format.
-     * 
+     *
      * @example
      * const encoded = encoder.encode('contract_bytearray', new Uint8Array())
      * console.log(`Encoded data: ${encoded}`)
      * // Outputs:
      * // Encoded data: cb_Xfbg4g==
-     * 
-     * @param {'contract_bytearray'|'contract_pubkey'|'account_address'|'channel'|'oracle_pubkey'|'oracle_query_id'}
-     *  type - Name of the data type
+     *
+     * @param {string} type - Name of the data type
      * @param {Uint8Array} data - Data to be encoded
      * @returns {string} Encoded data in canonical format
     */
@@ -25,18 +24,18 @@ class FateApiEncoder {
 
     /**
      * Decode API data
-     * 
+     *
      * @example
      * const decoded = encoder.decode('cb_Xfbg4g==')
      * console.log('Decoded data:', Array.from(decoded))
      * // Outputs:
      * // Decoded data: []
-     * 
+     *
      * @param {string} data - FATE API encoded data in canonical format.
      * @returns {Uint8Array} Decoded data
     */
     decode(data) {
-    	return this._internalEncoder.decode(data)
+        return this._internalEncoder.decode(data)
     }
 }
 
