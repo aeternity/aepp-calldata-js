@@ -59,3 +59,11 @@ export class BytecodeContractCallEncoder {
 export class ContractByteArrayEncoder {
   decode(data: `cb_${string}`): any;
 }
+
+export class FateApiEncoder {
+  encode(
+    type: 'contract_bytearray' | 'contract_pubkey' | 'account_address' | 'channel' | 'oracle_pubkey' | 'oracle_query_id',
+    data: Uint8Array
+  ): string;
+  decode(data: string): Uint8Array;
+}

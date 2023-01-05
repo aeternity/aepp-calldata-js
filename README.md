@@ -130,6 +130,54 @@ Decoded string: whoolymoly
 Decoded map: Map(1) { 7n => false }
 ```
 
+## FATE API Encoder
+
+Any of the following FATE API data types can be encoded and decoded:
+ - contract_bytearray
+ - contract_pubkey
+ - account_address
+ - channel
+ - oracle_pubkey
+ - oracle_query_id
+
+Example:
+```javascript
+const {FateApiEncoder} = require('@aeternity/aepp-calldata')
+const encoder = new FateApiEncoder()
+
+const encoded = encoder.encode('contract_bytearray', new Uint8Array())
+console.log(`Encoded: ${encoded}`)
+
+const decoded = encoder.decode('cb_Xfbg4g==')
+console.log('Decoded:', decoded)
+```
+
+Expected output:
+```
+Encoded: cb_Xfbg4g==
+Decoded: Uint8Array(0) []
+```
+
+Note that the encoder work with binary data, so that strings has to be encoded as `Uint8Array`.
+
+String Example:
+```javascript
+const textEncoder = new TextEncoder()
+const textDecoder = new TextDecoder()
+
+const encoded = encoder.encode('contract_bytearray', textEncoder.encode('whoolymoly'))
+console.log(`Encoded: ${encoded}`)
+
+const decoded = textDecoder.decode(encoder.decode('cb_d2hvb2x5bW9seeO2SW0='))
+console.log('Decoded:', decoded)
+```
+
+Excepted output:
+```
+Encoded: cb_d2hvb2x5bW9seeO2SW0=
+Decoded: whoolymoly
+```
+
 ## Data types
 
 Using the library involves data types and their mappings from Sophia to JavaScript and vice versa.

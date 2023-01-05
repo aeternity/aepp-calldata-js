@@ -35,6 +35,15 @@ test('Encode', t => {
         encoder.encode('oracle_query_id', payload),
         'oq_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'
     )
+
+const textEncoder = new TextEncoder()
+const textDecoder = new TextDecoder()
+
+const encoded = encoder.encode('contract_bytearray', textEncoder.encode('whoolymoly'))
+console.log(`Encoded: ${encoded}`)
+
+const decoded = textDecoder.decode(encoder.decode('cb_d2hvb2x5bW9seeO2SW0='))
+console.log('Decoded:', decoded)
 })
 
 test('Encode errors', t => {
