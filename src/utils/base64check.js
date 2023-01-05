@@ -26,13 +26,12 @@ const getPayload = (payloadWithChecksumData) => {
         throw new FormatError('Invalid checksum')
     }
 
-    return payload
+    return new Uint8Array(payload)
 }
 
 /**
  * Base64check encode given `input`
- * @rtype (input: String|buffer) => Buffer
- * @param {String|Buffer} input - Data to encode
+ * @param {String|Uint8Array} input - Data to encode
  * @return {String} Base64check encoded data
  */
 const encode = (input) => {
@@ -41,12 +40,13 @@ const encode = (input) => {
 
 /**
  * Base64check decode given `str`
- * @rtype (str: String) => Buffer
  * @param {String} str - Data to decode
- * @return {Buffer} Base64check decoded data
+ * @return {Uint8Array} Base64check decoded data
  */
 const decode = (str) => {
-    return getPayload(Buffer.from(str, 'base64'))
+    const data = Buffer.from(str, 'base64')
+
+    return getPayload(data)
 }
 
 module.exports = {

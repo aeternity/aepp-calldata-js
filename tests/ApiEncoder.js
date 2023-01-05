@@ -54,32 +54,32 @@ test('Encode errors', t => {
 test('Decode', t => {
     t.plan(6)
     t.deepEqual(
-        Array.from(encoder.decode('cb_Xfbg4g==')),
-        []
+        encoder.decode('cb_Xfbg4g=='),
+        new Uint8Array()
     )
 
     t.deepEqual(
-        new Uint8Array(encoder.decode('ct_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG')),
+        encoder.decode('ct_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'),
         payload
     )
 
     t.deepEqual(
-        new Uint8Array(encoder.decode('ak_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG')),
+        encoder.decode('ak_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'),
         payload
     )
 
     t.deepEqual(
-        new Uint8Array(encoder.decode('ch_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG')),
+        encoder.decode('ch_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'),
         payload
     )
 
     t.deepEqual(
-        new Uint8Array(encoder.decode('ok_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG')),
+        encoder.decode('ok_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'),
         payload
     )
 
     t.deepEqual(
-        new Uint8Array(encoder.decode('oq_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG')),
+        encoder.decode('oq_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'),
         payload
     )
 })

@@ -127,7 +127,10 @@ class Encoder {
      * @returns {Uint8Array} Decoded value as byte array.
     */
     decodeString(data) {
-        return this._apiEncoder.decodeWithType(data, 'contract_bytearray')
+        const decoder = new TextDecoder()
+        const bytes = this._apiEncoder.decodeWithType(data, 'contract_bytearray')
+
+        return decoder.decode(bytes)
     }
     /* eslint-enable max-len */
 

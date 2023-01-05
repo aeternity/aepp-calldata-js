@@ -105,7 +105,10 @@ class BytecodeContractCallEncoder {
         }
 
         if (resultType === 'error') {
-            return this._apiEncoder.decodeWithType(data, 'contract_bytearray').toString()
+            const decoder = new TextDecoder()
+            const bytes = this._apiEncoder.decodeWithType(data, 'contract_bytearray')
+
+            return decoder.decode(bytes)
         }
 
         if (resultType === 'revert') {
