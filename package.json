@@ -41,7 +41,7 @@
     "ava": "5.1.1",
     "benchmark": "2.1.4",
     "browserify": "17.0.0",
-    "eslint": "8.32.0",
+    "eslint": "8.33.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-plugin-import": "2.27.5",
     "nyc": "15.1.0",
