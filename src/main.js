@@ -3,6 +3,7 @@ const AciContractCallEncoder = require('./api/AciContractCallEncoder')
 const BytecodeContractCallEncoder = require('./api/BytecodeContractCallEncoder')
 const ContractByteArrayEncoder = require('./api/ContractByteArrayEncoder')
 const FateApiEncoder = require('./api/FateApiEncoder')
+const ContractEncoder = require('./api/ContractEncoder')
 
 module.exports = {
     Encoder,
@@ -10,4 +11,5 @@ module.exports = {
     BytecodeContractCallEncoder,
     ContractByteArrayEncoder,
     FateApiEncoder,
+    ContractEncoder,
 }
