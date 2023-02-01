@@ -60,10 +60,16 @@ export class ContractByteArrayEncoder {
   decode(data: `cb_${string}`): any;
 }
 
+declare type TYPE2TAG = {
+  contract_bytearray: 'cb',
+  contract_pubkey: 'ct',
+  account_address: 'ak',
+  channel: 'ch',
+  oracle_pubkey: 'ok',
+  oracle_query_id: 'oq',
+};
+
 export class FateApiEncoder {
-  encode(
-    type: 'contract_bytearray' | 'contract_pubkey' | 'account_address' | 'channel' | 'oracle_pubkey' | 'oracle_query_id',
-    data: Uint8Array
-  ): string;
-  decode(data: `${'cb' | 'ct' | 'ak' | 'ch' | 'ok' | 'oq'}_${string}`): Uint8Array;
+  encode<Type extends keyof TYPE2TAG>(type: Type, data: Uint8Array): `${TYPE2TAG[Type]}_${string}`;
+  decode(data: `${TYPE2TAG[keyof TYPE2TAG]}_${string}`): Uint8Array;
 }
