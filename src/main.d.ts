@@ -2,7 +2,7 @@
  * @deprecated Use AciContractCallEncoder
  */
 export class Encoder {
-  constructor(aci: { [key: string]: any });
+  constructor(aci: any[]);
 
   encode(contract: string, funName: string, args: any[]): `cb_${string}`;
 
@@ -22,7 +22,7 @@ export class Encoder {
 }
 
 export class AciContractCallEncoder {
-  constructor(aci: { [key: string]: any });
+  constructor(aci: any[]);
 
   encodeCall(contract: string, funName: string, args: any[]): `cb_${string}`;
 
