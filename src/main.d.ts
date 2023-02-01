@@ -65,5 +65,5 @@ export class FateApiEncoder {
     type: 'contract_bytearray' | 'contract_pubkey' | 'account_address' | 'channel' | 'oracle_pubkey' | 'oracle_query_id',
     data: Uint8Array
   ): string;
-  decode(data: string): Uint8Array;
+  decode(data: `${'cb' | 'ct' | 'ak' | 'ch' | 'ok' | 'oq'}_${string}`): Uint8Array;
 }
