@@ -5,7 +5,7 @@ const encoder = new ApiEncoder()
 const payload = new Uint8Array(Array.from({length: 32}, (x, i) => i))
 
 test('Encode', t => {
-    t.plan(6)
+    t.plan(8)
     t.deepEqual(
         encoder.encode('contract_bytearray', new Uint8Array()),
         'cb_Xfbg4g=='
@@ -62,7 +62,7 @@ test('Encode errors', t => {
 })
 
 test('Decode', t => {
-    t.plan(6)
+    t.plan(8)
     t.deepEqual(
         encoder.decode('cb_Xfbg4g=='),
         new Uint8Array()
