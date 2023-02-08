@@ -5,7 +5,7 @@ const encoder = new ApiEncoder()
 const payload = new Uint8Array(Array.from({length: 32}, (x, i) => i))
 
 test('Encode', t => {
-    t.plan(6)
+    t.plan(8)
     t.deepEqual(
         encoder.encode('contract_bytearray', new Uint8Array()),
         'cb_Xfbg4g=='
@@ -35,6 +35,16 @@ test('Encode', t => {
         encoder.encode('oracle_query_id', payload),
         'oq_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'
     )
+
+    t.deepEqual(
+        encoder.encode('key_block_hash', payload),
+        'kh_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'
+    )
+
+    t.deepEqual(
+        encoder.encode('peer_pubkey', payload),
+        'pp_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'
+    )
 })
 
 test('Encode errors', t => {
@@ -52,7 +62,7 @@ test('Encode errors', t => {
 })
 
 test('Decode', t => {
-    t.plan(6)
+    t.plan(8)
     t.deepEqual(
         encoder.decode('cb_Xfbg4g=='),
         new Uint8Array()
@@ -80,6 +90,16 @@ test('Decode', t => {
 
     t.deepEqual(
         encoder.decode('oq_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'),
+        payload
+    )
+
+    t.deepEqual(
+        encoder.decode('kh_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'),
+        payload
+    )
+
+    t.deepEqual(
+        encoder.decode('pp_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'),
         payload
     )
 })

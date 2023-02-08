@@ -4,21 +4,25 @@ const FormatError = require('./Errors/FormatError')
 const FateTypeError = require('./Errors/FateTypeError')
 
 const TYPES = {
+    key_block_hash: {tag: 'kh', size: 32, encoder: base58check},
     contract_bytearray: {tag: 'cb', size: 0, encoder: base64check},
     contract_pubkey: {tag: 'ct', size: 32, encoder: base58check},
     account_address: {tag: 'ak', size: 32, encoder: base58check},
     channel: {tag: 'ch', size: 32, encoder: base58check},
     oracle_pubkey: {tag: 'ok', size: 32, encoder: base58check},
     oracle_query_id: {tag: 'oq', size: 32, encoder: base58check},
+    peer_pubkey: {tag: 'pp', size: 32, encoder: base58check},
 }
 
 const TAG2TYPE = {
+    kh: 'key_block_hash',
     cb: 'contract_bytearray',
     ct: 'contract_pubkey',
     ak: 'account_address',
     ch: 'channel',
     ok: 'oracle_pubkey',
     oq: 'oracle_query_id',
+    pp: 'peer_pubkey',
 }
 
 class ApiEncoder {
