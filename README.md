@@ -178,6 +178,68 @@ Encoded: cb_d2hvb2x5bW9seeO2SW0=
 Decoded: whoolymoly
 ```
 
+## Contract Encoder
+
+Decodes contract metadata including bytecode.
+
+Example:
+```javascript
+const {ContractEncoder} = require('@aeternity/aepp-calldata')
+const encoder = new ContractEncoder()
+
+const testContract = fs.readFileSync(path.resolve(__dirname, '../build/contracts/Test.aeb'))
+const contract = encoder.decode(testContract.toString())
+
+console.log('Contract:', contract)
+```
+
+Expected output (trimmed):
+```
+{
+  tag: 70n,
+  vsn: 3n,
+  source_hash: 'e50758c624dcacd485db1f9e76208c5858dd968f6218637d055fd4a3b2850baa',
+  aevmTypeInfo: [],
+  compilerVersion: '6.1.0',
+  payable: false,
+  bytecode: {
+    functions: [
+      {
+        id: '077a0e02',
+        name: 'test_nested_list',
+        attributes: [],
+        args: {
+          name: 'tuple',
+          valueTypes: [
+            {
+              name: 'list',
+              valuesType: { name: 'list', valuesType: { name: 'int' } }
+            }
+          ]
+        },
+        returnType: {
+          name: 'list',
+          valuesType: { name: 'list', valuesType: { name: 'int' } }
+        },
+        instructions: [
+          [
+            { mnemonic: 'RETURNR', args: [ { mod: 'arg', arg: 0n } ] }
+          ]
+        ]
+      },
+      .....
+    ],
+    symbols: {
+      '67419061': 'test_unit',
+      ....
+    },
+    annotations: Map(0) {}
+  }
+}
+```
+
+**Please note that the bytecode is for debugging/print purposes and it's structure WON'T be kept backward compatible**
+
 ## Data types
 
 Using the library involves data types and their mappings from Sophia to JavaScript and vice versa.

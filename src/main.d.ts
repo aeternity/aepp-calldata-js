@@ -73,3 +73,7 @@ export class FateApiEncoder {
   encode<Type extends keyof TYPE2TAG>(type: Type, data: Uint8Array): `${TYPE2TAG[Type]}_${string}`;
   decode(data: `${TYPE2TAG[keyof TYPE2TAG]}_${string}`): Uint8Array;
 }
+
+export class ContractEncoder {
+  decode(data: `cb_${string}`): object;
+}

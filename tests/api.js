@@ -8,6 +8,7 @@ const {
     BytecodeContractCallEncoder,
     ContractByteArrayEncoder,
     FateApiEncoder,
+    ContractEncoder
 } = require('../src/main')
 
 const CONTRACT = 'Test'
@@ -91,4 +92,16 @@ test('FateApiEncoder public API', t => {
 
     t.is(encoder.encode('contract_bytearray', new Uint8Array()), 'cb_Xfbg4g==')
     t.deepEqual(encoder.decode('cb_Xfbg4g=='), new Uint8Array())
+})
+
+test('ContractEncoder public API', t => {
+    t.plan(4)
+
+    const encoder = new ContractEncoder()
+    const contract = encoder.decode('cb_+HJGA6CQAsse7xqrjce/mDvteSZLzqBKYE8JbOjr5flAYmKjyMC4Ran+RNZEHwA3ADcAGg6CEXRlc3QaDoQRZWNobwEDP/5iqLSMBDcABwEDBJcvAhFE1kQfEWluaXQRYqi0jBV0ZXN0MoIvAIU2LjEuMAHQSNos')
+
+    t.is(contract.tag, 70n)
+    t.is(contract.vsn, 3n)
+    t.is(contract.compilerVersion, '6.1.0')
+    t.is(contract.sourceHash, '9002cb1eef1aab8dc7bf983bed79264bcea04a604f096ce8ebe5f9406262a3c8')
 })
