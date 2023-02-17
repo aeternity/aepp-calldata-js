@@ -67,3 +67,7 @@ export class FateApiEncoder {
   ): string;
   decode(data: string): Uint8Array;
 }
+
+export class ContractEncoder {
+  decode(data: `cb_${string}`): object;
+}

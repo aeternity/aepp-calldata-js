@@ -95,12 +95,13 @@ test('FateApiEncoder public API', t => {
 })
 
 test('ContractEncoder public API', t => {
-    t.plan(3)
+    t.plan(4)
 
     const encoder = new ContractEncoder()
     const contract = encoder.decode('cb_+HJGA6CQAsse7xqrjce/mDvteSZLzqBKYE8JbOjr5flAYmKjyMC4Ran+RNZEHwA3ADcAGg6CEXRlc3QaDoQRZWNobwEDP/5iqLSMBDcABwEDBJcvAhFE1kQfEWluaXQRYqi0jBV0ZXN0MoIvAIU2LjEuMAHQSNos')
 
     t.is(contract.tag, 70n)
     t.is(contract.vsn, 3n)
-    t.is(contract.source_hash, '9002cb1eef1aab8dc7bf983bed79264bcea04a604f096ce8ebe5f9406262a3c8')
+    t.is(contract.compilerVersion, '6.1.0')
+    t.is(contract.sourceHash, '9002cb1eef1aab8dc7bf983bed79264bcea04a604f096ce8ebe5f9406262a3c8')
 })

@@ -10,6 +10,12 @@ class ContractEncoder {
         this._bytecodeSerializer = new BytecodeSerializer(new Serializer())
     }
 
+    /**
+     * Decodes serialized contract metadata and bytecode
+     *
+     * @param {string} data - Contract bytearray data in a canonical format.
+     * @returns {Object} Decoded contract metadata as POJO.
+    */
     decode(data) {
         const binData = this._apiEncoder.decodeWithType(data, 'contract_bytearray')
         const decoded = RLP.decode(binData, true)
@@ -18,9 +24,9 @@ class ContractEncoder {
         return {
             tag: ByteArray2Int(decoded.data[0]),
             vsn: ByteArray2Int(decoded.data[1]),
-            source_hash: ByteArray2Hex(decoded.data[2]),
-            aevm_type_info: decoded.data[3],
-            compiler_version: stringDecoder.decode(decoded.data[5]),
+            sourceHash: ByteArray2Hex(decoded.data[2]),
+            aevmTypeInfo: decoded.data[3],
+            compilerVersion: stringDecoder.decode(decoded.data[5]),
             payable: Boolean(decoded.data[6][0]),
             bytecode: this._bytecodeSerializer.deserialize(new Uint8Array(decoded.data[4]))
         }
