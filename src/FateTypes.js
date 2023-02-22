@@ -31,7 +31,7 @@ const FateTypeSignature = () => {
 }
 
 const FateTypeAccountAddress = () => {
-    return {name: 'account_address'}
+    return {name: 'account_pubkey'}
 }
 
 const FateTypeContractAddress = () => {

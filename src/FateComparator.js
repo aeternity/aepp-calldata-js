@@ -176,7 +176,7 @@ const comparators = {
     'map': mapComparator,
     // objects (bytes)
     'bytes': bytesComparator,
-    'account_address': bytesComparator,
+    'account_pubkey': bytesComparator,
     'channel': bytesComparator,
     'contract_pubkey': bytesComparator,
     'oracle_query_id': bytesComparator,

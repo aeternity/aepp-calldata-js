@@ -135,7 +135,7 @@ Decoded map: Map(1) { 7n => false }
 Any of the following FATE API data types can be encoded and decoded:
  - contract_bytearray
  - contract_pubkey
- - account_address
+ - account_pubkey
  - channel
  - oracle_pubkey
  - oracle_query_id

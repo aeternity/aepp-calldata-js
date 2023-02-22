@@ -63,7 +63,7 @@ export class ContractByteArrayEncoder {
 declare type TYPE2TAG = {
   contract_bytearray: 'cb',
   contract_pubkey: 'ct',
-  account_address: 'ak',
+  account_pubkey: 'ak',
   channel: 'ch',
   oracle_pubkey: 'ok',
   oracle_query_id: 'oq',

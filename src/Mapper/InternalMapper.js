@@ -12,7 +12,7 @@ class InternalMapper {
 
     toInternal(type, value) {
         switch (type.name) {
-        case 'account_address':
+        case 'account_pubkey':
         case 'contract_pubkey':
         case 'channel':
         case 'oracle_pubkey':

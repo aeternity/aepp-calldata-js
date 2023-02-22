@@ -20,7 +20,7 @@ const TYPES = [
     'hash',
     'bytes',
     'signature',
-    'account_address',
+    'account_pubkey',
     'contract_pubkey',
     'channel',
     'oracle_pubkey',
@@ -48,7 +48,7 @@ class PrimitiveDataFactory extends BaseDataFactory {
             return new FateBytes(value, type.valueTypes)
         case 'signature':
             return new FateSignature(value)
-        case 'account_address':
+        case 'account_pubkey':
             return new FateAccountAddress(value)
         case 'contract_pubkey':
             return new FateContractAddress(value)
