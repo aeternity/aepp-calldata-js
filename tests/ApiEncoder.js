@@ -17,7 +17,7 @@ test('Encode', t => {
     )
 
     t.deepEqual(
-        encoder.encode('account_address', payload),
+        encoder.encode('account_pubkey', payload),
         'ak_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'
     )
 
@@ -142,7 +142,7 @@ test('Decode with type errors', t => {
     )
 
     t.throws(
-        () => encoder.decodeWithType('cb_Xfbg4g==', 'account_address'),
+        () => encoder.decodeWithType('cb_Xfbg4g==', 'account_pubkey'),
         { name: 'FateTypeError'}
     )
 })

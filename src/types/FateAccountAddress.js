@@ -2,7 +2,7 @@ const FateAddress = require('./FateAddress')
 
 class FateAccountAddress extends FateAddress {
     constructor(value) {
-        super(value, 'account_address', 'ak')
+        super(value, 'account_pubkey', 'ak')
     }
 }
 

@@ -43,7 +43,7 @@ class Serializer extends BaseSerializer {
             'bits': new BitsSerializer(),
             'variant': new VariantSerializer(this),
             'bytes': new BytesSerializer(),
-            'account_address': new AddressSerializer(),
+            'account_pubkey': new AddressSerializer(),
             'contract_pubkey': new ContractSerializer(),
             'oracle_pubkey': new OracleSerializer(),
             'oracle_query_id': new OracleQuerySerializer(),
