@@ -14,6 +14,7 @@ const TYPES = {
     oracle_query_id: {tag: 'oq', size: 32, encoder: base58check},
     peer_pubkey: {tag: 'pp', size: 32, encoder: base58check},
     transaction_hash: {tag: 'th', size: 32, encoder: base58check},
+    signature: {tag: 'sg', size: 64, encoder: base58check},
 }
 
 const TAG2TYPE = {
@@ -27,6 +28,7 @@ const TAG2TYPE = {
     oq: 'oracle_query_id',
     pp: 'peer_pubkey',
     th: 'transaction_hash',
+    sg: 'signature',
 }
 
 class ApiEncoder {
