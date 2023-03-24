@@ -5,7 +5,7 @@ const encoder = new ApiEncoder()
 const payload = new Uint8Array(Array.from({length: 32}, (x, i) => i))
 
 test('Encode', t => {
-    t.plan(8)
+    t.plan(9)
     t.deepEqual(
         encoder.encode('contract_bytearray', new Uint8Array()),
         'cb_Xfbg4g=='
@@ -42,6 +42,11 @@ test('Encode', t => {
     )
 
     t.deepEqual(
+        encoder.encode('micro_block_hash', payload),
+        'mh_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'
+    )
+
+    t.deepEqual(
         encoder.encode('peer_pubkey', payload),
         'pp_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'
     )
@@ -62,7 +67,7 @@ test('Encode errors', t => {
 })
 
 test('Decode', t => {
-    t.plan(8)
+    t.plan(9)
     t.deepEqual(
         encoder.decode('cb_Xfbg4g=='),
         new Uint8Array()
@@ -95,6 +100,11 @@ test('Decode', t => {
 
     t.deepEqual(
         encoder.decode('kh_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'),
+        payload
+    )
+
+    t.deepEqual(
+        encoder.decode('mh_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'),
         payload
     )
 

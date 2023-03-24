@@ -5,6 +5,7 @@ const FateTypeError = require('./Errors/FateTypeError')
 
 const TYPES = {
     key_block_hash: {tag: 'kh', size: 32, encoder: base58check},
+    micro_block_hash: {tag: 'mh', size: 32, encoder: base58check},
     contract_bytearray: {tag: 'cb', size: 0, encoder: base64check},
     contract_pubkey: {tag: 'ct', size: 32, encoder: base58check},
     account_pubkey: {tag: 'ak', size: 32, encoder: base58check},
@@ -16,6 +17,7 @@ const TYPES = {
 
 const TAG2TYPE = {
     kh: 'key_block_hash',
+    mh: 'micro_block_hash',
     cb: 'contract_bytearray',
     ct: 'contract_pubkey',
     ak: 'account_pubkey',
