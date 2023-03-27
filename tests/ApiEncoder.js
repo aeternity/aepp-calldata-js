@@ -2,10 +2,12 @@ const test = require('./test')
 const ApiEncoder = require('../src/ApiEncoder')
 
 const encoder = new ApiEncoder()
-const payload = new Uint8Array(Array.from({length: 32}, (x, i) => i))
+const mkPayload = (size) => new Uint8Array(Array.from({ length: size }, (x, i) => i))
+const payload = mkPayload(32)
+const payload64 = mkPayload(64)
 
 test('Encode', t => {
-    t.plan(9)
+    t.plan(11)
     t.deepEqual(
         encoder.encode('contract_bytearray', new Uint8Array()),
         'cb_Xfbg4g=='
@@ -50,6 +52,16 @@ test('Encode', t => {
         encoder.encode('peer_pubkey', payload),
         'pp_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'
     )
+
+    t.deepEqual(
+        encoder.encode('transaction_hash', payload),
+        'th_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'
+    )
+
+    t.deepEqual(
+        encoder.encode('signature', payload64),
+        'sg_12jVjGbD3wrDT6L19fyB486MyMfMdNjc148QTEgR2qypJqKtTHnBDUjubAxFytva52tzNzog1PChUSJ1vFMgt11fwd15'
+    )
 })
 
 test('Encode errors', t => {
@@ -67,7 +79,7 @@ test('Encode errors', t => {
 })
 
 test('Decode', t => {
-    t.plan(9)
+    t.plan(11)
     t.deepEqual(
         encoder.decode('cb_Xfbg4g=='),
         new Uint8Array()
@@ -111,6 +123,15 @@ test('Decode', t => {
     t.deepEqual(
         encoder.decode('pp_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'),
         payload
+    )
+
+    t.deepEqual(
+        encoder.decode('th_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'),
+        payload
+    )
+    t.deepEqual(
+        encoder.decode('sg_12jVjGbD3wrDT6L19fyB486MyMfMdNjc148QTEgR2qypJqKtTHnBDUjubAxFytva52tzNzog1PChUSJ1vFMgt11fwd15'),
+        payload64
     )
 })
 
