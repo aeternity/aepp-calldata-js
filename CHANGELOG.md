@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 ### Fixed
 ### Added
+- Add support to more types in ApiEncoder: block_pof_hash, block_tx_hash, block_state_hash, name, commitment, bytearray
 ### Changed
 ### Deprecated
 ### Removed
