@@ -7,10 +7,26 @@ const payload = mkPayload(32)
 const payload64 = mkPayload(64)
 
 test('Encode', t => {
-    t.plan(11)
+    t.plan(17)
+
     t.deepEqual(
         encoder.encode('contract_bytearray', new Uint8Array()),
         'cb_Xfbg4g=='
+    )
+
+    t.deepEqual(
+        encoder.encode('block_pof_hash', payload),
+        'bf_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'
+    )
+
+    t.deepEqual(
+        encoder.encode('block_tx_hash', payload),
+        'bx_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'
+    )
+
+    t.deepEqual(
+        encoder.encode('block_state_hash', payload),
+        'bs_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'
     )
 
     t.deepEqual(
@@ -54,6 +70,11 @@ test('Encode', t => {
     )
 
     t.deepEqual(
+        encoder.encode('name', payload),
+        'nm_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'
+    )
+
+    t.deepEqual(
         encoder.encode('transaction_hash', payload),
         'th_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'
     )
@@ -61,6 +82,16 @@ test('Encode', t => {
     t.deepEqual(
         encoder.encode('signature', payload64),
         'sg_12jVjGbD3wrDT6L19fyB486MyMfMdNjc148QTEgR2qypJqKtTHnBDUjubAxFytva52tzNzog1PChUSJ1vFMgt11fwd15'
+    )
+
+    t.deepEqual(
+        encoder.encode('commitment', payload),
+        'cm_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'
+    )
+
+    t.deepEqual(
+        encoder.encode('bytearray', new Uint8Array()),
+        'ba_Xfbg4g=='
     )
 })
 
@@ -79,10 +110,25 @@ test('Encode errors', t => {
 })
 
 test('Decode', t => {
-    t.plan(11)
+    t.plan(17)
     t.deepEqual(
         encoder.decode('cb_Xfbg4g=='),
         new Uint8Array()
+    )
+
+    t.deepEqual(
+        encoder.decode('bf_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'),
+        payload
+    )
+
+    t.deepEqual(
+        encoder.decode('bx_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'),
+        payload
+    )
+
+    t.deepEqual(
+        encoder.decode('bs_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'),
+        payload
     )
 
     t.deepEqual(
@@ -126,12 +172,28 @@ test('Decode', t => {
     )
 
     t.deepEqual(
+        encoder.decode('nm_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'),
+        payload
+    )
+
+    t.deepEqual(
         encoder.decode('th_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'),
         payload
     )
+
     t.deepEqual(
         encoder.decode('sg_12jVjGbD3wrDT6L19fyB486MyMfMdNjc148QTEgR2qypJqKtTHnBDUjubAxFytva52tzNzog1PChUSJ1vFMgt11fwd15'),
         payload64
+    )
+
+    t.deepEqual(
+        encoder.decode('cm_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'),
+        payload
+    )
+
+    t.deepEqual(
+        encoder.decode('ba_Xfbg4g=='),
+        new Uint8Array()
     )
 })
 

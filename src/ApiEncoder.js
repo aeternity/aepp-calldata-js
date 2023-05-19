@@ -6,6 +6,9 @@ const FateTypeError = require('./Errors/FateTypeError')
 const TYPES = {
     key_block_hash: {tag: 'kh', size: 32, encoder: base58check},
     micro_block_hash: {tag: 'mh', size: 32, encoder: base58check},
+    block_pof_hash: {tag: 'bf', size: 32, encoder: base58check},
+    block_tx_hash: {tag: 'bx', size: 32, encoder: base58check},
+    block_state_hash: {tag: 'bs', size: 32, encoder: base58check},
     contract_bytearray: {tag: 'cb', size: 0, encoder: base64check},
     contract_pubkey: {tag: 'ct', size: 32, encoder: base58check},
     account_pubkey: {tag: 'ak', size: 32, encoder: base58check},
@@ -13,13 +16,19 @@ const TYPES = {
     oracle_pubkey: {tag: 'ok', size: 32, encoder: base58check},
     oracle_query_id: {tag: 'oq', size: 32, encoder: base58check},
     peer_pubkey: {tag: 'pp', size: 32, encoder: base58check},
+    name: {tag: 'nm', size: 0, encoder: base58check},
     transaction_hash: {tag: 'th', size: 32, encoder: base58check},
     signature: {tag: 'sg', size: 64, encoder: base58check},
+    commitment: {tag: 'cm', size: 32, encoder: base58check},
+    bytearray: {tag: 'ba', size: 0, encoder: base64check},
 }
 
 const TAG2TYPE = {
     kh: 'key_block_hash',
     mh: 'micro_block_hash',
+    bf: 'block_pof_hash',
+    bx: 'block_tx_hash',
+    bs: 'block_state_hash',
     cb: 'contract_bytearray',
     ct: 'contract_pubkey',
     ak: 'account_pubkey',
@@ -27,8 +36,11 @@ const TAG2TYPE = {
     ok: 'oracle_pubkey',
     oq: 'oracle_query_id',
     pp: 'peer_pubkey',
+    nm: 'name',
     th: 'transaction_hash',
     sg: 'signature',
+    cm: 'commitment',
+    ba: 'bytearray',
 }
 
 class ApiEncoder {
