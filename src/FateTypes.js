@@ -106,6 +106,13 @@ const FateTypeVariant = (variants) => {
     }
 }
 
+const FateTypeType = (type) => {
+    return {
+        name: 'type',
+        type,
+    }
+}
+
 const FateTypeOption = (valueTypes) => {
     const variants = [
         { None: []},
@@ -248,6 +255,7 @@ module.exports = {
     FateTypeSet,
     FateTypeMap,
     FateTypeVariant,
+    FateTypeType,
     FateTypeOption,
     FateTypeChainTTL,
     FateTypeChainGAMetaTx,
