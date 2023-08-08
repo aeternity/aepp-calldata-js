@@ -8,7 +8,8 @@ const {
     BytecodeContractCallEncoder,
     ContractByteArrayEncoder,
     FateApiEncoder,
-    ContractEncoder
+    ContractEncoder,
+    TypeResolver,
 } = require('../src/main')
 
 const CONTRACT = 'Test'
@@ -78,11 +79,14 @@ test('BytecodeContractCallEncoder public API', t => {
 })
 
 test('ContractByteArrayEncoder public API', t => {
-    t.plan(1)
+    t.plan(3)
 
     const encoder = new ContractByteArrayEncoder()
+    const resolver = new TypeResolver()
 
-    t.is(encoder.decode('cb_b4MC7W/bKkpn'), 191919n, 'int')
+    t.is(encoder.decode('cb_b4MC7W/bKkpn'), 191919n)
+    t.is(encoder.decodeWithType('cb_b4MC7W/bKkpn', resolver.resolveType('int')), 191919n)
+    t.is(encoder.encodeWithType(191919n, resolver.resolveType('int')), 'cb_b4MC7W/bKkpn')
 })
 
 test('FateApiEncoder public API', t => {
@@ -104,4 +108,15 @@ test('ContractEncoder public API', t => {
     t.is(contract.vsn, 3n)
     t.is(contract.compilerVersion, '6.1.0')
     t.is(contract.sourceHash, '9002cb1eef1aab8dc7bf983bed79264bcea04a604f096ce8ebe5f9406262a3c8')
+})
+
+test('TypeResolver public API', t => {
+    t.plan(1)
+
+    const resolver = new TypeResolver()
+    const encoder = new ContractByteArrayEncoder()
+    const type = resolver.resolveType({map: ['int', 'bool']})
+    const encoded = encoder.encodeWithType(new Map([[7n, false]]), type)
+
+    t.is(encoded, 'cb_LwEOfzGit9U=')
 })

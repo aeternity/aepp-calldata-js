@@ -57,7 +57,9 @@ export class BytecodeContractCallEncoder {
 }
 
 export class ContractByteArrayEncoder {
+  encodeWithType(value: any, type: object): `cb_${string}`;
   decode(data: `cb_${string}`): any;
+  decodeWithType(data: `cb_${string}`, type: object): any;
 }
 
 declare type TYPE2TAG = {
@@ -76,4 +78,8 @@ export class FateApiEncoder {
 
 export class ContractEncoder {
   decode(data: `cb_${string}`): object;
+}
+
+export class TypeResolver {
+  resolveType(type: string|object, vars: object): object;
 }
