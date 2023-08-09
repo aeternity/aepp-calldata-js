@@ -29,6 +29,7 @@
   "browser": {
     "./tests/test.js": "./tests/browser/test.js"
   },
+  "sideEffects": false,
   "dependencies": {
     "blakejs": "^1.2.1",
     "bs58": "^5.0.0",
