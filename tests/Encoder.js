@@ -217,6 +217,24 @@ test('Encode map arguments', t => {
 test('Encode map arguments with sorted keys', t => {
     const encoded = encoder.encode(CONTRACT, 'test_string_map', [[["fo", "a"], ["s", "a"]]])
     t.is(encoded, 'cb_KxFFPju5Gy8CBXMFYQlmbwVhMOIQaw==', 'test_string_map({["fo"] = "a", ["s"] = "a"})')
+
+    const encoded2 = encoder.encode(
+        CONTRACT,
+        'test_string_map',
+        [[
+            // keep the order
+            ["ynx*,t@K66L(KYxf7GW3", "a"],
+            ["GTSnE%&8V3289VJ_ShLG", "a"],
+            ["adFLS.fj8E1jt=C1efff", "a"],
+            ["]!T+mi$hy$W:eMZGw}Kf", "a"],
+            ["Lzm]F8-44H*{mj!fh]M!", "a"],
+        ]]
+    )
+    t.is(
+        encoded2,
+        'cb_KxFFPju5Gy8FUUdUU25FJSY4VjMyODlWSl9TaExHBWFRTHptXUY4LTQ0SCp7bWohZmhdTSEFYVFdIVQrbWkkaHkkVzplTVpHd31LZgVhUWFkRkxTLmZqOEUxanQ9QzFlZmZmBWFReW54Kix0QEs2NkwoS1l4ZjdHVzMFYeU+O/8=',
+        'test_string_map({["GTSnE%&8V3289VJ_ShLG"] = "a", ["ynx*,t@K66L(KYxf7GW3"] = "a", ["adFLS.fj8E1jt=C1efff"] = "a", ["]!T+mi$hy$W:eMZGw}Kf"] = "a", ["Lzm]F8-44H*{mj!fh]M!"] = "a"})'
+    )
 })
 
 test('Encode map arguments by object', t => {

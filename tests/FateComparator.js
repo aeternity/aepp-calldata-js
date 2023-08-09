@@ -44,7 +44,7 @@ test('Compare primitive types', t => {
 
     t.deepEqual(
         sort(FateTypeString(), ['Z', 'abc', '~', 'a', 'abcd', 'bab', new FateString('bab'), 'B', 'ab', 'b', 'aa', 'abd']),
-        ['~', 'a', 'b', 'B', 'Z', 'aa', 'ab', 'abc', 'abd', 'bab', new FateString('bab'), 'abcd']
+        ['B', 'Z', 'a', 'b', '~', 'aa', 'ab', 'abc', 'abd', 'bab', new FateString('bab'), 'abcd']
     )
 
     t.deepEqual(
