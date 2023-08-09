@@ -222,7 +222,7 @@ test('Encode map arguments with sorted keys', t => {
         CONTRACT,
         'test_string_map',
         [[
-            //keep the order
+            // keep the order
             ["ynx*,t@K66L(KYxf7GW3", "a"],
             ["GTSnE%&8V3289VJ_ShLG", "a"],
             ["adFLS.fj8E1jt=C1efff", "a"],
