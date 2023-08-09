@@ -16,6 +16,7 @@ const {
     FateTypeMap,
     FateTypeTuple,
     FateTypeVariant,
+    FateTypeType,
 } = require('./FateTypes')
 
 const OBJECT_TYPES = {
@@ -77,6 +78,23 @@ class TypeFactory {
             assert(OBJECT_TYPES.hasOwnProperty(obj), `Unsupported object type "${obj}"`)
 
             return OBJECT_TYPES[obj]
+        }
+
+        if (tag === FateTag.TYPE_INTEGER
+            || tag === FateTag.TYPE_BOOLEAN
+            || tag === FateTag.TYPE_LIST
+            || tag === FateTag.TYPE_TUPLE
+            || tag === FateTag.TYPE_OBJECT
+            || tag === FateTag.TYPE_BITS
+            || tag === FateTag.TYPE_MAP
+            || tag === FateTag.TYPE_STRING
+            || tag === FateTag.TYPE_VARIANT
+            || tag === FateTag.TYPE_BYTES
+            || tag === FateTag.TYPE_CONTRACT_BYTEARRAY
+            || tag === FateTag.TYPE_VAR
+            || tag === FateTag.TYPE_ANY
+        ) {
+            return FateTypeType()
         }
 
         throw new FatePrefixError(tag)

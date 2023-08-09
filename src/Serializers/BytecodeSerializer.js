@@ -74,7 +74,7 @@ class BytecodeSerializer extends BaseSerializer {
 
         const name = symbols[id]
         const [attributes, rest2] = this.deserializeAttributes(data.slice(5))
-        const [args, returnType, rest3] = this.deserializeSigniture(rest2)
+        const [args, returnType, rest3] = this.deserializeSignature(rest2)
         const [instructions, rest4] = this.deserializeInstructions(rest3)
 
         return [
@@ -164,7 +164,7 @@ class BytecodeSerializer extends BaseSerializer {
         return [{mod, arg: arg.valueOf()}, rest]
     }
 
-    deserializeSigniture(data) {
+    deserializeSignature(data) {
         const [args, rest] = this._typeSerializer.deserializeStream(data)
         const [returnType, rest2] = this._typeSerializer.deserializeStream(rest)
 

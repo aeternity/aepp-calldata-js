@@ -20,6 +20,7 @@ const TupleSerializer = require('./Serializers/TupleSerializer')
 const VariantSerializer = require('./Serializers/VariantSerializer')
 const Bls12381FieldSerializer = require('./Serializers/Bls12381FieldSerializer')
 const CalldataSerializer = require('./Serializers/CalldataSerializer')
+const TypeSerializer = require('./Serializers/TypeSerializer')
 const SerializerError = require('./Errors/SerializerError')
 
 class Serializer extends BaseSerializer {
@@ -51,6 +52,7 @@ class Serializer extends BaseSerializer {
             'bls12_381.fr': new Bls12381FieldSerializer(),
             'bls12_381.fp': new Bls12381FieldSerializer(),
             'calldata': new CalldataSerializer(this),
+            'type': new TypeSerializer(),
         }
     }
 
