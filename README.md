@@ -130,6 +130,30 @@ Decoded string: whoolymoly
 Decoded map: Map(1) { 7n => false }
 ```
 
+The encoder could also work with explicit type information:
+
+Example:
+```javascript
+const {ContractByteArrayEncoder, TypeResolver} = require('@aeternity/aepp-calldata')
+
+const encoder = new ContractByteArrayEncoder()
+const resolver = new TypeResolver()
+
+const decodedString = encoder.decodeWithType('cb_KXdob29seW1vbHlGazSE', resolver.resolveType('string'))
+console.log(`Decoded string: ${decodedString}`)
+
+const type = resolver.resolveType({map: ['int', 'bool']})
+const encodedMap = encoder.encodeWithType(new Map([[7n, false]]), type)
+console.log('Encoded map:', encodedMap)
+
+```
+
+Expected output:
+```
+Decoded string: whoolymoly
+Decoded map: Map(1) { 7n => false }
+```
+
 ## FATE API Encoder
 
 Any of the following FATE API data types can be encoded and decoded:
@@ -287,15 +311,16 @@ Refer to the [CHANGELOG](CHANGELOG.md) for more information about releases.
 The backward compatibility promise signaled with semantic versioning [above](#versioning) is **only** applied to public API of this library,
 that is only the module exports and [data types](#data-types) listed above.
 
-The public API namely consist of:
+The public API namely consist of below classes:
 
-`AciContractCallEncoder` class:
+- [AciContractCallEncoder](./api/AciContractCallEncoder.js)
+- [BytecodeContractCallEncoder](./api/BytecodeContractCallEncoder.js)
+- [ContractByteArrayEncoder](./api/ContractByteArrayEncoder.js)
+- [FateApiEncoder](./api/FateApiEncoder.js)
+- [ContractEncoder](./api/ContractEncoder.js)
+- [TypeResolver](./api/TypeResolver.js)
 
-- `encodeCall(contractName: string, functionName: string, arguments: Array<Data>): string`
-- `decodeResult(contractName: string, functionName: string, data: string, resultType: string): Data`
-- `decodeEvent(contractName: string, data: string, topics: Array<BigInt>): string`
-
-where `Data: Boolean | BigInt | String | Array | Map | Set | Object`
+The public API is also defined in [TypeScript declation file](main.d.ts).
 
 ### Errors
 

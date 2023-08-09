@@ -22,11 +22,12 @@ class ContractByteArrayEncoder {
      * Encode FATE data to contract bytearray.
      *
      * @example
-     * const encoded = encoder.encode("whoolymoly")
+     * const encoded = encoder.encode(FateTypeString(), "whoolymoly")
      * console.log(`Encoded data: ${encoded}`)
      * // Outputs:
      * // Encoded data: cb_KXdob29seW1vbHlGazSE
      *
+     * @param {object} type - Data as Javascript data structures. See README.md
      * @param {Array} data - Data as Javascript data structures. See README.md
      * @returns {string} Encoded contract byte array
     */
@@ -68,12 +69,13 @@ class ContractByteArrayEncoder {
      * Decodes arbitrary contract bytearray data with type information.
      *
      * @example
-     * const decoded = encoder.decode('cb_KXdob29seW1vbHlGazSE')
+     * const decoded = encoder.decodeWithType('cb_KXdob29seW1vbHlGazSE', FateTypeString())
      * console.log(`Decoded data: ${decoded}`)
      * // Outputs:
      * // Decoded data: whoolymoly
      *
      * @param {string} data - Contract bytearray data in a canonical format.
+     * @param {object} type - Data as Javascript data structures. See README.md
      * @returns {boolean|string|BigInt|Array|Map|Object}
      *  Decoded value as Javascript data structures. See README.md
     */
