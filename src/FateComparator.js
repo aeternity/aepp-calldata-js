@@ -148,11 +148,13 @@ const bytesComparator = (a, b) => {
 }
 
 const stringComparator = (a, b) => {
+    const encoder = new TextEncoder()
+
     const as = a.toString()
     const bs = b.toString()
 
     if (as.length === bs.length) {
-        return as.localeCompare(bs)
+        return bytesComparator(encoder.encode(a), encoder.encode(b))
     }
 
     return as.length - bs.length
