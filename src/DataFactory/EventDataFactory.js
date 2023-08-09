@@ -1,5 +1,5 @@
 const {hash} = require('../utils/hash')
-const {ByteArray2Int} = require('../utils/Int2ByteArray')
+const {byteArray2Int} = require('../utils/int2ByteArray')
 const TypeResolveError = require('../Errors/TypeResolveError')
 const BaseDataFactory = require('./BaseDataFactory')
 
@@ -22,7 +22,7 @@ class EventDataFactory extends BaseDataFactory {
         }
 
         const idx = variantType.variants
-            .map(v => ByteArray2Int(hash(Object.keys(v)[0])))
+            .map(v => byteArray2Int(hash(Object.keys(v)[0])))
             .findIndex(v => v === nameHash)
 
         if (idx === -1) {
