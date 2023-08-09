@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Security
 ### Fixed
+- Fix string comparator used in Map serialization
 ### Added
 - Add support to more types in ApiEncoder. [See README](README.md#fate-api-encoder) for full list.
 ### Changed
