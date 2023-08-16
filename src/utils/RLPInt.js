@@ -1,12 +1,12 @@
 const RLP = require('rlp')
-const {Int2ByteArray, ByteArray2Int } = require('./Int2ByteArray')
+const {int2ByteArray, byteArray2Int } = require('./int2ByteArray')
 
 module.exports = {
     encode(value) {
-        return new Uint8Array(RLP.encode(Int2ByteArray(value)))
+        return new Uint8Array(RLP.encode(int2ByteArray(value)))
     },
     decode(buffer) {
         const decoded = RLP.decode(buffer, true)
-        return [ByteArray2Int(decoded.data), decoded.remainder]
+        return [byteArray2Int(decoded.data), decoded.remainder]
     }
 }

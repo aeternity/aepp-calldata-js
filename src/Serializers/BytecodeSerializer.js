@@ -1,7 +1,7 @@
 const RLP = require('rlp')
 const BaseSerializer = require('./BaseSerializer')
 const TypeSerializer = require('./TypeSerializer')
-const {ByteArray2Hex, ByteArray2Int} = require('../utils/Int2ByteArray')
+const {byteArray2Hex, byteArray2Int} = require('../utils/int2ByteArray')
 const OPCODES = require('../FateOpcodes')
 const {
     FateTypeByteArray,
@@ -18,7 +18,7 @@ const MODIFIERS = {
 
 const splitArgs = (data, n = 1) => {
     const args = []
-    let bits = Number(ByteArray2Int(data))
+    let bits = Number(byteArray2Int(data))
 
     for (let i = 0; i < n * 2; i += 2) {
         args.push(bits & 0b11)
@@ -66,7 +66,7 @@ class BytecodeSerializer extends BaseSerializer {
 
     deserializeFunction(data, symbols) {
         const prefix = data[0]
-        const id = ByteArray2Hex(data.slice(1, 5))
+        const id = byteArray2Hex(data.slice(1, 5))
 
         if (prefix !== 0xfe) {
             throw new Error(`Wrong function prefix, expeted 0xfe got 0x${data[0].toString(16)}`)
@@ -194,7 +194,7 @@ class BytecodeSerializer extends BaseSerializer {
         const symbolsMap = {}
 
         symbols.forEach((val, key) => {
-            const hex = ByteArray2Hex(key)
+            const hex = byteArray2Hex(key)
             symbolsMap[hex] = val
         })
 

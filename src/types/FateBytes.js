@@ -1,6 +1,6 @@
 const FateData = require('./FateData')
-const {Int2ByteArray} = require('../utils/Int2ByteArray')
-const HexStringToByteArray = require('../utils/HexStringToByteArray')
+const {int2ByteArray} = require('../utils/int2ByteArray')
+const hexStringToByteArray = require('../utils/hexStringToByteArray')
 const FateTypeError = require('../Errors/FateTypeError')
 
 const toByteArray = (value, size = 0) => {
@@ -9,7 +9,7 @@ const toByteArray = (value, size = 0) => {
     }
 
     if (typeof value === 'string') {
-        return HexStringToByteArray(value)
+        return hexStringToByteArray(value)
     }
 
     if (typeof value !== 'bigint' && !Number.isInteger(value)) {
@@ -19,7 +19,7 @@ const toByteArray = (value, size = 0) => {
         )
     }
 
-    const bytes = Int2ByteArray(value)
+    const bytes = int2ByteArray(value)
     if (bytes.length >= size) {
         return bytes
     }

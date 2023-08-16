@@ -1,5 +1,5 @@
 const ApiEncoder = require('../ApiEncoder')
-const {Int2MontBytes} = require('../utils/Bls12381')
+const {int2MontBytes} = require('../utils/bls12381')
 const FateTypeError = require('../Errors/FateTypeError')
 
 /**
@@ -103,13 +103,13 @@ class InternalMapper {
     toBls12381Fr(type, value) {
         this.validateBls12381Field(type, value)
 
-        return Int2MontBytes(value, 'r')
+        return int2MontBytes(value, 'r')
     }
 
     toBls12381Fp(type, value) {
         this.validateBls12381Field(type, value)
 
-        return Int2MontBytes(value, 'p')
+        return int2MontBytes(value, 'p')
     }
 }
 

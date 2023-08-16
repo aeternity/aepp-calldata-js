@@ -1,6 +1,6 @@
 const test = require('./test')
 const Encoder = require('../src/Encoder')
-const HexStringToByteArray = require('../src/utils/HexStringToByteArray')
+const hexStringToByteArray = require('../src/utils/hexStringToByteArray')
 const aci = require('../build/contracts/Test.json')
 
 const CONTRACT = 'Test'
@@ -60,7 +60,7 @@ test('Decode string return', t => {
 test('Decode hash return', t => {
     t.plan(1)
 
-    const expectedHex = HexStringToByteArray("0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f")
+    const expectedHex = hexStringToByteArray("0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f")
     t.deepEqual(
         encoder.decode(
             CONTRACT,
@@ -75,7 +75,7 @@ test('Decode hash return', t => {
 test('Decode signature return', t => {
     t.plan(1)
 
-    const expectedHex = HexStringToByteArray("0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f")
+    const expectedHex = hexStringToByteArray("0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f")
     t.deepEqual(
         encoder.decode(
             CONTRACT,
@@ -455,9 +455,9 @@ test('Decode primitive tuple', t => {
             true,
             "test",
             0n,
-            HexStringToByteArray("0xBEEF"),
-            HexStringToByteArray("0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f"),
-            HexStringToByteArray("0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f")
+            hexStringToByteArray("0xBEEF"),
+            hexStringToByteArray("0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f"),
+            hexStringToByteArray("0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f")
         ],
         'test_primitives_tuple((1, true, "test", Bits.none, 0xBEEF, #000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f, #000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f))'
     )
@@ -621,9 +621,9 @@ test('Decode events', t => {
         ),
         {
             EventFour: [
-                HexStringToByteArray("0xfedcba9876543210deadbeef"),
-                HexStringToByteArray("0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f"),
-                HexStringToByteArray("0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f"),
+                hexStringToByteArray("0xfedcba9876543210deadbeef"),
+                hexStringToByteArray("0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f"),
+                hexStringToByteArray("0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f"),
                 'ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt'
             ]
         }
