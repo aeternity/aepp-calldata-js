@@ -170,7 +170,7 @@ Any of the following FATE API data types can be encoded and decoded:
 - oracle_query_id
 - peer_pubkey
 - name
-- transaction_hash
+- tx_hash
 - signature
 - commitment
 - bytearray

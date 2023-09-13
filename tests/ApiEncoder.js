@@ -75,7 +75,7 @@ test('Encode', t => {
     )
 
     t.deepEqual(
-        encoder.encode('transaction_hash', payload),
+        encoder.encode('tx_hash', payload),
         'th_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'
     )
 
