@@ -81,5 +81,5 @@ export class ContractEncoder {
 }
 
 export class TypeResolver {
-  resolveType(type: string|object, vars: object): object;
+  resolveType(type: string | object, vars?: object): object;
 }
