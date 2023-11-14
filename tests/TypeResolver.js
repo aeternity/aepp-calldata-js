@@ -25,7 +25,9 @@ const {
     FateTypeChainPayingForTx,
     FateTypeChainBaseTx,
     FateTypeAENSPointee,
+    FateTypeAENSv2Pointee,
     FateTypeAENSName,
+    FateTypeAENSv2Name,
     FateTypeSet,
     FateTypeBls12381Fr,
     FateTypeBls12381Fp,
@@ -336,11 +338,27 @@ test('Resolve AENS.pointee', t => {
     )
 })
 
+test('Resolve AENSv2.pointee', t => {
+    t.plan(1)
+    t.deepEqual(
+        resolver.resolveType('AENSv2.pointee'),
+        FateTypeAENSv2Pointee()
+    )
+})
+
 test('Resolve AENS.name', t => {
     t.plan(1)
     t.deepEqual(
         resolver.resolveType('AENS.name'),
         FateTypeAENSName()
+    )
+})
+
+test('Resolve AENSv2.name', t => {
+    t.plan(1)
+    t.deepEqual(
+        resolver.resolveType('AENSv2.name'),
+        FateTypeAENSv2Name()
     )
 })
 
