@@ -44,9 +44,9 @@ main contract Test =
 
     entrypoint test_unit(a:unit) = a
     entrypoint test_empty() = 1
-    entrypoint test_bool(a:bool, b:bool) = a
+    entrypoint test_bool(a:bool, b:bool) = a && b
     entrypoint test_single_int(a:int) = a
-    entrypoint test_int(a:int, b:int, c:int, d:int) = a
+    entrypoint test_int(a:int, b:int, c:int, d:int) = a + b + c + d
     entrypoint test_bytes(a:bytes(2)) = a
     entrypoint test_bytes32(a:bytes(32)) = a
     entrypoint test_account_address(a:address) = a
