@@ -48,6 +48,15 @@ test('Decode bytes return', t => {
     )
 })
 
+test('Decode bytes any size return', t => {
+    t.plan(1)
+    t.deepEqual(
+        encoder.decode(CONTRACT, 'test_bytes_any_size', 'cb_nwENwP/u2an5/Q=='),
+        new Uint8Array([0xc0, 0xff, 0xee]),
+        'test_bytes_any_size(Bytes.to_any_size(#c0ffee))'
+    )
+})
+
 test('Decode string return', t => {
     t.plan(1)
     t.deepEqual(

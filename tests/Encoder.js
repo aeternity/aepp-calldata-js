@@ -64,6 +64,12 @@ test('Encode bytes arguments', t => {
     t.is(encoded, 'cb_KxEe407MG58BCb7vI/elQA==', 'test_bytes(#beef)')
 })
 
+test('Encode bytes any size arguments', t => {
+    t.plan(1)
+    const encoded = encoder.encode(CONTRACT, 'test_bytes_any_size', [0xc0ffee])
+    t.is(encoded, 'cb_KxGHDGcIG58BDcD/7uo6XoQ=', 'test_bytes_any_size(Bytes.to_any_size(#c0ffee))')
+})
+
 test('Encode string arguments', t => {
     t.plan(1)
     const encoded = encoder.encode(CONTRACT, 'test_string', ["whoolymoly"])
