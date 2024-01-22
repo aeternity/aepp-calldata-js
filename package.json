@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@aeternity/aepp-cli": "4.1.0",
-    "ava": "6.0.1",
+    "ava": "6.1.0",
     "benchmark": "2.1.4",
     "browserify": "17.0.0",
     "eslint": "8.56.0",
