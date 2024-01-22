@@ -34,8 +34,8 @@ function contract_call() {
     npx aecli contract call \
         --networkId ae_uat --password $WALLET_PASS --json \
         --descrPath $DESCRIPTOR_SRC \
-        $WALLET_PATH \
-        "$@" | jq -r '.result.returnValue'
+        "$@" \
+        $WALLET_PATH | jq -r '.result.returnValue'
 }
 
 contract_call "$@"
