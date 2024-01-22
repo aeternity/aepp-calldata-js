@@ -137,6 +137,14 @@ test('Resolve bytes', t => {
     )
 })
 
+test('Resolve bytes any size', t => {
+    t.plan(1)
+    t.deepEqual(
+        resolver.resolveType({bytes: 'any'}),
+        FateTypeBytes()
+    )
+})
+
 test('Resolve list', t => {
     t.plan(1)
     t.deepEqual(

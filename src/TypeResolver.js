@@ -152,7 +152,7 @@ class TypeResolver {
         }
 
         if (key === 'bytes') {
-            return FateTypeBytes(valueTypes)
+            return FateTypeBytes(valueTypes === 'any' ? undefined : valueTypes)
         }
 
         if (key === 'list') {
