@@ -20,9 +20,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: npm
     - run: |
-          wget -q https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_21.3.8.17-1~ubuntu~bionic_amd64.deb
-          sudo apt install --allow-downgrades ./esl-erlang_21.3.8.17-1~ubuntu~bionic_amd64.deb || true
-          sudo apt --fix-broken install
+          wget -q https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_24.3.3-1~ubuntu~focal_amd64.deb
+          sudo apt install --allow-downgrades ./esl-erlang_24.3.3-1~ubuntu~focal_amd64.deb || true
     - run: npm config set fund false
     - run: make tests
     - run: make integration-tests
