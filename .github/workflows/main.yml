@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [20.x]
     steps:
     - uses: actions/checkout@v4
     - name: Use Node.js ${{ matrix.node-version }}
@@ -31,7 +31,7 @@ jobs:
     if: github.ref == 'refs/heads/master'
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [20.x]
     steps:
     - uses: actions/checkout@v4
     - name: Use Node.js ${{ matrix.node-version }}
@@ -40,8 +40,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: npm
     - run: |
-          wget -q https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_21.3.8.17-1~ubuntu~bionic_amd64.deb
-          sudo apt install --allow-downgrades ./esl-erlang_21.3.8.17-1~ubuntu~bionic_amd64.deb || true
-          sudo apt --fix-broken install
+          wget -q https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_24.3.3-1~ubuntu~focal_amd64.deb
+          sudo apt install --allow-downgrades ./esl-erlang_24.3.3-1~ubuntu~focal_amd64.deb || true
     - run: npm config set fund false
     - run: make benchmark-tests
