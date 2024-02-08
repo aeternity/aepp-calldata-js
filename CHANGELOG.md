@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Added
 - Add support for `bytes()` arbitrary-sized type from FATE 3.
+- Add support for `AENSv2.pointee`, `AENSv2.name` types from FATE 3.
 ### Changed
 ### Deprecated
 ### Removed

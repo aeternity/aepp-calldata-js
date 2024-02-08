@@ -561,6 +561,65 @@ test('Encode AENS.pointee arguments', t => {
     )
 })
 
+test('Encode AENSv2.pointee arguments', t => {
+    t.plan(5)
+    const encoded1 = encoder.encode(
+        CONTRACT,
+        'test_pointee_v2',
+        [{'AENSv2.AccountPt': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']}]
+    )
+    t.is(
+        encoded1,
+        'cb_KxElnEHfG6+FAQEBAQEAG58AoN5ov+GyA+UfUjUboIf3m3go5qFA8MMUpnDHADs/9XB10byw+g==',
+        'test_pointee_v2(AENSv2.AccountPt(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt))'
+    )
+
+    const encoded2 = encoder.encode(
+        CONTRACT,
+        'test_pointee_v2',
+        [{'AENSv2.OraclePt': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']}]
+    )
+    t.is(
+        encoded2,
+        'cb_KxElnEHfG6+FAQEBAQEBG58AoN5ov+GyA+UfUjUboIf3m3go5qFA8MMUpnDHADs/9XB1XO0VzQ==',
+        'test_pointee_v2(AENSv2.OraclePt(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt))'
+    )
+
+    const encoded3 = encoder.encode(
+        CONTRACT,
+        'test_pointee_v2',
+        [{'AENSv2.ContractPt': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']}]
+    )
+    t.is(
+        encoded3,
+        'cb_KxElnEHfG6+FAQEBAQECG58AoN5ov+GyA+UfUjUboIf3m3go5qFA8MMUpnDHADs/9XB1UFjoyQ==',
+        'test_pointee_v2(AENSv2.ContractPt(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt))'
+    )
+
+    const encoded4 = encoder.encode(
+        CONTRACT,
+        'test_pointee_v2',
+        [{'AENSv2.ChannelPt': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']}]
+    )
+    t.is(
+        encoded4,
+        'cb_KxElnEHfG6+FAQEBAQEDG58AoN5ov+GyA+UfUjUboIf3m3go5qFA8MMUpnDHADs/9XB1547G3Q==',
+        'test_pointee_v2(AENSv2.ChannelPt(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt))'
+    )
+
+    const dataPt = Buffer.from('http://example.com')
+    const encoded5 = encoder.encode(
+        CONTRACT,
+        'test_pointee_v2',
+        [{'AENSv2.DataPt': [dataPt]}]
+    )
+    t.is(
+        encoded5,
+        'cb_KxElnEHfG6+FAQEBAQEEG58BSWh0dHA6Ly9leGFtcGxlLmNvbYixc9Q=',
+        `test_pointee_v2(AENSv2.DataPt(Bytes.to_any_size(#${dataPt.toString('hex')})))`
+    )
+})
+
 test('Encode AENS.name arguments', t => {
     t.plan(1)
     const encoded1 = encoder.encode(
@@ -582,6 +641,30 @@ test('Encode AENS.name arguments', t => {
         encoded1,
         'cb_KxF9Ou/tG68DADufAKDeaL/hsgPlH1I1G6CH95t4KOahQPDDFKZwxwA7P/Vwda+CAQEBG28kLwENcHQxr4QBAQEBABufAKDVzwhADpiCIvJutLAsj4kHdFdGchGm5tlV7bcHScajO9PzmRQ=',
         'test_aens_name(AENS.Name(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt, RelativeTTL(100), {["pt1"] = AENS.AccountPt(ak_2dATVcZ9KJU5a8hdsVtTv21pYiGWiPbmVcU1Pz72FFqpk9pSRR)}))'
+    )
+})
+
+test('Encode AENSv2.name arguments', t => {
+    t.plan(1)
+    const encoded1 = encoder.encode(
+        CONTRACT,
+        'test_aens_name_v2',
+        [
+            {
+                'AENSv2.Name': [
+                    'ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt',
+                    {FixedTTL: [100]},
+                    new Map([
+                        ["pt1", {'AENSv2.AccountPt': ['ak_2dATVcZ9KJU5a8hdsVtTv21pYiGWiPbmVcU1Pz72FFqpk9pSRR']}]
+                    ])
+                ]
+            }
+        ]
+    )
+    t.is(
+        encoded1,
+        'cb_KxFjVV5kG68DADufAKDeaL/hsgPlH1I1G6CH95t4KOahQPDDFKZwxwA7P/Vwda+CAQEBG28kLwENcHQxr4UBAQEBAQAbnwCg1c8IQA6YgiLybrSwLI+JB3RXRnIRpubZVe23B0nGoztVU63L',
+        'test_aens_name_v2(AENSv2.Name(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt, RelativeTTL(100), {["pt1"] = AENSv2.AccountPt(ak_2dATVcZ9KJU5a8hdsVtTv21pYiGWiPbmVcU1Pz72FFqpk9pSRR)}))'
     )
 })
 

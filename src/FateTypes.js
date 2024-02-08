@@ -187,12 +187,36 @@ const FateTypeAENSPointee = () => {
     return FateTypeVariant(variants)
 }
 
+const FateTypeAENSv2Pointee = () => {
+    const variants = [
+        {'AENSv2.AccountPt': [FateTypeAccountAddress()]},
+        {'AENSv2.OraclePt': [FateTypeAccountAddress()]},
+        {'AENSv2.ContractPt': [FateTypeAccountAddress()]},
+        {'AENSv2.ChannelPt': [FateTypeAccountAddress()]},
+        {'AENSv2.DataPt': [FateTypeBytes()]}, // max 1024 bytes
+    ]
+
+    return FateTypeVariant(variants)
+}
+
 const FateTypeAENSName = () => {
     const variants = [{
         'AENS.Name': [
             FateTypeAccountAddress(),
             FateTypeChainTTL(),
             FateTypeMap(FateTypeString(), FateTypeAENSPointee())
+        ]
+    }]
+
+    return FateTypeVariant(variants)
+}
+
+const FateTypeAENSv2Name = () => {
+    const variants = [{
+        'AENSv2.Name': [
+            FateTypeAccountAddress(),
+            FateTypeChainTTL(),
+            FateTypeMap(FateTypeString(), FateTypeAENSv2Pointee())
         ]
     }]
 
@@ -262,7 +286,9 @@ module.exports = {
     FateTypeChainPayingForTx,
     FateTypeChainBaseTx,
     FateTypeAENSPointee,
+    FateTypeAENSv2Pointee,
     FateTypeAENSName,
+    FateTypeAENSv2Name,
     FateTypeEvent,
     FateTypeBls12381Fr,
     FateTypeBls12381Fp,

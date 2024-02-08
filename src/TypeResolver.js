@@ -24,7 +24,9 @@ const {
     FateTypeChainPayingForTx,
     FateTypeChainBaseTx,
     FateTypeAENSPointee,
+    FateTypeAENSv2Pointee,
     FateTypeAENSName,
+    FateTypeAENSv2Name,
     FateTypeBls12381Fr,
     FateTypeBls12381Fp
 } = require('./FateTypes')
@@ -135,8 +137,16 @@ class TypeResolver {
             return FateTypeAENSPointee()
         }
 
+        if (key === 'AENSv2.pointee') {
+            return FateTypeAENSv2Pointee()
+        }
+
         if (key === 'AENS.name') {
             return FateTypeAENSName()
+        }
+
+        if (key === 'AENSv2.name') {
+            return FateTypeAENSv2Name()
         }
 
         if (key === 'Set.set') {

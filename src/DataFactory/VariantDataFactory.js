@@ -6,7 +6,9 @@ const TYPES = [
     'variant',
     'Chain.ttl',
     'AENS.pointee',
-    'AENS.name'
+    'AENSv2.pointee',
+    'AENS.name',
+    'AENSv2.name'
 ]
 
 class VariantDataFactory extends BaseDataFactory {

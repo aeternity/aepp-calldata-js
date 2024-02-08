@@ -522,6 +522,28 @@ test('Decode singleton record (optimized)', t => {
     )
 })
 
+test('Decode AENSv2.name with DataPr', t => {
+    t.plan(1)
+    t.deepEqual(
+        encoder.decode(
+            CONTRACT,
+            'test_aens_name_v2',
+            'cb_rwMAO58AoGcmh1wvzEWYjmsxUe1udTT9DCHfC0A1YAxTFxGd3/Lar4IBAQEbb4MCv60vAhlvcmFjbGWvhQEBAQEBARufAKBnJodcL8xFmI5rMVHtbnU0/Qwh3wtANWAMUxcRnd/y2iF0ZXN0IGtlea+FAQEBAQEEG58BKXRlc3QgdmFsdWUZ3wys'
+        ),
+        {
+            'AENSv2.Name': [
+                'ak_nRqnePWC6yGWBmR4wfN3AvQnqbv2TizxKJdvGXj8p7YZrUZ5J',
+                { FixedTTL: [180205n] },
+                new Map([
+                    ['oracle', { 'AENSv2.OraclePt': ['ak_nRqnePWC6yGWBmR4wfN3AvQnqbv2TizxKJdvGXj8p7YZrUZ5J'] }],
+                    ['test key', { 'AENSv2.DataPt': [Uint8Array.from(Buffer.from('test value'))] }],
+                ]),
+            ],
+        },
+        'test_aens_name_v2(AENSv2.Name(ak_nRqnePWC6yGWBmR4wfN3AvQnqbv2TizxKJdvGXj8p7YZrUZ5J, FixedTTL(180205), {["oracle"] = AENSv2.OraclePt(ak_nRqnePWC6yGWBmR4wfN3AvQnqbv2TizxKJdvGXj8p7YZrUZ5J), ["test key"] = AENSv2.DataPt(Bytes.to_any_size(#746573742076616c7565))}))'
+    )
+})
+
 test('Decode Set.set', t => {
     t.plan(1)
     t.deepEqual(
