@@ -2,6 +2,7 @@ const FateTag = require('../FateTag')
 const BaseSerializer = require('./BaseSerializer')
 const IntSerializer = require('./IntSerializer')
 const FatePrefixError = require('../Errors/FatePrefixError')
+const FateTypeError = require('../Errors/FateTypeError')
 const {
     FateTypeInt,
     FateTypeBool,
@@ -42,6 +43,64 @@ class TypeSerializer extends BaseSerializer {
         super(globalSerializer)
 
         this._intSerializer = new IntSerializer()
+    }
+
+    serialize(type) {
+        const basicTypeTag = Object.entries(BASIC_TYPES)
+            .find(([_key, { name }]) => name === type.name)?.[0]
+        if (basicTypeTag != null) {
+            return new Uint8Array([basicTypeTag])
+        }
+
+        const objectTypeTag = Object.entries(OBJECT_TYPES)
+            .find(([_key, { name }]) => name === type.name)?.[0]
+        if (objectTypeTag != null) {
+            return new Uint8Array([FateTag.TYPE_OBJECT, objectTypeTag])
+        }
+
+        if (type.name === 'tvar') {
+            return new Uint8Array([FateTag.TYPE_VAR, type.id])
+        }
+
+        if (type.name === 'bytes') {
+            return new Uint8Array([
+                FateTag.TYPE_BYTES,
+                ...this._intSerializer.serialize(type.size),
+            ])
+        }
+
+        if (type.name === 'list') {
+            return new Uint8Array([
+                FateTag.TYPE_LIST,
+                ...this.serialize(type.valuesType),
+            ])
+        }
+
+        if (type.name === 'map') {
+            return new Uint8Array([
+                FateTag.TYPE_MAP,
+                ...this.serialize(type.keyType),
+                ...this.serialize(type.valueType),
+            ])
+        }
+
+        if (type.name === 'tuple') {
+            return new Uint8Array([
+                FateTag.TYPE_TUPLE,
+                type.valueTypes.length,
+                ...type.valueTypes.map((t) => [...this.serialize(t)]).flat(),
+            ])
+        }
+
+        if (type.name === 'variant') {
+            return new Uint8Array([
+                FateTag.TYPE_VARIANT,
+                type.variants.length,
+                ...type.variants.map((t) => [...this.serialize(t)]).flat(),
+            ])
+        }
+
+        throw new FateTypeError(type.name, `Unsupported type: ${type.name}`)
     }
 
     deserializeStream(data) {
