@@ -69,7 +69,7 @@ class BytecodeSerializer extends BaseSerializer {
         const id = byteArray2Hex(data.slice(1, 5))
 
         if (prefix !== 0xfe) {
-            throw new Error(`Wrong function prefix, expeted 0xfe got 0x${data[0].toString(16)}`)
+            throw new Error(`Wrong function prefix, expected 0xfe got 0x${data[0].toString(16)}`)
         }
 
         const name = symbols[id]

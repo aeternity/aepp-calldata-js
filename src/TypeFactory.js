@@ -16,6 +16,7 @@ const {
     FateTypeMap,
     FateTypeTuple,
     FateTypeVariant,
+    FateTypeContractBytearray,
     FateTypeType,
 } = require('./FateTypes')
 
@@ -78,6 +79,10 @@ class TypeFactory {
             assert(OBJECT_TYPES.hasOwnProperty(obj), `Unsupported object type "${obj}"`)
 
             return OBJECT_TYPES[obj]
+        }
+
+        if (tag === FateTag.CONTRACT_BYTEARRAY) {
+            return FateTypeContractBytearray()
         }
 
         if (tag === FateTag.TYPE_INTEGER

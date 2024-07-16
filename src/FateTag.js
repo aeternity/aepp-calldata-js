@@ -42,7 +42,7 @@ module.exports = Object.freeze({
     EMPTY_STRING : 0b01011111, // 0101 1111
     POS_BIG_INT  : 0b01101111, // 0110 1111 | RLP encoded (integer - 64)
     FALSE        : 0b01111111, // 0111 1111
-                               // 1000 1111 - FREE (Possibly for bytecode in the future.)
+    CONTRACT_BYTEARRAY: 0b10001111, // 1000 1111
     OBJECT       : 0b10011111, // 1001 1111 | ObjectType | RLP encoded Array
     VARIANT      : 0b10101111, // 1010 1111 | [encoded arities] | encoded tag | [encoded values]
     MAP_ID       : 0b10111111, // 1011 1111 | RLP encoded integer (store map id)

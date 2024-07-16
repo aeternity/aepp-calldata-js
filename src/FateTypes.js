@@ -247,6 +247,10 @@ const FateTypeCalldata = (functionName, argumentTypes) => {
     }
 }
 
+const FateTypeContractBytearray = () => {
+    return {name: 'contract_bytearray'}
+}
+
 const FateTypeVar = (id) => {
     return {
         name: 'tvar',
@@ -293,6 +297,7 @@ module.exports = {
     FateTypeBls12381Fr,
     FateTypeBls12381Fp,
     FateTypeCalldata,
+    FateTypeContractBytearray,
     FateTypeVar,
     FateTypeAny,
 }
