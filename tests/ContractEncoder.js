@@ -57,6 +57,27 @@ test('Decode basic contract', t => {
     })
 })
 
+test('Decode contract with Chain.create', t => {
+    t.plan(1)
+
+    const contract = encoder.decode('cb_+NBGA6D+x/gUE1YYLmvMJDIzJK2ZFJyOM5sXubwJy+9TVt/ib8C4n7iE/kTWRB8ANwA3ABoOgj8BAz/+m66dXgA3AQdHAgwBAAwDAAwDNwEHDAOPbxX4U0YDoJg7mklGIIWH49uiZBksC7yUEVO88y4D7lTd8+T4TMK2wKOS/kTWRB8ANwEHNwAaBoIAAQM/jC8BEUTWRB8RaW5pdIIvAIk4LjAuMC1yYzEAowAAlS8CEUTWRB8RaW5pdBGbrp1eDW5ld4IvAIk4LjAuMC1yYzEAaSb5ng==')
+
+    t.like(contract.bytecode.functions[1].instructions[0][3], {
+        mnemonic: 'PUSH',
+        args: [{
+            mod: 'immediate',
+            arg: {
+                tag: 70n,
+                vsn: 3n,
+                sourceHash: '983b9a4946208587e3dba264192c0bbc941153bcf32e03ee54ddf3e4f84cc2b6',
+                aevmTypeInfo: [],
+                compilerVersion: '8.0.0-rc1',
+                payable: false
+            }
+        }],
+    })
+})
+
 test('Decode full featured contract', t => {
     const contract = encoder.decode(testContract.toString())
 
