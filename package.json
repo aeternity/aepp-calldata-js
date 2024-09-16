@@ -46,7 +46,7 @@
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-plugin-import": "2.29.1",
     "nyc": "17.0.0",
-    "tape": "5.8.1"
+    "tape": "5.9.0"
   },
   "ava": {
     "files": [
