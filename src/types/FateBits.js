@@ -1,3 +1,4 @@
+const { FateTypeBits } = require('../FateTypes')
 const FateData = require('./FateData')
 
 class FateBits extends FateData {
@@ -5,6 +6,10 @@ class FateBits extends FateData {
         super('bits')
 
         this._value = BigInt(value)
+    }
+
+    get type() {
+        return FateTypeBits()
     }
 
     get value() {
