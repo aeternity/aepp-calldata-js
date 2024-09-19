@@ -1,13 +1,20 @@
 import RLP from 'rlp'
 import BaseSerializer from './BaseSerializer.js'
 import TypeSerializer from './TypeSerializer.js'
-import {byteArray2Hex, byteArray2Int} from '../utils/int2ByteArray.js'
+import {byteArray2Hex, byteArray2Int, int2ByteArray} from '../utils/int2ByteArray.js'
 import OPCODES from '../FateOpcodes.js'
 import {
     FateTypeByteArray,
     FateTypeString,
     FateTypeMap,
+    FateTypeInt,
 } from '../FateTypes.js'
+import hexStringToByteArray from '../utils/hexStringToByteArray.js'
+import FateMap from '../types/FateMap.js'
+import FateString from '../types/FateString.js'
+import FateByteArray from '../types/FateByteArray.js'
+import FateInt from '../types/FateInt.js'
+import CompositeDataFactory from '../DataFactory/CompositeDataFactory.js'
 
 const MODIFIERS = {
     0b11: 'immediate',
@@ -37,6 +44,114 @@ class BytecodeSerializer extends BaseSerializer {
         super(globalSerializer)
 
         this._typeSerializer = new TypeSerializer()
+        this._dataFactory = new CompositeDataFactory()
+    }
+
+    serialize({functions, symbols, annotations}) {
+        return new Uint8Array([
+            ...RLP.encode(new Uint8Array(this.serializeFunctions(functions, symbols))),
+            ...RLP.encode(new Uint8Array(this.serializeSymbols(symbols))),
+            ...RLP.encode(new Uint8Array(this.serializeAnnotations(annotations))),
+        ])
+    }
+
+    serializeFunctions(functions) {
+        return functions.map((fun) => this.serializeFunction(fun)).flat()
+    }
+
+    serializeFunction({
+        id, attributes, args, returnType, instructions
+    }) {
+        return [
+            0xfe,
+            ...hexStringToByteArray(id),
+            ...this.serializeAttributes(attributes),
+            ...this.serializeSignature(args, returnType),
+            ...this.serializeInstructions(instructions),
+        ]
+    }
+
+    serializeInstructions(instructions) {
+        return instructions
+            .reduce((acc, block) => [...acc, ...block])
+            .map((instruction) => this.serializeInstruction(instruction)).flat()
+    }
+
+    serializeInstruction({mnemonic, args}) {
+        const [opcode, instr] = Object.entries(OPCODES)
+            .find(([_key, value]) => value.mnemonic === mnemonic) ?? []
+
+        if (instr == null) {
+            throw new Error(`Unsupported mnemonic: ${mnemonic}`)
+        }
+
+        return [opcode, ...instr.args === 0 ? [] : this.serializeArguments(args)]
+    }
+
+    serializeArguments(args) {
+        const sArgs = args.map((arg) => this.serializeArgument(arg))
+
+        const mods = sArgs
+            .map(([mod]) => mod)
+            .reverse()
+            .reduce((a, b) => (a << 2) + b)
+
+        const argsBytes = sArgs
+            .map(([_mod, arg]) => arg)
+            .filter(a => a)
+            .reduce((a, b) => [...a, ...b])
+
+        return [...int2ByteArray(mods), ...argsBytes]
+    }
+
+    serializeArgument({mod, arg, type}) {
+        const bits = +Object.entries(MODIFIERS).find(([_key, value]) => value === mod)[0]
+
+        if (mod === 'stack') {
+            return [bits]
+        }
+
+        const fateArg = this._dataFactory.create(type, arg)
+        return [bits, this.globalSerializer.serialize(fateArg)]
+    }
+
+    serializeSignature(args, returnType) {
+        return [
+            ...this._typeSerializer.serialize(args),
+            ...this._typeSerializer.serialize(returnType),
+        ]
+    }
+
+    serializeAttributes(attributes) {
+        let value = 0
+
+        if (attributes.includes('private')) {
+            value |= 0b0001
+        }
+
+        if (attributes.includes('payable')) {
+            value |= 0b0010
+        }
+
+        return this.globalSerializer.serialize(new FateInt(value))
+    }
+
+    serializeSymbols(symbolsMap) {
+        const fateMap = new FateMap(
+            FateTypeByteArray(),
+            FateTypeString(),
+            Object.entries(symbolsMap).map(([hex, value]) => [
+                new FateByteArray(hexStringToByteArray(hex)), new FateString(value),
+            ]),
+        )
+
+        return this.globalSerializer.serialize(fateMap)
+    }
+
+    serializeAnnotations(annotations) {
+        return this.globalSerializer.serialize(
+            new FateMap(FateTypeInt(), undefined, annotations),
+        )
     }
 
     deserialize(data) {
@@ -161,7 +276,7 @@ class BytecodeSerializer extends BaseSerializer {
 
         const [arg, rest] = this.globalSerializer.deserializeStream(stream)
 
-        return [{mod, arg: arg.valueOf()}, rest]
+        return [{mod, arg: arg.valueOf(), type: arg.type}, rest]
     }
 
     deserializeSignature(data) {

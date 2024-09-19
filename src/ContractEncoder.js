@@ -12,6 +12,18 @@ class ContractEncoder {
     }
 
     /**
+     * Encodes POJO contract
+     *
+     * @param {Object} contract - Contract metadata as POJO.
+     * @returns {Object} Contract bytearray data in a canonical format.
+    */
+    encode(contract) {
+        const binData = this._contractBytecodeSerializer.serialize(contract)
+        const [_len, remainder] = this._intSerializer.deserializeStream(binData.slice(1))
+        return this._apiEncoder.encode('contract_bytearray', remainder)
+    }
+
+    /**
      * Decodes serialized contract metadata and bytecode
      *
      * @param {string} data - Contract bytearray data in a canonical format.

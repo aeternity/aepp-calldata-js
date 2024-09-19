@@ -177,6 +177,7 @@ const comparators = {
     'variant': variantComparator,
     'map': mapComparator,
     // objects (bytes)
+    'byte_array': bytesComparator,
     'bytes': bytesComparator,
     'account_pubkey': bytesComparator,
     'channel': bytesComparator,
