@@ -16,6 +16,10 @@ const byteArrayToHexArray = (data) => {
 }
 
 const byteArray2Int = (data) => {
+    if (data.length === 0) {
+        return 0n
+    }
+
     const hex = byteArrayToHexArray(data)
 
     return BigInt('0x' + hex.join(''))
