@@ -2,6 +2,7 @@ const FateData = require('./FateData')
 const {int2ByteArray} = require('../utils/int2ByteArray')
 const hexStringToByteArray = require('../utils/hexStringToByteArray')
 const FateTypeError = require('../Errors/FateTypeError')
+const { FateTypeBytes } = require('../FateTypes')
 
 const toByteArray = (value, size = 0) => {
     if (Array.isArray(value) || ArrayBuffer.isView(value)) {
@@ -53,6 +54,10 @@ class FateBytes extends FateData {
 
     get size() {
         return this._size
+    }
+
+    get type() {
+        return FateTypeBytes(this._size)
     }
 
     valueOf() {
