@@ -8,10 +8,14 @@ const byteArraySerializer = new ByteArraySerializer()
 
 class StringSerializer extends BaseSerializer {
     serialize(value) {
-        const encoder = new TextEncoder()
-        const bytes = encoder.encode(value)
+        let bytesOrString = value.valueOf()
 
-        return byteArraySerializer.serialize(bytes)
+        if (typeof bytesOrString === 'string') {
+            const encoder = new TextEncoder()
+            bytesOrString = encoder.encode(bytesOrString)
+        }
+
+        return byteArraySerializer.serialize(bytesOrString)
     }
 
     deserializeStream(data) {
@@ -25,11 +29,10 @@ class StringSerializer extends BaseSerializer {
             throw new FatePrefixError(prefix)
         }
 
-        const decoder = new TextDecoder()
         const [bytes, rest] = byteArraySerializer.deserializeStream(buffer)
 
         return [
-            new FateString(decoder.decode(bytes.valueOf())),
+            new FateString(bytes.valueOf()),
             rest
         ]
     }
