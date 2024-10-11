@@ -16,7 +16,7 @@ const FateContractAddress = require('../src/types/FateContractAddress')
 const FateOracleAddress = require('../src/types/FateOracleAddress')
 const FateOracleQueryAddress = require('../src/types/FateOracleQueryAddress')
 const FateChannelAddress = require('../src/types/FateChannelAddress')
-const {FateTypeInt, FateTypeBool} = require('../src/FateTypes')
+const {FateTypeInt, FateTypeBool, FateTypeAny} = require('../src/FateTypes')
 
 const serializer = new Serializer()
 
@@ -107,7 +107,15 @@ test('Deserialize all types', t => {
         new FateTuple([], [new FateBool(true), new FateBool(false), new FateInt(0)])
     )
 
-    t.deepEqual(deser(t, [175,132,0,0,1,0,1,63]), new FateVariant([0, 0, 1, 0], 1))
+    t.deepEqual(
+        deser(t, [175,132,0,0,1,0,1,63]),
+        new FateVariant([0, 0, 1, 0], 1, [], [], [
+            { 0: [] },
+            { 1: [] },
+            { 2: [FateTypeAny()] },
+            { 3: [] },
+        ])
+    )
 
     t.deepEqual(deser(t, [159,1,9,190,239]), new FateBytes(0xbeef))
     t.deepEqual(

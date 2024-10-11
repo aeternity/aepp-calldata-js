@@ -1,14 +1,34 @@
 const RLP = require('rlp')
+const FateTag = require('../FateTag')
 const BaseSerializer = require('./BaseSerializer')
 const BytecodeSerializer = require('./BytecodeSerializer')
 const IntSerializer = require('./IntSerializer')
-const {byteArray2Int, byteArray2Hex} = require('../utils/int2ByteArray')
+const {byteArray2Int, byteArray2Hex, int2ByteArray} = require('../utils/int2ByteArray')
+const hexStringToByteArray = require('../utils/hexStringToByteArray')
 
 class ContractBytecodeSerializer extends BaseSerializer {
     constructor(globalSerializer) {
         super()
         this._bytecodeSerializer = new BytecodeSerializer(globalSerializer)
         this._intSerializer = new IntSerializer()
+    }
+
+    serialize(data) {
+        const stringEncoder = new TextEncoder()
+        const byteArray = RLP.encode([
+            data.tag,
+            data.vsn,
+            hexStringToByteArray(data.sourceHash),
+            data.aevmTypeInfo,
+            this._bytecodeSerializer.serialize(data.bytecode),
+            stringEncoder.encode(data.compilerVersion),
+            int2ByteArray(data.payable),
+        ])
+        return new Uint8Array([
+            FateTag.CONTRACT_BYTEARRAY,
+            ...this._intSerializer.serialize(byteArray.length),
+            ...byteArray,
+        ])
     }
 
     deserializeStream(data) {
