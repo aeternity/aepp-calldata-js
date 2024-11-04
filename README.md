@@ -165,6 +165,7 @@ Any of the following FATE API data types can be encoded and decoded:
 - contract_bytearray
 - contract_pubkey
 - account_pubkey
+- account_seckey
 - channel
 - oracle_pubkey
 - oracle_query_id

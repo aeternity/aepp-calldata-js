@@ -7,7 +7,7 @@ const payload = mkPayload(32)
 const payload64 = mkPayload(64)
 
 test('Encode', t => {
-    t.plan(17)
+    t.plan(18)
 
     t.deepEqual(
         encoder.encode('contract_bytearray', new Uint8Array()),
@@ -37,6 +37,11 @@ test('Encode', t => {
     t.deepEqual(
         encoder.encode('account_pubkey', payload),
         'ak_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'
+    )
+
+    t.deepEqual(
+        encoder.encode('account_seckey', payload),
+        'sk_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'
     )
 
     t.deepEqual(
@@ -110,7 +115,7 @@ test('Encode errors', t => {
 })
 
 test('Decode', t => {
-    t.plan(17)
+    t.plan(18)
     t.deepEqual(
         encoder.decode('cb_Xfbg4g=='),
         new Uint8Array()
@@ -138,6 +143,11 @@ test('Decode', t => {
 
     t.deepEqual(
         encoder.decode('ak_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'),
+        payload
+    )
+
+    t.deepEqual(
+        encoder.decode('sk_16qJFWMMHFy3xDdLmvUeyc2S6FrWRhJP51HsvDYdz9d1FsYG'),
         payload
     )
 
