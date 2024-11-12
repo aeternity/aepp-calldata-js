@@ -1,0 +1,12 @@
+{
+    "plugins": [
+        ["@babel/plugin-transform-modules-commonjs"],
+        ["babel-plugin-transform-rewrite-imports", {
+            "replaceExtensions": {
+                "sha.js/sha256.js": "sha.js/sha256.js",
+                "blakejs/blake2b.js": "blakejs/blake2b.js",
+                ".js": ".cjs"
+            }
+        }]
+    ]
+}
