@@ -5,4 +5,4 @@ class FormatError extends Error {
     }
 }
 
-module.exports = FormatError
+export default FormatError

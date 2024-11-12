@@ -1,4 +1,4 @@
-const InternalEncoder = require('../ContractEncoder')
+import InternalEncoder from '../ContractEncoder.js'
 
 class ContractEncoder {
     constructor() {
@@ -16,4 +16,4 @@ class ContractEncoder {
     }
 }
 
-module.exports = ContractEncoder
+export default ContractEncoder

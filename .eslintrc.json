@@ -12,6 +12,7 @@
         "ecmaVersion": 13
     },
     "rules": {
+        "import/extensions": ["error", "always"],
         "semi": ["error", "never"],
         "indent": ["error", 4],
         "curly": ["error", "all"],

@@ -1,6 +1,6 @@
-const test = require('./test')
-const ContractByteArrayEncoder = require('../src/ContractByteArrayEncoder')
-const {
+import test from './test.js'
+import ContractByteArrayEncoder from '../src/ContractByteArrayEncoder.js'
+import {
     FateTypeBool,
     FateTypeInt,
     FateTypeString,
@@ -15,7 +15,7 @@ const {
     FateTypeMap,
     FateTypeTuple,
     FateTypeVariant,
-} = require('../src/FateTypes')
+} from '../src/FateTypes.js'
 
 const encoder = new ContractByteArrayEncoder()
 

@@ -1,5 +1,5 @@
-const hexStringToByteArray = require('./utils/hexStringToByteArray')
-const {int2ByteArray, byteArray2Int, byteArray2Hex} = require('./utils/int2ByteArray')
+import hexStringToByteArray from './utils/hexStringToByteArray.js'
+import {int2ByteArray, byteArray2Int, byteArray2Hex} from './utils/int2ByteArray.js'
 
 // this is overlaping with general calldata Serializer with some extras: uint_* and id
 class PrimitivesEncoder {
@@ -140,4 +140,4 @@ class PrimitivesEncoder {
     }
 }
 
-module.exports = PrimitivesEncoder
+export default PrimitivesEncoder

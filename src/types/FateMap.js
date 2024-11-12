@@ -1,5 +1,5 @@
-const FateData = require('./FateData')
-const {FateTypeMap} = require('../FateTypes')
+import FateData from './FateData.js'
+import {FateTypeMap} from '../FateTypes.js'
 
 const arrayToItem = (item) => {
     const [key, value] = item
@@ -58,4 +58,4 @@ class FateMap extends FateData {
     }
 }
 
-module.exports = FateMap
+export default FateMap

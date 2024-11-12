@@ -1,5 +1,5 @@
-const CompositeDataFactory = require('./DataFactory/CompositeDataFactory')
-const InternalMapper = require('./Mapper/InternalMapper')
+import CompositeDataFactory from './DataFactory/CompositeDataFactory.js'
+import InternalMapper from './Mapper/InternalMapper.js'
 
 class ExternalDataFactory extends CompositeDataFactory {
     constructor() {
@@ -15,4 +15,4 @@ class ExternalDataFactory extends CompositeDataFactory {
     }
 }
 
-module.exports = ExternalDataFactory
+export default ExternalDataFactory

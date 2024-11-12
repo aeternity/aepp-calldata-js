@@ -1,8 +1,8 @@
-const RLP = require('rlp')
-const BaseSerializer = require('./BaseSerializer')
-const BytecodeSerializer = require('./BytecodeSerializer')
-const IntSerializer = require('./IntSerializer')
-const {byteArray2Int, byteArray2Hex} = require('../utils/int2ByteArray')
+import RLP from 'rlp'
+import BaseSerializer from './BaseSerializer.js'
+import BytecodeSerializer from './BytecodeSerializer.js'
+import IntSerializer from './IntSerializer.js'
+import {byteArray2Int, byteArray2Hex} from '../utils/int2ByteArray.js'
 
 class ContractBytecodeSerializer extends BaseSerializer {
     constructor(globalSerializer) {
@@ -32,4 +32,4 @@ class ContractBytecodeSerializer extends BaseSerializer {
     }
 }
 
-module.exports = ContractBytecodeSerializer
+export default ContractBytecodeSerializer

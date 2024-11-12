@@ -1,7 +1,7 @@
-const {hash} = require('../utils/hash')
-const {byteArray2Int} = require('../utils/int2ByteArray')
-const TypeResolveError = require('../Errors/TypeResolveError')
-const BaseDataFactory = require('./BaseDataFactory')
+import {hash} from '../utils/hash.js'
+import {byteArray2Int} from '../utils/int2ByteArray.js'
+import TypeResolveError from '../Errors/TypeResolveError.js'
+import BaseDataFactory from './BaseDataFactory.js'
 
 const DATA_TYPES = [
     'string',
@@ -56,4 +56,4 @@ class EventDataFactory extends BaseDataFactory {
     }
 }
 
-module.exports = EventDataFactory
+export default EventDataFactory

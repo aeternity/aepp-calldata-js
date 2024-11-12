@@ -1,7 +1,7 @@
-const RLP = require('rlp')
-const ChainObject = require('./ChainObject')
-const ObjectTags = require('./ChainObjectTags')
-const Templates = require('./ChainObjectTemplates')
+import RLP from 'rlp'
+import ChainObject from './ChainObject.js'
+import ObjectTags from './ChainObjectTags.js'
+import Templates from './ChainObjectTemplates.js'
 
 class ChainObjectSerializer {
     /**
@@ -73,4 +73,4 @@ class ChainObjectSerializer {
     }
 }
 
-module.exports = ChainObjectSerializer
+export default ChainObjectSerializer

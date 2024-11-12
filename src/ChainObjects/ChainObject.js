@@ -1,4 +1,4 @@
-const ObjectTags = require('./ChainObjectTags')
+import ObjectTags from './ChainObjectTags.js'
 
 class ChainObject {
     constructor(name, fields) {
@@ -13,4 +13,4 @@ class ChainObject {
     }
 }
 
-module.exports = ChainObject
+export default ChainObject

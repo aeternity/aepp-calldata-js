@@ -1,6 +1,6 @@
-const test = require('../test')
-const FateBool = require('../../src/types/FateBool')
-const BoolSerializer = require('../../src/Serializers/BoolSerializer')
+import test from '../test.js'
+import FateBool from '../../src/types/FateBool.js'
+import BoolSerializer from '../../src/Serializers/BoolSerializer.js'
 
 const s = new BoolSerializer()
 

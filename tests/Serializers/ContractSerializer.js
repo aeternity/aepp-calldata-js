@@ -1,6 +1,6 @@
-const test = require('../test')
-const ContractSerializer = require('../../src/Serializers/ContractSerializer')
-const FateContractAddress = require('../../src/types/FateContractAddress')
+import test from '../test.js'
+import ContractSerializer from '../../src/Serializers/ContractSerializer.js'
+import FateContractAddress from '../../src/types/FateContractAddress.js'
 
 const s = new ContractSerializer()
 

@@ -1,4 +1,4 @@
-const FormatError = require('../Errors/FormatError')
+import FormatError from '../Errors/FormatError.js'
 
 // TODO consider using Buffer.from(<string>, 'hex') instead
 // TODO get rid of this ?
@@ -15,4 +15,4 @@ const hexStringToByteArray = (str) => {
         .map(el => parseInt(el, 16)))
 }
 
-module.exports = hexStringToByteArray
+export default hexStringToByteArray

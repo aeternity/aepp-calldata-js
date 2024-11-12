@@ -1,9 +1,9 @@
-const test = require('../test')
-const Serializer = require('../../src/Serializer')
-const ListSerializer = require('../../src/Serializers/ListSerializer')
-const {FateTypeInt, FateTypeList} = require('../../src/FateTypes')
-const FateInt = require('../../src/types/FateInt')
-const FateList = require('../../src/types/FateList')
+import test from '../test.js'
+import Serializer from '../../src/Serializer.js'
+import ListSerializer from '../../src/Serializers/ListSerializer.js'
+import {FateTypeInt, FateTypeList} from '../../src/FateTypes.js'
+import FateInt from '../../src/types/FateInt.js'
+import FateList from '../../src/types/FateList.js'
 
 const s = new ListSerializer(new Serializer())
 

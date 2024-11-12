@@ -1,7 +1,7 @@
-const base64check = require('./utils/base64check')
-const base58check = require('./utils/base58check')
-const FormatError = require('./Errors/FormatError')
-const FateTypeError = require('./Errors/FateTypeError')
+import * as base64check from './utils/base64check.js'
+import * as base58check from './utils/base58check.js'
+import FormatError from './Errors/FormatError.js'
+import FateTypeError from './Errors/FateTypeError.js'
 
 const TYPES = {
     key_block_hash: {tag: 'kh', size: 32, encoder: base58check},
@@ -115,4 +115,4 @@ class ApiEncoder {
     }
 }
 
-module.exports = ApiEncoder
+export default ApiEncoder

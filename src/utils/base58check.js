@@ -1,5 +1,5 @@
-const bs58 = require('bs58').default
-const { addChecksum, getPayload } = require('./base64check')
+import bs58 from 'bs58'
+import { addChecksum, getPayload } from './base64check.js'
 
 /**
  * Base58check encode given `input`
@@ -19,7 +19,7 @@ const decode = (str) => {
     return getPayload(bs58.decode(str))
 }
 
-module.exports = {
+export {
     encode,
     decode
 }

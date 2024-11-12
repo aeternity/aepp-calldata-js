@@ -1,7 +1,7 @@
-const test = require('./test')
-const AciTypeResolver = require('../src/AciTypeResolver')
-const aci = require('../build/contracts/Test.json')
-const {
+import test from './test.js'
+import AciTypeResolver from '../src/AciTypeResolver.js'
+import aci from '../build/contracts/Test.json' with { type: 'json' }
+import {
     FateTypeInt,
     FateTypeBool,
     FateTypeString,
@@ -9,7 +9,7 @@ const {
     FateTypeTuple,
     FateTypeRecord,
     FateTypeVariant,
-} = require('../src/FateTypes')
+} from '../src/FateTypes.js'
 
 const CONTRACT = 'Test'
 const resolver = new AciTypeResolver(aci)

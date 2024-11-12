@@ -1,6 +1,6 @@
-const test = require('../test')
-const ByteArraySerializer = require('../../src/Serializers/ByteArraySerializer')
-const FateByteArray = require('../../src/types/FateByteArray')
+import test from '../test.js'
+import ByteArraySerializer from '../../src/Serializers/ByteArraySerializer.js'
+import FateByteArray from '../../src/types/FateByteArray.js'
 
 const s = new ByteArraySerializer()
 

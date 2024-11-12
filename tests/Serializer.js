@@ -1,22 +1,22 @@
-const test = require('./test')
-const Serializer = require('../src/Serializer')
-const FateInt = require('../src/types/FateInt')
-const FateBool = require('../src/types/FateBool')
-const FateString = require('../src/types/FateString')
-const FateByteArray = require('../src/types/FateByteArray')
-const FateBits = require('../src/types/FateBits')
-const FateList = require('../src/types/FateList')
-const FateMap = require('../src/types/FateMap')
-const FateTuple = require('../src/types/FateTuple')
-const FateVariant = require('../src/types/FateVariant')
-const FateBytes = require('../src/types/FateBytes')
-const FateData = require('../src/types/FateData')
-const FateAccountAddress = require('../src/types/FateAccountAddress')
-const FateContractAddress = require('../src/types/FateContractAddress')
-const FateOracleAddress = require('../src/types/FateOracleAddress')
-const FateOracleQueryAddress = require('../src/types/FateOracleQueryAddress')
-const FateChannelAddress = require('../src/types/FateChannelAddress')
-const {FateTypeInt, FateTypeBool} = require('../src/FateTypes')
+import test from './test.js'
+import Serializer from '../src/Serializer.js'
+import FateInt from '../src/types/FateInt.js'
+import FateBool from '../src/types/FateBool.js'
+import FateString from '../src/types/FateString.js'
+import FateByteArray from '../src/types/FateByteArray.js'
+import FateBits from '../src/types/FateBits.js'
+import FateList from '../src/types/FateList.js'
+import FateMap from '../src/types/FateMap.js'
+import FateTuple from '../src/types/FateTuple.js'
+import FateVariant from '../src/types/FateVariant.js'
+import FateBytes from '../src/types/FateBytes.js'
+import FateData from '../src/types/FateData.js'
+import FateAccountAddress from '../src/types/FateAccountAddress.js'
+import FateContractAddress from '../src/types/FateContractAddress.js'
+import FateOracleAddress from '../src/types/FateOracleAddress.js'
+import FateOracleQueryAddress from '../src/types/FateOracleQueryAddress.js'
+import FateChannelAddress from '../src/types/FateChannelAddress.js'
+import {FateTypeInt, FateTypeBool} from '../src/FateTypes.js'
 
 const serializer = new Serializer()
 

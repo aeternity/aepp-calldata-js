@@ -1,14 +1,13 @@
-const fs = require('fs')
-const path = require('path')
-const test = require('./test')
-const ContractEncoder = require('../src/ContractEncoder')
-const {
+import fs from 'fs'
+import test from './test.js'
+import ContractEncoder from '../src/ContractEncoder.js'
+import {
     FateTypeInt,
     FateTypeTuple,
-} = require('../src/FateTypes')
+} from '../src/FateTypes.js'
 
 const encoder = new ContractEncoder()
-const testContract = fs.readFileSync(path.resolve(__dirname, '../build/contracts/Test.aeb'))
+const testContract = fs.readFileSync('./build/contracts/Test.aeb')
 
 test('Decode basic contract', t => {
     t.plan(9)

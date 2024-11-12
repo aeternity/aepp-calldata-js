@@ -1,9 +1,9 @@
-const ContractByteArrayEncoder = require('./ContractByteArrayEncoder')
-const BytecodeTypeResolver = require('./BytecodeTypeResolver')
-const ApiEncoder = require('./ApiEncoder')
-const EventEncoder = require('./EventEncoder')
-const {FateTypeCalldata, FateTypeString} = require('./FateTypes')
-const EncoderError = require('./Errors/EncoderError')
+import ContractByteArrayEncoder from './ContractByteArrayEncoder.js'
+import BytecodeTypeResolver from './BytecodeTypeResolver.js'
+import ApiEncoder from './ApiEncoder.js'
+import EventEncoder from './EventEncoder.js'
+import {FateTypeCalldata, FateTypeString} from './FateTypes.js'
+import EncoderError from './Errors/EncoderError.js'
 
 class BytecodeContractCallEncoder {
     /**
@@ -119,4 +119,4 @@ class BytecodeContractCallEncoder {
     }
 }
 
-module.exports = BytecodeContractCallEncoder
+export default BytecodeContractCallEncoder

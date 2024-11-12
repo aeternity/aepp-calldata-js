@@ -1,7 +1,7 @@
-const test = require('../test')
-const TypeSerializer = require('../../src/Serializers/TypeSerializer')
-const FateTag = require('../../src/FateTag')
-const {
+import test from '../test.js'
+import TypeSerializer from '../../src/Serializers/TypeSerializer.js'
+import FateTag from '../../src/FateTag.js'
+import {
     FateTypeInt,
     FateTypeBool,
     FateTypeString,
@@ -18,7 +18,7 @@ const {
     FateTypeVariant,
     FateTypeVar,
     FateTypeAny,
-} = require('../../src/FateTypes')
+} from '../../src/FateTypes.js'
 
 const s = new TypeSerializer()
 

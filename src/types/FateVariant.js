@@ -1,5 +1,5 @@
-const FateData = require('./FateData')
-const {FateTypeVariant, FateTypeTuple, FateTypeInt} = require('../FateTypes')
+import FateData from './FateData.js'
+import {FateTypeVariant, FateTypeTuple, FateTypeInt} from '../FateTypes.js'
 
 class FateVariant extends FateData {
     constructor(arities, tag, value = [], valueTypes = [], variants = []) {
@@ -69,4 +69,4 @@ class FateVariant extends FateData {
     }
 }
 
-module.exports = FateVariant
+export default FateVariant

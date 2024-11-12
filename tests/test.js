@@ -3,5 +3,5 @@
 // see test-browser.js and package.json browser field
 
 // https://github.com/import-js/eslint-plugin-import/issues/2352
-// eslint-disable-next-line import/no-unresolved
-module.exports = require('ava')
+// eslint-disable-next-line import/no-unresolved, no-restricted-exports
+export {default} from 'ava'

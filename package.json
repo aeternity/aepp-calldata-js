@@ -4,6 +4,7 @@
   "version": "1.8.0",
   "author": "aeternity",
   "license": "ISC",
+  "type": "module",
   "homepage": "https://github.com/aeternity/aepp-calldata-js#readme",
   "bugs": {
     "url": "https://github.com/aeternity/aepp-calldata-js/issues"

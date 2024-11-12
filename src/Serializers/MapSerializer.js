@@ -1,9 +1,9 @@
-const FateTag = require('../FateTag')
-const RLPInt = require('../utils/RLPInt')
-const BaseSerializer = require('./BaseSerializer')
-const FateComparator = require('../FateComparator')
-const FateMap = require('../types/FateMap')
-const FatePrefixError = require('../Errors/FatePrefixError')
+import FateTag from '../FateTag.js'
+import * as RLPInt from '../utils/RLPInt.js'
+import BaseSerializer from './BaseSerializer.js'
+import FateComparator from '../FateComparator.js'
+import FateMap from '../types/FateMap.js'
+import FatePrefixError from '../Errors/FatePrefixError.js'
 
 class MapSerializer extends BaseSerializer {
     serialize(map) {
@@ -76,4 +76,4 @@ class MapSerializer extends BaseSerializer {
     }
 }
 
-module.exports = MapSerializer
+export default MapSerializer

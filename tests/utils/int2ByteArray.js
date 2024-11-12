@@ -1,5 +1,5 @@
-const test = require('../test')
-const {int2ByteArray, byteArray2Int} = require('../../src/utils/int2ByteArray')
+import test from '../test.js'
+import {int2ByteArray, byteArray2Int} from '../../src/utils/int2ByteArray.js'
 
 const b = (value) => new Uint8Array(value)
 

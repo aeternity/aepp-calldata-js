@@ -7,4 +7,4 @@ class FatePrefixError extends Error {
     }
 }
 
-module.exports = FatePrefixError
+export default FatePrefixError

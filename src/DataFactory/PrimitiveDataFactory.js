@@ -1,16 +1,16 @@
-const FateInt = require('../types/FateInt')
-const FateBool = require('../types/FateBool')
-const FateString = require('../types/FateString')
-const FateHash = require('../types/FateHash')
-const FateSignature = require('../types/FateSignature')
-const FateBytes = require('../types/FateBytes')
-const FateBits = require('../types/FateBits')
-const FateAccountAddress = require('../types/FateAccountAddress')
-const FateContractAddress = require('../types/FateContractAddress')
-const FateChannelAddress = require('../types/FateChannelAddress')
-const FateOracleAddress = require('../types/FateOracleAddress')
-const FateOracleQueryAddress = require('../types/FateOracleQueryAddress')
-const BaseDataFactory = require('./BaseDataFactory')
+import FateInt from '../types/FateInt.js'
+import FateBool from '../types/FateBool.js'
+import FateString from '../types/FateString.js'
+import FateHash from '../types/FateHash.js'
+import FateSignature from '../types/FateSignature.js'
+import FateBytes from '../types/FateBytes.js'
+import FateBits from '../types/FateBits.js'
+import FateAccountAddress from '../types/FateAccountAddress.js'
+import FateContractAddress from '../types/FateContractAddress.js'
+import FateChannelAddress from '../types/FateChannelAddress.js'
+import FateOracleAddress from '../types/FateOracleAddress.js'
+import FateOracleQueryAddress from '../types/FateOracleQueryAddress.js'
+import BaseDataFactory from './BaseDataFactory.js'
 
 const TYPES = [
     'int',
@@ -64,4 +64,4 @@ class PrimitiveDataFactory extends BaseDataFactory {
     }
 }
 
-module.exports = PrimitiveDataFactory
+export default PrimitiveDataFactory

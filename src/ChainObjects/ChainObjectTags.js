@@ -61,4 +61,4 @@ const ChainObjectTags = Object.freeze({
     POF: 200,
 })
 
-module.exports = ChainObjectTags
+export default ChainObjectTags

@@ -1,5 +1,5 @@
-const FateData = require('./FateData')
-const {FateTypeByteArray} = require('../FateTypes')
+import FateData from './FateData.js'
+import {FateTypeByteArray} from '../FateTypes.js'
 
 class FateByteArray extends FateData {
     constructor(value = []) {
@@ -21,4 +21,4 @@ class FateByteArray extends FateData {
     }
 }
 
-module.exports = FateByteArray
+export default FateByteArray

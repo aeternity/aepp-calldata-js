@@ -1,4 +1,4 @@
-const InternalEncoder = require('../BytecodeContractCallEncoder')
+import InternalEncoder from '../BytecodeContractCallEncoder.js'
 
 class BytecodeContractCallEncoder {
     /**
@@ -70,4 +70,4 @@ class BytecodeContractCallEncoder {
     }
 }
 
-module.exports = BytecodeContractCallEncoder
+export default BytecodeContractCallEncoder

@@ -1,7 +1,7 @@
-const FateTag = require('../FateTag')
-const FateBool = require('../types/FateBool')
-const BaseSerializer = require('./BaseSerializer')
-const FatePrefixError = require('../Errors/FatePrefixError')
+import FateTag from '../FateTag.js'
+import FateBool from '../types/FateBool.js'
+import BaseSerializer from './BaseSerializer.js'
+import FatePrefixError from '../Errors/FatePrefixError.js'
 
 class BoolSerializer extends BaseSerializer {
     serialize(data) {
@@ -25,4 +25,4 @@ class BoolSerializer extends BaseSerializer {
     }
 }
 
-module.exports = BoolSerializer
+export default BoolSerializer

@@ -1,5 +1,5 @@
-const FateMap = require('../types/FateMap')
-const BaseDataFactory = require('./BaseDataFactory')
+import FateMap from '../types/FateMap.js'
+import BaseDataFactory from './BaseDataFactory.js'
 
 class MapDataFactory extends BaseDataFactory {
     supports({ name, _valueTypes }) {
@@ -19,4 +19,4 @@ class MapDataFactory extends BaseDataFactory {
     }
 }
 
-module.exports = MapDataFactory
+export default MapDataFactory

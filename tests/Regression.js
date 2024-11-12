@@ -1,9 +1,8 @@
-const fs = require('fs')
-const path = require('path')
-const test = require('./test')
-const BytecodeContractCallEncoder = require('../src/BytecodeContractCallEncoder')
+import fs from 'fs'
+import test from './test.js'
+import BytecodeContractCallEncoder from '../src/BytecodeContractCallEncoder.js'
 
-const bytecode = fs.readFileSync(path.resolve(__dirname, './data/dex.aeb'))
+const bytecode = fs.readFileSync('./tests/data/dex.aeb')
 const encoder = new BytecodeContractCallEncoder(bytecode.toString())
 
 // Regression test: https://github.com/aeternity/aepp-calldata-js/issues/220

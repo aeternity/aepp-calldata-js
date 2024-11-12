@@ -1,9 +1,9 @@
-const FateTag = require('../FateTag')
-const BaseSerializer = require('./BaseSerializer')
-const IntSerializer = require('./IntSerializer')
-const FatePrefixError = require('../Errors/FatePrefixError')
-const FateTypeError = require('../Errors/FateTypeError')
-const {
+import FateTag from '../FateTag.js'
+import BaseSerializer from './BaseSerializer.js'
+import IntSerializer from './IntSerializer.js'
+import FatePrefixError from '../Errors/FatePrefixError.js'
+import FateTypeError from '../Errors/FateTypeError.js'
+import {
     FateTypeInt,
     FateTypeBool,
     FateTypeString,
@@ -20,7 +20,7 @@ const {
     FateTypeVariant,
     FateTypeVar,
     FateTypeAny,
-} = require('../FateTypes')
+} from '../FateTypes.js'
 
 const BASIC_TYPES = {
     [FateTag.TYPE_INTEGER]: FateTypeInt(),
@@ -176,4 +176,4 @@ class TypeSerializer extends BaseSerializer {
     }
 }
 
-module.exports = TypeSerializer
+export default TypeSerializer

@@ -6,4 +6,4 @@ class FateTypeError extends Error {
     }
 }
 
-module.exports = FateTypeError
+export default FateTypeError

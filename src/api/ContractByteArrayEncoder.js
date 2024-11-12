@@ -1,4 +1,4 @@
-const InternalEncoder = require('../ContractByteArrayEncoder')
+import InternalEncoder from '../ContractByteArrayEncoder.js'
 
 class ContractByteArrayEncoder {
     constructor() {
@@ -67,4 +67,4 @@ class ContractByteArrayEncoder {
     }
 }
 
-module.exports = ContractByteArrayEncoder
+export default ContractByteArrayEncoder

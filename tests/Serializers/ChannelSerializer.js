@@ -1,6 +1,6 @@
-const test = require('../test')
-const ChannelSerializer = require('../../src/Serializers/ChannelSerializer')
-const FateChannelAddress = require('../../src/types/FateChannelAddress')
+import test from '../test.js'
+import ChannelSerializer from '../../src/Serializers/ChannelSerializer.js'
+import FateChannelAddress from '../../src/types/FateChannelAddress.js'
 
 const s = new ChannelSerializer()
 

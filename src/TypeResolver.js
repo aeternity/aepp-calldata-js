@@ -1,5 +1,5 @@
-const TypeResolveError = require('./Errors/TypeResolveError')
-const {
+import TypeResolveError from './Errors/TypeResolveError.js'
+import {
     FateTypeVoid,
     FateTypeInt,
     FateTypeBool,
@@ -29,7 +29,7 @@ const {
     FateTypeAENSv2Name,
     FateTypeBls12381Fr,
     FateTypeBls12381Fp
-} = require('./FateTypes')
+} from './FateTypes.js'
 
 const isObject = (value) => {
     return value && typeof value === 'object' && value.constructor === Object
@@ -224,4 +224,4 @@ class TypeResolver {
     }
 }
 
-module.exports = TypeResolver
+export default TypeResolver

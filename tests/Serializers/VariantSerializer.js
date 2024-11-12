@@ -1,9 +1,9 @@
-const test = require('../test')
-const {FateTypeInt} = require('../../src/FateTypes')
-const FateInt = require('../../src/types/FateInt')
-const FateVariant = require('../../src/types/FateVariant')
-const Serializer = require('../../src/Serializer')
-const VariantSerializer = require('../../src/Serializers/VariantSerializer')
+import test from '../test.js'
+import {FateTypeInt} from '../../src/FateTypes.js'
+import FateInt from '../../src/types/FateInt.js'
+import FateVariant from '../../src/types/FateVariant.js'
+import Serializer from '../../src/Serializer.js'
+import VariantSerializer from '../../src/Serializers/VariantSerializer.js'
 
 const s = new VariantSerializer(new Serializer())
 

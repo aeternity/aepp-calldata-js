@@ -1,5 +1,5 @@
-const FateBls12381Field = require('./FateBls12381Field')
-const {FateTypeBls12381Fp} = require('../FateTypes')
+import FateBls12381Field from './FateBls12381Field.js'
+import {FateTypeBls12381Fp} from '../FateTypes.js'
 
 const SIZE = 48
 const NAME = 'bls12_381.fp'
@@ -18,4 +18,4 @@ class FateBls12381Fp extends FateBls12381Field {
     }
 }
 
-module.exports = FateBls12381Fp
+export default FateBls12381Fp

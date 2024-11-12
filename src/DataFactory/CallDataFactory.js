@@ -1,7 +1,7 @@
-const {symbolIdentifier} = require('../utils/hash')
-const FateTypeError = require('../Errors/FateTypeError')
-const FateCalldata = require('../types/FateCalldata')
-const BaseDataFactory = require('./BaseDataFactory')
+import {symbolIdentifier} from '../utils/hash.js'
+import FateTypeError from '../Errors/FateTypeError.js'
+import FateCalldata from '../types/FateCalldata.js'
+import BaseDataFactory from './BaseDataFactory.js'
 
 class CallDataFactory extends BaseDataFactory {
     supports({ name, _valueTypes }) {
@@ -23,4 +23,4 @@ class CallDataFactory extends BaseDataFactory {
     }
 }
 
-module.exports = CallDataFactory
+export default CallDataFactory

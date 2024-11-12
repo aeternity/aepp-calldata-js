@@ -1,4 +1,4 @@
-module.exports = Object.freeze({
+export default Object.freeze({
     0x00: {mnemonic: 'RETURN', args: 0, end: true},
     0x01: {mnemonic: 'RETURNR', args: 1, end: true},
     0x02: {mnemonic: 'CALL', args: 1, end: true},

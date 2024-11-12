@@ -1,5 +1,5 @@
-const FateData = require('./FateData')
-const {FateTypeTuple} = require('../FateTypes')
+import FateData from './FateData.js'
+import {FateTypeTuple} from '../FateTypes.js'
 
 const zipObject = (keys, values) => {
     const reducer = (acc, k, i) => {
@@ -54,4 +54,4 @@ class FateTuple extends FateData {
     }
 }
 
-module.exports = FateTuple
+export default FateTuple

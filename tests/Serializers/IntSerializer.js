@@ -1,6 +1,6 @@
-const test = require('../test')
-const IntSerializer = require('../../src/Serializers/IntSerializer')
-const FateInt = require('../../src/types/FateInt')
+import test from '../test.js'
+import IntSerializer from '../../src/Serializers/IntSerializer.js'
+import FateInt from '../../src/types/FateInt.js'
 
 const s = new IntSerializer()
 

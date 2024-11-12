@@ -1,6 +1,6 @@
-const test = require('../test')
-const AddressSerializer = require('../../src/Serializers/AddressSerializer')
-const FateAccountAddress = require('../../src/types/FateAccountAddress')
+import test from '../test.js'
+import AddressSerializer from '../../src/Serializers/AddressSerializer.js'
+import FateAccountAddress from '../../src/types/FateAccountAddress.js'
 
 const s = new AddressSerializer()
 

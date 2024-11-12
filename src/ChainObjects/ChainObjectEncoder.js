@@ -1,5 +1,5 @@
-const ChainObject = require('./ChainObject')
-const Templates = require('./ChainObjectTemplates')
+import ChainObject from './ChainObject.js'
+import Templates from './ChainObjectTemplates.js'
 
 class ChainObjectEncoder {
     /**
@@ -38,4 +38,4 @@ class ChainObjectEncoder {
     }
 }
 
-module.exports = ChainObjectEncoder
+export default ChainObjectEncoder

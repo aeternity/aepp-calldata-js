@@ -1,7 +1,7 @@
-const FateTag = require('../FateTag')
-const FateTuple = require('../types/FateTuple')
-const BaseSerializer = require('./BaseSerializer')
-const RLPInt = require('../utils/RLPInt')
+import FateTag from '../FateTag.js'
+import FateTuple from '../types/FateTuple.js'
+import BaseSerializer from './BaseSerializer.js'
+import * as RLPInt from '../utils/RLPInt.js'
 
 class TupleSerializer extends BaseSerializer {
     serialize(tuple) {
@@ -73,4 +73,4 @@ class TupleSerializer extends BaseSerializer {
     }
 }
 
-module.exports = TupleSerializer
+export default TupleSerializer

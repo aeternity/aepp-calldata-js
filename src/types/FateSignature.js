@@ -1,4 +1,4 @@
-const FateBytes = require('./FateBytes')
+import FateBytes from './FateBytes.js'
 
 class FateSignature extends FateBytes {
     constructor(value) {
@@ -6,4 +6,4 @@ class FateSignature extends FateBytes {
     }
 }
 
-module.exports = FateSignature
+export default FateSignature

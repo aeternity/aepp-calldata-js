@@ -1,4 +1,4 @@
-const InternalError = require('../Errors/InternalError')
+import InternalError from '../Errors/InternalError.js'
 
 const assert = (condition, message) => {
     if (!condition) {
@@ -6,4 +6,4 @@ const assert = (condition, message) => {
     }
 }
 
-module.exports = assert
+export default assert

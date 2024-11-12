@@ -1,13 +1,13 @@
-const RLP = require('rlp')
-const BaseSerializer = require('./BaseSerializer')
-const TypeSerializer = require('./TypeSerializer')
-const {byteArray2Hex, byteArray2Int} = require('../utils/int2ByteArray')
-const OPCODES = require('../FateOpcodes')
-const {
+import RLP from 'rlp'
+import BaseSerializer from './BaseSerializer.js'
+import TypeSerializer from './TypeSerializer.js'
+import {byteArray2Hex, byteArray2Int} from '../utils/int2ByteArray.js'
+import OPCODES from '../FateOpcodes.js'
+import {
     FateTypeByteArray,
     FateTypeString,
     FateTypeMap,
-} = require('../FateTypes')
+} from '../FateTypes.js'
 
 const MODIFIERS = {
     0b11: 'immediate',
@@ -208,4 +208,4 @@ class BytecodeSerializer extends BaseSerializer {
     }
 }
 
-module.exports = BytecodeSerializer
+export default BytecodeSerializer

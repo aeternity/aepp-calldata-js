@@ -1,4 +1,4 @@
-const PrimitivesEncoder = require('../PrimitivesEncoder')
+import PrimitivesEncoder from '../PrimitivesEncoder.js'
 
 const TYPE2SIZE = {
     uint_32: 4,
@@ -143,4 +143,4 @@ class FieldsEncoder {
     }
 }
 
-module.exports = FieldsEncoder
+export default FieldsEncoder

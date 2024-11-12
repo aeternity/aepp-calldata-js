@@ -1,6 +1,6 @@
-const TypeResolver = require('./TypeResolver')
-const TypeResolveError = require('./Errors/TypeResolveError')
-const {FateTypeEvent} = require('./FateTypes')
+import TypeResolver from './TypeResolver.js'
+import TypeResolveError from './Errors/TypeResolveError.js'
+import {FateTypeEvent} from './FateTypes.js'
 
 const isObject = (value) => {
     return value && typeof value === 'object' && value.constructor === Object
@@ -142,4 +142,4 @@ class AciTypeResolver extends TypeResolver {
     }
 }
 
-module.exports = AciTypeResolver
+export default AciTypeResolver

@@ -1,8 +1,8 @@
-const test = require('./test')
-const ChainObject = require('../src/ChainObjects/ChainObject')
-const ChainObjectEncoder = require('../src/ChainObjects/ChainObjectEncoder')
-const FieldEncoder = require('../src/ChainObjects/FieldEncoder')
-const FieldsEncoder = require('../src/ChainObjects/FieldsEncoder')
+import test from './test.js'
+import ChainObject from '../src/ChainObjects/ChainObject.js'
+import ChainObjectEncoder from '../src/ChainObjects/ChainObjectEncoder.js'
+import FieldEncoder from '../src/ChainObjects/FieldEncoder.js'
+import FieldsEncoder from '../src/ChainObjects/FieldsEncoder.js'
 
 const encoder = new ChainObjectEncoder(new FieldsEncoder(new FieldEncoder()))
 

@@ -262,7 +262,7 @@ const FateTypeAny = () => {
     return {name: 'any'}
 }
 
-module.exports = {
+export {
     FateTypeVoid,
     FateTypeInt,
     FateTypeBool,

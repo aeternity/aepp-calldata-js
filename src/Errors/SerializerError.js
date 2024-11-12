@@ -5,4 +5,4 @@ class SerializerError extends Error {
     }
 }
 
-module.exports = SerializerError
+export default SerializerError

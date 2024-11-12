@@ -1,8 +1,8 @@
-const FateTuple = require('../types/FateTuple')
-const FateCalldata = require('../types/FateCalldata')
-const FateByteArray = require('../types/FateByteArray')
-const BaseSerializer = require('./BaseSerializer')
-const {FateTypeTuple, FateTypeByteArray} = require('../FateTypes')
+import FateTuple from '../types/FateTuple.js'
+import FateCalldata from '../types/FateCalldata.js'
+import FateByteArray from '../types/FateByteArray.js'
+import BaseSerializer from './BaseSerializer.js'
+import {FateTypeTuple, FateTypeByteArray} from '../FateTypes.js'
 
 class CalldataSerializer extends BaseSerializer {
     serialize(calldata) {
@@ -30,4 +30,4 @@ class CalldataSerializer extends BaseSerializer {
     }
 }
 
-module.exports = CalldataSerializer
+export default CalldataSerializer

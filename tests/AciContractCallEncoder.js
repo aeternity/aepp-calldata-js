@@ -1,6 +1,6 @@
-const test = require('./test')
-const AciContractCallEncoder = require('../src/AciContractCallEncoder')
-const aci = require('../build/contracts/Test.json')
+import test from './test.js'
+import AciContractCallEncoder from '../src/AciContractCallEncoder.js'
+import aci from '../build/contracts/Test.json' with { type: 'json' }
 
 const CONTRACT = 'Test'
 const encoder = new AciContractCallEncoder(aci)

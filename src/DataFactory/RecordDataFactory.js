@@ -1,7 +1,7 @@
-const BaseDataFactory = require('./BaseDataFactory')
-const FateTuple = require('../types/FateTuple')
-const {FateTypeRecord} = require('../FateTypes')
-const FateTypeError = require('../Errors/FateTypeError')
+import BaseDataFactory from './BaseDataFactory.js'
+import FateTuple from '../types/FateTuple.js'
+import {FateTypeRecord} from '../FateTypes.js'
+import FateTypeError from '../Errors/FateTypeError.js'
 
 class RecordDataFactory extends BaseDataFactory {
     supports({ name, _valueTypes }) {
@@ -43,4 +43,4 @@ class RecordDataFactory extends BaseDataFactory {
     }
 }
 
-module.exports = RecordDataFactory
+export default RecordDataFactory

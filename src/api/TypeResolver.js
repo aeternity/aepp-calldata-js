@@ -1,4 +1,4 @@
-const InternalResolver = require('../TypeResolver')
+import InternalResolver from '../TypeResolver.js'
 
 class TypeResolver {
     constructor() {
@@ -27,4 +27,4 @@ class TypeResolver {
     }
 }
 
-module.exports = TypeResolver
+export default TypeResolver
