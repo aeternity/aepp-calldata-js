@@ -83,7 +83,7 @@ test('Decode full featured contract', t => {
     t.plan(6)
     t.is(contract.tag, 70n)
     t.is(contract.vsn, 3n)
-    t.is(contract.compilerVersion, '8.0.0-rc1')
+    t.is(contract.compilerVersion, '8.0.0')
     t.is(contract.payable, false)
     t.is(Object.keys(contract.bytecode.symbols).length, contract.bytecode.functions.length)
     t.deepEqual(contract.bytecode.annotations, new Map())
