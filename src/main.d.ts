@@ -26,7 +26,10 @@ export class AciContractCallEncoder {
 
   encodeCall(contract: string, funName: string, args: any[]): `cb_${string}`;
 
-  decodeCall(contract: string, funName: string, data: `cb_${string}`): any;
+  decodeCall(contract: string, funName: string, data: `cb_${string}`): {
+    functionId: string;
+    args: any[];
+  };
 
   decodeResult(
     contract: string,

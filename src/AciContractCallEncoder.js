@@ -72,7 +72,7 @@ class AciContractCallEncoder {
      * const data = encoder.decodeCall('Test', 'test_string', 'cb_KxHwzCuVGyl3aG9vbHltb2x5zwMSnw==')
      * console.log(`Decoded data: ${data}`)
      * // Outputs:
-     * // Decoded data: ["whoolymoly"]
+     * // Decoded data: { functionId: "f0cc2b95", args: ["whoolymoly"] }
      *
      * @param {string} contract - The contract name as defined in the ACI.
      * @param {string} funName - The function name as defined in the ACI.
@@ -80,7 +80,7 @@ class AciContractCallEncoder {
      * @returns {string} Decoded data
     */
     decodeCall(contract, funName, data) {
-        const {types, _required} = this._typeResolver.getCallTypes(contract, funName)
+        const {types} = this._typeResolver.getCallTypes(contract, funName)
         const calldataType = FateTypeCalldata(funName, types)
 
         return this._byteArrayEncoder.decodeWithType(data, calldataType)
