@@ -51,6 +51,26 @@ class AciContractCallEncoder {
     }
 
     /**
+     * * Decodes function details by contract calldata
+     *
+     * @example
+     * const data = encoder.decodeFunction('cb_KxHwzCuVGyl3aG9vbHltb2x5zwMSnw==')
+     * console.log(`Decoded data: ${data}`)
+     * // Outputs:
+     * // Decoded data: {
+     * //   contractName: "Test",
+     * //   functionName: "test_string",
+     * //   functionId: "f0cc2b95",
+     * // }
+     *
+     * @param {string} data - Encoded calldata in canonical format.
+     * @returns {object} Decoded function details
+    */
+    decodeFunction(data) {
+        return this._internalEncoder.decodeFunction(data)
+    }
+
+    /**
      * Decodes successful (resultType = ok) contract call return data
      *
      * @example

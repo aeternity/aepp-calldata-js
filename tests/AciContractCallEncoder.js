@@ -82,6 +82,22 @@ test('Decode calldata', t => {
     )
 })
 
+test('Decode calldata without function name', t => {
+    t.plan(1)
+    const decoded = encoder.decodeFunction(
+        'cb_KxGu5Sw8G6+CAAQBSzsrAgQGCK+EAAABAAIbFCg7KwIEBgj8xaf6',
+    )
+
+    t.deepEqual(
+        decoded,
+        {
+            contractName: CONTRACT,
+            functionName: 'test_template_maze',
+            functionId: 'aee52c3c',
+        }
+    )
+})
+
 test('Decode implicit init (void) result', t => {
     t.plan(1)
     t.is(
