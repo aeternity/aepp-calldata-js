@@ -1,7 +1,7 @@
 {
   "name": "@aeternity/aepp-calldata",
   "description": "Aeternity data serialization library",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "author": "aeternity",
   "license": "ISC",
   "type": "module",
