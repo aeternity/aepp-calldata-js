@@ -1,5 +1,5 @@
-const FateData = require('./FateData')
-const {FateTypeSet} = require('../FateTypes')
+import FateData from './FateData.js'
+import {FateTypeSet} from '../FateTypes.js'
 
 class FateSet extends FateData {
     constructor(itemsType, items = []) {
@@ -34,4 +34,4 @@ class FateSet extends FateData {
     }
 }
 
-module.exports = FateSet
+export default FateSet

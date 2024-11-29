@@ -1,6 +1,6 @@
-const ApiEncoder = require('./ApiEncoder')
-const CompositeDataFactory = require('./DataFactory/CompositeDataFactory')
-const CanonicalMapper = require('./Mapper/CanonicalMapper')
+import ApiEncoder from './ApiEncoder.js'
+import CompositeDataFactory from './DataFactory/CompositeDataFactory.js'
+import CanonicalMapper from './Mapper/CanonicalMapper.js'
 
 class EventEncoder {
     constructor() {
@@ -17,4 +17,4 @@ class EventEncoder {
     }
 }
 
-module.exports = EventEncoder
+export default EventEncoder

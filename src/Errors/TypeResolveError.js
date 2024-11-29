@@ -5,4 +5,4 @@ class TypeResolveError extends Error {
     }
 }
 
-module.exports = TypeResolveError
+export default TypeResolveError

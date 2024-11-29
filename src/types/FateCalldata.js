@@ -1,4 +1,4 @@
-const FateData = require('./FateData')
+import FateData from './FateData.js'
 
 class FateCalldata extends FateData {
     constructor(functionId, argTypes, argsData) {
@@ -33,4 +33,4 @@ class FateCalldata extends FateData {
     }
 }
 
-module.exports = FateCalldata
+export default FateCalldata

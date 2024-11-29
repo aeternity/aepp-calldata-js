@@ -1,6 +1,6 @@
-const Benchmark = require('benchmark')
-const Encoder = require('../../src/Encoder')
-const aci = require('../../build/contracts/Test.json')
+import Benchmark from 'benchmark'
+import Encoder from '../../src/Encoder.js'
+import aci from '../../build/contracts/Test.json' with { type: 'json' }
 
 const CONTRACT = 'Test'
 const encoder = new Encoder(aci)

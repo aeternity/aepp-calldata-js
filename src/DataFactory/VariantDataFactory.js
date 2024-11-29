@@ -1,6 +1,6 @@
-const FateVariant = require('../types/FateVariant')
-const FateTypeError = require('../Errors/FateTypeError')
-const BaseDataFactory = require('./BaseDataFactory')
+import FateVariant from '../types/FateVariant.js'
+import FateTypeError from '../Errors/FateTypeError.js'
+import BaseDataFactory from './BaseDataFactory.js'
 
 const TYPES = [
     'variant',
@@ -65,4 +65,4 @@ class VariantDataFactory extends BaseDataFactory {
     }
 }
 
-module.exports = VariantDataFactory
+export default VariantDataFactory

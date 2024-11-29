@@ -1,5 +1,5 @@
-const FateData = require('./FateData')
-const {FateTypeBool} = require('../FateTypes')
+import FateData from './FateData.js'
+import {FateTypeBool} from '../FateTypes.js'
 
 class FateBool extends FateData {
     constructor(value) {
@@ -21,4 +21,4 @@ class FateBool extends FateData {
     }
 }
 
-module.exports = FateBool
+export default FateBool

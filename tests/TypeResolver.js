@@ -1,7 +1,6 @@
-const test = require('./test')
-const TypeResolver = require('../src/TypeResolver')
-
-const {
+import test from './test.js'
+import TypeResolver from '../src/TypeResolver.js'
+import {
     FateTypeVoid,
     FateTypeInt,
     FateTypeBool,
@@ -31,7 +30,7 @@ const {
     FateTypeSet,
     FateTypeBls12381Fr,
     FateTypeBls12381Fp,
-} = require('../src/FateTypes')
+} from '../src/FateTypes.js'
 
 const resolver = new TypeResolver()
 

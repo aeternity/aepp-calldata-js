@@ -1,10 +1,10 @@
-const ContractByteArrayEncoder = require('./ContractByteArrayEncoder')
-const AciTypeResolver = require('./AciTypeResolver')
-const ApiEncoder = require('./ApiEncoder')
-const EventEncoder = require('./EventEncoder')
-const CanonicalMapper = require('./Mapper/CanonicalMapper')
-const {FateTypeCalldata, FateTypeString} = require('./FateTypes')
-const EncoderError = require('./Errors/EncoderError')
+import ContractByteArrayEncoder from './ContractByteArrayEncoder.js'
+import AciTypeResolver from './AciTypeResolver.js'
+import ApiEncoder from './ApiEncoder.js'
+import EventEncoder from './EventEncoder.js'
+import CanonicalMapper from './Mapper/CanonicalMapper.js'
+import {FateTypeCalldata, FateTypeString} from './FateTypes.js'
+import EncoderError from './Errors/EncoderError.js'
 
 /**
  * @deprecated Use AciContractCallEncoder
@@ -174,4 +174,4 @@ class Encoder {
     }
 }
 
-module.exports = Encoder
+export default Encoder

@@ -1,6 +1,6 @@
-const ApiEncoder = require('../ApiEncoder')
-const {int2MontBytes} = require('../utils/bls12381')
-const FateTypeError = require('../Errors/FateTypeError')
+import ApiEncoder from '../ApiEncoder.js'
+import {int2MontBytes} from '../utils/bls12381.js'
+import FateTypeError from '../Errors/FateTypeError.js'
 
 /**
  * Map Aesophia canonical structures and formats to internal representation FATE data structures.
@@ -113,4 +113,4 @@ class InternalMapper {
     }
 }
 
-module.exports = InternalMapper
+export default InternalMapper

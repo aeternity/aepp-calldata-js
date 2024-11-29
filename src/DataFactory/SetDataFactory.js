@@ -1,5 +1,5 @@
-const FateSet = require('../types/FateSet')
-const BaseDataFactory = require('./BaseDataFactory')
+import FateSet from '../types/FateSet.js'
+import BaseDataFactory from './BaseDataFactory.js'
 
 class SetDataFactory extends BaseDataFactory {
     supports({name, _valueTypes}) {
@@ -16,4 +16,4 @@ class SetDataFactory extends BaseDataFactory {
     }
 }
 
-module.exports = SetDataFactory
+export default SetDataFactory

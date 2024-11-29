@@ -1,10 +1,10 @@
-const test = require('../test')
-const Serializer = require('../../src/Serializer')
-const MapSerializer = require('../../src/Serializers/MapSerializer')
-const FateInt = require('../../src/types/FateInt')
-const FateBool = require('../../src/types/FateBool')
-const FateMap = require('../../src/types/FateMap')
-const {FateTypeInt, FateTypeBool, FateTypeMap} = require('../../src/FateTypes')
+import test from '../test.js'
+import Serializer from '../../src/Serializer.js'
+import MapSerializer from '../../src/Serializers/MapSerializer.js'
+import FateInt from '../../src/types/FateInt.js'
+import FateBool from '../../src/types/FateBool.js'
+import FateMap from '../../src/types/FateMap.js'
+import {FateTypeInt, FateTypeBool, FateTypeMap} from '../../src/FateTypes.js'
 
 const s = new MapSerializer(new Serializer())
 const FTInt = FateTypeInt()

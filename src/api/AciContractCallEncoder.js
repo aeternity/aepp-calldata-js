@@ -1,4 +1,4 @@
-const InternalEncoder = require('../AciContractCallEncoder')
+import InternalEncoder from '../AciContractCallEncoder.js'
 
 class AciContractCallEncoder {
     /**
@@ -92,4 +92,4 @@ class AciContractCallEncoder {
     }
 }
 
-module.exports = AciContractCallEncoder
+export default AciContractCallEncoder

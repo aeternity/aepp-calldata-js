@@ -1,5 +1,5 @@
-const FateAddress = require('./FateAddress')
-const { FateTypeChannelAddress } = require('../FateTypes')
+import FateAddress from './FateAddress.js'
+import { FateTypeChannelAddress } from '../FateTypes.js'
 
 class FateChannelAddress extends FateAddress {
     constructor(value) {
@@ -11,4 +11,4 @@ class FateChannelAddress extends FateAddress {
     }
 }
 
-module.exports = FateChannelAddress
+export default FateChannelAddress

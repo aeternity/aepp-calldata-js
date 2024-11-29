@@ -1,4 +1,4 @@
-const InternalEncoder = require('../ApiEncoder')
+import InternalEncoder from '../ApiEncoder.js'
 
 class FateApiEncoder {
     constructor() {
@@ -39,4 +39,4 @@ class FateApiEncoder {
     }
 }
 
-module.exports = FateApiEncoder
+export default FateApiEncoder

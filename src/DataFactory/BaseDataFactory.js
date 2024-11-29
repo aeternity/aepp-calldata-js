@@ -16,4 +16,4 @@ class BaseDataFactory {
     }
 }
 
-module.exports = BaseDataFactory
+export default BaseDataFactory

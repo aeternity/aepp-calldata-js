@@ -1,7 +1,7 @@
-const Serializer = require('./Serializer')
-const ApiEncoder = require('./ApiEncoder')
-const CanonicalMapper = require('./Mapper/CanonicalMapper')
-const ExternalDataFactory = require('./ExternalDataFactory')
+import Serializer from './Serializer.js'
+import ApiEncoder from './ApiEncoder.js'
+import CanonicalMapper from './Mapper/CanonicalMapper.js'
+import ExternalDataFactory from './ExternalDataFactory.js'
 
 class ContractByteArrayEncoder {
     constructor() {
@@ -87,4 +87,4 @@ class ContractByteArrayEncoder {
     }
 }
 
-module.exports = ContractByteArrayEncoder
+export default ContractByteArrayEncoder

@@ -1,10 +1,10 @@
-const test = require('../test')
-const Serializer = require('../../src/Serializer')
-const TupleSerializer = require('../../src/Serializers/TupleSerializer')
-const FateInt = require('../../src/types/FateInt')
-const FateBool = require('../../src/types/FateBool')
-const FateTuple = require('../../src/types/FateTuple')
-const {FateTypeInt, FateTypeBool} = require('../../src/FateTypes')
+import test from '../test.js'
+import Serializer from '../../src/Serializer.js'
+import TupleSerializer from '../../src/Serializers/TupleSerializer.js'
+import FateInt from '../../src/types/FateInt.js'
+import FateBool from '../../src/types/FateBool.js'
+import FateTuple from '../../src/types/FateTuple.js'
+import {FateTypeInt, FateTypeBool} from '../../src/FateTypes.js'
 
 const s = new TupleSerializer(new Serializer())
 const FTInt = FateTypeInt()

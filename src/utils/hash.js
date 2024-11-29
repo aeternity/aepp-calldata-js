@@ -1,4 +1,4 @@
-const blake = require('blakejs/blake2b')
+import blake from 'blakejs/blake2b.js'
 
 const HASH_BYTES = 32
 
@@ -11,7 +11,7 @@ const symbolIdentifier = (funName) => {
     return hash(funName).slice(0, 4)
 }
 
-module.exports = {
+export {
     hash,
     symbolIdentifier
 }

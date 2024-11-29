@@ -1,8 +1,7 @@
-const fs = require('fs')
-const path = require('path')
-const test = require('./test')
-const aci = require('../build/contracts/Test.json')
-const {
+import fs from 'fs'
+import test from './test.js'
+import aci from '../build/contracts/Test.json' with { type: 'json' }
+import {
     Encoder,
     AciContractCallEncoder,
     BytecodeContractCallEncoder,
@@ -10,7 +9,7 @@ const {
     FateApiEncoder,
     ContractEncoder,
     TypeResolver,
-} = require('../src/main')
+} from '../src/main.js'
 
 const CONTRACT = 'Test'
 
@@ -66,7 +65,7 @@ test('AciContractCallEncoder public API', t => {
 test('BytecodeContractCallEncoder public API', t => {
     t.plan(3)
 
-    const bytecode = fs.readFileSync(path.resolve(__dirname, '../build/contracts/Test.aeb'))
+    const bytecode = fs.readFileSync('./build/contracts/Test.aeb')
     const encoder = new BytecodeContractCallEncoder(bytecode.toString())
 
     t.is(encoder.encodeCall('init', []), 'cb_KxFE1kQfP4oEp9E=')

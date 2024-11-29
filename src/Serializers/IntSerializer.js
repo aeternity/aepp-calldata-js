@@ -1,9 +1,9 @@
-const FateTag = require('../FateTag')
-const RLPInt = require('../utils/RLPInt')
-const FateInt = require('../types/FateInt')
-const BaseSerializer = require('./BaseSerializer')
-const FatePrefixError = require('../Errors/FatePrefixError')
-const abs = require('../utils/abs')
+import FateTag from '../FateTag.js'
+import * as RLPInt from '../utils/RLPInt.js'
+import FateInt from '../types/FateInt.js'
+import BaseSerializer from './BaseSerializer.js'
+import FatePrefixError from '../Errors/FatePrefixError.js'
+import abs from '../utils/abs.js'
 
 const SMALL_INT_MASK = 0b00000001
 
@@ -75,4 +75,4 @@ class IntSerializer extends BaseSerializer {
     }
 }
 
-module.exports = IntSerializer
+export default IntSerializer

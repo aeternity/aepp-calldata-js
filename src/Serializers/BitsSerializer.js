@@ -1,8 +1,8 @@
-const FateTag = require('../FateTag')
-const RLPInt = require('../utils/RLPInt')
-const FateBits = require('../types/FateBits')
-const BaseSerializer = require('./BaseSerializer')
-const abs = require('../utils/abs')
+import FateTag from '../FateTag.js'
+import * as RLPInt from '../utils/RLPInt.js'
+import FateBits from '../types/FateBits.js'
+import BaseSerializer from './BaseSerializer.js'
+import abs from '../utils/abs.js'
 
 class BitsSerializer extends BaseSerializer {
     serialize(data) {
@@ -26,4 +26,4 @@ class BitsSerializer extends BaseSerializer {
     }
 }
 
-module.exports = BitsSerializer
+export default BitsSerializer

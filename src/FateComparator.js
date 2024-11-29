@@ -1,7 +1,7 @@
-const assert = require('./utils/assert')
-const FateList = require('./types/FateList')
-const FateTuple = require('./types/FateTuple')
-const {FateTypeTuple, FateTypeInt} = require('./FateTypes')
+import assert from './utils/assert.js'
+import FateList from './types/FateList.js'
+import FateTuple from './types/FateTuple.js'
+import {FateTypeTuple, FateTypeInt} from './FateTypes.js'
 
 /* eslint-disable no-use-before-define */
 
@@ -192,4 +192,4 @@ const FateComparator = (type) => {
     return comparators[type.name]
 }
 
-module.exports = FateComparator
+export default FateComparator

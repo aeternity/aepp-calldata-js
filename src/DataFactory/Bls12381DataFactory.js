@@ -1,6 +1,6 @@
-const FateBls12381Fr = require('../types/FateBls12381Fr')
-const FateBls12381Fp = require('../types/FateBls12381Fp')
-const BaseDataFactory = require('./BaseDataFactory')
+import FateBls12381Fr from '../types/FateBls12381Fr.js'
+import FateBls12381Fp from '../types/FateBls12381Fp.js'
+import BaseDataFactory from './BaseDataFactory.js'
 
 const TYPES = [
     'bls12_381.fr',
@@ -24,4 +24,4 @@ class Bls12381DataFactory extends BaseDataFactory {
     }
 }
 
-module.exports = Bls12381DataFactory
+export default Bls12381DataFactory

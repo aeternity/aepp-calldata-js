@@ -2,7 +2,7 @@
 
 // Definition of tag scheme.
 // This has to follow the protocol specification.
-module.exports = Object.freeze({
+export default Object.freeze({
     SMALL_INT    :        0b0, // sxxxxxx 0 - 6 bit integer with sign bit
                                        // 1 Set below
     LONG_STRING  : 0b00000001, // 000000 01 | RLP encoded array - when size >= 64

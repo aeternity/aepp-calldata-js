@@ -1,15 +1,15 @@
-const assert = require('../utils/assert')
-const zip = require('../utils/zip')
-const PrimitiveDataFactory = require('./PrimitiveDataFactory')
-const ListDataFactory = require('./ListDataFactory')
-const SetDataFactory = require('./SetDataFactory')
-const MapDataFactory = require('./MapDataFactory')
-const TupleDataFactory = require('./TupleDataFactory')
-const RecordDataFactory = require('./RecordDataFactory')
-const VariantDataFactory = require('./VariantDataFactory')
-const EventDataFactory = require('./EventDataFactory')
-const Bls12381DataFactory = require('./Bls12381DataFactory')
-const CallDataFactory = require('./CallDataFactory')
+import assert from '../utils/assert.js'
+import zip from '../utils/zip.js'
+import PrimitiveDataFactory from './PrimitiveDataFactory.js'
+import ListDataFactory from './ListDataFactory.js'
+import SetDataFactory from './SetDataFactory.js'
+import MapDataFactory from './MapDataFactory.js'
+import TupleDataFactory from './TupleDataFactory.js'
+import RecordDataFactory from './RecordDataFactory.js'
+import VariantDataFactory from './VariantDataFactory.js'
+import EventDataFactory from './EventDataFactory.js'
+import Bls12381DataFactory from './Bls12381DataFactory.js'
+import CallDataFactory from './CallDataFactory.js'
 
 class CompositeDataFactory {
     constructor() {
@@ -44,4 +44,4 @@ class CompositeDataFactory {
     }
 }
 
-module.exports = CompositeDataFactory
+export default CompositeDataFactory

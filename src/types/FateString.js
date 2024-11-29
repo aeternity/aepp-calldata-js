@@ -1,6 +1,6 @@
-const FateData = require('./FateData')
-const {FateTypeString} = require('../FateTypes')
-const { byteArray2Int } = require('../utils/int2ByteArray')
+import FateData from './FateData.js'
+import {FateTypeString} from '../FateTypes.js'
+import { byteArray2Int } from '../utils/int2ByteArray.js'
 
 const toString = (data) => {
     if (data instanceof Uint8Array) {
@@ -53,4 +53,4 @@ class FateString extends FateData {
     }
 }
 
-module.exports = FateString
+export default FateString

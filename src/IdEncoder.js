@@ -45,4 +45,4 @@ class IdEncoder {
     }
 }
 
-module.exports = IdEncoder
+export default IdEncoder

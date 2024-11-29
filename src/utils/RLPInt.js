@@ -1,12 +1,11 @@
-const RLP = require('rlp')
-const {int2ByteArray, byteArray2Int } = require('./int2ByteArray')
+import RLP from 'rlp'
+import {int2ByteArray, byteArray2Int} from './int2ByteArray.js'
 
-module.exports = {
-    encode(value) {
-        return new Uint8Array(RLP.encode(int2ByteArray(value)))
-    },
-    decode(buffer) {
-        const decoded = RLP.decode(buffer, true)
-        return [byteArray2Int(decoded.data), decoded.remainder]
-    }
+export function encode(value) {
+    return new Uint8Array(RLP.encode(int2ByteArray(value)))
+}
+
+export function decode(buffer) {
+    const decoded = RLP.decode(buffer, true)
+    return [byteArray2Int(decoded.data), decoded.remainder]
 }

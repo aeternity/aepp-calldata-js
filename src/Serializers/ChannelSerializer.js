@@ -1,7 +1,7 @@
-const RLP = require('rlp')
-const FateTag = require('../FateTag')
-const BaseSerializer = require('./BaseSerializer')
-const FateChannelAddress = require('../types/FateChannelAddress')
+import RLP from 'rlp'
+import FateTag from '../FateTag.js'
+import BaseSerializer from './BaseSerializer.js'
+import FateChannelAddress from '../types/FateChannelAddress.js'
 
 class ChannelSerializer extends BaseSerializer {
     serialize(data) {
@@ -23,4 +23,4 @@ class ChannelSerializer extends BaseSerializer {
     }
 }
 
-module.exports = ChannelSerializer
+export default ChannelSerializer

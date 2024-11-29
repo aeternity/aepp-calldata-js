@@ -1,6 +1,6 @@
-const FateList = require('../types/FateList')
-const FateTypeError = require('../Errors/FateTypeError')
-const BaseDataFactory = require('./BaseDataFactory')
+import FateList from '../types/FateList.js'
+import FateTypeError from '../Errors/FateTypeError.js'
+import BaseDataFactory from './BaseDataFactory.js'
 
 class ListDataFactory extends BaseDataFactory {
     supports({name, _valueTypes}) {
@@ -21,4 +21,4 @@ class ListDataFactory extends BaseDataFactory {
     }
 }
 
-module.exports = ListDataFactory
+export default ListDataFactory

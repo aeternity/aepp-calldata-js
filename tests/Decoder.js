@@ -1,7 +1,7 @@
-const test = require('./test')
-const Encoder = require('../src/Encoder')
-const hexStringToByteArray = require('../src/utils/hexStringToByteArray')
-const aci = require('../build/contracts/Test.json')
+import test from './test.js'
+import Encoder from '../src/Encoder.js'
+import hexStringToByteArray from '../src/utils/hexStringToByteArray.js'
+import aci from '../build/contracts/Test.json' with { type: 'json' }
 
 const CONTRACT = 'Test'
 const encoder = new Encoder(aci)

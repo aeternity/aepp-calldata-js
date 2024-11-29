@@ -1,6 +1,6 @@
-const Sha256 = require('sha.js/sha256')
-const { Buffer } = require('safe-buffer')
-const FormatError = require('../Errors/FormatError')
+import Sha256 from 'sha.js/sha256.js'
+import { Buffer } from 'safe-buffer'
+import FormatError from '../Errors/FormatError.js'
 
 const sha256hash = (input) => {
     return new Sha256().update(input).digest()
@@ -49,7 +49,7 @@ const decode = (str) => {
     return getPayload(data)
 }
 
-module.exports = {
+export {
     addChecksum,
     getPayload,
     encode,

@@ -1,9 +1,8 @@
-const fs = require('fs')
-const path = require('path')
-const test = require('./test')
-const BytecodeContractCallEncoder = require('../src/BytecodeContractCallEncoder')
+import fs from 'fs'
+import test from './test.js'
+import BytecodeContractCallEncoder from '../src/BytecodeContractCallEncoder.js'
 
-const bytecode = fs.readFileSync(path.resolve(__dirname, '../build/contracts/Test.aeb'))
+const bytecode = fs.readFileSync('./build/contracts/Test.aeb')
 const encoder = new BytecodeContractCallEncoder(bytecode.toString())
 
 test('Encode implicit init', t => {

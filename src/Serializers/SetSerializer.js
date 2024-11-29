@@ -1,8 +1,8 @@
-const BaseSerializer = require('./BaseSerializer')
-const {FateTypeTuple, FateTypeMap} = require('../FateTypes')
-const FateMap = require('../types/FateMap')
-const FateTuple = require('../types/FateTuple')
-const FateSet = require('../types/FateSet')
+import BaseSerializer from './BaseSerializer.js'
+import {FateTypeTuple, FateTypeMap} from '../FateTypes.js'
+import FateMap from '../types/FateMap.js'
+import FateTuple from '../types/FateTuple.js'
+import FateSet from '../types/FateSet.js'
 
 // This serializer takes advantages of the singular tuple optimization directly
 // An alternative implementation would be building the full structure
@@ -31,4 +31,4 @@ class SetSerializer extends BaseSerializer {
     }
 }
 
-module.exports = SetSerializer
+export default SetSerializer

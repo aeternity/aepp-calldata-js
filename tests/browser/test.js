@@ -1,1 +1,2 @@
-module.exports = require('tape')
+// eslint-disable-next-line no-restricted-exports
+export {default} from 'tape'

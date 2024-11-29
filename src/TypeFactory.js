@@ -1,7 +1,7 @@
-const assert = require('./utils/assert')
-const FateTag = require('./FateTag')
-const FatePrefixError = require('./Errors/FatePrefixError')
-const {
+import assert from './utils/assert.js'
+import FateTag from './FateTag.js'
+import FatePrefixError from './Errors/FatePrefixError.js'
+import {
     FateTypeInt,
     FateTypeBool,
     FateTypeString,
@@ -18,7 +18,7 @@ const {
     FateTypeVariant,
     FateTypeContractBytearray,
     FateTypeType,
-} = require('./FateTypes')
+} from './FateTypes.js'
 
 const OBJECT_TYPES = {
     [FateTag.OTYPE_ADDRESS]: FateTypeAccountAddress(),
@@ -106,4 +106,4 @@ class TypeFactory {
     }
 }
 
-module.exports = TypeFactory
+export default TypeFactory

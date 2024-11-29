@@ -1,7 +1,7 @@
-const FateTag = require('../FateTag')
-const ByteArraySerializer = require('./ByteArraySerializer')
-const FateBytes = require('../types/FateBytes')
-const BaseSerializer = require('./BaseSerializer')
+import FateTag from '../FateTag.js'
+import ByteArraySerializer from './ByteArraySerializer.js'
+import FateBytes from '../types/FateBytes.js'
+import BaseSerializer from './BaseSerializer.js'
 
 const byteArraySerializer = new ByteArraySerializer()
 
@@ -25,4 +25,4 @@ class BytesSerializer extends BaseSerializer {
     }
 }
 
-module.exports = BytesSerializer
+export default BytesSerializer

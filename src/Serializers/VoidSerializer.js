@@ -1,5 +1,5 @@
-const FateVoid = require('../types/FateVoid')
-const BaseSerializer = require('./BaseSerializer')
+import FateVoid from '../types/FateVoid.js'
+import BaseSerializer from './BaseSerializer.js'
 
 class VoidSerializer extends BaseSerializer {
     serialize() {
@@ -15,4 +15,4 @@ class VoidSerializer extends BaseSerializer {
     }
 }
 
-module.exports = VoidSerializer
+export default VoidSerializer

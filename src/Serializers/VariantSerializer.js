@@ -1,9 +1,9 @@
-const RLP = require('rlp')
-const FateTag = require('../FateTag')
-const FateTuple = require('../types/FateTuple')
-const FateVariant = require('../types/FateVariant')
-const {FateTypeTuple} = require('../FateTypes')
-const BaseSerializer = require('./BaseSerializer')
+import RLP from 'rlp'
+import FateTag from '../FateTag.js'
+import FateTuple from '../types/FateTuple.js'
+import FateVariant from '../types/FateVariant.js'
+import {FateTypeTuple} from '../FateTypes.js'
+import BaseSerializer from './BaseSerializer.js'
 
 class VariantSerializer extends BaseSerializer {
     serialize(variant) {
@@ -40,4 +40,4 @@ class VariantSerializer extends BaseSerializer {
     }
 }
 
-module.exports = VariantSerializer
+export default VariantSerializer

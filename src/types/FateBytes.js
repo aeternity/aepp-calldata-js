@@ -1,8 +1,8 @@
-const FateData = require('./FateData')
-const {int2ByteArray} = require('../utils/int2ByteArray')
-const hexStringToByteArray = require('../utils/hexStringToByteArray')
-const FateTypeError = require('../Errors/FateTypeError')
-const { FateTypeBytes } = require('../FateTypes')
+import FateData from './FateData.js'
+import {int2ByteArray} from '../utils/int2ByteArray.js'
+import hexStringToByteArray from '../utils/hexStringToByteArray.js'
+import FateTypeError from '../Errors/FateTypeError.js'
+import { FateTypeBytes } from '../FateTypes.js'
 
 const toByteArray = (value, size = 0) => {
     if (Array.isArray(value) || ArrayBuffer.isView(value)) {
@@ -65,4 +65,4 @@ class FateBytes extends FateData {
     }
 }
 
-module.exports = FateBytes
+export default FateBytes

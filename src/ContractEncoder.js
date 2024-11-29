@@ -1,8 +1,8 @@
-const ApiEncoder = require('./ApiEncoder')
-const Serializer = require('./Serializer')
-const ContractBytecodeSerializer = require('./Serializers/ContractBytecodeSerializer')
-const IntSerializer = require('./Serializers/IntSerializer')
-const FateTag = require('./FateTag')
+import ApiEncoder from './ApiEncoder.js'
+import Serializer from './Serializer.js'
+import ContractBytecodeSerializer from './Serializers/ContractBytecodeSerializer.js'
+import IntSerializer from './Serializers/IntSerializer.js'
+import FateTag from './FateTag.js'
 
 class ContractEncoder {
     constructor() {
@@ -30,4 +30,4 @@ class ContractEncoder {
     }
 }
 
-module.exports = ContractEncoder
+export default ContractEncoder

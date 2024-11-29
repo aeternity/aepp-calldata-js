@@ -1,4 +1,4 @@
-const InternalError = require('../Errors/InternalError')
+import InternalError from '../Errors/InternalError.js'
 
 class FateData {
     constructor(name) {
@@ -14,4 +14,4 @@ class FateData {
     }
 }
 
-module.exports = FateData
+export default FateData

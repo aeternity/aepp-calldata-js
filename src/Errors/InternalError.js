@@ -5,4 +5,4 @@ class InternalError extends Error {
     }
 }
 
-module.exports = InternalError
+export default InternalError

@@ -1,7 +1,7 @@
-const RLPInt = require('../utils/RLPInt')
-const FateTag = require('../FateTag')
-const FateList = require('../types/FateList')
-const BaseSerializer = require('./BaseSerializer')
+import * as RLPInt from '../utils/RLPInt.js'
+import FateTag from '../FateTag.js'
+import FateList from '../types/FateList.js'
+import BaseSerializer from './BaseSerializer.js'
 
 class ListSerializer extends BaseSerializer {
     serialize(list) {
@@ -71,4 +71,4 @@ class ListSerializer extends BaseSerializer {
     }
 }
 
-module.exports = ListSerializer
+export default ListSerializer

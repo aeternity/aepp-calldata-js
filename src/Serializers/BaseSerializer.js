@@ -1,4 +1,4 @@
-const SerializerError = require('../Errors/SerializerError')
+import SerializerError from '../Errors/SerializerError.js'
 
 class BaseSerializer {
     constructor(globalSerializer) {
@@ -20,4 +20,4 @@ class BaseSerializer {
     }
 }
 
-module.exports = BaseSerializer
+export default BaseSerializer

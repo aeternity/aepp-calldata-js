@@ -35,7 +35,7 @@ const byteArray2Hex = (data) => {
     return byteArrayToHexArray(data).join('')
 }
 
-module.exports = {
+export {
     int2ByteArray,
     byteArray2Int,
     byteArray2IntBE,

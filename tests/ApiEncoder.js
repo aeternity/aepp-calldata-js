@@ -1,5 +1,5 @@
-const test = require('./test')
-const ApiEncoder = require('../src/ApiEncoder')
+import test from './test.js'
+import ApiEncoder from '../src/ApiEncoder.js'
 
 const encoder = new ApiEncoder()
 const mkPayload = (size) => new Uint8Array(Array.from({ length: size }, (x, i) => i))

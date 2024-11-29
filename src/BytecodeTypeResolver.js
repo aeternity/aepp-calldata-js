@@ -1,6 +1,6 @@
-const ContractEncoder = require('./ContractEncoder')
-const TypeResolveError = require('./Errors/TypeResolveError')
-const {
+import ContractEncoder from './ContractEncoder.js'
+import TypeResolveError from './Errors/TypeResolveError.js'
+import {
     FateTypeVoid,
     FateTypeTuple,
     FateTypeEvent,
@@ -9,7 +9,7 @@ const {
     FateTypeVariant,
     FateTypeOracleAddress,
     FateTypeOracleQueryAddress,
-} = require('./FateTypes')
+} from './FateTypes.js'
 
 class BytecodeTypeResolver {
     constructor(encodedContract) {
@@ -127,4 +127,4 @@ class BytecodeTypeResolver {
     }
 }
 
-module.exports = BytecodeTypeResolver
+export default BytecodeTypeResolver

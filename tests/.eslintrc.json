@@ -1,4 +1,14 @@
 {
+    // TODO: remove custom parser after finding a better solution in https://github.com/eslint/eslint/discussions/15305
+    "parser": "@babel/eslint-parser",
+    "parserOptions": {
+      "requireConfigFile": false,
+      "babelOptions": {
+        "plugins": [
+          "@babel/plugin-syntax-import-assertions"
+        ]
+      }
+    },
     "rules": {
         "no-underscore-dangle": "error",
         "no-bitwise": "error",

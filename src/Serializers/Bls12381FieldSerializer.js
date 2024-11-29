@@ -1,7 +1,7 @@
-const BaseSerializer = require('./BaseSerializer')
-const BytesSerializer = require('./BytesSerializer')
-const FateBls12381Fr = require('../types/FateBls12381Fr')
-const FateBls12381Fp = require('../types/FateBls12381Fp')
+import BaseSerializer from './BaseSerializer.js'
+import BytesSerializer from './BytesSerializer.js'
+import FateBls12381Fr from '../types/FateBls12381Fr.js'
+import FateBls12381Fp from '../types/FateBls12381Fp.js'
 
 const bytesSerializer = new BytesSerializer()
 
@@ -31,4 +31,4 @@ class Bls12381FieldSerializer extends BaseSerializer {
     }
 }
 
-module.exports = Bls12381FieldSerializer
+export default Bls12381FieldSerializer

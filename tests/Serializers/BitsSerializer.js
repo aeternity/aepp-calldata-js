@@ -1,6 +1,6 @@
-const test = require('../test')
-const BitsSerializer = require('../../src/Serializers/BitsSerializer')
-const FateBits = require('../../src/types/FateBits')
+import test from '../test.js'
+import BitsSerializer from '../../src/Serializers/BitsSerializer.js'
+import FateBits from '../../src/types/FateBits.js'
 
 const s = new BitsSerializer()
 

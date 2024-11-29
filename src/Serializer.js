@@ -1,28 +1,28 @@
-const TypeFactory = require('./TypeFactory')
-const FateData = require('./types/FateData')
-const BaseSerializer = require('./Serializers/BaseSerializer')
-const AddressSerializer = require('./Serializers/AddressSerializer')
-const BitsSerializer = require('./Serializers/BitsSerializer')
-const BoolSerializer = require('./Serializers/BoolSerializer')
-const ByteArraySerializer = require('./Serializers/ByteArraySerializer')
-const BytesSerializer = require('./Serializers/BytesSerializer')
-const ChannelSerializer = require('./Serializers/ChannelSerializer')
-const ContractSerializer = require('./Serializers/ContractSerializer')
-const IntSerializer = require('./Serializers/IntSerializer')
-const VoidSerializer = require('./Serializers/VoidSerializer')
-const ListSerializer = require('./Serializers/ListSerializer')
-const SetSerializer = require('./Serializers/SetSerializer')
-const MapSerializer = require('./Serializers/MapSerializer')
-const OracleQuerySerializer = require('./Serializers/OracleQuerySerializer')
-const OracleSerializer = require('./Serializers/OracleSerializer')
-const StringSerializer = require('./Serializers/StringSerializer')
-const TupleSerializer = require('./Serializers/TupleSerializer')
-const VariantSerializer = require('./Serializers/VariantSerializer')
-const Bls12381FieldSerializer = require('./Serializers/Bls12381FieldSerializer')
-const CalldataSerializer = require('./Serializers/CalldataSerializer')
-const ContractBytecodeSerializer = require('./Serializers/ContractBytecodeSerializer')
-const TypeSerializer = require('./Serializers/TypeSerializer')
-const SerializerError = require('./Errors/SerializerError')
+import TypeFactory from './TypeFactory.js'
+import FateData from './types/FateData.js'
+import BaseSerializer from './Serializers/BaseSerializer.js'
+import AddressSerializer from './Serializers/AddressSerializer.js'
+import BitsSerializer from './Serializers/BitsSerializer.js'
+import BoolSerializer from './Serializers/BoolSerializer.js'
+import ByteArraySerializer from './Serializers/ByteArraySerializer.js'
+import BytesSerializer from './Serializers/BytesSerializer.js'
+import ChannelSerializer from './Serializers/ChannelSerializer.js'
+import ContractSerializer from './Serializers/ContractSerializer.js'
+import IntSerializer from './Serializers/IntSerializer.js'
+import VoidSerializer from './Serializers/VoidSerializer.js'
+import ListSerializer from './Serializers/ListSerializer.js'
+import SetSerializer from './Serializers/SetSerializer.js'
+import MapSerializer from './Serializers/MapSerializer.js'
+import OracleQuerySerializer from './Serializers/OracleQuerySerializer.js'
+import OracleSerializer from './Serializers/OracleSerializer.js'
+import StringSerializer from './Serializers/StringSerializer.js'
+import TupleSerializer from './Serializers/TupleSerializer.js'
+import VariantSerializer from './Serializers/VariantSerializer.js'
+import Bls12381FieldSerializer from './Serializers/Bls12381FieldSerializer.js'
+import CalldataSerializer from './Serializers/CalldataSerializer.js'
+import ContractBytecodeSerializer from './Serializers/ContractBytecodeSerializer.js'
+import TypeSerializer from './Serializers/TypeSerializer.js'
+import SerializerError from './Errors/SerializerError.js'
 
 class Serializer extends BaseSerializer {
     constructor() {
@@ -115,4 +115,4 @@ class Serializer extends BaseSerializer {
     }
 }
 
-module.exports = Serializer
+export default Serializer

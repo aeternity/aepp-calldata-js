@@ -5,4 +5,4 @@ class EncoderError extends Error {
     }
 }
 
-module.exports = EncoderError
+export default EncoderError

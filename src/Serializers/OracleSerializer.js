@@ -1,7 +1,7 @@
-const RLP = require('rlp')
-const FateTag = require('../FateTag')
-const BaseSerializer = require('./BaseSerializer')
-const FateOracleAddress = require('../types/FateOracleAddress')
+import RLP from 'rlp'
+import FateTag from '../FateTag.js'
+import BaseSerializer from './BaseSerializer.js'
+import FateOracleAddress from '../types/FateOracleAddress.js'
 
 class OracleSerializer extends BaseSerializer {
     serialize(data) {
@@ -23,4 +23,4 @@ class OracleSerializer extends BaseSerializer {
     }
 }
 
-module.exports = OracleSerializer
+export default OracleSerializer

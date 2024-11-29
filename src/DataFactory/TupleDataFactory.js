@@ -1,6 +1,6 @@
-const FateTuple = require('../types/FateTuple')
-const FateTypeError = require('../Errors/FateTypeError')
-const BaseDataFactory = require('./BaseDataFactory')
+import FateTuple from '../types/FateTuple.js'
+import FateTypeError from '../Errors/FateTypeError.js'
+import BaseDataFactory from './BaseDataFactory.js'
 
 class TupleDataFactory extends BaseDataFactory {
     supports({ name, _valueTypes }) {
@@ -30,4 +30,4 @@ class TupleDataFactory extends BaseDataFactory {
     }
 }
 
-module.exports = TupleDataFactory
+export default TupleDataFactory

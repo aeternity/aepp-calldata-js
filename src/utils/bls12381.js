@@ -1,4 +1,4 @@
-const {int2ByteArray, byteArray2IntBE} = require('./int2ByteArray')
+import {int2ByteArray, byteArray2IntBE} from './int2ByteArray.js'
 
 const CURVES = {
     r: {
@@ -47,7 +47,7 @@ const montBytes2Int = (value, curveType) => {
     return (a * Rinv) % curve.N
 }
 
-module.exports = {
+export {
     int2MontBytes,
     montBytes2Int,
 }

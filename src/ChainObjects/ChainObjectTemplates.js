@@ -118,4 +118,4 @@ const ChainObjectTemplates = Object.freeze({
     }
 })
 
-module.exports = ChainObjectTemplates
+export default ChainObjectTemplates

@@ -1,5 +1,5 @@
-const FateData = require('./FateData')
-const FateTypeError = require('../Errors/FateTypeError')
+import FateData from './FateData.js'
+import FateTypeError from '../Errors/FateTypeError.js'
 
 class FateBls12381Field extends FateData {
     constructor(value, size, name) {
@@ -38,4 +38,4 @@ class FateBls12381Field extends FateData {
     }
 }
 
-module.exports = FateBls12381Field
+export default FateBls12381Field

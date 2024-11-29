@@ -1,9 +1,9 @@
-const ApiEncoder = require('../ApiEncoder')
-const ChainObjectSerializer = require('./ChainObjectSerializer')
-const ChainObjectEncoder = require('./ChainObjectEncoder')
-const PrimitivesEncoder = require('../PrimitivesEncoder')
-const IdEncoder = require('../IdEncoder')
-const FieldsEncoder = require('./FieldsEncoder')
+import ApiEncoder from '../ApiEncoder.js'
+import ChainObjectSerializer from './ChainObjectSerializer.js'
+import ChainObjectEncoder from './ChainObjectEncoder.js'
+import PrimitivesEncoder from '../PrimitivesEncoder.js'
+import IdEncoder from '../IdEncoder.js'
+import FieldsEncoder from './FieldsEncoder.js'
 
 class FieldEncoder {
     constructor(additionalEncoders, additionalDecoders) {
@@ -63,4 +63,4 @@ class FieldEncoder {
     }
 }
 
-module.exports = FieldEncoder
+export default FieldEncoder

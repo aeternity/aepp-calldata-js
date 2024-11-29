@@ -1,5 +1,5 @@
-const test = require('../test')
-const hexStringToByteArray = require('../../src/utils/hexStringToByteArray')
+import test from '../test.js'
+import hexStringToByteArray from '../../src/utils/hexStringToByteArray.js'
 
 const b = (value) => new Uint8Array(value)
 

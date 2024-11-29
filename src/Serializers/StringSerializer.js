@@ -1,8 +1,8 @@
-const FateTag = require('../FateTag')
-const BaseSerializer = require('./BaseSerializer')
-const ByteArraySerializer = require('./ByteArraySerializer')
-const FateString = require('../types/FateString')
-const FatePrefixError = require('../Errors/FatePrefixError')
+import FateTag from '../FateTag.js'
+import BaseSerializer from './BaseSerializer.js'
+import ByteArraySerializer from './ByteArraySerializer.js'
+import FateString from '../types/FateString.js'
+import FatePrefixError from '../Errors/FatePrefixError.js'
 
 const byteArraySerializer = new ByteArraySerializer()
 
@@ -38,4 +38,4 @@ class StringSerializer extends BaseSerializer {
     }
 }
 
-module.exports = StringSerializer
+export default StringSerializer

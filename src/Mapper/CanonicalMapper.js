@@ -1,6 +1,6 @@
-const ApiEncoder = require('../ApiEncoder')
-const {montBytes2Int} = require('../utils/bls12381')
-const {byteArray2Hex} = require('../utils/int2ByteArray')
+import ApiEncoder from '../ApiEncoder.js'
+import {montBytes2Int} from '../utils/bls12381.js'
+import {byteArray2Hex} from '../utils/int2ByteArray.js'
 
 /**
  * Map the internal representation FATE data structure to Aesophia canonical structures and formats.
@@ -78,4 +78,4 @@ class CanonicalMapper {
     }
 }
 
-module.exports = CanonicalMapper
+export default CanonicalMapper

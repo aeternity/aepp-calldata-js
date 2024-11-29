@@ -1,7 +1,7 @@
-const RLP = require('rlp')
-const FateTag = require('../FateTag')
-const BaseSerializer = require('./BaseSerializer')
-const FateContractAddress = require('../types/FateContractAddress')
+import RLP from 'rlp'
+import FateTag from '../FateTag.js'
+import BaseSerializer from './BaseSerializer.js'
+import FateContractAddress from '../types/FateContractAddress.js'
 
 class ContractSerializer extends BaseSerializer {
     serialize(data) {
@@ -23,4 +23,4 @@ class ContractSerializer extends BaseSerializer {
     }
 }
 
-module.exports = ContractSerializer
+export default ContractSerializer
