@@ -43,6 +43,10 @@ else
 	@echo Open "build/js/index.html" in your browser.
 endif
 
+browser-tests-headless: node_modules $(BUILDDIR)/$(JSON_ACIS) $(BUILDDIR)/$(BYTECODES)
+	npx playwright install chromium-headless-shell
+	npm run test:browser
+
 integration-tests: $(INTEGRATION_TESTS) | node_modules $(BUILDDIR)/$(JSON_ACIS)
 	@for file in $^; do bash $${file}; done
 

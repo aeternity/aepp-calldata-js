@@ -55,6 +55,7 @@
     "eslint-plugin-import": "2.29.1",
     "html-webpack-plugin": "^5.6.3",
     "nyc": "17.0.0",
+    "playwright": "^1.49.0",
     "process": "^0.11.10",
     "stream-browserify": "^3.0.0",
     "tape": "5.8.1",
@@ -65,7 +66,8 @@
     "files": [
       "tests/**/*",
       "!tests/test.js",
-      "!tests/benchmark/*"
+      "!tests/benchmark/*",
+      "!tests/browser/run.js"
     ]
   },
   "nyc": {
@@ -82,6 +84,7 @@
     "prepare": "npm run build",
     "test": "ava --verbose",
     "test:watch": "ava --verbose --watch",
+    "test:browser": "npm run browser-test-bundle && node ./tests/browser/run.js",
     "lint": "eslint src tests"
   }
 }
