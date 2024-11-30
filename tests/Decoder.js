@@ -1,3 +1,4 @@
+import { Buffer } from 'safe-buffer'
 import test from './test.js'
 import Encoder from '../src/Encoder.js'
 import hexStringToByteArray from '../src/utils/hexStringToByteArray.js'
@@ -589,6 +590,7 @@ test('Decode BLS12_381.g1', t => {
 })
 
 test('Decode generic contract byte array', t => {
+    t.plan(1)
     // just make sure the method exists
     t.is(encoder.decodeContractByteArray('cb_/8CwV/U='), true)
 })
