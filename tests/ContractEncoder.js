@@ -1,5 +1,5 @@
-import fs from 'fs'
 import test from './test.js'
+import testContract from '../build/contracts/Test.aeb.json' with { type: 'json' }
 import ContractEncoder from '../src/ContractEncoder.js'
 import {
     FateTypeInt,
@@ -7,7 +7,6 @@ import {
 } from '../src/FateTypes.js'
 
 const encoder = new ContractEncoder()
-const testContract = fs.readFileSync('./build/contracts/Test.aeb')
 
 test('Decode basic contract', t => {
     t.plan(9)
@@ -78,7 +77,7 @@ test('Decode contract with Chain.create', t => {
 })
 
 test('Decode full featured contract', t => {
-    const contract = encoder.decode(testContract.toString())
+    const contract = encoder.decode(testContract)
 
     t.plan(6)
     t.is(contract.tag, 70n)
