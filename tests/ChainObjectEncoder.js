@@ -75,6 +75,7 @@ const microBlockData = new Uint8Array([
 ])
 
 test('Encode MicroBlock Object', t => {
+    t.plan(1)
     // console.dir(encoder.encode(microBlock), {maxArrayLength: null})
     t.deepEqual(
         encoder.encode(microBlock),
@@ -83,6 +84,7 @@ test('Encode MicroBlock Object', t => {
 })
 
 test('Decode MicroBlock Object', t => {
+    t.plan(1)
     t.deepEqual(
         encoder.decode('micro_block', microBlockData),
         microBlock
@@ -131,6 +133,7 @@ const keyBlockData = new Uint8Array([
 ])
 
 test('Encode KeyBlock Object', t => {
+    t.plan(1)
     t.deepEqual(
         encoder.encode(keyBlock),
         keyBlockData
@@ -138,6 +141,7 @@ test('Encode KeyBlock Object', t => {
 })
 
 test('Decode KeyBlock Object', t => {
+    t.plan(1)
     t.deepEqual(
         encoder.decode('key_block', keyBlockData),
         keyBlock
