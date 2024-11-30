@@ -1,7 +1,7 @@
 COMPILER=./bin/aesophia_cli
 SOURCEDIR = contracts
 SOURCES=$(wildcard $(SOURCEDIR)/*.aes)
-BYTECODES=$(SOURCES:.aes=.aeb)
+BYTECODES=$(SOURCES:.aes=.aeb.json)
 JSON_ACIS=$(SOURCES:.aes=.json)
 ADDRESSES=$(SOURCES:.aes=.addr)
 BUILDDIR = build
@@ -17,7 +17,7 @@ $(BUILDDIR)/$(SOURCEDIR): | $(BUILDDIR)
 	mkdir -p $@
 
 $(BUILDDIR)/$(BYTECODES): $(SOURCES) | $(BUILDDIR)/$(SOURCEDIR)
-	$(COMPILER) $< -o $@
+	@echo \"$(shell $(COMPILER) $<)\" > $@
 
 # Note on jq default filter: https://github.com/stedolan/jq/issues/1110
 $(BUILDDIR)/$(JSON_ACIS): $(SOURCES) | $(BUILDDIR)/$(SOURCEDIR)

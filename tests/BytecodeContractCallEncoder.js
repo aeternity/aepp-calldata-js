@@ -1,9 +1,8 @@
-import fs from 'fs'
 import test from './test.js'
+import bytecode from '../build/contracts/Test.aeb.json' with { type: 'json' }
 import BytecodeContractCallEncoder from '../src/BytecodeContractCallEncoder.js'
 
-const bytecode = fs.readFileSync('./build/contracts/Test.aeb')
-const encoder = new BytecodeContractCallEncoder(bytecode.toString())
+const encoder = new BytecodeContractCallEncoder(bytecode)
 
 test('Encode implicit init', t => {
     t.plan(1)
