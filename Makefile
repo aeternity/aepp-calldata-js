@@ -33,17 +33,14 @@ node_modules: package-lock.json
 tests: node_modules $(BUILDDIR)/$(JSON_ACIS) $(BUILDDIR)/$(BYTECODES)
 	npm test
 
-$(BUILDDIR)/js: | $(BUILDDIR)
-	mkdir -p $@
-
-$(BUILDDIR)/js/tests.js: node_modules $(BUILDDIR)/$(JSON_ACIS) $(BUILDDIR)/js
+$(BUILDDIR)/js/index.html: node_modules $(BUILDDIR)/$(JSON_ACIS) $(BUILDDIR)/$(BYTECODES)
 	npm run browser-test-bundle
 
-browser-tests: $(BUILDDIR)/js/tests.js
+browser-tests: $(BUILDDIR)/js/index.html
 ifneq ($(shell which open),)
-	@open tests/browser/index.html
+	@open build/js/index.html
 else
-	@echo Open "tests/browser/index.html" in your browser.
+	@echo Open "build/js/index.html" in your browser.
 endif
 
 integration-tests: $(INTEGRATION_TESTS) | node_modules $(BUILDDIR)/$(JSON_ACIS)
