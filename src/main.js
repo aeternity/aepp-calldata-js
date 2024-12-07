@@ -15,3 +15,16 @@ export {
     ContractEncoder,
     TypeResolver,
 }
+
+/**
+ * @deprecated use named exports instead
+ */
+export default {
+    Encoder,
+    AciContractCallEncoder,
+    BytecodeContractCallEncoder,
+    ContractByteArrayEncoder,
+    FateApiEncoder,
+    ContractEncoder,
+    TypeResolver,
+}
