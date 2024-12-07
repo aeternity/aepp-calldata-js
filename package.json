@@ -26,7 +26,8 @@
   "types": "src/main.d.ts",
   "exports": {
     "types": "./src/main.d.ts",
-    "import": "./src/main.js"
+    "import": "./src/main.js",
+    "require": "./cjs/main.cjs"
   },
   "files": [
     "cjs/*",
