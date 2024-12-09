@@ -1,3 +1,4 @@
+import { Buffer } from 'safe-buffer'
 import test from './test.js'
 import Encoder from '../src/Encoder.js'
 import aci from '../build/contracts/Test.json' with { type: 'json' }
@@ -221,6 +222,7 @@ test('Encode map arguments', t => {
 })
 
 test('Encode map arguments with sorted keys', t => {
+    t.plan(2)
     const encoded = encoder.encode(CONTRACT, 'test_string_map', [[["fo", "a"], ["s", "a"]]])
     t.is(encoded, 'cb_KxFFPju5Gy8CBXMFYQlmbwVhMOIQaw==', 'test_string_map({["fo"] = "a", ["s"] = "a"})')
 

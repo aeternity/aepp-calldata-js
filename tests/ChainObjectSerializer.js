@@ -7,6 +7,8 @@ import FieldsEncoder from '../src/ChainObjects/FieldsEncoder.js'
 const serializer = new ChainObjectSerializer(new FieldsEncoder(new FieldEncoder()))
 
 test('Serialize Account', t => {
+    t.plan(2)
+
     t.deepEqual(
         serializer.serialize(new ChainObject('account', {balance: 0n, nonce: 0n})),
         new Uint8Array([196, 10, 1, 0, 0])
@@ -19,6 +21,8 @@ test('Serialize Account', t => {
 })
 
 test('Deserialize Account', t => {
+    t.plan(2)
+
     t.deepEqual(
         serializer.deserialize(new Uint8Array([196, 10, 1, 0, 0])),
         new ChainObject('account', {balance: 0n, nonce: 0n}),
@@ -31,6 +35,7 @@ test('Deserialize Account', t => {
 })
 
 test('Serialize SpendTx', t => {
+    t.plan(1)
     t.deepEqual(
         serializer.serialize(new ChainObject('spend_tx', {
             sender: 'ak_11111111111111111111111111111118qjnEr',
@@ -50,6 +55,7 @@ test('Serialize SpendTx', t => {
 })
 
 test('Deserialize SpendTx', t => {
+    t.plan(1)
     t.deepEqual(
         serializer.deserialize(new Uint8Array([
             248, 75, 12, 1, 161, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -110,6 +116,7 @@ const signedTxData = new Uint8Array([
 ])
 
 test('Serialize SignedTx', t => {
+    t.plan(1)
     t.deepEqual(
         serializer.serialize(signedTx),
         signedTxData
@@ -117,6 +124,7 @@ test('Serialize SignedTx', t => {
 })
 
 test('Deserialize SignedTx', t => {
+    t.plan(1)
     t.deepEqual(
         serializer.deserialize(signedTxData),
         signedTx
@@ -165,6 +173,7 @@ const lightMicroBlockData = new Uint8Array([
 ])
 
 test('Serialize Light MicroBlock', t => {
+    t.plan(1)
     t.deepEqual(
         serializer.serialize(lightMicroBlock),
         lightMicroBlockData
@@ -172,6 +181,7 @@ test('Serialize Light MicroBlock', t => {
 })
 
 test('Deserialize Light MicroBlock', t => {
+    t.plan(1)
     t.deepEqual(
         serializer.deserialize(lightMicroBlockData),
         lightMicroBlock
