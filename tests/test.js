@@ -4,4 +4,4 @@
 
 // https://github.com/import-js/eslint-plugin-import/issues/2352
 // eslint-disable-next-line import/no-unresolved, no-restricted-exports
-export {default} from 'ava'
+export { default } from 'ava'

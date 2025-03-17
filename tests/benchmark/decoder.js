@@ -25,18 +25,14 @@ suite.add('Encoder#decode(string)', () => {
 })
 
 suite.add('Encoder#decode(hash)', () => {
-    encoder.decode(
-        CONTRACT,
-        'test_hash',
-        'cb_nwGBAAECAwQFBgcICQoLDA0ODwABAgMEBQYHCAkKCwwNDg/55Yfk',
-    )
+    encoder.decode(CONTRACT, 'test_hash', 'cb_nwGBAAECAwQFBgcICQoLDA0ODwABAgMEBQYHCAkKCwwNDg/55Yfk')
 })
 
 suite.add('Encoder#decode(signature)', () => {
     encoder.decode(
         CONTRACT,
         'test_signature',
-        'cb_nwEBAAABAgMEBQYHCAkKCwwNDg8AAQIDBAUGBwgJCgsMDQ4PAAECAwQFBgcICQoLDA0ODwABAgMEBQYHCAkKCwwNDg/EV2+8',
+        'cb_nwEBAAABAgMEBQYHCAkKCwwNDg8AAQIDBAUGBwgJCgsMDQ4PAAECAwQFBgcICQoLDA0ODwABAgMEBQYHCAkKCwwNDg/EV2+8'
     )
 })
 
@@ -86,4 +82,4 @@ suite.on('complete', () => {
 })
 
 // run async
-suite.run({async: true})
+suite.run({ async: true })

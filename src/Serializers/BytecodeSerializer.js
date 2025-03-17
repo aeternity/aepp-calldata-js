@@ -1,19 +1,15 @@
 import RLP from 'rlp'
 import BaseSerializer from './BaseSerializer.js'
 import TypeSerializer from './TypeSerializer.js'
-import {byteArray2Hex, byteArray2Int} from '../utils/int2ByteArray.js'
+import { byteArray2Hex, byteArray2Int } from '../utils/int2ByteArray.js'
 import OPCODES from '../FateOpcodes.js'
-import {
-    FateTypeByteArray,
-    FateTypeString,
-    FateTypeMap,
-} from '../FateTypes.js'
+import { FateTypeByteArray, FateTypeString, FateTypeMap } from '../FateTypes.js'
 
 const MODIFIERS = {
     0b11: 'immediate',
     0b10: 'var',
     0b01: 'arg',
-    0b00: 'stack'
+    0b00: 'stack',
 }
 
 const splitArgs = (data, n = 1) => {
@@ -48,7 +44,7 @@ class BytecodeSerializer extends BaseSerializer {
         const functions = this.deserializeFunctions(codeBin.data, symbols)
         const annotations = this.deserializeAnnotations(annotationsBin)
 
-        return {functions, symbols, annotations}
+        return { functions, symbols, annotations }
     }
 
     deserializeFunctions(data, symbols) {
@@ -57,7 +53,7 @@ class BytecodeSerializer extends BaseSerializer {
         const functions = []
 
         while (rest.length) {
-            [fun, rest] = this.deserializeFunction(rest, symbols)
+            ;[fun, rest] = this.deserializeFunction(rest, symbols)
             functions.push(fun)
         }
 
@@ -84,9 +80,9 @@ class BytecodeSerializer extends BaseSerializer {
                 attributes,
                 args,
                 returnType,
-                instructions
+                instructions,
             },
-            rest4
+            rest4,
         ]
     }
 
@@ -103,7 +99,7 @@ class BytecodeSerializer extends BaseSerializer {
                 instructions[block] = []
             }
 
-            [instruction, rest, end] = this.deserializeInstruction(rest)
+            ;[instruction, rest, end] = this.deserializeInstruction(rest)
             instructions[block].push(instruction)
 
             if (end) {
@@ -123,19 +119,19 @@ class BytecodeSerializer extends BaseSerializer {
         }
 
         const instr = OPCODES[opcode]
-        const {mnemonic, end} = instr
+        const { mnemonic, end } = instr
 
         if (instr.args === 0) {
-            return [{mnemonic, args: []}, rest, end]
+            return [{ mnemonic, args: [] }, rest, end]
         }
 
         const [args, rest2] = this.deserializeArguments(rest, instr.args)
 
-        return [{mnemonic, args}, rest2, end]
+        return [{ mnemonic, args }, rest2, end]
     }
 
     deserializeArguments(data, n) {
-        const numBytes = (n <= 4) ? 1 : 2
+        const numBytes = n <= 4 ? 1 : 2
         const modBytes = data.subarray(0, numBytes)
         const rest = data.slice(numBytes)
 
@@ -144,8 +140,8 @@ class BytecodeSerializer extends BaseSerializer {
         let rest2 = rest
         let arg
 
-        modifiers.forEach(mod => {
-            [arg, rest2] = this.deserializeArgument(mod, rest2)
+        modifiers.forEach((mod) => {
+            ;[arg, rest2] = this.deserializeArgument(mod, rest2)
             args.push(arg)
         })
 
@@ -156,12 +152,12 @@ class BytecodeSerializer extends BaseSerializer {
         const mod = MODIFIERS[bits]
 
         if (mod === 'stack') {
-            return [{mod, arg: 0}, stream]
+            return [{ mod, arg: 0 }, stream]
         }
 
         const [arg, rest] = this.globalSerializer.deserializeStream(stream)
 
-        return [{mod, arg: arg.valueOf()}, rest]
+        return [{ mod, arg: arg.valueOf() }, rest]
     }
 
     deserializeSignature(data) {

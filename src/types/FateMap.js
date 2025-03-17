@@ -1,9 +1,9 @@
 import FateData from './FateData.js'
-import {FateTypeMap} from '../FateTypes.js'
+import { FateTypeMap } from '../FateTypes.js'
 
 const arrayToItem = (item) => {
     const [key, value] = item
-    return {key, value}
+    return { key, value }
 }
 
 class FateMap extends FateData {

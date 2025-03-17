@@ -1,5 +1,5 @@
 import BaseSerializer from './BaseSerializer.js'
-import {FateTypeTuple, FateTypeMap} from '../FateTypes.js'
+import { FateTypeTuple, FateTypeMap } from '../FateTypes.js'
 import FateMap from '../types/FateMap.js'
 import FateTuple from '../types/FateTuple.js'
 import FateSet from '../types/FateSet.js'
@@ -13,21 +13,20 @@ import FateSet from '../types/FateSet.js'
 
 class SetSerializer extends BaseSerializer {
     serialize(set) {
-        return this.globalSerializer.serialize(new FateMap(
-            set.itemsType,
-            FateTypeTuple(),
-            set.items.map(i => [i, new FateTuple()])
-        ))
+        return this.globalSerializer.serialize(
+            new FateMap(
+                set.itemsType,
+                FateTypeTuple(),
+                set.items.map((i) => [i, new FateTuple()])
+            )
+        )
     }
 
     deserializeStream(data, typeInfo) {
         const mapType = FateTypeMap(typeInfo.valuesType, FateTypeTuple())
         const [map, rest] = this.globalSerializer.deserializeStream(data, mapType)
 
-        return [
-            new FateSet(typeInfo.valuesType, map.keys),
-            rest
-        ]
+        return [new FateSet(typeInfo.valuesType, map.keys), rest]
     }
 }
 

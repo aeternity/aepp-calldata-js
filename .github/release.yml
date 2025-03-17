@@ -1,22 +1,22 @@
 changelog:
-  exclude:
-    labels:
-      - release/ignore
-    authors:
-      - renovate
-  categories:
-    - title: Breaking Changes 🛠
-      labels:
-        - breaking
-    - title: Exciting New Features 🎉
-      labels:
-        - feature
-    - title: Bugfixes 🐞
-      labels:
-        - bug
-    - title: Deprecated
-      labels:
-        - deprecation
-    - title: Other Changes
-      labels:
-        - "*"
+    exclude:
+        labels:
+            - release/ignore
+        authors:
+            - renovate
+    categories:
+        - title: Breaking Changes 🛠
+          labels:
+              - breaking
+        - title: Exciting New Features 🎉
+          labels:
+              - feature
+        - title: Bugfixes 🐞
+          labels:
+              - bug
+        - title: Deprecated
+          labels:
+              - deprecation
+        - title: Other Changes
+          labels:
+              - '*'

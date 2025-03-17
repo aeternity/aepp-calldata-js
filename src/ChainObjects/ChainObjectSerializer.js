@@ -6,13 +6,13 @@ import Templates from './ChainObjectTemplates.js'
 class ChainObjectSerializer {
     /**
      * @param {FieldsEncoder} fieldsEncoder
-    */
+     */
     constructor(fieldsEncoder) {
         this.fieldsEncoder = fieldsEncoder
     }
 
     serialize(chainObject) {
-        const {name, tag, vsn} = chainObject
+        const { name, tag, vsn } = chainObject
 
         const template = Templates[name.toUpperCase()][vsn]
         if (template === undefined) {
@@ -25,8 +25,8 @@ class ChainObjectSerializer {
     }
 
     deserialize(data) {
-        const {tag, vsn, rest} = this.#deserializeHeader(data)
-        const type = Object.keys(ObjectTags).find(key => ObjectTags[key] === Number(tag))
+        const { tag, vsn, rest } = this.#deserializeHeader(data)
+        const type = Object.keys(ObjectTags).find((key) => ObjectTags[key] === Number(tag))
 
         if (type === undefined) {
             throw new Error(`Unsupported object tag: ${tag}`)
@@ -43,22 +43,22 @@ class ChainObjectSerializer {
         const template = Templates[type][vsn]
         const fields = this.fieldsEncoder.decodeFields(rest, template)
 
-        return new ChainObject(type.toLowerCase(), {vsn, ...fields})
+        return new ChainObject(type.toLowerCase(), { vsn, ...fields })
     }
 
     #deserializeHeader(data) {
         const objData = RLP.decode(data)
-        const template = {tag: 'int', vsn: 'int'}
+        const template = { tag: 'int', vsn: 'int' }
 
-        const {tag, vsn} = this.fieldsEncoder.decodeFields(objData, template)
+        const { tag, vsn } = this.fieldsEncoder.decodeFields(objData, template)
         const rest = objData.slice(2)
 
-        return {tag, vsn, rest}
+        return { tag, vsn, rest }
     }
 
     #serializeFields(tag, vsn, template, fields) {
-        const allFields = {tag, vsn, ...fields}
-        const fullTemplate = {tag: 'int', vsn: 'int', ...template}
+        const allFields = { tag, vsn, ...fields }
+        const fullTemplate = { tag: 'int', vsn: 'int', ...template }
         const data = this.fieldsEncoder.encodeFields(allFields, fullTemplate)
 
         return [...RLP.encode(data)]
@@ -66,8 +66,8 @@ class ChainObjectSerializer {
 
     #deserializeFields(template, data) {
         const objData = RLP.decode(data)
-        const fullTemplate = {tag: 'int', vsn: 'int', ...template}
-        const {_tag, _vsn, ...fields} = this.fieldsEncoder.decodeFields(objData, fullTemplate)
+        const fullTemplate = { tag: 'int', vsn: 'int', ...template }
+        const { _tag, _vsn, ...fields } = this.fieldsEncoder.decodeFields(objData, fullTemplate)
 
         return fields
     }

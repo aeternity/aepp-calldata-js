@@ -2,7 +2,7 @@ import RLP from 'rlp'
 import FateTag from '../FateTag.js'
 import FateTuple from '../types/FateTuple.js'
 import FateVariant from '../types/FateVariant.js'
-import {FateTypeTuple} from '../FateTypes.js'
+import { FateTypeTuple } from '../FateTypes.js'
 import BaseSerializer from './BaseSerializer.js'
 
 class VariantSerializer extends BaseSerializer {
@@ -13,7 +13,7 @@ class VariantSerializer extends BaseSerializer {
             FateTag.VARIANT,
             ...RLP.encode(new Uint8Array(variant.arities)),
             variant.tag,
-            ...this.globalSerializer.serialize(valueTuple)
+            ...this.globalSerializer.serialize(valueTuple),
         ]
     }
 
@@ -33,10 +33,7 @@ class VariantSerializer extends BaseSerializer {
 
         const [els, rest] = this.globalSerializer.deserializeStream(data, valueType)
 
-        return [
-            new FateVariant(arities, tag, els.items, els.valueTypes, variants),
-            rest
-        ]
+        return [new FateVariant(arities, tag, els.items, els.valueTypes, variants), rest]
     }
 }
 

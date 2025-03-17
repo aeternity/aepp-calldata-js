@@ -1,5 +1,5 @@
 import FateData from './FateData.js'
-import {FateTypeByteArray} from '../FateTypes.js'
+import { FateTypeByteArray } from '../FateTypes.js'
 
 class FateByteArray extends FateData {
     constructor(value = []) {

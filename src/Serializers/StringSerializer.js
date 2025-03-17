@@ -31,10 +31,7 @@ class StringSerializer extends BaseSerializer {
 
         const [bytes, rest] = byteArraySerializer.deserializeStream(buffer)
 
-        return [
-            new FateString(bytes.valueOf()),
-            rest
-        ]
+        return [new FateString(bytes.valueOf()), rest]
     }
 }
 

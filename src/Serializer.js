@@ -30,31 +30,31 @@ class Serializer extends BaseSerializer {
 
         this.typeFactory = new TypeFactory()
         this._serializers = {
-            'void': new VoidSerializer(),
-            'bool': new BoolSerializer(),
-            'int': new IntSerializer(),
-            'tuple': new TupleSerializer(this),
-            'record': new TupleSerializer(this),
-            'list': new ListSerializer(this),
-            'set': new SetSerializer(this),
-            'map': new MapSerializer(this),
-            'byte_array': new ByteArraySerializer(),
-            'string': new StringSerializer(),
-            'hash': new BytesSerializer(),
-            'signature': new BytesSerializer(),
-            'bits': new BitsSerializer(),
-            'variant': new VariantSerializer(this),
-            'bytes': new BytesSerializer(),
-            'account_pubkey': new AddressSerializer(),
-            'contract_pubkey': new ContractSerializer(),
-            'oracle_pubkey': new OracleSerializer(),
-            'oracle_query_id': new OracleQuerySerializer(),
-            'channel': new ChannelSerializer(),
+            void: new VoidSerializer(),
+            bool: new BoolSerializer(),
+            int: new IntSerializer(),
+            tuple: new TupleSerializer(this),
+            record: new TupleSerializer(this),
+            list: new ListSerializer(this),
+            set: new SetSerializer(this),
+            map: new MapSerializer(this),
+            byte_array: new ByteArraySerializer(),
+            string: new StringSerializer(),
+            hash: new BytesSerializer(),
+            signature: new BytesSerializer(),
+            bits: new BitsSerializer(),
+            variant: new VariantSerializer(this),
+            bytes: new BytesSerializer(),
+            account_pubkey: new AddressSerializer(),
+            contract_pubkey: new ContractSerializer(),
+            oracle_pubkey: new OracleSerializer(),
+            oracle_query_id: new OracleQuerySerializer(),
+            channel: new ChannelSerializer(),
             'bls12_381.fr': new Bls12381FieldSerializer(),
             'bls12_381.fp': new Bls12381FieldSerializer(),
-            'calldata': new CalldataSerializer(this),
-            'contract_bytearray': new ContractBytecodeSerializer(this),
-            'type': new TypeSerializer(),
+            calldata: new CalldataSerializer(this),
+            contract_bytearray: new ContractBytecodeSerializer(this),
+            type: new TypeSerializer(),
         }
     }
 
@@ -73,7 +73,9 @@ class Serializer extends BaseSerializer {
 
     serialize(data) {
         if (typeof data !== 'object') {
-            throw new SerializerError('Only object serialization is supported. Got: ' + JSON.stringify(data))
+            throw new SerializerError(
+                'Only object serialization is supported. Got: ' + JSON.stringify(data)
+            )
         }
 
         if (!(data instanceof FateData)) {

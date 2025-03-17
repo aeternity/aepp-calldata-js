@@ -13,18 +13,14 @@ class MapSerializer extends BaseSerializer {
         const sortedItems = [...map.items]
         sortedItems.sort((elA, elB) => cmp(elA.key, elB.key))
 
-        const serializedItems = sortedItems.map(i => {
+        const serializedItems = sortedItems.map((i) => {
             return [
                 this.globalSerializer.serialize(i.key),
-                this.globalSerializer.serialize(i.value)
+                this.globalSerializer.serialize(i.value),
             ]
         })
 
-        return [
-            FateTag.MAP,
-            ...RLPInt.encode(len),
-            ...serializedItems.flat(Infinity)
-        ]
+        return [FateTag.MAP, ...RLPInt.encode(len), ...serializedItems.flat(Infinity)]
     }
 
     deserializeStream(data, typeInfo) {
@@ -46,7 +42,7 @@ class MapSerializer extends BaseSerializer {
         let valueType
 
         if (typeof typeInfo !== 'undefined') {
-            ({keyType, valueType} = typeInfo)
+            ;({ keyType, valueType } = typeInfo)
         }
 
         const elements = []
@@ -65,14 +61,7 @@ class MapSerializer extends BaseSerializer {
             valueType = firstEl[1].type
         }
 
-        return [
-            new FateMap(
-                keyType,
-                valueType,
-                elements
-            ),
-            rest
-        ]
+        return [new FateMap(keyType, valueType, elements), rest]
     }
 }
 

@@ -5,14 +5,11 @@ const int2ByteArray = (value) => {
         return new Uint8Array([Number(bigInt)])
     }
 
-    return new Uint8Array([
-        ...int2ByteArray(bigInt >> 8n),
-        Number(bigInt & 0xffn)
-    ])
+    return new Uint8Array([...int2ByteArray(bigInt >> 8n), Number(bigInt & 0xffn)])
 }
 
 const byteArrayToHexArray = (data) => {
-    return [...data].map(x => x.toString(16).padStart(2, '0'))
+    return [...data].map((x) => x.toString(16).padStart(2, '0'))
 }
 
 const byteArray2Int = (data) => {
@@ -35,9 +32,4 @@ const byteArray2Hex = (data) => {
     return byteArrayToHexArray(data).join('')
 }
 
-export {
-    int2ByteArray,
-    byteArray2Int,
-    byteArray2IntBE,
-    byteArray2Hex,
-}
+export { int2ByteArray, byteArray2Int, byteArray2IntBE, byteArray2Hex }

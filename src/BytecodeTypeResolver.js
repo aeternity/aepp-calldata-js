@@ -27,19 +27,19 @@ class BytecodeTypeResolver {
     }
 
     getFunctionId(funName) {
-        const {symbols} = this._bytecode
+        const { symbols } = this._bytecode
 
-        return Object.keys(symbols).find(key => symbols[key] === funName)
+        return Object.keys(symbols).find((key) => symbols[key] === funName)
     }
 
     getFunction(id) {
-        const {functions} = this._bytecode
+        const { functions } = this._bytecode
 
-        return functions.find(f => f.id === id)
+        return functions.find((f) => f.id === id)
     }
 
     getFunctionName(id) {
-        const {name} = this.getFunction(id)
+        const { name } = this.getFunction(id)
 
         return name
     }
@@ -48,15 +48,15 @@ class BytecodeTypeResolver {
         const fun = this.getFunction(this.getFunctionId(funName))
 
         if (fun) {
-            const types = fun.args.valueTypes.map(t => this.resolveType(t))
+            const types = fun.args.valueTypes.map((t) => this.resolveType(t))
             return {
                 types,
-                required: types.length
+                required: types.length,
             }
         }
 
         if (funName === 'init') {
-            return {types: [], required: 0}
+            return { types: [], required: 0 }
         }
 
         throw new TypeResolveError(`Unknown function ${funName}`)
@@ -91,8 +91,8 @@ class BytecodeTypeResolver {
     resolveType(type) {
         if (type.name === 'variant') {
             const variants = type.variants.map((el, idx) => {
-                const valueTypes = el.valueTypes.map(v => this.resolveType(v))
-                return {[idx]: valueTypes}
+                const valueTypes = el.valueTypes.map((v) => this.resolveType(v))
+                return { [idx]: valueTypes }
             })
 
             return FateTypeVariant(variants)
@@ -100,7 +100,7 @@ class BytecodeTypeResolver {
 
         let resolvedTypes = []
         if (Array.isArray(type.valueTypes)) {
-            resolvedTypes = type.valueTypes.map(t => this.resolveType(t))
+            resolvedTypes = type.valueTypes.map((t) => this.resolveType(t))
         }
 
         if (type.name === 'tuple') {
