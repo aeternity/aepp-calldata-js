@@ -12,13 +12,13 @@ WALLET_PATH="build/wallet"
 WALLET_PASS="123"
 # init() calldata
 CALLDATA="[]"
-export AECLI_NODE_URL="https://next.aeternity.io"
+export AECLI_NODE_URL="https://testnet.aeternity.io"
 export AECLI_COMPILER_URL="cli8"
 
 ACCOUNT=$(npx aecli account address --json $WALLET_PATH 2> /dev/null | jq -r '.publicKey' || true)
 if [ -z $ACCOUNT ]; then
     ACCOUNT=$(npx aecli account create --json -P $WALLET_PASS $WALLET_PATH | jq -r '.publicKey')
-    curl -sS -X POST https://faucet.ceres.aepps.com/account/$ACCOUNT > /dev/null
+    curl -sS -X POST https://faucet.aepps.com/account/$ACCOUNT > /dev/null
 fi
 
 if ! npx aecli inspect $ACCOUNT > /dev/null; then
