@@ -2,6 +2,7 @@
 
 // Definition of tag scheme.
 // This has to follow the protocol specification.
+// prettier-ignore
 export default Object.freeze({
     SMALL_INT    :        0b0, // sxxxxxx 0 - 6 bit integer with sign bit
                                        // 1 Set below
