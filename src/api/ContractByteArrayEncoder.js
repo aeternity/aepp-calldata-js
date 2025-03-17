@@ -18,7 +18,7 @@ class ContractByteArrayEncoder {
      * @param {any} value - Value as Javascript data structures. See README.md
      * @param {object} type - Opaque type information provided by TypeResolver. See README.md
      * @returns {string} Encoded contract byte array
-    */
+     */
     encodeWithType(value, type) {
         return this._internalEncoder.encode(type, value)
     }
@@ -41,7 +41,7 @@ class ContractByteArrayEncoder {
      * @param {string} data - Contract bytearray data in a canonical format.
      * @returns {boolean|string|BigInt|Array|Map|Object}
      *  Decoded value as Javascript data structures. See README.md
-    */
+     */
     decode(data) {
         return this._internalEncoder.decode(data)
     }
@@ -61,7 +61,7 @@ class ContractByteArrayEncoder {
      * @param {object} type - Opaque type information provided by TypeResolver. See README.md
      * @returns {boolean|string|BigInt|Array|Map|Object}
      *  Decoded value as Javascript data structures. See README.md
-    */
+     */
     decodeWithType(data, type) {
         return this._internalEncoder.decodeWithType(data, type)
     }

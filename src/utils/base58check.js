@@ -19,7 +19,4 @@ const decode = (str) => {
     return getPayload(bs58.decode(str))
 }
 
-export {
-    encode,
-    decode
-}
+export { encode, decode }

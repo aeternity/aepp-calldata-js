@@ -1,6 +1,6 @@
 import ApiEncoder from '../ApiEncoder.js'
-import {montBytes2Int} from '../utils/bls12381.js'
-import {byteArray2Hex} from '../utils/int2ByteArray.js'
+import { montBytes2Int } from '../utils/bls12381.js'
+import { byteArray2Hex } from '../utils/int2ByteArray.js'
 
 /**
  * Map the internal representation FATE data structure to Aesophia canonical structures and formats.
@@ -24,11 +24,11 @@ class CanonicalMapper {
     }
 
     visitList(acceptor) {
-        return acceptor.items.map(e => e.accept(this))
+        return acceptor.items.map((e) => e.accept(this))
     }
 
     visitSet(acceptor) {
-        return new Set(acceptor.items.map(e => e.accept(this)))
+        return new Set(acceptor.items.map((e) => e.accept(this)))
     }
 
     visitMap(acceptor) {
@@ -41,11 +41,11 @@ class CanonicalMapper {
     }
 
     visitTuple(acceptor) {
-        return acceptor.prepareItems(e => e.accept(this))
+        return acceptor.prepareItems((e) => e.accept(this))
     }
 
     visitVariant(acceptor) {
-        const value = acceptor.value.map(e => e.accept(this))
+        const value = acceptor.value.map((e) => e.accept(this))
 
         if (acceptor.variantName === 'None') {
             return undefined
@@ -56,7 +56,7 @@ class CanonicalMapper {
         }
 
         return {
-            [acceptor.variantName]: value
+            [acceptor.variantName]: value,
         }
     }
 
@@ -69,11 +69,11 @@ class CanonicalMapper {
     }
 
     visitCalldata(acceptor) {
-        const {functionId, args} = acceptor.valueOf()
+        const { functionId, args } = acceptor.valueOf()
 
         return {
             functionId: byteArray2Hex(functionId),
-            args: args.map(e => e.accept(this))
+            args: args.map((e) => e.accept(this)),
         }
     }
 }

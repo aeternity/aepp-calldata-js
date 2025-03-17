@@ -1,6 +1,6 @@
 import BaseDataFactory from './BaseDataFactory.js'
 import FateTuple from '../types/FateTuple.js'
-import {FateTypeRecord} from '../FateTypes.js'
+import { FateTypeRecord } from '../FateTypes.js'
 import FateTypeError from '../Errors/FateTypeError.js'
 
 class RecordDataFactory extends BaseDataFactory {
@@ -36,10 +36,7 @@ class RecordDataFactory extends BaseDataFactory {
             return resolvedValue[0]
         }
 
-        return new FateTuple(
-            FateTypeRecord(type.keys, type.valueTypes),
-            resolvedValue
-        )
+        return new FateTuple(FateTypeRecord(type.keys, type.valueTypes), resolvedValue)
     }
 }
 

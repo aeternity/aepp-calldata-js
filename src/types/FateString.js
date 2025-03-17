@@ -1,5 +1,5 @@
 import FateData from './FateData.js'
-import {FateTypeString} from '../FateTypes.js'
+import { FateTypeString } from '../FateTypes.js'
 import { byteArray2Int } from '../utils/int2ByteArray.js'
 
 const toString = (data) => {

@@ -49,9 +49,4 @@ const decode = (str) => {
     return getPayload(data)
 }
 
-export {
-    addChecksum,
-    getPayload,
-    encode,
-    decode
-}
+export { addChecksum, getPayload, encode, decode }

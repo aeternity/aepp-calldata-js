@@ -9,10 +9,7 @@ class TupleDataFactory extends BaseDataFactory {
 
     create(type, value) {
         if (!Array.isArray(value)) {
-            throw new FateTypeError(
-                type.name,
-                `Fate tuple must be an Array, got ${value} instead`
-            )
+            throw new FateTypeError(type.name, `Fate tuple must be an Array, got ${value} instead`)
         }
 
         const resolvedValue = type.valueTypes.map((t, i) => {

@@ -22,7 +22,7 @@ import {
 
 const s = new TypeSerializer()
 
-test('Serialize basic types', t => {
+test('Serialize basic types', (t) => {
     t.plan(5)
     t.deepEqual(s.serialize(FateTypeInt()), new Uint8Array([FateTag.TYPE_INTEGER]))
     t.deepEqual(s.serialize(FateTypeBool()), new Uint8Array([FateTag.TYPE_BOOLEAN]))
@@ -31,7 +31,7 @@ test('Serialize basic types', t => {
     t.deepEqual(s.serialize(FateTypeAny()), new Uint8Array([FateTag.TYPE_ANY]))
 })
 
-test('Deserialize basic types', t => {
+test('Deserialize basic types', (t) => {
     t.plan(5)
     t.deepEqual(s.deserialize([FateTag.TYPE_INTEGER]), FateTypeInt())
     t.deepEqual(s.deserialize([FateTag.TYPE_BOOLEAN]), FateTypeBool())
@@ -40,7 +40,7 @@ test('Deserialize basic types', t => {
     t.deepEqual(s.deserialize([FateTag.TYPE_ANY]), FateTypeAny())
 })
 
-test('Serialize object types', t => {
+test('Serialize object types', (t) => {
     t.plan(5)
     t.deepEqual(
         s.serialize(FateTypeAccountAddress()),
@@ -64,7 +64,7 @@ test('Serialize object types', t => {
     )
 })
 
-test('Deserialize object types', t => {
+test('Deserialize object types', (t) => {
     t.plan(5)
     t.deepEqual(
         s.deserialize([FateTag.TYPE_OBJECT, FateTag.OTYPE_ADDRESS]),
@@ -74,10 +74,7 @@ test('Deserialize object types', t => {
         s.deserialize([FateTag.TYPE_OBJECT, FateTag.OTYPE_CONTRACT]),
         FateTypeContractAddress()
     )
-    t.deepEqual(
-        s.deserialize([FateTag.TYPE_OBJECT, FateTag.OTYPE_ORACLE]),
-        FateTypeOracleAddress()
-    )
+    t.deepEqual(s.deserialize([FateTag.TYPE_OBJECT, FateTag.OTYPE_ORACLE]), FateTypeOracleAddress())
     t.deepEqual(
         s.deserialize([FateTag.TYPE_OBJECT, FateTag.OTYPE_ORACLE_QUERY]),
         FateTypeOracleQueryAddress()
@@ -88,7 +85,7 @@ test('Deserialize object types', t => {
     )
 })
 
-test('Serialize composite types', t => {
+test('Serialize composite types', (t) => {
     t.plan(6)
     t.deepEqual(s.serialize(FateTypeVar(123)), new Uint8Array([FateTag.TYPE_VAR, 123]))
     t.deepEqual(
@@ -113,7 +110,7 @@ test('Serialize composite types', t => {
     )
 })
 
-test('Deserialize composite types', t => {
+test('Deserialize composite types', (t) => {
     t.plan(6)
     t.deepEqual(s.deserialize([FateTag.TYPE_VAR, 123]), FateTypeVar(123))
     t.deepEqual(s.deserialize([FateTag.TYPE_BYTES, 111, 130, 1, 192]), FateTypeBytes(512n))

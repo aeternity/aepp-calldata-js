@@ -2,7 +2,7 @@ import RLP from 'rlp'
 import BaseSerializer from './BaseSerializer.js'
 import BytecodeSerializer from './BytecodeSerializer.js'
 import IntSerializer from './IntSerializer.js'
-import {byteArray2Int, byteArray2Hex} from '../utils/int2ByteArray.js'
+import { byteArray2Int, byteArray2Hex } from '../utils/int2ByteArray.js'
 
 class ContractBytecodeSerializer extends BaseSerializer {
     constructor(globalSerializer) {

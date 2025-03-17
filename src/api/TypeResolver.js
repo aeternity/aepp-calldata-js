@@ -21,7 +21,7 @@ class TypeResolver {
      * @param {object} type - The type information in ACI format
      * @param {object} vars - Additional type variables, templates etc.
      * @returns {object} Opaque type information structure
-    */
+     */
     resolveType(type, vars = {}) {
         return this._internalResolver.resolveType(type, vars)
     }

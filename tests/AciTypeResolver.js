@@ -15,69 +15,48 @@ const CONTRACT = 'Test'
 const resolver = new AciTypeResolver(aci)
 const ns = (name) => `${CONTRACT}.${name}`
 
-test('Get implicit empty init argument types', t => {
+test('Get implicit empty init argument types', (t) => {
     t.plan(1)
-    t.deepEqual(
-        resolver.getCallTypes(CONTRACT, 'init'),
-        {types: [], required: 0}
-    )
+    t.deepEqual(resolver.getCallTypes(CONTRACT, 'init'), { types: [], required: 0 })
 })
 
-test('Get function argument types', t => {
+test('Get function argument types', (t) => {
     t.plan(1)
-    t.deepEqual(
-        resolver.getCallTypes(CONTRACT, 'test_bool'),
-        {
-            types: [FateTypeBool(), FateTypeBool()],
-            required: 2
-        }
-    )
+    t.deepEqual(resolver.getCallTypes(CONTRACT, 'test_bool'), {
+        types: [FateTypeBool(), FateTypeBool()],
+        required: 2,
+    })
 })
 
-test('Get function return type', t => {
+test('Get function return type', (t) => {
     t.plan(1)
-    t.deepEqual(
-        resolver.getReturnType(CONTRACT, 'test_bool'),
-        FateTypeBool()
-    )
+    t.deepEqual(resolver.getReturnType(CONTRACT, 'test_bool'), FateTypeBool())
 })
 
-test('Return type unit', t => {
+test('Return type unit', (t) => {
     t.plan(1)
-    t.deepEqual(
-        resolver.getReturnType(CONTRACT, 'test_unit'),
-        FateTypeTuple()
-    )
+    t.deepEqual(resolver.getReturnType(CONTRACT, 'test_unit'), FateTypeTuple())
 })
 
-test('Resolve contract address', t => {
+test('Resolve contract address', (t) => {
     t.plan(1)
-    t.deepEqual(
-        resolver.resolveType('RemoteTest'),
-        FateTypeContractAddress()
-    )
+    t.deepEqual(resolver.resolveType('RemoteTest'), FateTypeContractAddress())
 })
 
-test('Resolve type defs', t => {
+test('Resolve type defs', (t) => {
     t.plan(1)
-    t.deepEqual(
-        resolver.resolveType('Test.number'),
-        FateTypeInt()
-    )
+    t.deepEqual(resolver.resolveType('Test.number'), FateTypeInt())
 })
 
-test('Resolve record', t => {
+test('Resolve record', (t) => {
     t.plan(1)
     t.deepEqual(
         resolver.resolveType(ns('point')),
-        FateTypeRecord(
-            ['x', 'y'],
-            [FateTypeInt(), FateTypeInt()]
-        )
+        FateTypeRecord(['x', 'y'], [FateTypeInt(), FateTypeInt()])
     )
 })
 
-test('Resolve nested record', t => {
+test('Resolve nested record', (t) => {
     t.plan(1)
     t.deepEqual(
         resolver.resolveType(ns('rectangle')),
@@ -86,42 +65,39 @@ test('Resolve nested record', t => {
             [
                 FateTypeRecord(['x', 'y'], [FateTypeInt(), FateTypeInt()]),
                 FateTypeInt(),
-                FateTypeInt()
-            ],
+                FateTypeInt(),
+            ]
         )
     )
 })
 
-test('Resolve variant', t => {
+test('Resolve variant', (t) => {
     t.plan(1)
     t.deepEqual(
         resolver.resolveType(ns('really_t')),
-        FateTypeVariant([{Nope: []}, {No: []}, {Yep: [FateTypeInt()]}, {Yes: []}])
+        FateTypeVariant([{ Nope: [] }, { No: [] }, { Yep: [FateTypeInt()] }, { Yes: [] }])
     )
 })
 
-test('Resolve variant with template vars', t => {
+test('Resolve variant with template vars', (t) => {
     t.plan(1)
     t.deepEqual(
         resolver.resolveType({
-            [ns('amount_t')]: ['int', 'bool']
+            [ns('amount_t')]: ['int', 'bool'],
         }),
         FateTypeVariant([
-            {Zero: []},
-            {Any: [FateTypeInt(), FateTypeBool(), FateTypeInt(), FateTypeInt()]}
+            { Zero: [] },
+            { Any: [FateTypeInt(), FateTypeBool(), FateTypeInt(), FateTypeInt()] },
         ])
     )
 })
 
-test('Resolve template type', t => {
+test('Resolve template type', (t) => {
     t.plan(1)
-    t.deepEqual(
-        resolver.resolveType({[ns('box')]: ['int']}),
-        FateTypeInt()
-    )
+    t.deepEqual(resolver.resolveType({ [ns('box')]: ['int'] }), FateTypeInt())
 })
 
-test('Resolve state', t => {
+test('Resolve state', (t) => {
     t.plan(1)
     t.deepEqual(
         resolver.resolveType('WithInit.state'),

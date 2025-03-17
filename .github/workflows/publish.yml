@@ -1,19 +1,19 @@
 name: Node.js Package
 on:
-  release:
-    types: [created]
+    release:
+        types: [created]
 jobs:
-  build:
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v4
-      # Setup .npmrc file to publish to npm
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-          registry-url: 'https://registry.npmjs.org'
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - run: npm config set fund false
-      - run: npm install
-      - run: npm publish --access public
+    build:
+        runs-on: ubuntu-22.04
+        steps:
+            - uses: actions/checkout@v4
+            # Setup .npmrc file to publish to npm
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: '20.x'
+                  registry-url: 'https://registry.npmjs.org'
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+            - run: npm config set fund false
+            - run: npm install
+            - run: npm publish --access public

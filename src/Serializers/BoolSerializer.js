@@ -5,7 +5,7 @@ import FatePrefixError from '../Errors/FatePrefixError.js'
 
 class BoolSerializer extends BaseSerializer {
     serialize(data) {
-        return (data.valueOf() === true) ? [FateTag.TRUE] : [FateTag.FALSE]
+        return data.valueOf() === true ? [FateTag.TRUE] : [FateTag.FALSE]
     }
 
     deserializeStream(data) {

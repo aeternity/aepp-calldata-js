@@ -46,14 +46,16 @@ class TypeSerializer extends BaseSerializer {
     }
 
     serialize(type) {
-        const basicTypeTag = Object.entries(BASIC_TYPES)
-            .find(([_key, { name }]) => name === type.name)?.[0]
+        const basicTypeTag = Object.entries(BASIC_TYPES).find(
+            ([_key, { name }]) => name === type.name
+        )?.[0]
         if (basicTypeTag != null) {
             return new Uint8Array([basicTypeTag])
         }
 
-        const objectTypeTag = Object.entries(OBJECT_TYPES)
-            .find(([_key, { name }]) => name === type.name)?.[0]
+        const objectTypeTag = Object.entries(OBJECT_TYPES).find(
+            ([_key, { name }]) => name === type.name
+        )?.[0]
         if (objectTypeTag != null) {
             return new Uint8Array([FateTag.TYPE_OBJECT, objectTypeTag])
         }
@@ -63,17 +65,11 @@ class TypeSerializer extends BaseSerializer {
         }
 
         if (type.name === 'bytes') {
-            return new Uint8Array([
-                FateTag.TYPE_BYTES,
-                ...this._intSerializer.serialize(type.size),
-            ])
+            return new Uint8Array([FateTag.TYPE_BYTES, ...this._intSerializer.serialize(type.size)])
         }
 
         if (type.name === 'list') {
-            return new Uint8Array([
-                FateTag.TYPE_LIST,
-                ...this.serialize(type.valuesType),
-            ])
+            return new Uint8Array([FateTag.TYPE_LIST, ...this.serialize(type.valuesType)])
         }
 
         if (type.name === 'map') {
@@ -151,7 +147,7 @@ class TypeSerializer extends BaseSerializer {
             let el
 
             for (let i = 0; i < size; i++) {
-                [el, rest] = this.deserializeStream(rest)
+                ;[el, rest] = this.deserializeStream(rest)
                 elementTypes.push(el)
             }
 
@@ -165,7 +161,7 @@ class TypeSerializer extends BaseSerializer {
             let el
 
             for (let i = 0; i < size; i++) {
-                [el, rest] = this.deserializeStream(rest)
+                ;[el, rest] = this.deserializeStream(rest)
                 variants.push(el)
             }
 

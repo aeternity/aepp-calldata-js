@@ -4,24 +4,24 @@ import FormatError from './Errors/FormatError.js'
 import FateTypeError from './Errors/FateTypeError.js'
 
 const TYPES = {
-    key_block_hash: {tag: 'kh', size: 32, encoder: base58check},
-    micro_block_hash: {tag: 'mh', size: 32, encoder: base58check},
-    block_pof_hash: {tag: 'bf', size: 32, encoder: base58check},
-    block_tx_hash: {tag: 'bx', size: 32, encoder: base58check},
-    block_state_hash: {tag: 'bs', size: 32, encoder: base58check},
-    contract_bytearray: {tag: 'cb', size: 0, encoder: base64check},
-    contract_pubkey: {tag: 'ct', size: 32, encoder: base58check},
-    account_pubkey: {tag: 'ak', size: 32, encoder: base58check},
-    account_seckey: {tag: 'sk', size: 32, encoder: base58check},
-    channel: {tag: 'ch', size: 32, encoder: base58check},
-    oracle_pubkey: {tag: 'ok', size: 32, encoder: base58check},
-    oracle_query_id: {tag: 'oq', size: 32, encoder: base58check},
-    peer_pubkey: {tag: 'pp', size: 32, encoder: base58check},
-    name: {tag: 'nm', size: 0, encoder: base58check},
-    tx_hash: {tag: 'th', size: 32, encoder: base58check},
-    signature: {tag: 'sg', size: 64, encoder: base58check},
-    commitment: {tag: 'cm', size: 32, encoder: base58check},
-    bytearray: {tag: 'ba', size: 0, encoder: base64check},
+    key_block_hash: { tag: 'kh', size: 32, encoder: base58check },
+    micro_block_hash: { tag: 'mh', size: 32, encoder: base58check },
+    block_pof_hash: { tag: 'bf', size: 32, encoder: base58check },
+    block_tx_hash: { tag: 'bx', size: 32, encoder: base58check },
+    block_state_hash: { tag: 'bs', size: 32, encoder: base58check },
+    contract_bytearray: { tag: 'cb', size: 0, encoder: base64check },
+    contract_pubkey: { tag: 'ct', size: 32, encoder: base58check },
+    account_pubkey: { tag: 'ak', size: 32, encoder: base58check },
+    account_seckey: { tag: 'sk', size: 32, encoder: base58check },
+    channel: { tag: 'ch', size: 32, encoder: base58check },
+    oracle_pubkey: { tag: 'ok', size: 32, encoder: base58check },
+    oracle_query_id: { tag: 'oq', size: 32, encoder: base58check },
+    peer_pubkey: { tag: 'pp', size: 32, encoder: base58check },
+    name: { tag: 'nm', size: 0, encoder: base58check },
+    tx_hash: { tag: 'th', size: 32, encoder: base58check },
+    signature: { tag: 'sg', size: 64, encoder: base58check },
+    commitment: { tag: 'cm', size: 32, encoder: base58check },
+    bytearray: { tag: 'ba', size: 0, encoder: base64check },
 }
 
 const TAG2TYPE = {
@@ -73,7 +73,9 @@ class ApiEncoder {
         }
 
         if (data[2] !== '_') {
-            throw new FormatError(`Invalid API data format. Expected _ separator on position 2, got ${data[2]}`)
+            throw new FormatError(
+                `Invalid API data format. Expected _ separator on position 2, got ${data[2]}`
+            )
         }
 
         const type = TYPES[TAG2TYPE[tag]]
@@ -81,7 +83,9 @@ class ApiEncoder {
         const decoded = type.encoder.decode(payload)
 
         if (type.size > 0 && decoded.length !== type.size) {
-            throw new FormatError(`Invalid API data format. Expected size ${type.size}, but got ${decoded.length}`)
+            throw new FormatError(
+                `Invalid API data format. Expected size ${type.size}, but got ${decoded.length}`
+            )
         }
 
         return decoded

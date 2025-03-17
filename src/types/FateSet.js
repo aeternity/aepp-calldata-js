@@ -1,5 +1,5 @@
 import FateData from './FateData.js'
-import {FateTypeSet} from '../FateTypes.js'
+import { FateTypeSet } from '../FateTypes.js'
 
 class FateSet extends FateData {
     constructor(itemsType, items = []) {
@@ -26,7 +26,7 @@ class FateSet extends FateData {
     }
 
     valueOf() {
-        return new Set(this.items.map(e => e.valueOf()))
+        return new Set(this.items.map((e) => e.valueOf()))
     }
 
     accept(visitor) {

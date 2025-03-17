@@ -1,5 +1,5 @@
 import ApiEncoder from '../ApiEncoder.js'
-import {int2MontBytes} from '../utils/bls12381.js'
+import { int2MontBytes } from '../utils/bls12381.js'
 import FateTypeError from '../Errors/FateTypeError.js'
 
 /**
@@ -12,30 +12,30 @@ class InternalMapper {
 
     toInternal(type, value) {
         switch (type.name) {
-        case 'account_pubkey':
-        case 'contract_pubkey':
-        case 'channel':
-        case 'oracle_pubkey':
-        case 'oracle_query_id':
-            return this.toAddress(type, value)
-        case 'variant':
-            return this.toVariant(type, value)
-        case 'map':
-            return this.toMap(type, value)
-        case 'set':
-            return this.toSet(type, value)
-        case 'record':
-            return this.toRecord(type, value)
-        case 'bls12_381.fr':
-            return this.toBls12381Fr(type, value)
-        case 'bls12_381.fp':
-            return this.toBls12381Fp(type, value)
-        default:
-            return value
+            case 'account_pubkey':
+            case 'contract_pubkey':
+            case 'channel':
+            case 'oracle_pubkey':
+            case 'oracle_query_id':
+                return this.toAddress(type, value)
+            case 'variant':
+                return this.toVariant(type, value)
+            case 'map':
+                return this.toMap(type, value)
+            case 'set':
+                return this.toSet(type, value)
+            case 'record':
+                return this.toRecord(type, value)
+            case 'bls12_381.fr':
+                return this.toBls12381Fr(type, value)
+            case 'bls12_381.fp':
+                return this.toBls12381Fp(type, value)
+            default:
+                return value
         }
     }
 
-    toAddress({name, _}, value) {
+    toAddress({ name, _ }, value) {
         return this._apiEncoder.decodeWithType(value, name)
     }
 
@@ -45,7 +45,7 @@ class InternalMapper {
         }
 
         if ([undefined, null].includes(value)) {
-            return {None: []}
+            return { None: [] }
         }
 
         const [variantName] = Object.keys(value)
@@ -53,12 +53,14 @@ class InternalMapper {
             return value
         }
 
-        return {Some: [value]}
+        return { Some: [value] }
     }
 
     isOptionVariant({ _name, variants }) {
-        return variants.some(({ None }) => None && None.length === 0)
+        return (
+            variants.some(({ None }) => None && None.length === 0)
             && variants.some(({ Some }) => Some)
+        )
     }
 
     toMap(type, value) {
@@ -81,10 +83,7 @@ class InternalMapper {
             return new Set(value)
         }
 
-        throw new FateTypeError(
-            'set',
-            `Fate set must be a Set or Array, got "${value}" instead`
-        )
+        throw new FateTypeError('set', `Fate set must be a Set or Array, got "${value}" instead`)
     }
 
     toRecord(type, record) {

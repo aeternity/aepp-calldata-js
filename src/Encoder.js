@@ -3,7 +3,7 @@ import AciTypeResolver from './AciTypeResolver.js'
 import ApiEncoder from './ApiEncoder.js'
 import EventEncoder from './EventEncoder.js'
 import CanonicalMapper from './Mapper/CanonicalMapper.js'
-import {FateTypeCalldata, FateTypeString} from './FateTypes.js'
+import { FateTypeCalldata, FateTypeString } from './FateTypes.js'
 import EncoderError from './Errors/EncoderError.js'
 
 /**
@@ -18,7 +18,7 @@ class Encoder {
      * const encoder = new Encoder(ACI)
      *
      * @param {Object} aci - The contract ACI in a canonical form as POJO.
-    */
+     */
     constructor(aci) {
         /** @type {ContractByteArrayEncoder} */
         this._byteArrayEncoder = new ContractByteArrayEncoder()
@@ -49,14 +49,14 @@ class Encoder {
      * @param {string} funName - The function name as defined in the ACI.
      * @param {Array} args - An array of call arguments as Javascript data structures. See README.md
      * @returns {string} Encoded calldata
-    */
+     */
     encode(contract, funName, args) {
-        const {types, required} = this._typeResolver.getCallTypes(contract, funName)
+        const { types, required } = this._typeResolver.getCallTypes(contract, funName)
 
         if (args.length > types.length || args.length < required) {
             throw new EncoderError(
                 'Non matching number of arguments. '
-                + `${funName} expects between ${required} and ${types.length} number of arguments but got ${args.length}`
+                    + `${funName} expects between ${required} and ${types.length} number of arguments but got ${args.length}`
             )
         }
 
@@ -82,7 +82,7 @@ class Encoder {
      * @param {string} data - The call return value in a canonical format.
      * @returns {boolean|string|BigInt|Array|Map|Object}
      *  Decoded value as Javascript data structures. See README.md
-    */
+     */
     decode(contract, funName, data) {
         const type = this._typeResolver.getReturnType(contract, funName)
 
@@ -107,7 +107,7 @@ class Encoder {
      * @param {string} data - Contract bytearray data in a canonical format.
      * @returns {boolean|string|BigInt|Array|Map|Object}
      *  Decoded value as Javascript data structures. See README.md
-    */
+     */
     decodeContractByteArray(data) {
         return this._byteArrayEncoder.decode(data)
     }
@@ -125,7 +125,7 @@ class Encoder {
      *
      * @param {string} data - The encoded string.
      * @returns {Uint8Array} Decoded value as byte array.
-    */
+     */
     decodeString(data) {
         const decoder = new TextDecoder()
         const bytes = this._apiEncoder.decodeWithType(data, 'contract_bytearray')
@@ -145,7 +145,7 @@ class Encoder {
      *
      * @param {string} data - The FATE encoded string.
      * @returns {string} Decoded string value.
-    */
+     */
     decodeFateString(data) {
         return this._byteArrayEncoder.decodeWithType(data, FateTypeString())
     }

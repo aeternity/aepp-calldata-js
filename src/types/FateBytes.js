@@ -1,5 +1,5 @@
 import FateData from './FateData.js'
-import {int2ByteArray} from '../utils/int2ByteArray.js'
+import { int2ByteArray } from '../utils/int2ByteArray.js'
 import hexStringToByteArray from '../utils/hexStringToByteArray.js'
 import FateTypeError from '../Errors/FateTypeError.js'
 import { FateTypeBytes } from '../FateTypes.js'

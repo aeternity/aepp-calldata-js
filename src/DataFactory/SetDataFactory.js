@@ -2,7 +2,7 @@ import FateSet from '../types/FateSet.js'
 import BaseDataFactory from './BaseDataFactory.js'
 
 class SetDataFactory extends BaseDataFactory {
-    supports({name, _valueTypes}) {
+    supports({ name, _valueTypes }) {
         return 'set' === name
     }
 

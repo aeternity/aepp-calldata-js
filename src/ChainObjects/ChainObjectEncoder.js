@@ -4,13 +4,13 @@ import Templates from './ChainObjectTemplates.js'
 class ChainObjectEncoder {
     /**
      * @param {FieldsEncoder} fieldsEncoder
-    */
+     */
     constructor(fieldsEncoder) {
         this.fieldsEncoder = fieldsEncoder
     }
 
     encode(object) {
-        const {name, vsn} = object
+        const { name, vsn } = object
         const template = Templates[name.toUpperCase()][vsn]
 
         if (template === undefined) {
@@ -19,7 +19,7 @@ class ChainObjectEncoder {
 
         const encoded = this.fieldsEncoder.encodeFields(object, template)
 
-        return new Uint8Array(encoded.flatMap(e => [...e]))
+        return new Uint8Array(encoded.flatMap((e) => [...e]))
     }
 
     // Decoding a fixed size object
@@ -28,7 +28,7 @@ class ChainObjectEncoder {
     decode(name, data) {
         // version field is 4 bytes and should be always first
         // note that it may exists other objects with different version size?
-        const {vsn} = this.fieldsEncoder.decodeFields([data.slice(0, 4)], {vsn: 'uint_32'})
+        const { vsn } = this.fieldsEncoder.decodeFields([data.slice(0, 4)], { vsn: 'uint_32' })
 
         const template = Templates[name.toUpperCase()][vsn]
         const binaryFields = this.fieldsEncoder.splitFields(data, template)

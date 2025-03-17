@@ -8,12 +8,12 @@ const TAGS = {
 }
 
 const PREFIX2TAG = {
-    'ak': TAGS.ACCOUNT_PUBKEY,
-    'nm': TAGS.NAME,
-    'cm': TAGS.COMMITMENT,
-    'ok': TAGS.ORACLE_PUBKEY,
-    'ct': TAGS.CONTRACT_PUBKEY,
-    'ch': TAGS.CHANNEL
+    ak: TAGS.ACCOUNT_PUBKEY,
+    nm: TAGS.NAME,
+    cm: TAGS.COMMITMENT,
+    ok: TAGS.ORACLE_PUBKEY,
+    ct: TAGS.CONTRACT_PUBKEY,
+    ch: TAGS.CHANNEL,
 }
 
 class IdEncoder {
@@ -24,7 +24,7 @@ class IdEncoder {
     encode(value) {
         const [tag, ...rest] = value
 
-        const key = Object.keys(TAGS).find(tagKey => TAGS[tagKey] === tag)
+        const key = Object.keys(TAGS).find((tagKey) => TAGS[tagKey] === tag)
         if (key === undefined) {
             throw new Error('Unsupported ID tag: ' + tag)
         }

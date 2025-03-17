@@ -1,38 +1,38 @@
-import {hash} from '../utils/hash.js'
-import {byteArray2Int} from '../utils/int2ByteArray.js'
+import { hash } from '../utils/hash.js'
+import { byteArray2Int } from '../utils/int2ByteArray.js'
 import TypeResolveError from '../Errors/TypeResolveError.js'
 import BaseDataFactory from './BaseDataFactory.js'
 
-const DATA_TYPES = [
-    'string',
-    'signature',
-    'bytes',
-]
+const DATA_TYPES = ['string', 'signature', 'bytes']
 
 class EventDataFactory extends BaseDataFactory {
     supports({ name, _valueTypes }) {
         return 'event' === name
     }
 
-    create({variantType, topics}, data) {
+    create({ variantType, topics }, data) {
         const [nameHash, ...args] = topics
 
         if (typeof nameHash !== 'bigint') {
-            throw new TypeResolveError(`Event name hash (first topic) should be of type "BigInt", got "${typeof nameHash}" instead.`)
+            throw new TypeResolveError(
+                `Event name hash (first topic) should be of type "BigInt", got "${typeof nameHash}" instead.`
+            )
         }
 
         const idx = variantType.variants
-            .map(v => byteArray2Int(hash(Object.keys(v)[0])))
-            .findIndex(v => v === nameHash)
+            .map((v) => byteArray2Int(hash(Object.keys(v)[0])))
+            .findIndex((v) => v === nameHash)
 
         if (idx === -1) {
-            throw new TypeResolveError('Event name hash does not match any event variant constructor')
+            throw new TypeResolveError(
+                'Event name hash does not match any event variant constructor'
+            )
         }
 
         const variant = variantType.variants[idx]
         const variantName = Object.keys(variant)[0]
         const [argTypes] = Object.values(variant)
-        const resolvedArgs = argTypes.map(t => {
+        const resolvedArgs = argTypes.map((t) => {
             if (this._isData(t)) {
                 return data
             }
@@ -40,7 +40,7 @@ class EventDataFactory extends BaseDataFactory {
             return args.shift()
         })
 
-        return this.valueFactory.create(variantType, {[variantName]: resolvedArgs})
+        return this.valueFactory.create(variantType, { [variantName]: resolvedArgs })
     }
 
     _isData(type) {

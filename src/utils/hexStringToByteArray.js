@@ -9,10 +9,12 @@ const hexStringToByteArray = (str) => {
         throw new FormatError(`Invalid hex string: ${str}`)
     }
 
-    return new Uint8Array(match[2]
-        .split(/(.{1,2})/)
-        .filter(el => el)
-        .map(el => parseInt(el, 16)))
+    return new Uint8Array(
+        match[2]
+            .split(/(.{1,2})/)
+            .filter((el) => el)
+            .map((el) => parseInt(el, 16))
+    )
 }
 
 export default hexStringToByteArray

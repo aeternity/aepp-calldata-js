@@ -1,5 +1,5 @@
 import FateData from './FateData.js'
-import {FateTypeTuple} from '../FateTypes.js'
+import { FateTypeTuple } from '../FateTypes.js'
 
 const zipObject = (keys, values) => {
     const reducer = (acc, k, i) => {
@@ -14,7 +14,9 @@ class FateTuple extends FateData {
     constructor(valueTypes = [], items = []) {
         super('tuple')
 
-        this._valueTypes = (valueTypes.hasOwnProperty('valueTypes')) ? valueTypes.valueTypes : valueTypes
+        this._valueTypes = valueTypes.hasOwnProperty('valueTypes')
+            ? valueTypes.valueTypes
+            : valueTypes
         this._type = Array.isArray(valueTypes) ? FateTypeTuple(valueTypes) : valueTypes
         this._items = Array.from(items)
     }
@@ -36,7 +38,7 @@ class FateTuple extends FateData {
     }
 
     valueOf() {
-        return this.prepareItems(e => e.valueOf())
+        return this.prepareItems((e) => e.valueOf())
     }
 
     prepareItems(callback) {

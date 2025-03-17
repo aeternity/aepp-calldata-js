@@ -29,9 +29,10 @@ class FieldEncoder {
             id: (value) => this.idEncoder.encode(value),
             key_block: (value, _params) => this.chainObjectEncoder.decode('key_block', value),
             micro_block: (value, _params) => this.chainObjectEncoder.decode('micro_block', value),
-            light_micro_block: (value, _params) => this.chainObjectEncoder.decode('light_micro_block', value),
+            light_micro_block: (value, _params) =>
+                this.chainObjectEncoder.decode('light_micro_block', value),
             chain_object: (value) => this.chainObjectSerializer.deserialize(value),
-            ...additionalDecoders
+            ...additionalDecoders,
         }
 
         this.encoders = {
@@ -50,7 +51,7 @@ class FieldEncoder {
             micro_block: (value, _params) => this.chainObjectEncoder.encode(value),
             light_micro_block: (value, _params) => this.chainObjectEncoder.encode(value),
             chain_object: (value) => this.chainObjectSerializer.serialize(value),
-            ...additionalEncoders
+            ...additionalEncoders,
         }
     }
 

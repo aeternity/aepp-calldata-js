@@ -37,25 +37,28 @@ class TypeFactory {
             return FateTypeBool()
         }
 
-        if ((tag & 0x01) === FateTag.SMALL_INT
+        if (
+            (tag & 0x01) === FateTag.SMALL_INT
             || tag === FateTag.POS_BIG_INT
             || tag === FateTag.NEG_BIG_INT
         ) {
             return FateTypeInt()
         }
 
-        if ((tag & 0x03) === FateTag.SHORT_STRING
+        if (
+            (tag & 0x03) === FateTag.SHORT_STRING
             || tag === FateTag.LONG_STRING
             || tag === FateTag.EMPTY_STRING
         ) {
             return FateTypeString()
         }
 
-        if ((tag & 0x0F) === FateTag.SHORT_LIST || tag === FateTag.LONG_LIST) {
+        if ((tag & 0x0f) === FateTag.SHORT_LIST || tag === FateTag.LONG_LIST) {
             return FateTypeList()
         }
 
-        if ((tag & 0x0F) === FateTag.SHORT_TUPLE
+        if (
+            (tag & 0x0f) === FateTag.SHORT_TUPLE
             || tag === FateTag.LONG_TUPLE
             || tag === FateTag.EMPTY_TUPLE
         ) {
@@ -85,7 +88,8 @@ class TypeFactory {
             return FateTypeContractBytearray()
         }
 
-        if (tag === FateTag.TYPE_INTEGER
+        if (
+            tag === FateTag.TYPE_INTEGER
             || tag === FateTag.TYPE_BOOLEAN
             || tag === FateTag.TYPE_LIST
             || tag === FateTag.TYPE_TUPLE

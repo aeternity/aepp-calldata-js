@@ -33,11 +33,11 @@ class CompositeDataFactory {
             `Number of types (${types.length}) and values (${values.length}) should match`
         )
 
-        return zip(types, values).map(el => this.create(...el))
+        return zip(types, values).map((el) => this.create(...el))
     }
 
     create(type, value) {
-        const factory = this._factories.find(f => f.supports(type))
+        const factory = this._factories.find((f) => f.supports(type))
         assert(factory, `Unsupported type "${type.name}"`)
 
         return factory.create(type, value)

@@ -1,4 +1,4 @@
-import {symbolIdentifier} from '../utils/hash.js'
+import { symbolIdentifier } from '../utils/hash.js'
 import FateTypeError from '../Errors/FateTypeError.js'
 import FateCalldata from '../types/FateCalldata.js'
 import BaseDataFactory from './BaseDataFactory.js'

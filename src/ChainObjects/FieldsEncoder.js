@@ -25,7 +25,7 @@ class FieldsEncoder {
      * @param {object} data - An object with field => value items
      * @param {object} template - An object with field => type items
      * @returns {array} A poisioned array of encoded fields with preserved order
-    */
+     */
     encodeFields(data, template) {
         const chunks = []
 
@@ -47,7 +47,7 @@ class FieldsEncoder {
      * @param {array} data - An array with positioned values according to the template
      * @param {object} template - An object with field => type items
      * @returns {object} An object with decoded field => value items
-    */
+     */
     decodeFields(data, template) {
         const chunks = {}
         let idx = 0
@@ -107,13 +107,13 @@ class FieldsEncoder {
 
     #encodeField(typeInfo, value) {
         if (Array.isArray(typeInfo)) {
-            return value.map(v => this.#encodeField(typeInfo[0], v))
+            return value.map((v) => this.#encodeField(typeInfo[0], v))
         }
 
         if (Object.getPrototypeOf(typeInfo) === Object.prototype) {
-            const {template} = typeInfo
+            const { template } = typeInfo
 
-            return new Uint8Array(this.encodeFields(value, template).flatMap(e => [...e]))
+            return new Uint8Array(this.encodeFields(value, template).flatMap((e) => [...e]))
         }
 
         if (this.primEncoder.supports(typeInfo)) {
@@ -125,11 +125,11 @@ class FieldsEncoder {
 
     #decodeField(typeInfo, value) {
         if (Array.isArray(typeInfo)) {
-            return value.map(v => this.#decodeField(typeInfo[0], v))
+            return value.map((v) => this.#decodeField(typeInfo[0], v))
         }
 
         if (Object.getPrototypeOf(typeInfo) === Object.prototype) {
-            const {template} = typeInfo
+            const { template } = typeInfo
             const objectFields = this.splitFields(value, template)
 
             return this.decodeFields(objectFields, template)

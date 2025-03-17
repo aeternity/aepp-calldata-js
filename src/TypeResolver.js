@@ -28,7 +28,7 @@ import {
     FateTypeAENSName,
     FateTypeAENSv2Name,
     FateTypeBls12381Fr,
-    FateTypeBls12381Fp
+    FateTypeBls12381Fp,
 } from './FateTypes.js'
 
 const isObject = (value) => {
@@ -49,7 +49,7 @@ class TypeResolver {
             return []
         }
 
-        return valueTypes.map(v => {
+        return valueTypes.map((v) => {
             const tpl = v.hasOwnProperty('type') ? v.type : v
             const t = vars.hasOwnProperty(tpl) ? vars[tpl] : tpl
 
@@ -63,7 +63,7 @@ class TypeResolver {
         let resolvedTypes = []
 
         if (isObject(type)) {
-            [[key, valueTypes]] = Object.entries(type)
+            ;[[key, valueTypes]] = Object.entries(type)
         }
 
         if (this.isCustomType(key)) {
@@ -185,7 +185,7 @@ class TypeResolver {
         }
 
         if (key === 'record') {
-            const keys = valueTypes.map(e => e.name)
+            const keys = valueTypes.map((e) => e.name)
 
             return FateTypeRecord(keys, resolvedTypes)
         }
@@ -210,14 +210,14 @@ class TypeResolver {
     }
 
     resolveVariant(valueTypes, vars) {
-        const variants = valueTypes.map(e => {
+        const variants = valueTypes.map((e) => {
             const [[variant, args]] = Object.entries(e)
-            const resolvedArgs = args.map(v => {
+            const resolvedArgs = args.map((v) => {
                 const t = vars.hasOwnProperty(v) ? vars[v] : v
                 return this.resolveType(t, vars)
             })
 
-            return {[variant]: resolvedArgs}
+            return { [variant]: resolvedArgs }
         })
 
         return FateTypeVariant(variants)

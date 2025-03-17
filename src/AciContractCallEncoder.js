@@ -3,7 +3,7 @@ import AciTypeResolver from './AciTypeResolver.js'
 import ApiEncoder from './ApiEncoder.js'
 import EventEncoder from './EventEncoder.js'
 import CanonicalMapper from './Mapper/CanonicalMapper.js'
-import {FateTypeCalldata, FateTypeString} from './FateTypes.js'
+import { FateTypeCalldata, FateTypeString } from './FateTypes.js'
 import EncoderError from './Errors/EncoderError.js'
 
 class AciContractCallEncoder {
@@ -15,7 +15,7 @@ class AciContractCallEncoder {
      * const encoder = new AciContractCallEncoder(ACI)
      *
      * @param {Object} aci - The contract ACI in a canonical (CLI compiler) form as POJO.
-    */
+     */
     constructor(aci) {
         /** @type {ContractByteArrayEncoder} */
         this._byteArrayEncoder = new ContractByteArrayEncoder()
@@ -46,14 +46,14 @@ class AciContractCallEncoder {
      * @param {string} funName - The function name as defined in the ACI.
      * @param {Array} args - An array of call arguments as Javascript data structures. See README.md
      * @returns {string} Encoded calldata
-    */
+     */
     encodeCall(contract, funName, args) {
-        const {types, required} = this._typeResolver.getCallTypes(contract, funName)
+        const { types, required } = this._typeResolver.getCallTypes(contract, funName)
 
         if (args.length > types.length || args.length < required) {
             throw new EncoderError(
                 'Non matching number of arguments. '
-                + `${funName} expects between ${required} and ${types.length} number of arguments but got ${args.length}`
+                    + `${funName} expects between ${required} and ${types.length} number of arguments but got ${args.length}`
             )
         }
 
@@ -78,9 +78,9 @@ class AciContractCallEncoder {
      * @param {string} funName - The function name as defined in the ACI.
      * @param {string} data - Encoded calldata in canonical format.
      * @returns {string} Decoded data
-    */
+     */
     decodeCall(contract, funName, data) {
-        const {types, _required} = this._typeResolver.getCallTypes(contract, funName)
+        const { types, _required } = this._typeResolver.getCallTypes(contract, funName)
         const calldataType = FateTypeCalldata(funName, types)
 
         return this._byteArrayEncoder.decodeWithType(data, calldataType)
@@ -101,7 +101,7 @@ class AciContractCallEncoder {
      * @param {'ok'|'revert'|'error'} resultType - The call result type.
      * @returns {boolean|string|BigInt|Array|Map|Object}
      *  Decoded value as Javascript data structures. See README.md
-    */
+     */
     decodeResult(contract, funName, data, resultType = 'ok') {
         if (resultType === 'ok') {
             const type = this._typeResolver.getReturnType(contract, funName)

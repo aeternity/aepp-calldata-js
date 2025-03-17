@@ -11,7 +11,4 @@ const symbolIdentifier = (funName) => {
     return hash(funName).slice(0, 4)
 }
 
-export {
-    hash,
-    symbolIdentifier
-}
+export { hash, symbolIdentifier }

@@ -1,5 +1,5 @@
 import FateBls12381Field from './FateBls12381Field.js'
-import {FateTypeBls12381Fp} from '../FateTypes.js'
+import { FateTypeBls12381Fp } from '../FateTypes.js'
 
 const SIZE = 48
 const NAME = 'bls12_381.fp'

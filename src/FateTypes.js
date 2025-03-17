@@ -1,52 +1,52 @@
 const FateTypeVoid = () => {
-    return {name: 'void'}
+    return { name: 'void' }
 }
 
 const FateTypeInt = () => {
-    return {name: 'int'}
+    return { name: 'int' }
 }
 
 const FateTypeBool = () => {
-    return {name: 'bool'}
+    return { name: 'bool' }
 }
 
 const FateTypeString = () => {
-    return {name: 'string'}
+    return { name: 'string' }
 }
 
 const FateTypeBits = () => {
-    return {name: 'bits'}
+    return { name: 'bits' }
 }
 
 const FateTypeBytes = (size) => {
-    return {name: 'bytes', size}
+    return { name: 'bytes', size }
 }
 
 const FateTypeHash = () => {
-    return {name: 'hash'}
+    return { name: 'hash' }
 }
 
 const FateTypeSignature = () => {
-    return {name: 'signature'}
+    return { name: 'signature' }
 }
 
 const FateTypeAccountAddress = () => {
-    return {name: 'account_pubkey'}
+    return { name: 'account_pubkey' }
 }
 
 const FateTypeContractAddress = () => {
-    return {name: 'contract_pubkey'}
+    return { name: 'contract_pubkey' }
 }
 
 const FateTypeChannelAddress = () => {
-    return {name: 'channel'}
+    return { name: 'channel' }
 }
 
 const FateTypeOracleAddress = (questionType, answerType) => {
     return {
         name: 'oracle_pubkey',
         questionType,
-        answerType
+        answerType,
     }
 }
 
@@ -54,12 +54,12 @@ const FateTypeOracleQueryAddress = (questionType, answerType) => {
     return {
         name: 'oracle_query_id',
         questionType,
-        answerType
+        answerType,
     }
 }
 
 const FateTypeByteArray = () => {
-    return {name: 'byte_array'}
+    return { name: 'byte_array' }
 }
 
 const FateTypeList = (valuesType) => {
@@ -72,7 +72,7 @@ const FateTypeList = (valuesType) => {
 const FateTypeTuple = (valueTypes = []) => {
     return {
         name: 'tuple',
-        valueTypes
+        valueTypes,
     }
 }
 
@@ -114,63 +114,53 @@ const FateTypeType = (type) => {
 }
 
 const FateTypeOption = (valueTypes) => {
-    const variants = [
-        { None: []},
-        { Some: valueTypes }
-    ]
+    const variants = [{ None: [] }, { Some: valueTypes }]
 
     return FateTypeVariant(variants)
 }
 
 const FateTypeChainTTL = () => {
-    const variants = [
-        {RelativeTTL: [FateTypeInt()]},
-        {FixedTTL: [FateTypeInt()]}
-    ]
+    const variants = [{ RelativeTTL: [FateTypeInt()] }, { FixedTTL: [FateTypeInt()] }]
 
     return FateTypeVariant(variants)
 }
 
 const FateTypeChainGAMetaTx = () => {
-    const variants = [
-        {'Chain.GAMetaTx': [FateTypeAccountAddress(), FateTypeInt()]},
-    ]
+    const variants = [{ 'Chain.GAMetaTx': [FateTypeAccountAddress(), FateTypeInt()] }]
 
     return FateTypeVariant(variants)
 }
 
 const FateTypeChainPayingForTx = () => {
-    const variants = [
-        {'Chain.PayingForTx': [FateTypeAccountAddress(), FateTypeInt()]},
-    ]
+    const variants = [{ 'Chain.PayingForTx': [FateTypeAccountAddress(), FateTypeInt()] }]
 
     return FateTypeVariant(variants)
 }
 
 const FateTypeChainBaseTx = () => {
     const variants = [
-        {'Chain.SpendTx': [FateTypeAccountAddress(), FateTypeInt(), FateTypeString()]},
-        {'Chain.OracleRegisterTx': []},
-        {'Chain.OracleQueryTx': []},
-        {'Chain.OracleResponseTx': []},
-        {'Chain.OracleExtendTx': []},
-        {'Chain.NamePreclaimTx': []},
-        {'Chain.NameClaimTx': [FateTypeString()]},
-        {'Chain.NameUpdateTx': [FateTypeHash()]},
-        {'Chain.NameRevokeTx': [FateTypeHash()]},
-        {'Chain.NameTransferTx': [FateTypeAccountAddress(), FateTypeHash()]},
-        {'Chain.ChannelCreateTx': [FateTypeAccountAddress()]},
-        {'Chain.ChannelDepositTx': [FateTypeAccountAddress(), FateTypeInt()]},
-        {'Chain.ChannelWithdrawTx': [FateTypeAccountAddress(), FateTypeInt()]},
-        {'Chain.ChannelForceProgressTx': [FateTypeAccountAddress()]},
-        {'Chain.ChannelCloseMutualTx': [FateTypeAccountAddress()]},
-        {'Chain.ChannelCloseSoloTx': [FateTypeAccountAddress()]},
-        {'Chain.ChannelSlashTx': [FateTypeAccountAddress()]},
-        {'Chain.ChannelSettleTx': [FateTypeAccountAddress()]},
-        {'Chain.ChannelSnapshotSoloTx': [FateTypeAccountAddress()]},
-        {'Chain.ContractCreateTx': [FateTypeAccountAddress()]},
-        {'Chain.ContractCallTx': [FateTypeAccountAddress(), FateTypeInt()]},
-        {'Chain.GAAttachTx': []},
+        { 'Chain.SpendTx': [FateTypeAccountAddress(), FateTypeInt(), FateTypeString()] },
+        { 'Chain.OracleRegisterTx': [] },
+        { 'Chain.OracleQueryTx': [] },
+        { 'Chain.OracleResponseTx': [] },
+        { 'Chain.OracleExtendTx': [] },
+        { 'Chain.NamePreclaimTx': [] },
+        { 'Chain.NameClaimTx': [FateTypeString()] },
+        { 'Chain.NameUpdateTx': [FateTypeHash()] },
+        { 'Chain.NameRevokeTx': [FateTypeHash()] },
+        { 'Chain.NameTransferTx': [FateTypeAccountAddress(), FateTypeHash()] },
+        { 'Chain.ChannelCreateTx': [FateTypeAccountAddress()] },
+        { 'Chain.ChannelDepositTx': [FateTypeAccountAddress(), FateTypeInt()] },
+        { 'Chain.ChannelWithdrawTx': [FateTypeAccountAddress(), FateTypeInt()] },
+        { 'Chain.ChannelForceProgressTx': [FateTypeAccountAddress()] },
+        { 'Chain.ChannelCloseMutualTx': [FateTypeAccountAddress()] },
+        { 'Chain.ChannelCloseSoloTx': [FateTypeAccountAddress()] },
+        { 'Chain.ChannelSlashTx': [FateTypeAccountAddress()] },
+        { 'Chain.ChannelSettleTx': [FateTypeAccountAddress()] },
+        { 'Chain.ChannelSnapshotSoloTx': [FateTypeAccountAddress()] },
+        { 'Chain.ContractCreateTx': [FateTypeAccountAddress()] },
+        { 'Chain.ContractCallTx': [FateTypeAccountAddress(), FateTypeInt()] },
+        { 'Chain.GAAttachTx': [] },
     ]
 
     return FateTypeVariant(variants)
@@ -178,10 +168,10 @@ const FateTypeChainBaseTx = () => {
 
 const FateTypeAENSPointee = () => {
     const variants = [
-        {'AENS.AccountPt': [FateTypeAccountAddress()]},
-        {'AENS.OraclePt': [FateTypeAccountAddress()]},
-        {'AENS.ContractPt': [FateTypeAccountAddress()]},
-        {'AENS.ChannelPt': [FateTypeAccountAddress()]},
+        { 'AENS.AccountPt': [FateTypeAccountAddress()] },
+        { 'AENS.OraclePt': [FateTypeAccountAddress()] },
+        { 'AENS.ContractPt': [FateTypeAccountAddress()] },
+        { 'AENS.ChannelPt': [FateTypeAccountAddress()] },
     ]
 
     return FateTypeVariant(variants)
@@ -189,36 +179,40 @@ const FateTypeAENSPointee = () => {
 
 const FateTypeAENSv2Pointee = () => {
     const variants = [
-        {'AENSv2.AccountPt': [FateTypeAccountAddress()]},
-        {'AENSv2.OraclePt': [FateTypeAccountAddress()]},
-        {'AENSv2.ContractPt': [FateTypeAccountAddress()]},
-        {'AENSv2.ChannelPt': [FateTypeAccountAddress()]},
-        {'AENSv2.DataPt': [FateTypeBytes()]}, // max 1024 bytes
+        { 'AENSv2.AccountPt': [FateTypeAccountAddress()] },
+        { 'AENSv2.OraclePt': [FateTypeAccountAddress()] },
+        { 'AENSv2.ContractPt': [FateTypeAccountAddress()] },
+        { 'AENSv2.ChannelPt': [FateTypeAccountAddress()] },
+        { 'AENSv2.DataPt': [FateTypeBytes()] }, // max 1024 bytes
     ]
 
     return FateTypeVariant(variants)
 }
 
 const FateTypeAENSName = () => {
-    const variants = [{
-        'AENS.Name': [
-            FateTypeAccountAddress(),
-            FateTypeChainTTL(),
-            FateTypeMap(FateTypeString(), FateTypeAENSPointee())
-        ]
-    }]
+    const variants = [
+        {
+            'AENS.Name': [
+                FateTypeAccountAddress(),
+                FateTypeChainTTL(),
+                FateTypeMap(FateTypeString(), FateTypeAENSPointee()),
+            ],
+        },
+    ]
 
     return FateTypeVariant(variants)
 }
 
 const FateTypeAENSv2Name = () => {
-    const variants = [{
-        'AENSv2.Name': [
-            FateTypeAccountAddress(),
-            FateTypeChainTTL(),
-            FateTypeMap(FateTypeString(), FateTypeAENSv2Pointee())
-        ]
-    }]
+    const variants = [
+        {
+            'AENSv2.Name': [
+                FateTypeAccountAddress(),
+                FateTypeChainTTL(),
+                FateTypeMap(FateTypeString(), FateTypeAENSv2Pointee()),
+            ],
+        },
+    ]
 
     return FateTypeVariant(variants)
 }
@@ -232,11 +226,11 @@ const FateTypeEvent = (variantType, topics) => {
 }
 
 const FateTypeBls12381Fr = () => {
-    return {name: 'bls12_381.fr'}
+    return { name: 'bls12_381.fr' }
 }
 
 const FateTypeBls12381Fp = () => {
-    return {name: 'bls12_381.fp'}
+    return { name: 'bls12_381.fp' }
 }
 
 const FateTypeCalldata = (functionName, argumentTypes) => {
@@ -248,18 +242,18 @@ const FateTypeCalldata = (functionName, argumentTypes) => {
 }
 
 const FateTypeContractBytearray = () => {
-    return {name: 'contract_bytearray'}
+    return { name: 'contract_bytearray' }
 }
 
 const FateTypeVar = (id) => {
     return {
         name: 'tvar',
-        id
+        id,
     }
 }
 
 const FateTypeAny = () => {
-    return {name: 'any'}
+    return { name: 'any' }
 }
 
 export {

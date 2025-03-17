@@ -3,7 +3,7 @@ import hexStringToByteArray from '../../src/utils/hexStringToByteArray.js'
 
 const b = (value) => new Uint8Array(value)
 
-test('hexStringToByteArray', t => {
+test('hexStringToByteArray', (t) => {
     t.plan(7)
     t.deepEqual(hexStringToByteArray(''), b([]))
     t.deepEqual(hexStringToByteArray('0x'), b([]))

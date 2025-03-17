@@ -5,9 +5,7 @@
         "es2021": true,
         "node": true
     },
-    "extends": [
-        "airbnb-base"
-    ],
+    "extends": ["airbnb-base"],
     "parserOptions": {
         "ecmaVersion": 13
     },
@@ -21,7 +19,7 @@
             "error",
             { "blankLine": "always", "prev": "*", "next": "block-like" },
             { "blankLine": "always", "prev": "block-like", "next": "*" },
-            { "blankLine": "any",    "prev": ["const", "let", "var"], "next": "block-like"}
+            { "blankLine": "any", "prev": ["const", "let", "var"], "next": "block-like" }
         ],
         "no-negated-condition": "error",
         "no-else-return": "error",

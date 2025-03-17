@@ -7,7 +7,7 @@ class BaseDataFactory {
         return this._valueFactory
     }
 
-    supports({_name, _valueTypes}) {
+    supports({ _name, _valueTypes }) {
         return false
     }
 

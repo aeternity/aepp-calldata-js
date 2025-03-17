@@ -1,5 +1,5 @@
 import FateData from './FateData.js'
-import {FateTypeVoid} from '../FateTypes.js'
+import { FateTypeVoid } from '../FateTypes.js'
 
 class FateVoid extends FateData {
     constructor() {

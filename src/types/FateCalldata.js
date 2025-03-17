@@ -24,7 +24,7 @@ class FateCalldata extends FateData {
     valueOf() {
         return {
             functionId: this._functionId,
-            args: this._args
+            args: this._args,
         }
     }
 

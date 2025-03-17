@@ -17,7 +17,7 @@ class FateApiEncoder {
      * @param {string} type - Name of the data type
      * @param {Uint8Array} data - Data to be encoded
      * @returns {string} Encoded data in canonical format
-    */
+     */
     encode(type, data) {
         return this._internalEncoder.encode(type, data)
     }
@@ -33,7 +33,7 @@ class FateApiEncoder {
      *
      * @param {string} data - FATE API encoded data in canonical format.
      * @returns {Uint8Array} Decoded data
-    */
+     */
     decode(data) {
         return this._internalEncoder.decode(data)
     }

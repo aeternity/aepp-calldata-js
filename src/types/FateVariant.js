@@ -1,5 +1,5 @@
 import FateData from './FateData.js'
-import {FateTypeVariant, FateTypeTuple, FateTypeInt} from '../FateTypes.js'
+import { FateTypeVariant, FateTypeTuple, FateTypeInt } from '../FateTypes.js'
 
 class FateVariant extends FateData {
     constructor(arities, tag, value = [], valueTypes = [], variants = []) {
@@ -57,10 +57,10 @@ class FateVariant extends FateData {
             return this
         }
 
-        const value = this._value.map(e => e.valueOf())
+        const value = this._value.map((e) => e.valueOf())
 
         return {
-            [this.variantName]: value
+            [this.variantName]: value,
         }
     }
 

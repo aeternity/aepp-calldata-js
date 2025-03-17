@@ -5,26 +5,21 @@ import BaseSerializer from './BaseSerializer.js'
 
 class ListSerializer extends BaseSerializer {
     serialize(list) {
-        const serializedElements = list.items.map(e => {
-            return this.globalSerializer.serialize(e)
-        }).flat(Infinity)
+        const serializedElements = list.items
+            .map((e) => {
+                return this.globalSerializer.serialize(e)
+            })
+            .flat(Infinity)
 
         const len = list.items.length
 
         if (len < 16) {
             const prefix = (len << 4) | FateTag.SHORT_LIST
 
-            return [
-                prefix,
-                ...serializedElements
-            ]
+            return [prefix, ...serializedElements]
         }
 
-        return [
-            FateTag.LONG_LIST,
-            ...RLPInt.encode(len - 16),
-            ...serializedElements
-        ]
+        return [FateTag.LONG_LIST, ...RLPInt.encode(len - 16), ...serializedElements]
     }
 
     deserializeStream(data, typeInfo) {
@@ -34,12 +29,12 @@ class ListSerializer extends BaseSerializer {
         let rest = buffer.slice(1)
 
         if (prefix === FateTag.LONG_LIST) {
-            [len, rest] = RLPInt.decode(buffer.slice(1))
+            ;[len, rest] = RLPInt.decode(buffer.slice(1))
             len += 16n
         }
 
-        if ((prefix & 0x0F) === FateTag.SHORT_LIST) {
-            len = BigInt((prefix & 0xF0) >> 4)
+        if ((prefix & 0x0f) === FateTag.SHORT_LIST) {
+            len = BigInt((prefix & 0xf0) >> 4)
         }
 
         let itemsType
@@ -52,7 +47,7 @@ class ListSerializer extends BaseSerializer {
         const elements = []
 
         for (let i = 0n; i < len; i++) {
-            [el, rest] = this.globalSerializer.deserializeStream(rest, itemsType)
+            ;[el, rest] = this.globalSerializer.deserializeStream(rest, itemsType)
             elements.push(el)
         }
 
@@ -64,10 +59,7 @@ class ListSerializer extends BaseSerializer {
             itemsType = elements[0].type
         }
 
-        return [
-            new FateList(itemsType, elements),
-            rest
-        ]
+        return [new FateList(itemsType, elements), rest]
     }
 }
 
