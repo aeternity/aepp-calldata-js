@@ -1,6 +1,8 @@
 import TypeResolver from './TypeResolver.js'
 import TypeResolveError from './Errors/TypeResolveError.js'
 import {FateTypeEvent} from './FateTypes.js'
+import {symbolIdentifier} from './utils/hash.js'
+import {byteArray2Hex} from './utils/int2ByteArray.js'
 
 const isObject = (value) => {
     return value && typeof value === 'object' && value.constructor === Object
@@ -139,6 +141,18 @@ class AciTypeResolver extends TypeResolver {
         const typeDef = vars.hasOwnProperty(def.typedef) ? vars[def.typedef] : def.typedef
 
         return [typeDef, vars]
+    }
+
+    getFunction(functionId) {
+        const { contract } = this.aci.at(-1)
+        const functionName = contract.functions
+            .map(e => e.name)
+            .find((name) => byteArray2Hex(symbolIdentifier(name)) === functionId)
+        if (functionName == null) {
+            throw new TypeResolveError(`Unknown function id ${functionId}`)
+        }
+
+        return { contractName: contract.name, functionName }
     }
 }
 

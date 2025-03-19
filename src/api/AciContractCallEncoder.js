@@ -39,7 +39,7 @@ class AciContractCallEncoder {
      * const data = encoder.decodeCall('Test', 'test_string', 'cb_KxHwzCuVGyl3aG9vbHltb2x5zwMSnw==')
      * console.log(`Decoded data: ${data}`)
      * // Outputs:
-     * // Decoded data: ["whoolymoly"]
+     * // Decoded data: { functionId: "f0cc2b95", args: ["whoolymoly"] }
      *
      * @param {string} contract - The contract name as defined in the ACI.
      * @param {string} funName - The function name as defined in the ACI.
@@ -48,6 +48,26 @@ class AciContractCallEncoder {
     */
     decodeCall(contract, funName, data) {
         return this._internalEncoder.decodeCall(contract, funName, data)
+    }
+
+    /**
+     * * Decodes function details by contract calldata
+     *
+     * @example
+     * const data = encoder.decodeFunction('cb_KxHwzCuVGyl3aG9vbHltb2x5zwMSnw==')
+     * console.log(`Decoded data: ${data}`)
+     * // Outputs:
+     * // Decoded data: {
+     * //   contractName: "Test",
+     * //   functionName: "test_string",
+     * //   functionId: "f0cc2b95",
+     * // }
+     *
+     * @param {string} data - Encoded calldata in canonical format.
+     * @returns {object} Decoded function details
+    */
+    decodeFunction(data) {
+        return this._internalEncoder.decodeFunction(data)
     }
 
     /**
