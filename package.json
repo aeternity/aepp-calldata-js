@@ -83,7 +83,7 @@
     "prepare": "npm run build",
     "test": "ava --verbose",
     "test:watch": "ava --verbose --watch",
-    "format": "prettier . --write",
-    "lint": "prettier . --check && eslint src tests"
+    "format": "node prettier.cjs . --write",
+    "lint": "node prettier.cjs . --check && eslint src tests"
   }
 }
