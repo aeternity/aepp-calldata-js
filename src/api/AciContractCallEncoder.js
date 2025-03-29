@@ -9,7 +9,7 @@ class AciContractCallEncoder {
      * const encoder = new AciContractCallEncoder(ACI)
      *
      * @param {Object} aci - The contract ACI in a canonical (CLI compiler) form as POJO.
-    */
+     */
     constructor(aci) {
         this._internalEncoder = new InternalEncoder(aci)
     }
@@ -27,7 +27,7 @@ class AciContractCallEncoder {
      * @param {string} funName - The function name as defined in the ACI.
      * @param {Array} args - An array of call arguments as Javascript data structures. See README.md
      * @returns {string} Encoded calldata
-    */
+     */
     encodeCall(contract, funName, args) {
         return this._internalEncoder.encodeCall(contract, funName, args)
     }
@@ -45,7 +45,7 @@ class AciContractCallEncoder {
      * @param {string} funName - The function name as defined in the ACI.
      * @param {string} data - Encoded calldata in canonical format.
      * @returns {string} Decoded data
-    */
+     */
     decodeCall(contract, funName, data) {
         return this._internalEncoder.decodeCall(contract, funName, data)
     }
@@ -65,7 +65,7 @@ class AciContractCallEncoder {
      *
      * @param {string} data - Encoded calldata in canonical format.
      * @returns {object} Decoded function details
-    */
+     */
     decodeFunction(data) {
         return this._internalEncoder.decodeFunction(data)
     }
@@ -85,7 +85,7 @@ class AciContractCallEncoder {
      * @param {'ok'|'revert'|'error'} resultType - The call result type.
      * @returns {boolean|string|BigInt|Array|Map|Object}
      *  Decoded value as Javascript data structures. See README.md
-    */
+     */
     decodeResult(contract, funName, data, resultType = 'ok') {
         return this._internalEncoder.decodeResult(contract, funName, data, resultType)
     }
@@ -95,6 +95,7 @@ class AciContractCallEncoder {
      *
      * @example
      * const data = encoder.decodeEvent('Test', 'cb_dHJpZ2dlcmVk1FYuYA==', [
+ // temp comment to fool Prettier
      *     34853523142692495808479485503424878684430196596020091237715106250497712463899n,
      *     17
      * ])

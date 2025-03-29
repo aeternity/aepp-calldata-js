@@ -1,6 +1,6 @@
 import fs from 'fs'
 import test from './test.js'
-import aci from '../build/contracts/Test.json' with { type: 'json' }
+import aci from '../build/contracts/Test.json' with {type: 'json'}
 import {
     Encoder,
     AciContractCallEncoder,
@@ -16,23 +16,23 @@ const CONTRACT = 'Test'
 test('Encoder (legacy) public API', t => {
     t.plan(6)
     const encoder = new Encoder(aci)
-    const error = 'cb_VHlwZSBlcnJvciBvbiBjYWxsOiBbe2J5dGVzLDw8MjQwLDIsLi4uPj59XSBpcyBub3Qgb2YgdHlwZSBbe2J5dGVzLDMyfV3EtJjU'
+    const error =
+        'cb_VHlwZSBlcnJvciBvbiBjYWxsOiBbe2J5dGVzLDw8MjQwLDIsLi4uPj59XSBpcyBub3Qgb2YgdHlwZSBbe2J5dGVzLDMyfV3EtJjU'
 
     t.is(encoder.encode(CONTRACT, 'init', []), 'cb_KxFE1kQfP4oEp9E=', 'init()')
     t.is(encoder.decode(CONTRACT, 'init', 'cb_Xfbg4g=='), undefined)
     t.is(encoder.decodeContractByteArray('cb_/8CwV/U='), true)
     t.is(encoder.decodeFateString('cb_OXJlcXVpcmUgZmFpbGVkarP9mg=='), 'require failed')
-    t.is(encoder.decodeString(error).toString(), 'Type error on call: [{bytes,<<240,2,...>>}] is not of type [{bytes,32}]')
+    t.is(
+        encoder.decodeString(error).toString(),
+        'Type error on call: [{bytes,<<240,2,...>>}] is not of type [{bytes,32}]'
+    )
 
     t.deepEqual(
-        encoder.decodeEvent(
-            CONTRACT,
-            'cb_dHJpZ2dlcmVk1FYuYA==',
-            [
-                34853523142692495808479485503424878684430196596020091237715106250497712463899n,
-                17
-            ]
-        ),
+        encoder.decodeEvent(CONTRACT, 'cb_dHJpZ2dlcmVk1FYuYA==', [
+            34853523142692495808479485503424878684430196596020091237715106250497712463899n,
+            17,
+        ]),
         {EventTwo: [17n, 'triggered']}
     )
 })
@@ -44,20 +44,16 @@ test('AciContractCallEncoder public API', t => {
     t.is(encoder.encodeCall(CONTRACT, 'init', []), 'cb_KxFE1kQfP4oEp9E=')
     t.is(encoder.decodeResult(CONTRACT, 'init', 'cb_Xfbg4g=='), undefined)
 
-    t.deepEqual(
-        encoder.decodeCall(CONTRACT, 'test_bool', 'cb_KxGhC8WIK/9/56SENg=='),
-        {functionId: 'a10bc588', args: [true, false]}
-    )
+    t.deepEqual(encoder.decodeCall(CONTRACT, 'test_bool', 'cb_KxGhC8WIK/9/56SENg=='), {
+        functionId: 'a10bc588',
+        args: [true, false],
+    })
 
     t.deepEqual(
-        encoder.decodeEvent(
-            CONTRACT,
-            'cb_dHJpZ2dlcmVk1FYuYA==',
-            [
-                34853523142692495808479485503424878684430196596020091237715106250497712463899n,
-                17
-            ]
-        ),
+        encoder.decodeEvent(CONTRACT, 'cb_dHJpZ2dlcmVk1FYuYA==', [
+            34853523142692495808479485503424878684430196596020091237715106250497712463899n,
+            17,
+        ]),
         {EventTwo: [17n, 'triggered']}
     )
 })
@@ -71,10 +67,11 @@ test('BytecodeContractCallEncoder public API', t => {
     t.is(encoder.encodeCall('init', []), 'cb_KxFE1kQfP4oEp9E=')
     t.is(encoder.decodeResult('init', 'cb_Xfbg4g=='), undefined)
 
-    t.deepEqual(
-        encoder.decodeCall('cb_KxGhC8WIK/9/56SENg=='),
-        {functionId: 'a10bc588', functionName: 'test_bool', args: [true, false]}
-    )
+    t.deepEqual(encoder.decodeCall('cb_KxGhC8WIK/9/56SENg=='), {
+        functionId: 'a10bc588',
+        functionName: 'test_bool',
+        args: [true, false],
+    })
 })
 
 test('ContractByteArrayEncoder public API', t => {
@@ -101,7 +98,9 @@ test('ContractEncoder public API', t => {
     t.plan(4)
 
     const encoder = new ContractEncoder()
-    const contract = encoder.decode('cb_+HJGA6CQAsse7xqrjce/mDvteSZLzqBKYE8JbOjr5flAYmKjyMC4Ran+RNZEHwA3ADcAGg6CEXRlc3QaDoQRZWNobwEDP/5iqLSMBDcABwEDBJcvAhFE1kQfEWluaXQRYqi0jBV0ZXN0MoIvAIU2LjEuMAHQSNos')
+    const contract = encoder.decode(
+        'cb_+HJGA6CQAsse7xqrjce/mDvteSZLzqBKYE8JbOjr5flAYmKjyMC4Ran+RNZEHwA3ADcAGg6CEXRlc3QaDoQRZWNobwEDP/5iqLSMBDcABwEDBJcvAhFE1kQfEWluaXQRYqi0jBV0ZXN0MoIvAIU2LjEuMAHQSNos'
+    )
 
     t.is(contract.tag, 70n)
     t.is(contract.vsn, 3n)

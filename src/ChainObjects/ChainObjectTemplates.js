@@ -3,13 +3,13 @@ const ChainObjectTemplates = Object.freeze({
         1: {
             nonce: 'int',
             balance: 'int',
-        }
+        },
     },
     SIGNED_TX: {
         1: {
             signatures: ['signature'],
             transaction: 'chain_object',
-        }
+        },
     },
     SPEND_TX: {
         1: {
@@ -20,7 +20,7 @@ const ChainObjectTemplates = Object.freeze({
             ttl: 'int',
             nonce: 'int',
             payload: 'bytearray',
-        }
+        },
     },
     LIGHT_MICRO_BLOCK: {
         5: {
@@ -37,17 +37,17 @@ const ChainObjectTemplates = Object.freeze({
                     time: 'uint_64',
                     // fraudHash: 'block_pof_hash',
                     signature: 'signature',
-                }
+                },
             },
             txHashes: ['tx_hash'],
             pof: 'binary',
-        }
+        },
     },
     MICRO_BLOCK_BODY: {
         5: {
             txs: ['chain_object'],
-            pof: 'binary'
-        }
+            pof: 'binary',
+        },
     },
     MICRO_BLOCK: {
         5: {
@@ -64,10 +64,10 @@ const ChainObjectTemplates = Object.freeze({
                     time: 'uint_64',
                     // fraudHash: 'block_pof_hash',
                     signature: 'signature',
-                }
+                },
             },
-            body: 'chain_object'
-        }
+            body: 'chain_object',
+        },
     },
     KEY_BLOCK: {
         1: {
@@ -98,24 +98,26 @@ const ChainObjectTemplates = Object.freeze({
             nonce: 'uint_64',
             time: 'uint_64',
             // binary, but currently interpreted as int/node version
-            info: 'uint_32'
-        }
+            info: 'uint_32',
+        },
     },
     COMPILER_SOPHIA: {
         3: {
             sourceHash: 'hex',
-            typeInfo: [{
-                hash: 'binary',
-                name: 'binary',
-                payable: 'bool',
-                argType: 'binary',
-                returnType: 'binary'
-            }],
+            typeInfo: [
+                {
+                    hash: 'binary',
+                    name: 'binary',
+                    payable: 'bool',
+                    argType: 'binary',
+                    returnType: 'binary',
+                },
+            ],
             byteCode: 'binary',
             compilerVersion: 'string',
-            payable: 'bool'
-        }
-    }
+            payable: 'bool',
+        },
+    },
 })
 
 export default ChainObjectTemplates

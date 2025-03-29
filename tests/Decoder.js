@@ -1,17 +1,14 @@
 import test from './test.js'
 import Encoder from '../src/Encoder.js'
 import hexStringToByteArray from '../src/utils/hexStringToByteArray.js'
-import aci from '../build/contracts/Test.json' with { type: 'json' }
+import aci from '../build/contracts/Test.json' with {type: 'json'}
 
 const CONTRACT = 'Test'
 const encoder = new Encoder(aci)
 
 test('Decode implicit init (void)', t => {
     t.plan(1)
-    t.is(
-        encoder.decode(CONTRACT, 'init', 'cb_Xfbg4g=='),
-        undefined
-    )
+    t.is(encoder.decode(CONTRACT, 'init', 'cb_Xfbg4g=='), undefined)
 })
 
 test('Decode unit return', t => {
@@ -24,10 +21,7 @@ test('Decode unit return', t => {
 
 test('Decode boolean return', t => {
     t.plan(1)
-    t.is(
-        encoder.decode(CONTRACT, 'test_bool', 'cb_/8CwV/U='),
-        true
-    )
+    t.is(encoder.decode(CONTRACT, 'test_bool', 'cb_/8CwV/U='), true)
 })
 
 test('Decode int return', t => {
@@ -69,12 +63,14 @@ test('Decode string return', t => {
 test('Decode hash return', t => {
     t.plan(1)
 
-    const expectedHex = hexStringToByteArray("0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f")
+    const expectedHex = hexStringToByteArray(
+        '0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f'
+    )
     t.deepEqual(
         encoder.decode(
             CONTRACT,
             'test_hash',
-            'cb_nwGBAAECAwQFBgcICQoLDA0ODwABAgMEBQYHCAkKCwwNDg/55Yfk',
+            'cb_nwGBAAECAwQFBgcICQoLDA0ODwABAgMEBQYHCAkKCwwNDg/55Yfk'
         ),
         expectedHex,
         'test_hash(#000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f)'
@@ -84,12 +80,14 @@ test('Decode hash return', t => {
 test('Decode signature return', t => {
     t.plan(1)
 
-    const expectedHex = hexStringToByteArray("0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f")
+    const expectedHex = hexStringToByteArray(
+        '0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f'
+    )
     t.deepEqual(
         encoder.decode(
             CONTRACT,
             'test_signature',
-            'cb_nwEBAAABAgMEBQYHCAkKCwwNDg8AAQIDBAUGBwgJCgsMDQ4PAAECAwQFBgcICQoLDA0ODwABAgMEBQYHCAkKCwwNDg/EV2+8',
+            'cb_nwEBAAABAgMEBQYHCAkKCwwNDg8AAQIDBAUGBwgJCgsMDQ4PAAECAwQFBgcICQoLDA0ODwABAgMEBQYHCAkKCwwNDg/EV2+8'
         ),
         expectedHex,
         `test_signature(#000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f)`
@@ -115,7 +113,7 @@ test('Decode contract address return', t => {
         encoder.decode(
             CONTRACT,
             'test_contract_address',
-            'cb_nwKgH8DQmexaE8uTKKMX/OzYUrH3SJ5eALoJVzw8LbaYVVPlirXw',
+            'cb_nwKgH8DQmexaE8uTKKMX/OzYUrH3SJ5eALoJVzw8LbaYVVPlirXw'
         ),
         'ct_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ',
         'test_contract_address(ct_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ)'
@@ -141,7 +139,7 @@ test('Decode oracle query address return', t => {
         encoder.decode(
             CONTRACT,
             'test_oracle_query_address',
-            'cb_nwSg7R7n3AJ40FzpUJRzxQqT1Dooso1QMvbffapEL+E3E0g6bqyq',
+            'cb_nwSg7R7n3AJ40FzpUJRzxQqT1Dooso1QMvbffapEL+E3E0g6bqyq'
         ),
         'oq_2oRvyowJuJnEkxy58Ckkw77XfWJrmRgmGaLzhdqb67SKEL1gPY',
         'test_oracle_query_address(oq_2oRvyowJuJnEkxy58Ckkw77XfWJrmRgmGaLzhdqb67SKEL1gPY)'
@@ -186,7 +184,7 @@ test('Decode nested list arguments', t => {
     const ints = [
         [1n, 2n],
         [3n, 4n],
-        [5n, 6n]
+        [5n, 6n],
     ]
 
     t.deepEqual(decoded, ints, 'test_nested_list([[1, 2], [3, 4], [5, 6]])')
@@ -207,7 +205,7 @@ test('Decode nested tuple arguments', t => {
         encoder.decode(CONTRACT, 'test_nested_tuple', 'cb_Kyv/fyt//701yEI='),
         [
             [true, false],
-            [false, true]
+            [false, true],
         ],
         'test_nested_tuple(((true, false), (false, true)))'
     )
@@ -256,11 +254,7 @@ test('Decode map with optional key', t => {
 test('Decode simple variant arguments', t => {
     t.plan(1)
     t.deepEqual(
-        encoder.decode(
-            CONTRACT,
-            'test_variants',
-            'cb_r4QAAAEAAT8xtJ9f'
-        ),
+        encoder.decode(CONTRACT, 'test_variants', 'cb_r4QAAAEAAT8xtJ9f'),
         {No: []},
         'test_variants(No)'
     )
@@ -269,11 +263,7 @@ test('Decode simple variant arguments', t => {
 test('Decode variant arguments with non-zero arity', t => {
     t.plan(1)
     t.deepEqual(
-        encoder.decode(
-            CONTRACT,
-            'test_variants',
-            'cb_r4QAAAEAAhsOfGqVXg=='
-        ),
+        encoder.decode(CONTRACT, 'test_variants', 'cb_r4QAAAEAAhsOfGqVXg=='),
         {Yep: [7n]},
         'test_variants(Yep(7))'
     )
@@ -282,11 +272,7 @@ test('Decode variant arguments with non-zero arity', t => {
 test('Decode variant arguments with nested variants', t => {
     t.plan(2)
     t.deepEqual(
-        encoder.decode(
-            CONTRACT,
-            'test_nested_variants',
-            'cb_r4IBAQAbr4IBAQAbDi9/8t0='
-        ),
+        encoder.decode(CONTRACT, 'test_nested_variants', 'cb_r4IBAQAbr4IBAQAbDi9/8t0='),
         {One: [{RelativeTTL: [7n]}]},
         'test_nested_variants(One(RelativeTTL(7)))'
     )
@@ -298,15 +284,24 @@ test('Decode variant arguments with nested variants', t => {
             'cb_r4IBAQEbrwMAO58AoN5ov+GyA+UfUjUboIf3m3go5qFA8MMUpnDHADs/9XB1r4IBAQAbDi8BHXBvaW50ZXKvhAEBAQECG58AoB/A0JnsWhPLkyijF/zs2FKx90ieXgC6CVc8PC22mFVTOxp1fA=='
         ),
         {
-            Two: [{
-                'AENS.Name': [
-                    'ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt',
-                    {RelativeTTL: [7n]},
-                    new Map([
-                        ['pointer', {'AENS.ContractPt': ['ak_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ']}]
-                    ])
-                ]
-            }]
+            Two: [
+                {
+                    'AENS.Name': [
+                        'ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt',
+                        {RelativeTTL: [7n]},
+                        new Map([
+                            [
+                                'pointer',
+                                {
+                                    'AENS.ContractPt': [
+                                        'ak_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ',
+                                    ],
+                                },
+                            ],
+                        ]),
+                    ],
+                },
+            ],
         },
         'test_nested_variants(Two(AENS.Name(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt, RelativeTTL(7), {["pointer"] = AENS.ContractPt(ak_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ)})))'
     )
@@ -315,11 +310,7 @@ test('Decode variant arguments with nested variants', t => {
 test('Decode variant with template arguments', t => {
     t.plan(1)
     t.deepEqual(
-        encoder.decode(
-            CONTRACT,
-            'test_template_variants',
-            'cb_r4IABAFLDv8SKhktM40=',
-        ),
+        encoder.decode(CONTRACT, 'test_template_variants', 'cb_r4IABAFLDv8SKhktM40='),
         {Any: [7n, true, 9n, 21n]},
         'test_template_variants(Any(7, true, 9, 21))'
     )
@@ -327,30 +318,18 @@ test('Decode variant with template arguments', t => {
 
 test('Decode type aliases', t => {
     t.plan(2)
-    t.is(
-        encoder.decode(CONTRACT, 'test_int_type', 'cb_DtbN98k='),
-        7n,
-        'test_int_type(7)'
-    )
+    t.is(encoder.decode(CONTRACT, 'test_int_type', 'cb_DtbN98k='), 7n, 'test_int_type(7)')
 
     t.deepEqual(
         encoder.decode(CONTRACT, 'test_map_type', 'cb_LwENZm9vJjJRlLM='),
-        new Map([["foo", 19n]]),
+        new Map([['foo', 19n]]),
         'test_map_type({["foo"] = 19})'
     )
 })
 
 test('Decode template type', t => {
     t.plan(1)
-    t.is(
-        encoder.decode(
-            CONTRACT,
-            'test_template_type',
-            'cb_DtbN98k='
-        ),
-        7n,
-        'test_template_type(7)'
-    )
+    t.is(encoder.decode(CONTRACT, 'test_template_type', 'cb_DtbN98k='), 7n, 'test_template_type(7)')
 })
 
 test('Decode optional arguments', t => {
@@ -371,21 +350,13 @@ test('Decode optional arguments', t => {
 test('Decode records', t => {
     t.plan(2)
     t.deepEqual(
-        encoder.decode(
-            CONTRACT,
-            'test_record',
-            'cb_KwAAUjeM0Q=='
-        ),
+        encoder.decode(CONTRACT, 'test_record', 'cb_KwAAUjeM0Q=='),
         {x: 0n, y: 0n},
         'test_record({x = 0, y = 0})'
     )
 
     t.deepEqual(
-        encoder.decode(
-            CONTRACT,
-            'test_nested_record',
-            'cb_OysCBAYISeTR0A=='
-        ),
+        encoder.decode(CONTRACT, 'test_nested_record', 'cb_OysCBAYISeTR0A=='),
         {origin: {x: 1n, y: 2n}, a: 3n, b: 4n},
         'test_nested_record({origin = {x = 1, y = 2}, a = 3, b = 4})'
     )
@@ -406,7 +377,7 @@ test('Decode record with address and int', t => {
         encoder.decode(
             CONTRACT,
             'test_address_record',
-            'cb_K58AoOXXknb25K5lzfPVkbasMmGPTn7KZRv5XH5TrCCecghqVPPeH80=',
+            'cb_K58AoOXXknb25K5lzfPVkbasMmGPTn7KZRv5XH5TrCCecghqVPPeH80='
         ),
         {account: 'ak_2kE1RxHzsRE4LxDFu6WKi35BwPvrEawBjNtV788Gje3yqADvwR', amount: 42n},
         'test_address_record({account = ak_2kE1RxHzsRE4LxDFu6WKi35BwPvrEawBjNtV788Gje3yqADvwR, amount = 42})'
@@ -416,11 +387,7 @@ test('Decode record with address and int', t => {
 test('Decode list of records', t => {
     t.plan(1)
     t.deepEqual(
-        encoder.decode(
-            CONTRACT,
-            'test_records_list',
-            'cb_MysAACsCAisEBMjzXEk='
-        ),
+        encoder.decode(CONTRACT, 'test_records_list', 'cb_MysAACsCAisEBMjzXEk='),
         [
             {x: 0n, y: 0n},
             {x: 1n, y: 1n},
@@ -433,15 +400,20 @@ test('Decode list of records', t => {
 test('Decode records map', t => {
     t.plan(1)
     t.deepEqual(
-        encoder.decode(
-            CONTRACT,
-            'test_records_map',
-            'cb_LwMrAAArAgIrAgQrBggrbyQYKy5vIzf5arA='
-        ),
+        encoder.decode(CONTRACT, 'test_records_map', 'cb_LwMrAAArAgIrAgQrBggrbyQYKy5vIzf5arA='),
         new Map([
-            [{x: 0n, y: 0n}, {x: 1n, y: 1n}],
-            [{x: 1n, y: 2n}, {x: 3n, y: 4n}],
-            [{x: 100n, y: 12n}, {x: 23n, y: 99n}],
+            [
+                {x: 0n, y: 0n},
+                {x: 1n, y: 1n},
+            ],
+            [
+                {x: 1n, y: 2n},
+                {x: 3n, y: 4n},
+            ],
+            [
+                {x: 100n, y: 12n},
+                {x: 23n, y: 99n},
+            ],
         ]),
         `test_records_map(
                 {[{x = 0, y = 0}] = {x = 1, y = 1},
@@ -462,11 +434,15 @@ test('Decode primitive tuple', t => {
         [
             1n,
             true,
-            "test",
+            'test',
             0n,
-            hexStringToByteArray("0xBEEF"),
-            hexStringToByteArray("0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f"),
-            hexStringToByteArray("0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f")
+            hexStringToByteArray('0xBEEF'),
+            hexStringToByteArray(
+                '0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f'
+            ),
+            hexStringToByteArray(
+                '0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f'
+            ),
         ],
         'test_primitives_tuple((1, true, "test", Bits.none, 0xBEEF, #000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f, #000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f))'
     )
@@ -502,8 +478,11 @@ test('Decode complex tuple', t => {
             {x: 1n, y: 1n},
             {Yep: [3n]},
             [1n, 2n, 3n],
-            new Map([[1n, 2n], [3n, 4n]]),
-            [5n, 6n]
+            new Map([
+                [1n, 2n],
+                [3n, 4n],
+            ]),
+            [5n, 6n],
         ],
         'test_complex_tuple(({x = 1, y = 1}, Yep(3), [1, 2, 3], {[1] = 2, [3] = 4}, (5, 6)))'
     )
@@ -512,11 +491,7 @@ test('Decode complex tuple', t => {
 test('Decode singleton record (optimized)', t => {
     t.plan(1)
     t.deepEqual(
-        encoder.decode(
-            CONTRACT,
-            'test_singleton_record',
-            'cb_ABQG4Fg='
-        ),
+        encoder.decode(CONTRACT, 'test_singleton_record', 'cb_ABQG4Fg='),
         0n,
         'test_singleton_record({x = 0})'
     )
@@ -533,10 +508,17 @@ test('Decode AENSv2.name with DataPr', t => {
         {
             'AENSv2.Name': [
                 'ak_nRqnePWC6yGWBmR4wfN3AvQnqbv2TizxKJdvGXj8p7YZrUZ5J',
-                { FixedTTL: [180205n] },
+                {FixedTTL: [180205n]},
                 new Map([
-                    ['oracle', { 'AENSv2.OraclePt': ['ak_nRqnePWC6yGWBmR4wfN3AvQnqbv2TizxKJdvGXj8p7YZrUZ5J'] }],
-                    ['test key', { 'AENSv2.DataPt': [Uint8Array.from(Buffer.from('test value'))] }],
+                    [
+                        'oracle',
+                        {
+                            'AENSv2.OraclePt': [
+                                'ak_nRqnePWC6yGWBmR4wfN3AvQnqbv2TizxKJdvGXj8p7YZrUZ5J',
+                            ],
+                        },
+                    ],
+                    ['test key', {'AENSv2.DataPt': [Uint8Array.from(Buffer.from('test value'))]}],
                 ]),
             ],
         },
@@ -547,11 +529,7 @@ test('Decode AENSv2.name with DataPr', t => {
 test('Decode Set.set', t => {
     t.plan(1)
     t.deepEqual(
-        encoder.decode(
-            CONTRACT,
-            'test_set',
-            'cb_LwQKPxA/Gj8qPwZjWoo='
-        ),
+        encoder.decode(CONTRACT, 'test_set', 'cb_LwQKPxA/Gj8qPwZjWoo='),
         new Set([5n, 8n, 13n, 21n]),
         'test_set({to_map = {[5] = (), [8] = (), [13] = (), [21] = ()}})'
     )
@@ -560,8 +538,12 @@ test('Decode Set.set', t => {
 test('Decode BLS12_381.fr', t => {
     t.plan(1)
     t.deepEqual(
-        encoder.decode(CONTRACT, 'test_bls12_381_fr', 'cb_nwGBxHFEFDqOu+s9/hWhDQxmnzSFvfQ6dkSwETqb5Rgy7EblqaTu'),
-        0XDEADBEEFn,
+        encoder.decode(
+            CONTRACT,
+            'test_bls12_381_fr',
+            'cb_nwGBxHFEFDqOu+s9/hWhDQxmnzSFvfQ6dkSwETqb5Rgy7EblqaTu'
+        ),
+        0xdeadbeefn,
         'test_bls12_381_fr(3735928559)'
     )
 })
@@ -569,8 +551,12 @@ test('Decode BLS12_381.fr', t => {
 test('Decode BLS12_381.fp', t => {
     t.plan(1)
     t.deepEqual(
-        encoder.decode(CONTRACT, 'test_bls12_381_fp', 'cb_nwHBA/Xt2rba+aow52i/Vr/nGSDbg1ErD/oOVs0LOV1F83sEMEfueZoY+Ng3idzNLTcU1fPMEQ=='),
-        0XDEADBEEFn,
+        encoder.decode(
+            CONTRACT,
+            'test_bls12_381_fp',
+            'cb_nwHBA/Xt2rba+aow52i/Vr/nGSDbg1ErD/oOVs0LOV1F83sEMEfueZoY+Ng3idzNLTcU1fPMEQ=='
+        ),
+        0xdeadbeefn,
         'test_bls12_381_fp(3735928559)'
     )
 })
@@ -578,11 +564,15 @@ test('Decode BLS12_381.fp', t => {
 test('Decode BLS12_381.g1', t => {
     t.plan(1)
     t.deepEqual(
-        encoder.decode(CONTRACT, 'test_bls12_381_g1', 'cb_O58Bwf3/AgAAAAl2AgAMxAsA9Ou6WMdTV5hIX0VXUnBTWM53bexWopcaB1yT5ID6w172FZ8BwU9VBgAAABMyBQDE1hgAPLlRu92wDV5gV8ubH+0hZSWLAyxiAXmN8myM4oG7navrEZ8BwaGqCQAAAB3uBwB86SUAhIboHfQNxCN4T1Hg7GnwcXyemWttYFoA3n2F4IJ8d/jgDT13HE8='),
+        encoder.decode(
+            CONTRACT,
+            'test_bls12_381_g1',
+            'cb_O58Bwf3/AgAAAAl2AgAMxAsA9Ou6WMdTV5hIX0VXUnBTWM53bexWopcaB1yT5ID6w172FZ8BwU9VBgAAABMyBQDE1hgAPLlRu92wDV5gV8ubH+0hZSWLAyxiAXmN8myM4oG7navrEZ8BwaGqCQAAAB3uBwB86SUAhIboHfQNxCN4T1Hg7GnwcXyemWttYFoA3n2F4IJ8d/jgDT13HE8='
+        ),
         {
             x: 1n,
             y: 2n,
-            z: 3n
+            z: 3n,
         },
         'test_bls12_381_g1(1, 2, 3)'
     )
@@ -599,12 +589,12 @@ test('Decode FATE errors', t => {
     const error = encoder.decodeString(
         'cb_VHlwZSBlcnJvciBvbiBjYWxsOiBbe2J5dGVzLDw8MjQwLDIsLi4uPj59XSBpcyBub3Qgb2YgdHlwZSBbe2J5dGVzLDMyfV3EtJjU'
     )
-    t.is(error.toString(), 'Type error on call: [{bytes,<<240,2,...>>}] is not of type [{bytes,32}]')
-
-    t.throws(
-        () => encoder.decodeString('err_abc'),
-        { name: 'FateTypeError' }
+    t.is(
+        error.toString(),
+        'Type error on call: [{bytes,<<240,2,...>>}] is not of type [{bytes,32}]'
     )
+
+    t.throws(() => encoder.decodeString('err_abc'), {name: 'FateTypeError'})
 
     // revert messages are FATE string encoded
     const revert = encoder.decodeFateString('cb_OXJlcXVpcmUgZmFpbGVkarP9mg==')
@@ -614,28 +604,20 @@ test('Decode FATE errors', t => {
 test('Decode events', t => {
     t.plan(4)
     t.deepEqual(
-        encoder.decodeEvent(
-            CONTRACT,
-            'cb_dHJpZ2dlcmVk1FYuYA==',
-            [
-                34853523142692495808479485503424878684430196596020091237715106250497712463899n,
-                17
-            ]
-        ),
+        encoder.decodeEvent(CONTRACT, 'cb_dHJpZ2dlcmVk1FYuYA==', [
+            34853523142692495808479485503424878684430196596020091237715106250497712463899n,
+            17,
+        ]),
         {EventTwo: [17n, 'triggered']}
     )
 
     t.deepEqual(
-        encoder.decodeEvent(
-            CONTRACT,
-            'cb_dHJpZ2dlciAzIGRhdGGEhtnk',
-            [
-                31681207293023881403488055235089918158550553865217088186518345674953571854592n,
-                1337n,
-                0,
-                1
-            ]
-        ),
+        encoder.decodeEvent(CONTRACT, 'cb_dHJpZ2dlciAzIGRhdGGEhtnk', [
+            31681207293023881403488055235089918158550553865217088186518345674953571854592n,
+            1337n,
+            0,
+            1,
+        ]),
         {EventThree: [1337n, false, 'trigger 3 data', 0b00000001n]}
     )
 
@@ -652,32 +634,32 @@ test('Decode events', t => {
         ),
         {
             EventFour: [
-                hexStringToByteArray("0xfedcba9876543210deadbeef"),
-                hexStringToByteArray("0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f"),
-                hexStringToByteArray("0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f"),
-                'ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt'
-            ]
+                hexStringToByteArray('0xfedcba9876543210deadbeef'),
+                hexStringToByteArray(
+                    '0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f'
+                ),
+                hexStringToByteArray(
+                    '0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f'
+                ),
+                'ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt',
+            ],
         }
     )
 
     t.deepEqual(
-        encoder.decodeEvent(
-            CONTRACT,
-            'cb_dHJpZ2dlciA1IGRhdGHUCNNt',
-            [
-                3185384254601604808758985712725166327926049022179140726175527582565167826658n,
-                14362372655521436838170755271847218341882561275649283336261918563942507500883n,
-                91795063255705172344756673568691065400082428174303230431501479273130556001865n,
-                107252750761032185514125154622280566678392879123784198680081054042150971839304n,
-            ]
-        ),
+        encoder.decodeEvent(CONTRACT, 'cb_dHJpZ2dlciA1IGRhdGHUCNNt', [
+            3185384254601604808758985712725166327926049022179140726175527582565167826658n,
+            14362372655521436838170755271847218341882561275649283336261918563942507500883n,
+            91795063255705172344756673568691065400082428174303230431501479273130556001865n,
+            107252750761032185514125154622280566678392879123784198680081054042150971839304n,
+        ]),
         {
             EventFive: [
-                "trigger 5 data",
+                'trigger 5 data',
                 'ct_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ',
                 'ok_2YNyxd6TRJPNrTcEDCe9ra59SVUdp9FR9qWC5msKZWYD9bP9z5',
-                'oq_2oRvyowJuJnEkxy58Ckkw77XfWJrmRgmGaLzhdqb67SKEL1gPY'
-            ]
+                'oq_2oRvyowJuJnEkxy58Ckkw77XfWJrmRgmGaLzhdqb67SKEL1gPY',
+            ],
         }
     )
 })

@@ -24,42 +24,42 @@ const TYPES = [
     'contract_pubkey',
     'channel',
     'oracle_pubkey',
-    'oracle_query_id'
+    'oracle_query_id',
 ]
 
 class PrimitiveDataFactory extends BaseDataFactory {
-    supports({ name, _valueTypes }) {
+    supports({name, _valueTypes}) {
         return TYPES.includes(name)
     }
 
     create(type, value) {
         switch (type.name) {
-        case 'int':
-            return new FateInt(value)
-        case 'bool':
-            return new FateBool(value)
-        case 'string':
-            return new FateString(value)
-        case 'bits':
-            return new FateBits(value)
-        case 'hash':
-            return new FateHash(value)
-        case 'bytes':
-            return new FateBytes(value, type.valueTypes)
-        case 'signature':
-            return new FateSignature(value)
-        case 'account_pubkey':
-            return new FateAccountAddress(value)
-        case 'contract_pubkey':
-            return new FateContractAddress(value)
-        case 'channel':
-            return new FateChannelAddress(value)
-        case 'oracle_pubkey':
-            return new FateOracleAddress(value)
-        case 'oracle_query_id':
-            return new FateOracleQueryAddress(value)
-        default:
-            throw new Error(`Unsupported type "${type.name}"`)
+            case 'int':
+                return new FateInt(value)
+            case 'bool':
+                return new FateBool(value)
+            case 'string':
+                return new FateString(value)
+            case 'bits':
+                return new FateBits(value)
+            case 'hash':
+                return new FateHash(value)
+            case 'bytes':
+                return new FateBytes(value, type.valueTypes)
+            case 'signature':
+                return new FateSignature(value)
+            case 'account_pubkey':
+                return new FateAccountAddress(value)
+            case 'contract_pubkey':
+                return new FateContractAddress(value)
+            case 'channel':
+                return new FateChannelAddress(value)
+            case 'oracle_pubkey':
+                return new FateOracleAddress(value)
+            case 'oracle_query_id':
+                return new FateOracleQueryAddress(value)
+            default:
+                throw new Error(`Unsupported type "${type.name}"`)
         }
     }
 }

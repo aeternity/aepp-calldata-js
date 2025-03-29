@@ -13,11 +13,13 @@ import FateSet from '../types/FateSet.js'
 
 class SetSerializer extends BaseSerializer {
     serialize(set) {
-        return this.globalSerializer.serialize(new FateMap(
-            set.itemsType,
-            FateTypeTuple(),
-            set.items.map(i => [i, new FateTuple()])
-        ))
+        return this.globalSerializer.serialize(
+            new FateMap(
+                set.itemsType,
+                FateTypeTuple(),
+                set.items.map(i => [i, new FateTuple()])
+            )
+        )
     }
 
     deserializeStream(data, typeInfo) {
@@ -26,7 +28,7 @@ class SetSerializer extends BaseSerializer {
 
         return [
             new FateSet(typeInfo.valuesType, map.keys),
-            rest
+            rest,
         ]
     }
 }

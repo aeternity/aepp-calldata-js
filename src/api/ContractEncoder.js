@@ -10,7 +10,7 @@ class ContractEncoder {
      *
      * @param {string} data - FATE API encoded data in canonical format.
      * @returns {Object} Decoded data
-    */
+     */
     decode(data) {
         return this._internalEncoder.decode(data)
     }

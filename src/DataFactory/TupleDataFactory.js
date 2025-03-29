@@ -3,7 +3,7 @@ import FateTypeError from '../Errors/FateTypeError.js'
 import BaseDataFactory from './BaseDataFactory.js'
 
 class TupleDataFactory extends BaseDataFactory {
-    supports({ name, _valueTypes }) {
+    supports({name, _valueTypes}) {
         return 'tuple' === name
     }
 

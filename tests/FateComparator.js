@@ -32,18 +32,40 @@ const FTBool = FateTypeBool()
 
 test('Compare primitive types', t => {
     t.plan(4)
-    t.deepEqual(
-        sort(FateTypeInt(), [3, new FateInt(3), 5, -7, 1, 0]),
-        [-7, 0, 1, 3, new FateInt(3), 5]
-    )
+    t.deepEqual(sort(FateTypeInt(), [3, new FateInt(3), 5, -7, 1, 0]), [
+        -7,
+        0,
+        1,
+        3,
+        new FateInt(3),
+        5,
+    ])
+
+    t.deepEqual(sort(FateTypeBool(), [true, false, false, new FateBool(true), true, true, false]), [
+        false,
+        false,
+        false,
+        true,
+        new FateBool(true),
+        true,
+        true,
+    ])
 
     t.deepEqual(
-        sort(FateTypeBool(), [true, false, false, new FateBool(true), true, true, false]),
-        [false, false, false, true, new FateBool(true), true, true]
-    )
-
-    t.deepEqual(
-        sort(FateTypeString(), ['Z', 'abc', '~', 'a', 'abcd', 'bab', new FateString('bab'), 'B', 'ab', 'b', 'aa', 'abd']),
+        sort(FateTypeString(), [
+            'Z',
+            'abc',
+            '~',
+            'a',
+            'abcd',
+            'bab',
+            new FateString('bab'),
+            'B',
+            'ab',
+            'b',
+            'aa',
+            'abd',
+        ]),
         ['B', 'Z', 'a', 'b', '~', 'aa', 'ab', 'abc', 'abd', 'bab', new FateString('bab'), 'abcd']
     )
 
@@ -74,16 +96,16 @@ test('Compare bytes', t => {
 
     t.deepEqual(
         sort(FateTypeBytes(), [
-            new FateBytes("0xfedcba9876543210"),
-            new FateBytes("0xdeadfeed"),
-            new FateBytes("0xdeadbeef"),
-            new FateBytes("0xdeadbad"),
+            new FateBytes('0xfedcba9876543210'),
+            new FateBytes('0xdeadfeed'),
+            new FateBytes('0xdeadbeef'),
+            new FateBytes('0xdeadbad'),
         ]),
         [
-            new FateBytes("0xdeadbad"),
-            new FateBytes("0xdeadbeef"),
-            new FateBytes("0xdeadfeed"),
-            new FateBytes("0xfedcba9876543210"),
+            new FateBytes('0xdeadbad'),
+            new FateBytes('0xdeadbeef'),
+            new FateBytes('0xdeadfeed'),
+            new FateBytes('0xfedcba9876543210'),
         ]
     )
 })
@@ -94,21 +116,21 @@ test('Compare lists', t => {
     t.deepEqual(
         sort(FateTypeList(FateTypeInt()), [
             new FateList(FateTypeInt()),
-            new FateList(FateTypeInt(), [0,1,2]),
-            new FateList(FateTypeInt(), [0,1,2,3]),
-            new FateList(FateTypeInt(), [0,1]),
-            new FateList(FateTypeInt(), [0,0,0]),
-            new FateList(FateTypeInt(), [0,1,2]),
+            new FateList(FateTypeInt(), [0, 1, 2]),
+            new FateList(FateTypeInt(), [0, 1, 2, 3]),
+            new FateList(FateTypeInt(), [0, 1]),
+            new FateList(FateTypeInt(), [0, 0, 0]),
+            new FateList(FateTypeInt(), [0, 1, 2]),
             new FateList(FateTypeInt()),
         ]),
         [
             new FateList(FateTypeInt()),
             new FateList(FateTypeInt()),
-            new FateList(FateTypeInt(), [0,0,0]),
-            new FateList(FateTypeInt(), [0,1]),
-            new FateList(FateTypeInt(), [0,1,2]),
-            new FateList(FateTypeInt(), [0,1,2]),
-            new FateList(FateTypeInt(), [0,1,2,3]),
+            new FateList(FateTypeInt(), [0, 0, 0]),
+            new FateList(FateTypeInt(), [0, 1]),
+            new FateList(FateTypeInt(), [0, 1, 2]),
+            new FateList(FateTypeInt(), [0, 1, 2]),
+            new FateList(FateTypeInt(), [0, 1, 2, 3]),
         ]
     )
 })
@@ -170,20 +192,68 @@ test('Compare maps', t => {
     t.plan(1)
     t.deepEqual(
         sort(FateTypeMap(FTInt, FTBool), [
-            new FateMap(FTInt, FTBool, [[1,true], [3,true], [2,false], [0,false]]),
+            new FateMap(FTInt, FTBool, [
+                [1, true],
+                [3, true],
+                [2, false],
+                [0, false],
+            ]),
             new FateMap(FTInt, FTBool, []),
-            new FateMap(FTInt, FTBool, [[1,true], [3,true], [0,false]]),
-            new FateMap(FTInt, FTBool, [[1,true], [3,true], [2,false], [0,false]]),
-            new FateMap(FTInt, FTBool, [[1,true], [3,true], [2,false], [0,true]]),
-            new FateMap(FTInt, FTBool, [[1,true], [3,true], [2,true], [0,false]]),
+            new FateMap(FTInt, FTBool, [
+                [1, true],
+                [3, true],
+                [0, false],
+            ]),
+            new FateMap(FTInt, FTBool, [
+                [1, true],
+                [3, true],
+                [2, false],
+                [0, false],
+            ]),
+            new FateMap(FTInt, FTBool, [
+                [1, true],
+                [3, true],
+                [2, false],
+                [0, true],
+            ]),
+            new FateMap(FTInt, FTBool, [
+                [1, true],
+                [3, true],
+                [2, true],
+                [0, false],
+            ]),
         ]),
         [
             new FateMap(FTInt, FTBool, []),
-            new FateMap(FTInt, FTBool, [[1,true], [3,true], [2,false], [0,false]]),
-            new FateMap(FTInt, FTBool, [[1,true], [3,true], [2,false], [0,false]]),
-            new FateMap(FTInt, FTBool, [[1,true], [3,true], [2,true], [0,false]]),
-            new FateMap(FTInt, FTBool, [[1,true], [3,true], [0,false]]),
-            new FateMap(FTInt, FTBool, [[1,true], [3,true], [2,false], [0,true]]),
+            new FateMap(FTInt, FTBool, [
+                [1, true],
+                [3, true],
+                [2, false],
+                [0, false],
+            ]),
+            new FateMap(FTInt, FTBool, [
+                [1, true],
+                [3, true],
+                [2, false],
+                [0, false],
+            ]),
+            new FateMap(FTInt, FTBool, [
+                [1, true],
+                [3, true],
+                [2, true],
+                [0, false],
+            ]),
+            new FateMap(FTInt, FTBool, [
+                [1, true],
+                [3, true],
+                [0, false],
+            ]),
+            new FateMap(FTInt, FTBool, [
+                [1, true],
+                [3, true],
+                [2, false],
+                [0, true],
+            ]),
         ]
     )
 })

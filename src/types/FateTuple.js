@@ -14,7 +14,9 @@ class FateTuple extends FateData {
     constructor(valueTypes = [], items = []) {
         super('tuple')
 
-        this._valueTypes = (valueTypes.hasOwnProperty('valueTypes')) ? valueTypes.valueTypes : valueTypes
+        this._valueTypes = valueTypes.hasOwnProperty('valueTypes')
+            ? valueTypes.valueTypes
+            : valueTypes
         this._type = Array.isArray(valueTypes) ? FateTypeTuple(valueTypes) : valueTypes
         this._items = Array.from(items)
     }

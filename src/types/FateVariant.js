@@ -60,7 +60,7 @@ class FateVariant extends FateData {
         const value = this._value.map(e => e.valueOf())
 
         return {
-            [this.variantName]: value
+            [this.variantName]: value,
         }
     }
 

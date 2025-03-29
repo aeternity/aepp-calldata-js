@@ -10,7 +10,7 @@ class BitsSerializer extends BaseSerializer {
 
         return [
             prefix,
-            ...RLPInt.encode(abs(data.value))
+            ...RLPInt.encode(abs(data.value)),
         ]
     }
 
@@ -21,7 +21,7 @@ class BitsSerializer extends BaseSerializer {
 
         return [
             new FateBits(i * sign),
-            new Uint8Array(remainder)
+            new Uint8Array(remainder),
         ]
     }
 }

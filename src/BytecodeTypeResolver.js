@@ -51,7 +51,7 @@ class BytecodeTypeResolver {
             const types = fun.args.valueTypes.map(t => this.resolveType(t))
             return {
                 types,
-                required: types.length
+                required: types.length,
             }
         }
 

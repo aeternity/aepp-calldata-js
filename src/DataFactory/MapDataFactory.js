@@ -2,7 +2,7 @@ import FateMap from '../types/FateMap.js'
 import BaseDataFactory from './BaseDataFactory.js'
 
 class MapDataFactory extends BaseDataFactory {
-    supports({ name, _valueTypes }) {
+    supports({name, _valueTypes}) {
         return 'map' === name
     }
 

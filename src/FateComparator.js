@@ -96,7 +96,7 @@ const variantComparator = (a, b) => {
     )
 }
 
-const mapItemComparator = (type) => {
+const mapItemComparator = type => {
     const keyComparator = FateComparator(type)
     return (a, b) => keyComparator(a.key, b.key)
 }
@@ -163,29 +163,29 @@ const stringComparator = (a, b) => {
 const intComparator = (a, b) => Number(BigInt(a) - BigInt(b))
 const boolComparator = (a, b) => a - b
 const bitsComparator = (a, b) => {
-    return (a < 0 || b < 0) ? -intComparator(a, b) : intComparator(a, b)
+    return a < 0 || b < 0 ? -intComparator(a, b) : intComparator(a, b)
 }
 
 const comparators = {
-    'int': intComparator,
-    'bool': boolComparator,
-    'string': stringComparator,
-    'bits': bitsComparator,
+    int: intComparator,
+    bool: boolComparator,
+    string: stringComparator,
+    bits: bitsComparator,
     // composite types
-    'list': listComparator,
-    'tuple': tupleComparator,
-    'variant': variantComparator,
-    'map': mapComparator,
+    list: listComparator,
+    tuple: tupleComparator,
+    variant: variantComparator,
+    map: mapComparator,
     // objects (bytes)
-    'bytes': bytesComparator,
-    'account_pubkey': bytesComparator,
-    'channel': bytesComparator,
-    'contract_pubkey': bytesComparator,
-    'oracle_query_id': bytesComparator,
-    'oracle_pubkey': bytesComparator,
+    bytes: bytesComparator,
+    account_pubkey: bytesComparator,
+    channel: bytesComparator,
+    contract_pubkey: bytesComparator,
+    oracle_query_id: bytesComparator,
+    oracle_pubkey: bytesComparator,
 }
 
-const FateComparator = (type) => {
+const FateComparator = type => {
     assert(type.hasOwnProperty('name'), `Cannot determine type name of ${JSON.stringify(type)}`)
     assert(comparators.hasOwnProperty(type.name), `Unsupported comparator for ${type.name}`)
 

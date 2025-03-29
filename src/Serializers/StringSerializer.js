@@ -33,7 +33,7 @@ class StringSerializer extends BaseSerializer {
 
         return [
             new FateString(bytes.valueOf()),
-            rest
+            rest,
         ]
     }
 }

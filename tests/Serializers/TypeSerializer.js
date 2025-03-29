@@ -74,10 +74,7 @@ test('Deserialize object types', t => {
         s.deserialize([FateTag.TYPE_OBJECT, FateTag.OTYPE_CONTRACT]),
         FateTypeContractAddress()
     )
-    t.deepEqual(
-        s.deserialize([FateTag.TYPE_OBJECT, FateTag.OTYPE_ORACLE]),
-        FateTypeOracleAddress()
-    )
+    t.deepEqual(s.deserialize([FateTag.TYPE_OBJECT, FateTag.OTYPE_ORACLE]), FateTypeOracleAddress())
     t.deepEqual(
         s.deserialize([FateTag.TYPE_OBJECT, FateTag.OTYPE_ORACLE_QUERY]),
         FateTypeOracleQueryAddress()

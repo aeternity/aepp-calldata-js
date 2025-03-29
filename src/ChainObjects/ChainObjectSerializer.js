@@ -6,7 +6,7 @@ import Templates from './ChainObjectTemplates.js'
 class ChainObjectSerializer {
     /**
      * @param {FieldsEncoder} fieldsEncoder
-    */
+     */
     constructor(fieldsEncoder) {
         this.fieldsEncoder = fieldsEncoder
     }

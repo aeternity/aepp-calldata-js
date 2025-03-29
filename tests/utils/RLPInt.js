@@ -1,7 +1,7 @@
 import test from '../test.js'
 import {encode} from '../../src/utils/RLPInt.js'
 
-const b = (value) => new Uint8Array(value)
+const b = value => new Uint8Array(value)
 
 test('RLP Encode Integer', t => {
     t.plan(8)
@@ -14,6 +14,6 @@ test('RLP Encode Integer', t => {
     t.deepEqual(encode(100000), b([131, 1, 134, 160]))
     t.deepEqual(
         encode(10000000000000009999999n),
-        b([138,2,30,25,224,201,186,178,216,150,127])
+        b([138, 2, 30, 25, 224, 201, 186, 178, 216, 150, 127])
     )
 })

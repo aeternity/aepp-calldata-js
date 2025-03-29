@@ -1,6 +1,6 @@
 import Benchmark from 'benchmark'
 import Encoder from '../../src/Encoder.js'
-import aci from '../../build/contracts/Test.json' with { type: 'json' }
+import aci from '../../build/contracts/Test.json' with {type: 'json'}
 
 const CONTRACT = 'Test'
 const encoder = new Encoder(aci)
@@ -25,18 +25,14 @@ suite.add('Encoder#decode(string)', () => {
 })
 
 suite.add('Encoder#decode(hash)', () => {
-    encoder.decode(
-        CONTRACT,
-        'test_hash',
-        'cb_nwGBAAECAwQFBgcICQoLDA0ODwABAgMEBQYHCAkKCwwNDg/55Yfk',
-    )
+    encoder.decode(CONTRACT, 'test_hash', 'cb_nwGBAAECAwQFBgcICQoLDA0ODwABAgMEBQYHCAkKCwwNDg/55Yfk')
 })
 
 suite.add('Encoder#decode(signature)', () => {
     encoder.decode(
         CONTRACT,
         'test_signature',
-        'cb_nwEBAAABAgMEBQYHCAkKCwwNDg8AAQIDBAUGBwgJCgsMDQ4PAAECAwQFBgcICQoLDA0ODwABAgMEBQYHCAkKCwwNDg/EV2+8',
+        'cb_nwEBAAABAgMEBQYHCAkKCwwNDg8AAQIDBAUGBwgJCgsMDQ4PAAECAwQFBgcICQoLDA0ODwABAgMEBQYHCAkKCwwNDg/EV2+8'
     )
 })
 
@@ -75,7 +71,7 @@ suite.add('Encoder#decode(record)', () => {
 /* eslint-disable no-console */
 
 // print results
-suite.on('cycle', (event) => {
+suite.on('cycle', event => {
     console.log(String(event.target))
 })
 

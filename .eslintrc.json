@@ -5,9 +5,7 @@
         "es2021": true,
         "node": true
     },
-    "extends": [
-        "airbnb-base"
-    ],
+    "extends": ["airbnb-base"],
     "parserOptions": {
         "ecmaVersion": 13
     },
@@ -19,9 +17,9 @@
         "curly": ["error", "all"],
         "padding-line-between-statements": [
             "error",
-            { "blankLine": "always", "prev": "*", "next": "block-like" },
-            { "blankLine": "always", "prev": "block-like", "next": "*" },
-            { "blankLine": "any",    "prev": ["const", "let", "var"], "next": "block-like"}
+            {"blankLine": "always", "prev": "*", "next": "block-like"},
+            {"blankLine": "always", "prev": "block-like", "next": "*"},
+            {"blankLine": "any", "prev": ["const", "let", "var"], "next": "block-like"}
         ],
         "no-negated-condition": "error",
         "no-else-return": "error",
@@ -43,6 +41,6 @@
         "no-plusplus": "off",
         "yoda": "off",
         "no-extra-semi": "off",
-        "no-unused-vars": ["error", { "varsIgnorePattern": "^_.*$", "argsIgnorePattern": "^_.*$" }]
+        "no-unused-vars": ["error", {"varsIgnorePattern": "^_.*$", "argsIgnorePattern": "^_.*$"}]
     }
 }

@@ -1,6 +1,6 @@
 import test from './test.js'
 import Encoder from '../src/Encoder.js'
-import aci from '../build/contracts/Test.json' with { type: 'json' }
+import aci from '../build/contracts/Test.json' with {type: 'json'}
 
 const CONTRACT = 'Test'
 const encoder = new Encoder(aci)
@@ -20,15 +20,11 @@ test('Encode empty arguments', t => {
 test('Number of arguments validation', t => {
     t.plan(2)
 
-    t.throws(
-        () => encoder.encode(CONTRACT, 'test_bool', [true]),
-        { name: 'EncoderError' }
-    )
+    t.throws(() => encoder.encode(CONTRACT, 'test_bool', [true]), {name: 'EncoderError'})
 
-    t.throws(
-        () => encoder.encode(CONTRACT, 'test_bool', [true, true, false]),
-        { name: 'EncoderError' }
-    )
+    t.throws(() => encoder.encode(CONTRACT, 'test_bool', [true, true, false]), {
+        name: 'EncoderError',
+    })
 })
 
 test('Encode unit arguments', t => {
@@ -72,17 +68,15 @@ test('Encode bytes any size arguments', t => {
 
 test('Encode string arguments', t => {
     t.plan(1)
-    const encoded = encoder.encode(CONTRACT, 'test_string', ["whoolymoly"])
+    const encoded = encoder.encode(CONTRACT, 'test_string', ['whoolymoly'])
     t.is(encoded, 'cb_KxHwzCuVGyl3aG9vbHltb2x5zwMSnw==', 'test_string("whoolymoly")')
 })
 
 test('Encode hash arguments', t => {
     t.plan(1)
-    const encoded = encoder.encode(
-        CONTRACT,
-        'test_hash',
-        ["0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f"]
-    )
+    const encoded = encoder.encode(CONTRACT, 'test_hash', [
+        '0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f',
+    ])
     t.is(
         encoded,
         'cb_KxEjJ6ybG58BgQABAgMEBQYHCAkKCwwNDg8AAQIDBAUGBwgJCgsMDQ4PUyyi1w==',
@@ -92,19 +86,17 @@ test('Encode hash arguments', t => {
 
 test('Ensures hash in a proper format', t => {
     t.plan(1)
-    t.throws(
-        () => encoder.encode(CONTRACT, 'test_hash', [{}]),
-        { message: 'Should be one of: Array, ArrayBuffer, hex string, Number, BigInt; got [object Object] instead' }
-    )
+    t.throws(() => encoder.encode(CONTRACT, 'test_hash', [{}]), {
+        message:
+            'Should be one of: Array, ArrayBuffer, hex string, Number, BigInt; got [object Object] instead',
+    })
 })
 
 test('Encode signature arguments', t => {
     t.plan(1)
-    const encoded = encoder.encode(
-        CONTRACT,
-        'test_signature',
-        [`0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f`]
-    )
+    const encoded = encoder.encode(CONTRACT, 'test_signature', [
+        `0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f`,
+    ])
     t.is(
         encoded,
         'cb_KxEbznV5G58BAQAAAQIDBAUGBwgJCgsMDQ4PAAECAwQFBgcICQoLDA0ODwABAgMEBQYHCAkKCwwNDg8AAQIDBAUGBwgJCgsMDQ4P+jjEQA==',
@@ -118,29 +110,24 @@ test('Encode signature arguments', t => {
 test('Encode account address arguments', t => {
     t.plan(2)
     t.is(
-        encoder.encode(
-            CONTRACT,
-            'test_account_address',
-            ["ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt"]
-        ),
+        encoder.encode(CONTRACT, 'test_account_address', [
+            'ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt',
+        ]),
         'cb_KxHgYyOEG58AoN5ov+GyA+UfUjUboIf3m3go5qFA8MMUpnDHADs/9XB1FYw7tQ==',
         'test_account_address(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt)'
     )
 
-    t.throws(
-        () => encoder.encode(CONTRACT, 'test_account_address', ['test-string']),
-        { message: 'Account pubkey should start with ak_, got test-string instead' }
-    )
+    t.throws(() => encoder.encode(CONTRACT, 'test_account_address', ['test-string']), {
+        message: 'Account pubkey should start with ak_, got test-string instead',
+    })
 })
 
 test('Encode contract address arguments', t => {
     t.plan(1)
     t.is(
-        encoder.encode(
-            CONTRACT,
-            'test_contract_address',
-            ["ct_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ"]
-        ),
+        encoder.encode(CONTRACT, 'test_contract_address', [
+            'ct_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ',
+        ]),
         'cb_KxELEfrsG58CoB/A0JnsWhPLkyijF/zs2FKx90ieXgC6CVc8PC22mFVTzM0KJQ==',
         'test_contract_address(ct_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ)'
     )
@@ -149,11 +136,9 @@ test('Encode contract address arguments', t => {
 test('Encode oracle address arguments', t => {
     t.plan(1)
     t.is(
-        encoder.encode(
-            CONTRACT,
-            'test_oracle_address',
-            ["ok_2YNyxd6TRJPNrTcEDCe9ra59SVUdp9FR9qWC5msKZWYD9bP9z5"]
-        ),
+        encoder.encode(CONTRACT, 'test_oracle_address', [
+            'ok_2YNyxd6TRJPNrTcEDCe9ra59SVUdp9FR9qWC5msKZWYD9bP9z5',
+        ]),
         'cb_KxGPms0RG58DoMryKiRO2sA9JvAqF9kjlC0FXPyGIyiyWlHChLydQg5Jyfi1MA==',
         'test_oracle_address(ok_2YNyxd6TRJPNrTcEDCe9ra59SVUdp9FR9qWC5msKZWYD9bP9z5)'
     )
@@ -162,11 +147,9 @@ test('Encode oracle address arguments', t => {
 test('Encode oracle query address arguments', t => {
     t.plan(1)
     t.is(
-        encoder.encode(
-            CONTRACT,
-            'test_oracle_query_address',
-            ["oq_2oRvyowJuJnEkxy58Ckkw77XfWJrmRgmGaLzhdqb67SKEL1gPY"]
-        ),
+        encoder.encode(CONTRACT, 'test_oracle_query_address', [
+            'oq_2oRvyowJuJnEkxy58Ckkw77XfWJrmRgmGaLzhdqb67SKEL1gPY',
+        ]),
         'cb_KxFBufYfG58EoO0e59wCeNBc6VCUc8UKk9Q6KLKNUDL2332qRC/hNxNIgI8x6g==',
         'test_oracle_query_address(oq_2oRvyowJuJnEkxy58Ckkw77XfWJrmRgmGaLzhdqb67SKEL1gPY)'
     )
@@ -186,7 +169,7 @@ test('Encode bits arguments', t => {
 
 test('Encode list arguments', t => {
     t.plan(1)
-    const encoded = encoder.encode(CONTRACT, 'test_list', [[1,2,3,5,8,13,21]])
+    const encoded = encoder.encode(CONTRACT, 'test_list', [[1, 2, 3, 5, 8, 13, 21]])
     t.is(encoded, 'cb_KxFLwdBRG3MCBAYKEBoquPlTeA==', 'test_list([1, 2, 3, 5, 8, 13, 21])')
 })
 
@@ -202,15 +185,20 @@ test('Encode long list arguments', t => {
 
 test('Ensures list is array', t => {
     t.plan(1)
-    t.throws(
-        () => encoder.encode(CONTRACT, 'test_list', ['test-string']),
-        { message: 'Fate list must be an Array, got test-string instead' }
-    )
+    t.throws(() => encoder.encode(CONTRACT, 'test_list', ['test-string']), {
+        message: 'Fate list must be an Array, got test-string instead',
+    })
 })
 
 test('Encode nested list arguments', t => {
     t.plan(1)
-    const encoded = encoder.encode(CONTRACT, 'test_nested_list', [[[1,2],[3,4],[5,6]]])
+    const encoded = encoder.encode(CONTRACT, 'test_nested_list', [
+        [
+            [1, 2],
+            [3, 4],
+            [5, 6],
+        ],
+    ])
     t.is(encoded, 'cb_KxEHeg4CGzMjAgQjBggjCgyQqs5t', 'test_nested_list([[1,2],[3,4],[5,6]])')
 })
 
@@ -221,21 +209,28 @@ test('Encode map arguments', t => {
 })
 
 test('Encode map arguments with sorted keys', t => {
-    const encoded = encoder.encode(CONTRACT, 'test_string_map', [[["fo", "a"], ["s", "a"]]])
-    t.is(encoded, 'cb_KxFFPju5Gy8CBXMFYQlmbwVhMOIQaw==', 'test_string_map({["fo"] = "a", ["s"] = "a"})')
-
-    const encoded2 = encoder.encode(
-        CONTRACT,
-        'test_string_map',
-        [[
-            // keep the order
-            ["ynx*,t@K66L(KYxf7GW3", "a"],
-            ["GTSnE%&8V3289VJ_ShLG", "a"],
-            ["adFLS.fj8E1jt=C1efff", "a"],
-            ["]!T+mi$hy$W:eMZGw}Kf", "a"],
-            ["Lzm]F8-44H*{mj!fh]M!", "a"],
-        ]]
+    const encoded = encoder.encode(CONTRACT, 'test_string_map', [
+        [
+            ['fo', 'a'],
+            ['s', 'a'],
+        ],
+    ])
+    t.is(
+        encoded,
+        'cb_KxFFPju5Gy8CBXMFYQlmbwVhMOIQaw==',
+        'test_string_map({["fo"] = "a", ["s"] = "a"})'
     )
+
+    const encoded2 = encoder.encode(CONTRACT, 'test_string_map', [
+        [
+            // keep the order
+            ['ynx*,t@K66L(KYxf7GW3', 'a'],
+            ['GTSnE%&8V3289VJ_ShLG', 'a'],
+            ['adFLS.fj8E1jt=C1efff', 'a'],
+            [']!T+mi$hy$W:eMZGw}Kf', 'a'],
+            ['Lzm]F8-44H*{mj!fh]M!', 'a'],
+        ],
+    ])
     t.is(
         encoded2,
         'cb_KxFFPju5Gy8FUUdUU25FJSY4VjMyODlWSl9TaExHBWFRTHptXUY4LTQ0SCp7bWohZmhdTSEFYVFdIVQrbWkkaHkkVzplTVpHd31LZgVhUWFkRkxTLmZqOEUxanQ9QzFlZmZmBWFReW54Kix0QEs2NkwoS1l4ZjdHVzMFYeU+O/8=',
@@ -245,28 +240,27 @@ test('Encode map arguments with sorted keys', t => {
 
 test('Encode map arguments by object', t => {
     t.plan(1)
-    const encoded = encoder.encode(CONTRACT, 'test_simple_map', [{ 7: false }])
+    const encoded = encoder.encode(CONTRACT, 'test_simple_map', [{7: false}])
     t.is(encoded, 'cb_KxHLN316Gy8BDn+vbmBO', 'test_simple_map({[7] = false})')
 })
 
 test('Ensures map is map, array, object', t => {
     t.plan(1)
-    t.throws(
-        () => encoder.encode(CONTRACT, 'test_simple_map', ['test-string']),
-        {
-            name: 'FateTypeError',
-            message: 'Fate map must be one of: Map, Array, Object; got test-string instead'
-        }
-    )
+    t.throws(() => encoder.encode(CONTRACT, 'test_simple_map', ['test-string']), {
+        name: 'FateTypeError',
+        message: 'Fate map must be one of: Map, Array, Object; got test-string instead',
+    })
 })
 
 test('Encode nested map arguments', t => {
     t.plan(1)
-    const encoded = encoder.encode(CONTRACT, 'test_nested_map', [[
-        [0, [[0, false]]],
-        [1, [[1, true]]],
-        [2, [[8, true]]],
-    ]])
+    const encoded = encoder.encode(CONTRACT, 'test_nested_map', [
+        [
+            [0, [[0, false]]],
+            [1, [[1, true]]],
+            [2, [[8, true]]],
+        ],
+    ])
     t.is(
         encoded,
         'cb_KxFdEx+MGy8DAC8BAH8CLwEC/wQvARD/oZN9CA==',
@@ -276,7 +270,7 @@ test('Encode nested map arguments', t => {
 
 test('Encode templated map arguments', t => {
     t.plan(1)
-    const encoded = encoder.encode(CONTRACT, 'test_template_map', [new Map([[17, "abc"]])])
+    const encoded = encoder.encode(CONTRACT, 'test_template_map', [new Map([[17, 'abc']])])
     t.is(encoded, 'cb_KxFQNXwJGy8BIg1hYmNLma/O', 'test_template_map({[17] = "abc"})')
 })
 
@@ -288,16 +282,24 @@ test('Encode tuple arguments', t => {
 
 test('Ensures tuple is array', t => {
     t.plan(1)
-    t.throws(
-        () => encoder.encode(CONTRACT, 'test_tuple', ['test-string']),
-        { message: 'Fate tuple must be an Array, got test-string instead' }
-    )
+    t.throws(() => encoder.encode(CONTRACT, 'test_tuple', ['test-string']), {
+        message: 'Fate tuple must be an Array, got test-string instead',
+    })
 })
 
 test('Encode nested tuple arguments', t => {
     t.plan(1)
-    const encoded = encoder.encode(CONTRACT, 'test_nested_tuple', [[[true, false], [false, true]]])
-    t.is(encoded, 'cb_KxHkKCkeGysr/38rf/+ZQRDt', 'test_nested_tuple(((true, false), (false, true)))')
+    const encoded = encoder.encode(CONTRACT, 'test_nested_tuple', [
+        [
+            [true, false],
+            [false, true],
+        ],
+    ])
+    t.is(
+        encoded,
+        'cb_KxHkKCkeGysr/38rf/+ZQRDt',
+        'test_nested_tuple(((true, false), (false, true)))'
+    )
 })
 
 test('Encode long tuple arguments', t => {
@@ -316,16 +318,13 @@ test('Variant validation', t => {
         null,
         {One: [], Two: []},
         {Fail: 'me'},
-        {Yep: [1,2,3]}
+        {Yep: [1, 2, 3]},
     ]
 
     t.plan(invalidData.length)
 
     invalidData.forEach(arg => {
-        t.throws(
-            () => encoder.encode(CONTRACT, 'test_variants', [arg]),
-            { name: 'FateTypeError' }
-        )
+        t.throws(() => encoder.encode(CONTRACT, 'test_variants', [arg]), {name: 'FateTypeError'})
     })
 })
 
@@ -344,23 +343,34 @@ test('Encode variant arguments with non-zero arity', t => {
 test('Encode variant arguments with nested variant', t => {
     t.plan(2)
     const encoded1 = encoder.encode(CONTRACT, 'test_nested_variants', [{One: [{RelativeTTL: [7]}]}])
-    t.is(encoded1, 'cb_KxF1qXomG6+CAQEAG6+CAQEAGw7cNGqs', 'test_nested_variants(One(RelativeTTL(7)))')
-
-    const encoded2 = encoder.encode(
-        CONTRACT,
-        'test_nested_variants',
-        [{
-            Two: [{
-                'AENS.Name': [
-                    'ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt',
-                    {RelativeTTL: [7]},
-                    new Map([
-                        ['pointer', {'AENS.ContractPt': ['ak_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ']}]
-                    ])
-                ]
-            }]
-        }]
+    t.is(
+        encoded1,
+        'cb_KxF1qXomG6+CAQEAG6+CAQEAGw7cNGqs',
+        'test_nested_variants(One(RelativeTTL(7)))'
     )
+
+    const encoded2 = encoder.encode(CONTRACT, 'test_nested_variants', [
+        {
+            Two: [
+                {
+                    'AENS.Name': [
+                        'ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt',
+                        {RelativeTTL: [7]},
+                        new Map([
+                            [
+                                'pointer',
+                                {
+                                    'AENS.ContractPt': [
+                                        'ak_Ez6MyeTMm17YnTnDdHTSrzMEBKmy7Uz2sXu347bTDPgVH2ifJ',
+                                    ],
+                                },
+                            ],
+                        ]),
+                    ],
+                },
+            ],
+        },
+    ])
 
     t.is(
         encoded2,
@@ -380,7 +390,7 @@ test('Encode type aliases', t => {
     const encoded = encoder.encode(CONTRACT, 'test_int_type', [7])
     t.is(encoded, 'cb_KxE9BFdGGw7F/9+f', 'test_int_type(7)')
 
-    const encodedMap = encoder.encode(CONTRACT, 'test_map_type', [[["foo", 19]]])
+    const encodedMap = encoder.encode(CONTRACT, 'test_map_type', [[['foo', 19]]])
     t.is(encodedMap, 'cb_KxEM7YA1Gy8BDWZvbybgU5Hd', 'test_map_type({["foo"] = 19})')
 })
 
@@ -388,15 +398,23 @@ test('Encode fancy map', t => {
     t.plan(2)
     const encodedMap1 = encoder.encode(CONTRACT, 'test_fancy_map', [
         new Map([[{None: []}, 1]]),
-        new Map([[{Some: [0]}, 2]])
+        new Map([[{Some: [0]}, 2]]),
     ])
-    t.is(encodedMap1, 'cb_KxETMqtuKy8Br4IAAQA/Ai8Br4IAAQEbAASjVMXT', 'test_fancy_map({[None()] = 1}, {[Some(0)] = 2})')
+    t.is(
+        encodedMap1,
+        'cb_KxETMqtuKy8Br4IAAQA/Ai8Br4IAAQEbAASjVMXT',
+        'test_fancy_map({[None()] = 1}, {[Some(0)] = 2})'
+    )
 
     const encodedMap2 = encoder.encode(CONTRACT, 'test_fancy_map', [
         new Map([[undefined, 1]]),
-        new Map([[0, 2]])
+        new Map([[0, 2]]),
     ])
-    t.is(encodedMap2, 'cb_KxETMqtuKy8Br4IAAQA/Ai8Br4IAAQEbAASjVMXT', 'test_fancy_map({[None()] = 1}, {[Some(0)] = 2})')
+    t.is(
+        encodedMap2,
+        'cb_KxETMqtuKy8Br4IAAQA/Ai8Br4IAAQEbAASjVMXT',
+        'test_fancy_map({[None()] = 1}, {[Some(0)] = 2})'
+    )
 })
 
 test('Encode template type', t => {
@@ -407,18 +425,16 @@ test('Encode template type', t => {
 
 test('Encode template maze', t => {
     t.plan(1)
-    const encoded = encoder.encode(
-        CONTRACT,
-        'test_template_maze',
-        [{
+    const encoded = encoder.encode(CONTRACT, 'test_template_maze', [
+        {
             Any: [
                 {origin: {x: 1, y: 2}, a: 3, b: 4},
                 {Yep: [10]},
                 20,
                 {origin: {x: 1, y: 2}, a: 3, b: 4},
-            ]
-        }]
-    )
+            ],
+        },
+    ])
     t.is(
         encoded,
         'cb_KxGu5Sw8G6+CAAQBSzsrAgQGCK+EAAABAAIbFCg7KwIEBgj8xaf6',
@@ -431,11 +447,9 @@ test('Encode records', t => {
     const encoded = encoder.encode(CONTRACT, 'test_record', [{x: 0, y: 0}])
     t.is(encoded, 'cb_KxFMrKn+GysAAOlAPrs=', 'test_record({x = 0, y = 0})')
 
-    const encodedNest = encoder.encode(
-        CONTRACT,
-        'test_nested_record',
-        [{origin: {x: 1, y: 2}, a: 3, b: 4}]
-    )
+    const encodedNest = encoder.encode(CONTRACT, 'test_nested_record', [
+        {origin: {x: 1, y: 2}, a: 3, b: 4},
+    ])
 
     t.is(
         encodedNest,
@@ -466,11 +480,9 @@ test('Encode option record arguments', t => {
 
 test('Encode record with address and int in arguments', t => {
     t.plan(1)
-    const encoded = encoder.encode(
-        CONTRACT,
-        'test_address_record',
-        [{account: 'ak_2kE1RxHzsRE4LxDFu6WKi35BwPvrEawBjNtV788Gje3yqADvwR', amount: 42}]
-    )
+    const encoded = encoder.encode(CONTRACT, 'test_address_record', [
+        {account: 'ak_2kE1RxHzsRE4LxDFu6WKi35BwPvrEawBjNtV788Gje3yqADvwR', amount: 42},
+    ])
     t.is(
         encoded,
         'cb_KxF7CJtTGyufAKDl15J29uSuZc3z1ZG2rDJhj05+ymUb+Vx+U6wgnnIIalQBp8sy',
@@ -516,44 +528,36 @@ test('Encode Chain.ttl arguments', t => {
 
 test('Encode AENS.pointee arguments', t => {
     t.plan(4)
-    const encoded1 = encoder.encode(
-        CONTRACT,
-        'test_pointee',
-        [{'AENS.AccountPt': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']}]
-    )
+    const encoded1 = encoder.encode(CONTRACT, 'test_pointee', [
+        {'AENS.AccountPt': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']},
+    ])
     t.is(
         encoded1,
         'cb_KxETYCAKG6+EAQEBAQAbnwCg3mi/4bID5R9SNRugh/ebeCjmoUDwwxSmcMcAOz/1cHV5nrYN',
         'test_pointee(AENS.AccountPt(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt))'
     )
 
-    const encoded2 = encoder.encode(
-        CONTRACT,
-        'test_pointee',
-        [{'AENS.OraclePt': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']}]
-    )
+    const encoded2 = encoder.encode(CONTRACT, 'test_pointee', [
+        {'AENS.OraclePt': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']},
+    ])
     t.is(
         encoded2,
         'cb_KxETYCAKG6+EAQEBAQEbnwCg3mi/4bID5R9SNRugh/ebeCjmoUDwwxSmcMcAOz/1cHV1g9LO',
         'test_pointee(AENS.OraclePt(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt))'
     )
 
-    const encoded3 = encoder.encode(
-        CONTRACT,
-        'test_pointee',
-        [{'AENS.ContractPt': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']}]
-    )
+    const encoded3 = encoder.encode(CONTRACT, 'test_pointee', [
+        {'AENS.ContractPt': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']},
+    ])
     t.is(
         encoded3,
         'cb_KxETYCAKG6+EAQEBAQIbnwCg3mi/4bID5R9SNRugh/ebeCjmoUDwwxSmcMcAOz/1cHXYPI6p',
         'test_pointee(AENS.ContractPt(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt))'
     )
 
-    const encoded4 = encoder.encode(
-        CONTRACT,
-        'test_pointee',
-        [{'AENS.ChannelPt': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']}]
-    )
+    const encoded4 = encoder.encode(CONTRACT, 'test_pointee', [
+        {'AENS.ChannelPt': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']},
+    ])
     t.is(
         encoded4,
         'cb_KxETYCAKG6+EAQEBAQMbnwCg3mi/4bID5R9SNRugh/ebeCjmoUDwwxSmcMcAOz/1cHUl0JMb',
@@ -563,44 +567,36 @@ test('Encode AENS.pointee arguments', t => {
 
 test('Encode AENSv2.pointee arguments', t => {
     t.plan(5)
-    const encoded1 = encoder.encode(
-        CONTRACT,
-        'test_pointee_v2',
-        [{'AENSv2.AccountPt': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']}]
-    )
+    const encoded1 = encoder.encode(CONTRACT, 'test_pointee_v2', [
+        {'AENSv2.AccountPt': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']},
+    ])
     t.is(
         encoded1,
         'cb_KxElnEHfG6+FAQEBAQEAG58AoN5ov+GyA+UfUjUboIf3m3go5qFA8MMUpnDHADs/9XB10byw+g==',
         'test_pointee_v2(AENSv2.AccountPt(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt))'
     )
 
-    const encoded2 = encoder.encode(
-        CONTRACT,
-        'test_pointee_v2',
-        [{'AENSv2.OraclePt': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']}]
-    )
+    const encoded2 = encoder.encode(CONTRACT, 'test_pointee_v2', [
+        {'AENSv2.OraclePt': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']},
+    ])
     t.is(
         encoded2,
         'cb_KxElnEHfG6+FAQEBAQEBG58AoN5ov+GyA+UfUjUboIf3m3go5qFA8MMUpnDHADs/9XB1XO0VzQ==',
         'test_pointee_v2(AENSv2.OraclePt(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt))'
     )
 
-    const encoded3 = encoder.encode(
-        CONTRACT,
-        'test_pointee_v2',
-        [{'AENSv2.ContractPt': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']}]
-    )
+    const encoded3 = encoder.encode(CONTRACT, 'test_pointee_v2', [
+        {'AENSv2.ContractPt': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']},
+    ])
     t.is(
         encoded3,
         'cb_KxElnEHfG6+FAQEBAQECG58AoN5ov+GyA+UfUjUboIf3m3go5qFA8MMUpnDHADs/9XB1UFjoyQ==',
         'test_pointee_v2(AENSv2.ContractPt(ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt))'
     )
 
-    const encoded4 = encoder.encode(
-        CONTRACT,
-        'test_pointee_v2',
-        [{'AENSv2.ChannelPt': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']}]
-    )
+    const encoded4 = encoder.encode(CONTRACT, 'test_pointee_v2', [
+        {'AENSv2.ChannelPt': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt']},
+    ])
     t.is(
         encoded4,
         'cb_KxElnEHfG6+FAQEBAQEDG58AoN5ov+GyA+UfUjUboIf3m3go5qFA8MMUpnDHADs/9XB1547G3Q==',
@@ -608,11 +604,7 @@ test('Encode AENSv2.pointee arguments', t => {
     )
 
     const dataPt = Buffer.from('http://example.com')
-    const encoded5 = encoder.encode(
-        CONTRACT,
-        'test_pointee_v2',
-        [{'AENSv2.DataPt': [dataPt]}]
-    )
+    const encoded5 = encoder.encode(CONTRACT, 'test_pointee_v2', [{'AENSv2.DataPt': [dataPt]}])
     t.is(
         encoded5,
         'cb_KxElnEHfG6+FAQEBAQEEG58BSWh0dHA6Ly9leGFtcGxlLmNvbYixc9Q=',
@@ -622,21 +614,24 @@ test('Encode AENSv2.pointee arguments', t => {
 
 test('Encode AENS.name arguments', t => {
     t.plan(1)
-    const encoded1 = encoder.encode(
-        CONTRACT,
-        'test_aens_name',
-        [
-            {
-                'AENS.Name': [
-                    'ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt',
-                    {FixedTTL: [100]},
-                    new Map([
-                        ["pt1", {'AENS.AccountPt': ['ak_2dATVcZ9KJU5a8hdsVtTv21pYiGWiPbmVcU1Pz72FFqpk9pSRR']}]
-                    ])
-                ]
-            }
-        ]
-    )
+    const encoded1 = encoder.encode(CONTRACT, 'test_aens_name', [
+        {
+            'AENS.Name': [
+                'ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt',
+                {FixedTTL: [100]},
+                new Map([
+                    [
+                        'pt1',
+                        {
+                            'AENS.AccountPt': [
+                                'ak_2dATVcZ9KJU5a8hdsVtTv21pYiGWiPbmVcU1Pz72FFqpk9pSRR',
+                            ],
+                        },
+                    ],
+                ]),
+            ],
+        },
+    ])
     t.is(
         encoded1,
         'cb_KxF9Ou/tG68DADufAKDeaL/hsgPlH1I1G6CH95t4KOahQPDDFKZwxwA7P/Vwda+CAQEBG28kLwENcHQxr4QBAQEBABufAKDVzwhADpiCIvJutLAsj4kHdFdGchGm5tlV7bcHScajO9PzmRQ=',
@@ -646,21 +641,24 @@ test('Encode AENS.name arguments', t => {
 
 test('Encode AENSv2.name arguments', t => {
     t.plan(1)
-    const encoded1 = encoder.encode(
-        CONTRACT,
-        'test_aens_name_v2',
-        [
-            {
-                'AENSv2.Name': [
-                    'ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt',
-                    {FixedTTL: [100]},
-                    new Map([
-                        ["pt1", {'AENSv2.AccountPt': ['ak_2dATVcZ9KJU5a8hdsVtTv21pYiGWiPbmVcU1Pz72FFqpk9pSRR']}]
-                    ])
-                ]
-            }
-        ]
-    )
+    const encoded1 = encoder.encode(CONTRACT, 'test_aens_name_v2', [
+        {
+            'AENSv2.Name': [
+                'ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt',
+                {FixedTTL: [100]},
+                new Map([
+                    [
+                        'pt1',
+                        {
+                            'AENSv2.AccountPt': [
+                                'ak_2dATVcZ9KJU5a8hdsVtTv21pYiGWiPbmVcU1Pz72FFqpk9pSRR',
+                            ],
+                        },
+                    ],
+                ]),
+            ],
+        },
+    ])
     t.is(
         encoded1,
         'cb_KxFjVV5kG68DADufAKDeaL/hsgPlH1I1G6CH95t4KOahQPDDFKZwxwA7P/Vwda+CAQEBG28kLwENcHQxr4UBAQEBAQAbnwCg1c8IQA6YgiLybrSwLI+JB3RXRnIRpubZVe23B0nGoztVU63L',
@@ -670,11 +668,9 @@ test('Encode AENSv2.name arguments', t => {
 
 test('Encode Chain.ga_meta_tx arguments', t => {
     t.plan(1)
-    const encoded1 = encoder.encode(
-        CONTRACT,
-        'test_ga_meta_tx',
-        [{'Chain.GAMetaTx': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt', 42]}]
-    )
+    const encoded1 = encoder.encode(CONTRACT, 'test_ga_meta_tx', [
+        {'Chain.GAMetaTx': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt', 42]},
+    ])
     t.is(
         encoded1,
         'cb_KxGKKBrYG68CACufAKDeaL/hsgPlH1I1G6CH95t4KOahQPDDFKZwxwA7P/VwdVSFBs0q',
@@ -684,11 +680,9 @@ test('Encode Chain.ga_meta_tx arguments', t => {
 
 test('Encode Chain.paying_for_tx arguments', t => {
     t.plan(1)
-    const encoded1 = encoder.encode(
-        CONTRACT,
-        'test_paying_for_tx',
-        [{'Chain.PayingForTx': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt', 42]}]
-    )
+    const encoded1 = encoder.encode(CONTRACT, 'test_paying_for_tx', [
+        {'Chain.PayingForTx': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt', 42]},
+    ])
     t.is(
         encoded1,
         'cb_KxGFY3+SG68CACufAKDeaL/hsgPlH1I1G6CH95t4KOahQPDDFKZwxwA7P/VwdVQi1L6n',
@@ -698,11 +692,9 @@ test('Encode Chain.paying_for_tx arguments', t => {
 
 test('Encode Chain.base_tx arguments', t => {
     t.plan(1)
-    const encoded1 = encoder.encode(
-        CONTRACT,
-        'test_base_tx',
-        [{'Chain.SpendTx': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt', 42, 'foo']}]
-    )
+    const encoded1 = encoder.encode(CONTRACT, 'test_base_tx', [
+        {'Chain.SpendTx': ['ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt', 42, 'foo']},
+    ])
     t.is(
         encoded1,
         'cb_KxHC9sshG6+WAwAAAAAAAQEBAgECAgEBAQEBAQECAAA7nwCg3mi/4bID5R9SNRugh/ebeCjmoUDwwxSmcMcAOz/1cHVUDWZvb5zbO1o=',
@@ -742,13 +734,10 @@ test('Encode Set.set arguments filters unique', t => {
 
 test('Validate Set.set arguments', t => {
     t.plan(1)
-    t.throws(
-        () => encoder.encode(CONTRACT, 'test_set', ['test-string']),
-        {
-            name: 'FateTypeError',
-            message: `Fate set must be a Set or Array, got "test-string" instead`
-        }
-    )
+    t.throws(() => encoder.encode(CONTRACT, 'test_set', ['test-string']), {
+        name: 'FateTypeError',
+        message: `Fate set must be a Set or Array, got "test-string" instead`,
+    })
 })
 
 test('Encode BLS12_381.fr arguments', t => {

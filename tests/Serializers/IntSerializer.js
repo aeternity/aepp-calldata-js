@@ -21,32 +21,26 @@ test('Serialize', t => {
     t.deepEqual(s.serialize(new FateInt(100000)), [111, 131, 1, 134, 96])
     t.deepEqual(s.serialize(-100000), [239, 131, 1, 134, 96])
     t.deepEqual(
-        s.serialize(new FateInt("0xfedcba9876543210")),
-        [111,136,254,220,186,152,118,84,49,208]
+        s.serialize(new FateInt('0xfedcba9876543210')),
+        [111, 136, 254, 220, 186, 152, 118, 84, 49, 208]
     )
 })
 
 test('Deserialize Stream', t => {
     t.plan(4)
-    t.deepEqual(
-        s.deserializeStream([126, 5, 5, 5]),
-        [new FateInt(63), new Uint8Array([5,5,5])]
-    )
+    t.deepEqual(s.deserializeStream([126, 5, 5, 5]), [new FateInt(63), new Uint8Array([5, 5, 5])])
 
-    t.deepEqual(
-        s.deserializeStream([254, 5, 5, 5]),
-        [new FateInt(-63), new Uint8Array([5,5,5])]
-    )
+    t.deepEqual(s.deserializeStream([254, 5, 5, 5]), [new FateInt(-63), new Uint8Array([5, 5, 5])])
 
-    t.deepEqual(
-        s.deserializeStream([111, 131, 1, 134, 96, 5, 5, 5]),
-        [new FateInt(100000), new Uint8Array([5,5,5])]
-    )
+    t.deepEqual(s.deserializeStream([111, 131, 1, 134, 96, 5, 5, 5]), [
+        new FateInt(100000),
+        new Uint8Array([5, 5, 5]),
+    ])
 
-    t.deepEqual(
-        s.deserializeStream([111,136,254,220,186,152,118,84,49,208,5,5,5]),
-        [new FateInt("0xfedcba9876543210"), new Uint8Array([5,5,5])]
-    )
+    t.deepEqual(s.deserializeStream([111, 136, 254, 220, 186, 152, 118, 84, 49, 208, 5, 5, 5]), [
+        new FateInt('0xfedcba9876543210'),
+        new Uint8Array([5, 5, 5]),
+    ])
 })
 
 test('Deserialize', t => {
@@ -63,9 +57,9 @@ test('Deserialize', t => {
     t.deepEqual(s.deserialize([111, 131, 1, 134, 96]), new FateInt(100000))
     t.deepEqual(s.deserialize([239, 131, 1, 134, 96]), new FateInt(-100000))
     t.deepEqual(
-        s.deserialize([111,136,254,220,186,152,118,84,49,208]),
-        new FateInt("0xfedcba9876543210")
+        s.deserialize([111, 136, 254, 220, 186, 152, 118, 84, 49, 208]),
+        new FateInt('0xfedcba9876543210')
     )
 
-    t.throws(() => s.deserialize([0b01010101]), { name: 'FatePrefixError' })
+    t.throws(() => s.deserialize([0b01010101]), {name: 'FatePrefixError'})
 })

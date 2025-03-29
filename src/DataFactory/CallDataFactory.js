@@ -4,7 +4,7 @@ import FateCalldata from '../types/FateCalldata.js'
 import BaseDataFactory from './BaseDataFactory.js'
 
 class CallDataFactory extends BaseDataFactory {
-    supports({ name, _valueTypes }) {
+    supports({name, _valueTypes}) {
         return 'calldata' === name
     }
 

@@ -1,8 +1,8 @@
 import FateData from './FateData.js'
 import {FateTypeString} from '../FateTypes.js'
-import { byteArray2Int } from '../utils/int2ByteArray.js'
+import {byteArray2Int} from '../utils/int2ByteArray.js'
 
-const toString = (data) => {
+const toString = data => {
     if (data instanceof Uint8Array) {
         const decoder = new TextDecoder()
         return decoder.decode(data)
@@ -11,7 +11,7 @@ const toString = (data) => {
     return data.toString()
 }
 
-const toBytes = (data) => {
+const toBytes = data => {
     if (typeof data === 'string') {
         const encoder = new TextEncoder()
         return encoder.encode(data)
@@ -20,7 +20,7 @@ const toBytes = (data) => {
     return data
 }
 
-const isUnicodeString = (data) => {
+const isUnicodeString = data => {
     const bytes = toBytes(toString(data))
     return byteArray2Int(data) === byteArray2Int(bytes)
 }

@@ -13,7 +13,7 @@ class VariantSerializer extends BaseSerializer {
             FateTag.VARIANT,
             ...RLP.encode(new Uint8Array(variant.arities)),
             variant.tag,
-            ...this.globalSerializer.serialize(valueTuple)
+            ...this.globalSerializer.serialize(valueTuple),
         ]
     }
 
@@ -35,7 +35,7 @@ class VariantSerializer extends BaseSerializer {
 
         return [
             new FateVariant(arities, tag, els.items, els.valueTypes, variants),
-            rest
+            rest,
         ]
     }
 }

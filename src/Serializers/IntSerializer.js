@@ -9,14 +9,14 @@ const SMALL_INT_MASK = 0b00000001
 
 class IntSerializer extends BaseSerializer {
     serialize(data) {
-        const bigValue = (data instanceof FateInt) ? data.value : BigInt(data)
+        const bigValue = data instanceof FateInt ? data.value : BigInt(data)
         const absVal = abs(bigValue)
 
         // small integer
         if (absVal < 64) {
             const small = Number(absVal)
             if (bigValue >= 0) {
-                return [(small << 1)]
+                return [small << 1]
             }
 
             // negative
@@ -27,14 +27,14 @@ class IntSerializer extends BaseSerializer {
         if (bigValue < 0) {
             return [
                 FateTag.NEG_BIG_INT,
-                ...RLPInt.encode(absVal - 64n)
+                ...RLPInt.encode(absVal - 64n),
             ]
         }
 
         // large positive integer
         return [
             FateTag.POS_BIG_INT,
-            ...RLPInt.encode(absVal - 64n)
+            ...RLPInt.encode(absVal - 64n),
         ]
     }
 
@@ -48,7 +48,7 @@ class IntSerializer extends BaseSerializer {
             if ((prefix & 0b10000000) === 0) {
                 return [
                     new FateInt(prefix >> 1),
-                    data.slice(1)
+                    data.slice(1),
                 ]
             }
 
@@ -57,7 +57,7 @@ class IntSerializer extends BaseSerializer {
 
             return [
                 new FateInt(-i),
-                data.slice(1)
+                data.slice(1),
             ]
         }
 
@@ -67,7 +67,7 @@ class IntSerializer extends BaseSerializer {
 
             return [
                 new FateInt((i + 64n) * sign),
-                new Uint8Array(remainder)
+                new Uint8Array(remainder),
             ]
         }
 

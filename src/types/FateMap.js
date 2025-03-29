@@ -1,7 +1,7 @@
 import FateData from './FateData.js'
 import {FateTypeMap} from '../FateTypes.js'
 
-const arrayToItem = (item) => {
+const arrayToItem = item => {
     const [key, value] = item
     return {key, value}
 }

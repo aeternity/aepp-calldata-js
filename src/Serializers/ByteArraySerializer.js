@@ -16,14 +16,14 @@ class ByteArraySerializer extends BaseSerializer {
 
             return [
                 prefix,
-                ...data.valueOf()
+                ...data.valueOf(),
             ]
         }
 
         return [
             FateTag.LONG_STRING,
             ...intSerializer.serialize(data.length - 64),
-            ...data.valueOf()
+            ...data.valueOf(),
         ]
     }
 
@@ -34,7 +34,7 @@ class ByteArraySerializer extends BaseSerializer {
         if (prefix === FateTag.EMPTY_STRING) {
             return [
                 new FateByteArray(),
-                data.slice(1)
+                data.slice(1),
             ]
         }
 
@@ -44,7 +44,7 @@ class ByteArraySerializer extends BaseSerializer {
 
             return [
                 new FateByteArray(rest.slice(0, len)),
-                rest.slice(len)
+                rest.slice(len),
             ]
         }
 
@@ -53,7 +53,7 @@ class ByteArraySerializer extends BaseSerializer {
 
         return [
             new FateByteArray(data.slice(1, offset)),
-            data.slice(offset)
+            data.slice(offset),
         ]
     }
 }

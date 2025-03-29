@@ -73,7 +73,9 @@ class ApiEncoder {
         }
 
         if (data[2] !== '_') {
-            throw new FormatError(`Invalid API data format. Expected _ separator on position 2, got ${data[2]}`)
+            throw new FormatError(
+                `Invalid API data format. Expected _ separator on position 2, got ${data[2]}`
+            )
         }
 
         const type = TYPES[TAG2TYPE[tag]]
@@ -81,7 +83,9 @@ class ApiEncoder {
         const decoded = type.encoder.decode(payload)
 
         if (type.size > 0 && decoded.length !== type.size) {
-            throw new FormatError(`Invalid API data format. Expected size ${type.size}, but got ${decoded.length}`)
+            throw new FormatError(
+                `Invalid API data format. Expected size ${type.size}, but got ${decoded.length}`
+            )
         }
 
         return decoded

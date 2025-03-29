@@ -25,7 +25,7 @@ class FieldsEncoder {
      * @param {object} data - An object with field => value items
      * @param {object} template - An object with field => type items
      * @returns {array} A poisioned array of encoded fields with preserved order
-    */
+     */
     encodeFields(data, template) {
         const chunks = []
 
@@ -47,7 +47,7 @@ class FieldsEncoder {
      * @param {array} data - An array with positioned values according to the template
      * @param {object} template - An object with field => type items
      * @returns {object} An object with decoded field => value items
-    */
+     */
     decodeFields(data, template) {
         const chunks = {}
         let idx = 0
