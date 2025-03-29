@@ -16,7 +16,7 @@ class ContractEncoder {
      *
      * @param {string} data - Contract bytearray data in a canonical format.
      * @returns {Object} Decoded contract metadata as POJO.
-    */
+     */
     decode(data) {
         const bytecode = this._apiEncoder.decodeWithType(data, 'contract_bytearray')
 

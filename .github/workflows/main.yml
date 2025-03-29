@@ -1,46 +1,46 @@
 name: Build, Test
 
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    push:
+        branches: [master]
+    pull_request:
+        branches: [master]
 
 jobs:
-  build:
-    runs-on: ubuntu-22.04
-    strategy:
-      matrix:
-        node-version: [20.x]
-    steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: npm
-    - run: |
-          wget -q https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_24.3.3-1~ubuntu~focal_amd64.deb
-          sudo apt install --allow-downgrades ./esl-erlang_24.3.3-1~ubuntu~focal_amd64.deb || true
-    - run: npm config set fund false
-    - run: make tests
-    - run: make integration-tests
-    - run: make lint
-  benchmark:
-    runs-on: ubuntu-22.04
-    if: github.ref == 'refs/heads/master'
-    strategy:
-      matrix:
-        node-version: [20.x]
-    steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: npm
-    - run: |
-          wget -q https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_24.3.3-1~ubuntu~focal_amd64.deb
-          sudo apt install --allow-downgrades ./esl-erlang_24.3.3-1~ubuntu~focal_amd64.deb || true
-    - run: npm config set fund false
-    - run: make benchmark-tests
+    build:
+        runs-on: ubuntu-22.04
+        strategy:
+            matrix:
+                node-version: [20.x]
+        steps:
+            - uses: actions/checkout@v4
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v4
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: npm
+            - run: |
+                  wget -q https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_24.3.3-1~ubuntu~focal_amd64.deb
+                  sudo apt install --allow-downgrades ./esl-erlang_24.3.3-1~ubuntu~focal_amd64.deb || true
+            - run: npm config set fund false
+            - run: make tests
+            - run: make integration-tests
+            - run: make lint
+    benchmark:
+        runs-on: ubuntu-22.04
+        if: github.ref == 'refs/heads/master'
+        strategy:
+            matrix:
+                node-version: [20.x]
+        steps:
+            - uses: actions/checkout@v4
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v4
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: npm
+            - run: |
+                  wget -q https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_24.3.3-1~ubuntu~focal_amd64.deb
+                  sudo apt install --allow-downgrades ./esl-erlang_24.3.3-1~ubuntu~focal_amd64.deb || true
+            - run: npm config set fund false
+            - run: make benchmark-tests

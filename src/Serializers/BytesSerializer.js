@@ -10,7 +10,7 @@ class BytesSerializer extends BaseSerializer {
         return [
             FateTag.OBJECT,
             FateTag.OTYPE_BYTES,
-            ...byteArraySerializer.serialize(bytes.value)
+            ...byteArraySerializer.serialize(bytes.value),
         ]
     }
 
@@ -20,7 +20,7 @@ class BytesSerializer extends BaseSerializer {
 
         return [
             new FateBytes(bytes.valueOf()),
-            rest
+            rest,
         ]
     }
 }

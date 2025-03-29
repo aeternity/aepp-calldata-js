@@ -26,15 +26,9 @@ test('Encode boolean arguments', t => {
 test('Number of arguments validation', t => {
     t.plan(2)
 
-    t.throws(
-        () => encoder.encodeCall('test_bool', [true]),
-        { name: 'EncoderError' }
-    )
+    t.throws(() => encoder.encodeCall('test_bool', [true]), {name: 'EncoderError'})
 
-    t.throws(
-        () => encoder.encodeCall('test_bool', [true, true, false]),
-        { name: 'EncoderError' }
-    )
+    t.throws(() => encoder.encodeCall('test_bool', [true, true, false]), {name: 'EncoderError'})
 })
 
 test('Encode optional arguments', t => {
@@ -54,10 +48,7 @@ test('Encode records', t => {
     const encoded = encoder.encodeCall('test_record', [[0, 0]])
     t.is(encoded, 'cb_KxFMrKn+GysAAOlAPrs=', 'test_record({x = 0, y = 0})')
 
-    const encodedNest = encoder.encodeCall(
-        'test_nested_record',
-        [[[1, 2], 3, 4]]
-    )
+    const encodedNest = encoder.encodeCall('test_nested_record', [[[1, 2], 3, 4]])
 
     t.is(
         encodedNest,
@@ -68,17 +59,16 @@ test('Encode records', t => {
 
 test('Encode calldata', t => {
     t.plan(1)
-    const encoded = encoder.encodeCall(
-        'test_template_maze',
-        [{
+    const encoded = encoder.encodeCall('test_template_maze', [
+        {
             1: [
                 [[1, 2], 3, 4],
                 {2: [10]},
                 20,
                 [[1, 2], 3, 4],
-            ]
-        }]
-    )
+            ],
+        },
+    ])
     t.is(
         encoded,
         'cb_KxGu5Sw8G6+CAAQBSzsrAgQGCK+EAAABAAIbFCg7KwIEBgj8xaf6',
@@ -88,33 +78,27 @@ test('Encode calldata', t => {
 
 test('Decode calldata', t => {
     t.plan(1)
-    const decoded = encoder.decodeCall(
-        'cb_KxGu5Sw8G6+CAAQBSzsrAgQGCK+EAAABAAIbFCg7KwIEBgj8xaf6',
-    )
+    const decoded = encoder.decodeCall('cb_KxGu5Sw8G6+CAAQBSzsrAgQGCK+EAAABAAIbFCg7KwIEBgj8xaf6')
 
-    t.deepEqual(
-        decoded,
-        {
-            functionId: 'aee52c3c',
-            functionName: 'test_template_maze',
-            args: [{
+    t.deepEqual(decoded, {
+        functionId: 'aee52c3c',
+        functionName: 'test_template_maze',
+        args: [
+            {
                 1: [
                     [[1n, 2n], 3n, 4n],
                     {2: [10n]},
                     20n,
                     [[1n, 2n], 3n, 4n],
-                ]
-            }]
-        }
-    )
+                ],
+            },
+        ],
+    })
 })
 
 test('Decode implicit init (void) result', t => {
     t.plan(1)
-    t.is(
-        encoder.decodeResult('init', 'cb_Xfbg4g=='),
-        undefined
-    )
+    t.is(encoder.decodeResult('init', 'cb_Xfbg4g=='), undefined)
 })
 
 test('Decode unit return result', t => {
@@ -128,16 +112,16 @@ test('Decode unit return result', t => {
 test('Decode successful result', t => {
     t.plan(1)
     t.deepEqual(
-        encoder.decodeResult(
-            'test_complex_tuple',
-            'cb_WysCAq+EAAABAAIbBjMCBAYvAgIEBggrCgyRsE4R'
-        ),
+        encoder.decodeResult('test_complex_tuple', 'cb_WysCAq+EAAABAAIbBjMCBAYvAgIEBggrCgyRsE4R'),
         [
             [1n, 1n],
             {2: [3n]},
             [1n, 2n, 3n],
-            new Map([[1n, 2n], [3n, 4n]]),
-            [5n, 6n]
+            new Map([
+                [1n, 2n],
+                [3n, 4n],
+            ]),
+            [5n, 6n],
         ],
         'test_complex_tuple(({x = 1, y = 1}, Yep(3), [1, 2, 3], {[1] = 2, [3] = 4}, (5, 6)))'
     )
@@ -153,10 +137,7 @@ test('Decode error result', t => {
     )
     t.is(error, 'Type error on call: [{bytes,<<240,2,...>>}] is not of type [{bytes,32}]')
 
-    t.throws(
-        () => encoder.decodeResult('test_unit', 'err_abc', 'error'),
-        { name: 'FateTypeError' }
-    )
+    t.throws(() => encoder.decodeResult('test_unit', 'err_abc', 'error'), {name: 'FateTypeError'})
 })
 
 test('Decode revert result', t => {
@@ -170,8 +151,5 @@ test('Decode revert result', t => {
 test('Decode unknown result', t => {
     t.plan(1)
 
-    t.throws(
-        () => encoder.decodeResult('test_unit', '123', 'unknown'),
-        { name: 'EncoderError' }
-    )
+    t.throws(() => encoder.decodeResult('test_unit', '123', 'unknown'), {name: 'EncoderError'})
 })

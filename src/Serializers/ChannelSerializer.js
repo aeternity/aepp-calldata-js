@@ -8,7 +8,7 @@ class ChannelSerializer extends BaseSerializer {
         return [
             FateTag.OBJECT,
             FateTag.OTYPE_CHANNEL,
-            ...RLP.encode(data.value)
+            ...RLP.encode(data.value),
         ]
     }
 
@@ -18,7 +18,7 @@ class ChannelSerializer extends BaseSerializer {
 
         return [
             new FateChannelAddress(decoded.data),
-            new Uint8Array(decoded.remainder)
+            new Uint8Array(decoded.remainder),
         ]
     }
 }

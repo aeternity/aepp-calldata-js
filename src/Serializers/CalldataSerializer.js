@@ -20,10 +20,10 @@ class CalldataSerializer extends BaseSerializer {
     deserialize(data, typeInfo) {
         const calldataType = FateTypeTuple([
             FateTypeByteArray(),
-            FateTypeTuple(typeInfo.argumentTypes)
+            FateTypeTuple(typeInfo.argumentTypes),
         ])
 
-        const [calldataTuple,] = this.globalSerializer.deserializeStream(data, calldataType)
+        const [calldataTuple] = this.globalSerializer.deserializeStream(data, calldataType)
         const [functionId, argsTuple] = calldataTuple.items
 
         return new FateCalldata(functionId.valueOf(), argsTuple.valueTypes, argsTuple.items)

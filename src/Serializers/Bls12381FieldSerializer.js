@@ -7,12 +7,12 @@ const bytesSerializer = new BytesSerializer()
 
 const factory = (type, data) => {
     switch (type.name) {
-    case 'bls12_381.fr':
-        return new FateBls12381Fr(data)
-    case 'bls12_381.fp':
-        return new FateBls12381Fp(data)
-    default:
-        throw new Error(`Unsupported type "${type.name}"`)
+        case 'bls12_381.fr':
+            return new FateBls12381Fr(data)
+        case 'bls12_381.fp':
+            return new FateBls12381Fp(data)
+        default:
+            throw new Error(`Unsupported type "${type.name}"`)
     }
 }
 
@@ -26,7 +26,7 @@ class Bls12381FieldSerializer extends BaseSerializer {
 
         return [
             factory(typeInfo, bytes.valueOf()),
-            rest
+            rest,
         ]
     }
 }

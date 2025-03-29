@@ -28,10 +28,10 @@ import {
     FateTypeAENSName,
     FateTypeAENSv2Name,
     FateTypeBls12381Fr,
-    FateTypeBls12381Fp
+    FateTypeBls12381Fp,
 } from './FateTypes.js'
 
-const isObject = (value) => {
+const isObject = value => {
     return value && typeof value === 'object' && value.constructor === Object
 }
 
@@ -63,7 +63,7 @@ class TypeResolver {
         let resolvedTypes = []
 
         if (isObject(type)) {
-            [[key, valueTypes]] = Object.entries(type)
+            ;[[key, valueTypes]] = Object.entries(type)
         }
 
         if (this.isCustomType(key)) {

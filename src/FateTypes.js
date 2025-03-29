@@ -18,7 +18,7 @@ const FateTypeBits = () => {
     return {name: 'bits'}
 }
 
-const FateTypeBytes = (size) => {
+const FateTypeBytes = size => {
     return {name: 'bytes', size}
 }
 
@@ -46,7 +46,7 @@ const FateTypeOracleAddress = (questionType, answerType) => {
     return {
         name: 'oracle_pubkey',
         questionType,
-        answerType
+        answerType,
     }
 }
 
@@ -54,7 +54,7 @@ const FateTypeOracleQueryAddress = (questionType, answerType) => {
     return {
         name: 'oracle_query_id',
         questionType,
-        answerType
+        answerType,
     }
 }
 
@@ -62,7 +62,7 @@ const FateTypeByteArray = () => {
     return {name: 'byte_array'}
 }
 
-const FateTypeList = (valuesType) => {
+const FateTypeList = valuesType => {
     return {
         name: 'list',
         valuesType,
@@ -72,7 +72,7 @@ const FateTypeList = (valuesType) => {
 const FateTypeTuple = (valueTypes = []) => {
     return {
         name: 'tuple',
-        valueTypes
+        valueTypes,
     }
 }
 
@@ -84,7 +84,7 @@ const FateTypeRecord = (keys, valueTypes) => {
     }
 }
 
-const FateTypeSet = (valuesType) => {
+const FateTypeSet = valuesType => {
     return {
         name: 'set',
         valuesType,
@@ -99,24 +99,24 @@ const FateTypeMap = (keyType, valueType) => {
     }
 }
 
-const FateTypeVariant = (variants) => {
+const FateTypeVariant = variants => {
     return {
         name: 'variant',
         variants,
     }
 }
 
-const FateTypeType = (type) => {
+const FateTypeType = type => {
     return {
         name: 'type',
         type,
     }
 }
 
-const FateTypeOption = (valueTypes) => {
+const FateTypeOption = valueTypes => {
     const variants = [
-        { None: []},
-        { Some: valueTypes }
+        {None: []},
+        {Some: valueTypes},
     ]
 
     return FateTypeVariant(variants)
@@ -125,7 +125,7 @@ const FateTypeOption = (valueTypes) => {
 const FateTypeChainTTL = () => {
     const variants = [
         {RelativeTTL: [FateTypeInt()]},
-        {FixedTTL: [FateTypeInt()]}
+        {FixedTTL: [FateTypeInt()]},
     ]
 
     return FateTypeVariant(variants)
@@ -200,25 +200,29 @@ const FateTypeAENSv2Pointee = () => {
 }
 
 const FateTypeAENSName = () => {
-    const variants = [{
-        'AENS.Name': [
-            FateTypeAccountAddress(),
-            FateTypeChainTTL(),
-            FateTypeMap(FateTypeString(), FateTypeAENSPointee())
-        ]
-    }]
+    const variants = [
+        {
+            'AENS.Name': [
+                FateTypeAccountAddress(),
+                FateTypeChainTTL(),
+                FateTypeMap(FateTypeString(), FateTypeAENSPointee()),
+            ],
+        },
+    ]
 
     return FateTypeVariant(variants)
 }
 
 const FateTypeAENSv2Name = () => {
-    const variants = [{
-        'AENSv2.Name': [
-            FateTypeAccountAddress(),
-            FateTypeChainTTL(),
-            FateTypeMap(FateTypeString(), FateTypeAENSv2Pointee())
-        ]
-    }]
+    const variants = [
+        {
+            'AENSv2.Name': [
+                FateTypeAccountAddress(),
+                FateTypeChainTTL(),
+                FateTypeMap(FateTypeString(), FateTypeAENSv2Pointee()),
+            ],
+        },
+    ]
 
     return FateTypeVariant(variants)
 }
@@ -251,10 +255,10 @@ const FateTypeContractBytearray = () => {
     return {name: 'contract_bytearray'}
 }
 
-const FateTypeVar = (id) => {
+const FateTypeVar = id => {
     return {
         name: 'tvar',
-        id
+        id,
     }
 }
 

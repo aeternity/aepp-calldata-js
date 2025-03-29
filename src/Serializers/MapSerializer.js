@@ -16,14 +16,14 @@ class MapSerializer extends BaseSerializer {
         const serializedItems = sortedItems.map(i => {
             return [
                 this.globalSerializer.serialize(i.key),
-                this.globalSerializer.serialize(i.value)
+                this.globalSerializer.serialize(i.value),
             ]
         })
 
         return [
             FateTag.MAP,
             ...RLPInt.encode(len),
-            ...serializedItems.flat(Infinity)
+            ...serializedItems.flat(Infinity),
         ]
     }
 
@@ -46,7 +46,7 @@ class MapSerializer extends BaseSerializer {
         let valueType
 
         if (typeof typeInfo !== 'undefined') {
-            ({keyType, valueType} = typeInfo)
+            ;({keyType, valueType} = typeInfo)
         }
 
         const elements = []
@@ -71,7 +71,7 @@ class MapSerializer extends BaseSerializer {
                 valueType,
                 elements
             ),
-            rest
+            rest,
         ]
     }
 }

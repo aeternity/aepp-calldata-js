@@ -1,4 +1,4 @@
-import { FateTypeBits } from '../FateTypes.js'
+import {FateTypeBits} from '../FateTypes.js'
 import FateData from './FateData.js'
 
 class FateBits extends FateData {

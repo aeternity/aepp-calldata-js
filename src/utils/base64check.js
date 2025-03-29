@@ -1,22 +1,22 @@
 import Sha256 from 'sha.js/sha256.js'
-import { Buffer } from 'safe-buffer'
+import {Buffer} from 'safe-buffer'
 import FormatError from '../Errors/FormatError.js'
 
-const sha256hash = (input) => {
+const sha256hash = input => {
     return new Sha256().update(input).digest()
 }
 
-const checkSumFn = (payload) => {
+const checkSumFn = payload => {
     return sha256hash(sha256hash(payload)).slice(0, 4)
 }
 
-const addChecksum = (payload) => {
+const addChecksum = payload => {
     const buffer = Buffer.from(payload)
     const checksum = checkSumFn(payload)
     return Buffer.concat([buffer, checksum], buffer.length + 4)
 }
 
-const getPayload = (payloadWithChecksumData) => {
+const getPayload = payloadWithChecksumData => {
     const payloadWithChecksum = Buffer.from(payloadWithChecksumData)
     const payload = payloadWithChecksum.slice(0, -4)
     const checksum = payloadWithChecksum.slice(-4)
@@ -34,7 +34,7 @@ const getPayload = (payloadWithChecksumData) => {
  * @param {String|Uint8Array} input - Data to encode
  * @return {String} Base64check encoded data
  */
-const encode = (input) => {
+const encode = input => {
     return addChecksum(input).toString('base64')
 }
 
@@ -43,15 +43,10 @@ const encode = (input) => {
  * @param {String} str - Data to decode
  * @return {Uint8Array} Base64check decoded data
  */
-const decode = (str) => {
+const decode = str => {
     const data = Buffer.from(str, 'base64')
 
     return getPayload(data)
 }
 
-export {
-    addChecksum,
-    getPayload,
-    encode,
-    decode
-}
+export {addChecksum, getPayload, encode, decode}

@@ -36,82 +36,52 @@ const resolver = new TypeResolver()
 
 test('Resolve void', t => {
     t.plan(1)
-    t.deepEqual(
-        resolver.resolveType('void'),
-        FateTypeVoid()
-    )
+    t.deepEqual(resolver.resolveType('void'), FateTypeVoid())
 })
 
 test('Resolve unit', t => {
     t.plan(1)
-    t.deepEqual(
-        resolver.resolveType('unit'),
-        FateTypeTuple()
-    )
+    t.deepEqual(resolver.resolveType('unit'), FateTypeTuple())
 })
 
 test('Resolve bool', t => {
     t.plan(1)
-    t.deepEqual(
-        resolver.resolveType('bool'),
-        FateTypeBool()
-    )
+    t.deepEqual(resolver.resolveType('bool'), FateTypeBool())
 })
 
 test('Resolve int', t => {
     t.plan(1)
-    t.deepEqual(
-        resolver.resolveType('int'),
-        FateTypeInt()
-    )
+    t.deepEqual(resolver.resolveType('int'), FateTypeInt())
 })
 
 test('Resolve string', t => {
     t.plan(1)
-    t.deepEqual(
-        resolver.resolveType('string'),
-        FateTypeString()
-    )
+    t.deepEqual(resolver.resolveType('string'), FateTypeString())
 })
 
 test('Resolve bits', t => {
     t.plan(1)
-    t.deepEqual(
-        resolver.resolveType('bits'),
-        FateTypeBits()
-    )
+    t.deepEqual(resolver.resolveType('bits'), FateTypeBits())
 })
 
 test('Resolve hash', t => {
     t.plan(1)
-    t.deepEqual(
-        resolver.resolveType('hash'),
-        FateTypeHash()
-    )
+    t.deepEqual(resolver.resolveType('hash'), FateTypeHash())
 })
 
 test('Resolve signature', t => {
     t.plan(1)
-    t.deepEqual(
-        resolver.resolveType('signature'),
-        FateTypeSignature()
-    )
+    t.deepEqual(resolver.resolveType('signature'), FateTypeSignature())
 })
 
 test('Resolve account address', t => {
     t.plan(1)
-    t.deepEqual(
-        resolver.resolveType('address'),
-        FateTypeAccountAddress()
-    )
+    t.deepEqual(resolver.resolveType('address'), FateTypeAccountAddress())
 })
 
 test('Resolve contract address', t => {
     t.plan(1)
-    t.deepEqual(
-        resolver.resolveType('contract_pubkey'),
-        FateTypeContractAddress()
-    )
+    t.deepEqual(resolver.resolveType('contract_pubkey'), FateTypeContractAddress())
 })
 
 test('Resolve oracle address', t => {
@@ -132,34 +102,22 @@ test('Resolve oracle query address', t => {
 
 test('Resolve bytes', t => {
     t.plan(1)
-    t.deepEqual(
-        resolver.resolveType({bytes: 32}),
-        FateTypeBytes(32)
-    )
+    t.deepEqual(resolver.resolveType({bytes: 32}), FateTypeBytes(32))
 })
 
 test('Resolve bytes any size', t => {
     t.plan(1)
-    t.deepEqual(
-        resolver.resolveType({bytes: 'any'}),
-        FateTypeBytes()
-    )
+    t.deepEqual(resolver.resolveType({bytes: 'any'}), FateTypeBytes())
 })
 
 test('Resolve list', t => {
     t.plan(1)
-    t.deepEqual(
-        resolver.resolveType({list: ['int']}),
-        FateTypeList(FateTypeInt())
-    )
+    t.deepEqual(resolver.resolveType({list: ['int']}), FateTypeList(FateTypeInt()))
 })
 
 test('Resolve templated list', t => {
     t.plan(1)
-    t.deepEqual(
-        resolver.resolveType({list: ["'a"]}, {"'a": "int"}),
-        FateTypeList(FateTypeInt())
-    )
+    t.deepEqual(resolver.resolveType({list: ["'a"]}, {"'a": 'int'}), FateTypeList(FateTypeInt()))
 })
 
 test('Resolve map', t => {
@@ -188,10 +146,7 @@ test('Resolve tuple', t => {
 
 test('Resolve unboxed singleton tuple', t => {
     t.plan(1)
-    t.deepEqual(
-        resolver.resolveType({tuple: ['int']}),
-        FateTypeInt()
-    )
+    t.deepEqual(resolver.resolveType({tuple: ['int']}), FateTypeInt())
 })
 
 test('Resolve templated tuple', t => {
@@ -208,8 +163,8 @@ test('Resolve record', t => {
         resolver.resolveType({
             record: [
                 {name: 'x', type: 'int'},
-                {name: 'y', type: 'int'}
-            ]
+                {name: 'y', type: 'int'},
+            ],
         }),
         FateTypeRecord(
             ['x', 'y'],
@@ -220,10 +175,7 @@ test('Resolve record', t => {
 
 test('Resolve unboxed singleton record', t => {
     t.plan(1)
-    t.deepEqual(
-        resolver.resolveType({record: [{name: 'x', type: 'int'}]}),
-        FateTypeInt()
-    )
+    t.deepEqual(resolver.resolveType({record: [{name: 'x', type: 'int'}]}), FateTypeInt())
 })
 
 test('Resolve nested record', t => {
@@ -236,21 +188,21 @@ test('Resolve nested record', t => {
                     type: {
                         record: [
                             {name: 'x', type: 'int'},
-                            {name: 'y', type: 'int'}
-                        ]
-                    }
+                            {name: 'y', type: 'int'},
+                        ],
+                    },
                 },
                 {name: 'a', type: 'int'},
                 {name: 'b', type: 'int'},
-            ]
+            ],
         }),
         FateTypeRecord(
             ['origin', 'a', 'b'],
             [
                 FateTypeRecord(['x', 'y'], [FateTypeInt(), FateTypeInt()]),
                 FateTypeInt(),
-                FateTypeInt()
-            ],
+                FateTypeInt(),
+            ]
         )
     )
 })
@@ -263,8 +215,8 @@ test('Resolve variant', t => {
                 {Nope: []},
                 {No: []},
                 {Yep: ['int']},
-                {Yes: []}
-            ]
+                {Yes: []},
+            ],
         }),
         FateTypeVariant([{Nope: []}, {No: []}, {Yep: [FateTypeInt()]}, {Yes: []}])
     )
@@ -278,120 +230,81 @@ test('Resolve variant with template vars', t => {
                 variant: [
                     {Zero: []},
                     {Any: ["'a", "'b", 'int', 'int']},
-                ]
+                ],
             },
             {"'a": 'int', "'b": 'bool'}
         ),
         FateTypeVariant([
             {Zero: []},
-            {Any: [FateTypeInt(), FateTypeBool(), FateTypeInt(), FateTypeInt()]}
+            {Any: [FateTypeInt(), FateTypeBool(), FateTypeInt(), FateTypeInt()]},
         ])
     )
 })
 
 test('Resolve Option', t => {
     t.plan(1)
-    t.deepEqual(
-        resolver.resolveType({option: ['int']}),
-        FateTypeOption([FateTypeInt()])
-    )
+    t.deepEqual(resolver.resolveType({option: ['int']}), FateTypeOption([FateTypeInt()]))
 })
 
 test('Resolve Chain.ttl', t => {
     t.plan(1)
-    t.deepEqual(
-        resolver.resolveType('Chain.ttl'),
-        FateTypeChainTTL()
-    )
+    t.deepEqual(resolver.resolveType('Chain.ttl'), FateTypeChainTTL())
 })
 
 test('Resolve Chain.ga_meta_tx', t => {
     t.plan(1)
-    t.deepEqual(
-        resolver.resolveType('Chain.ga_meta_tx'),
-        FateTypeChainGAMetaTx()
-    )
+    t.deepEqual(resolver.resolveType('Chain.ga_meta_tx'), FateTypeChainGAMetaTx())
 })
 
 test('Resolve Chain.paying_for_tx', t => {
     t.plan(1)
-    t.deepEqual(
-        resolver.resolveType('Chain.paying_for_tx'),
-        FateTypeChainPayingForTx()
-    )
+    t.deepEqual(resolver.resolveType('Chain.paying_for_tx'), FateTypeChainPayingForTx())
 })
 
 test('Resolve Chain.base_tx', t => {
     t.plan(1)
-    t.deepEqual(
-        resolver.resolveType('Chain.base_tx'),
-        FateTypeChainBaseTx()
-    )
+    t.deepEqual(resolver.resolveType('Chain.base_tx'), FateTypeChainBaseTx())
 })
 
 test('Resolve AENS.pointee', t => {
     t.plan(1)
-    t.deepEqual(
-        resolver.resolveType('AENS.pointee'),
-        FateTypeAENSPointee()
-    )
+    t.deepEqual(resolver.resolveType('AENS.pointee'), FateTypeAENSPointee())
 })
 
 test('Resolve AENSv2.pointee', t => {
     t.plan(1)
-    t.deepEqual(
-        resolver.resolveType('AENSv2.pointee'),
-        FateTypeAENSv2Pointee()
-    )
+    t.deepEqual(resolver.resolveType('AENSv2.pointee'), FateTypeAENSv2Pointee())
 })
 
 test('Resolve AENS.name', t => {
     t.plan(1)
-    t.deepEqual(
-        resolver.resolveType('AENS.name'),
-        FateTypeAENSName()
-    )
+    t.deepEqual(resolver.resolveType('AENS.name'), FateTypeAENSName())
 })
 
 test('Resolve AENSv2.name', t => {
     t.plan(1)
-    t.deepEqual(
-        resolver.resolveType('AENSv2.name'),
-        FateTypeAENSv2Name()
-    )
+    t.deepEqual(resolver.resolveType('AENSv2.name'), FateTypeAENSv2Name())
 })
 
 test('Resolve Set.set', t => {
     t.plan(1)
-    t.deepEqual(
-        resolver.resolveType({'Set.set': ['int']}),
-        FateTypeSet(FateTypeInt())
-    )
+    t.deepEqual(resolver.resolveType({'Set.set': ['int']}), FateTypeSet(FateTypeInt()))
 })
 
 test('Resolve MCL_BLS12_381.fr', t => {
     t.plan(1)
-    t.deepEqual(
-        resolver.resolveType('MCL_BLS12_381.fr'),
-        FateTypeBls12381Fr()
-    )
+    t.deepEqual(resolver.resolveType('MCL_BLS12_381.fr'), FateTypeBls12381Fr())
 })
 
 test('Resolve MCL_BLS12_381.fp', t => {
     t.plan(1)
-    t.deepEqual(
-        resolver.resolveType('MCL_BLS12_381.fp'),
-        FateTypeBls12381Fp()
-    )
+    t.deepEqual(resolver.resolveType('MCL_BLS12_381.fp'), FateTypeBls12381Fp())
 })
 
 test('Throws on invalid type', t => {
     t.plan(1)
-    t.throws(
-        () => resolver.resolveType('very_wrong_type'),
-        {
-            name: 'TypeResolveError',
-            message: `Cannot resolve type: "very_wrong_type"`
-        }
-    )
+    t.throws(() => resolver.resolveType('very_wrong_type'), {
+        name: 'TypeResolveError',
+        message: `Cannot resolve type: "very_wrong_type"`,
+    })
 })

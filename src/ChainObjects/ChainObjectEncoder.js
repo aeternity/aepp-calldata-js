@@ -4,7 +4,7 @@ import Templates from './ChainObjectTemplates.js'
 class ChainObjectEncoder {
     /**
      * @param {FieldsEncoder} fieldsEncoder
-    */
+     */
     constructor(fieldsEncoder) {
         this.fieldsEncoder = fieldsEncoder
     }

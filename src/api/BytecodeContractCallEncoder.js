@@ -9,7 +9,7 @@ class BytecodeContractCallEncoder {
      * const encoder = new BytecodeContractCallEncoder(bytecode)
      *
      * @param {string} bytecode - Contract bytecode using cannonical format.
-    */
+     */
     constructor(bytecode) {
         this._internalEncoder = new InternalEncoder(bytecode)
     }
@@ -26,7 +26,7 @@ class BytecodeContractCallEncoder {
      * @param {string} funName - The function name as defined in the bytecode.
      * @param {Array} args - An array of call arguments as Javascript data structures. See README.md
      * @returns {string} Encoded calldata
-    */
+     */
     encodeCall(funName, args) {
         return this._internalEncoder.encodeCall(funName, args)
     }
@@ -46,7 +46,7 @@ class BytecodeContractCallEncoder {
      *
      * @param {string} data - Encoded calldata in canonical format.
      * @returns {object} Decoded calldata
-    */
+     */
     decodeCall(data) {
         return this._internalEncoder.decodeCall(data)
     }
@@ -64,7 +64,7 @@ class BytecodeContractCallEncoder {
      * @param {'ok'|'revert'|'error'} resultType - The call result type.
      * @returns {boolean|string|BigInt|Array|Map|Object}
      *  Decoded value as Javascript data structures. See README.md
-    */
+     */
     decodeResult(data, resultType = 'ok') {
         return this._internalEncoder.decodeResult(data, resultType)
     }

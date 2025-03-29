@@ -10,7 +10,7 @@ const DATA_TYPES = [
 ]
 
 class EventDataFactory extends BaseDataFactory {
-    supports({ name, _valueTypes }) {
+    supports({name, _valueTypes}) {
         return 'event' === name
     }
 
@@ -18,7 +18,9 @@ class EventDataFactory extends BaseDataFactory {
         const [nameHash, ...args] = topics
 
         if (typeof nameHash !== 'bigint') {
-            throw new TypeResolveError(`Event name hash (first topic) should be of type "BigInt", got "${typeof nameHash}" instead.`)
+            throw new TypeResolveError(
+                `Event name hash (first topic) should be of type "BigInt", got "${typeof nameHash}" instead.`
+            )
         }
 
         const idx = variantType.variants
@@ -26,7 +28,9 @@ class EventDataFactory extends BaseDataFactory {
             .findIndex(v => v === nameHash)
 
         if (idx === -1) {
-            throw new TypeResolveError('Event name hash does not match any event variant constructor')
+            throw new TypeResolveError(
+                'Event name hash does not match any event variant constructor'
+            )
         }
 
         const variant = variantType.variants[idx]

@@ -8,7 +8,7 @@ class ContractSerializer extends BaseSerializer {
         return [
             FateTag.OBJECT,
             FateTag.OTYPE_CONTRACT,
-            ...RLP.encode(data.value)
+            ...RLP.encode(data.value),
         ]
     }
 
@@ -18,7 +18,7 @@ class ContractSerializer extends BaseSerializer {
 
         return [
             new FateContractAddress(decoded.data),
-            new Uint8Array(decoded.remainder)
+            new Uint8Array(decoded.remainder),
         ]
     }
 }

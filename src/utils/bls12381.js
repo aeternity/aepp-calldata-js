@@ -9,7 +9,7 @@ const CURVES = {
         R: 1n << 384n,
         /* eslint-disable-next-line max-len */
         N: 0x1a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaabn,
-    }
+    },
 }
 
 const xgcd = (a, b) => {
@@ -47,7 +47,4 @@ const montBytes2Int = (value, curveType) => {
     return (a * Rinv) % curve.N
 }
 
-export {
-    int2MontBytes,
-    montBytes2Int,
-}
+export {int2MontBytes, montBytes2Int}

@@ -8,11 +8,11 @@ const TYPES = [
     'AENS.pointee',
     'AENSv2.pointee',
     'AENS.name',
-    'AENSv2.name'
+    'AENSv2.name',
 ]
 
 class VariantDataFactory extends BaseDataFactory {
-    supports({ name, _valueTypes }) {
+    supports({name, _valueTypes}) {
         return TYPES.includes(name)
     }
 
@@ -58,10 +58,12 @@ class VariantDataFactory extends BaseDataFactory {
     }
 
     isValid(value) {
-        return typeof value === 'object'
+        return (
+            typeof value === 'object'
             && value !== null
             && Object.entries(value).length === 1
             && Array.isArray(Object.values(value)[0])
+        )
     }
 }
 

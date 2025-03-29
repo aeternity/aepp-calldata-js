@@ -16,7 +16,6 @@ npm install -P @aeternity/aepp-calldata
 
 To work with contract calls with type information provided by ACI the `AciContractCallEncoder` class should be used. The constructor takes a single argument - [Sophia ACI](https://github.com/aeternity/aesophia/blob/master/docs/aeso_aci.md) as string.
 
-
 NodeJS example:
 
 ```javascript
@@ -32,12 +31,14 @@ const encoder = new AciContractCallEncoder(ACI)
 The `encodeCall` method is used to encode calldata taking the contract name as first argument, then function name and list of contract call arguments as last argument.
 
 Example:
+
 ```javascript
-const encoded = encoder.encodeCall(CONTRACT, 'test_string', ["whoolymoly"])
+const encoded = encoder.encodeCall(CONTRACT, 'test_string', ['whoolymoly'])
 console.log(`Encoded data: ${encoded}`)
 ```
 
 Expected output:
+
 ```
 Encoded data: cb_KxHwzCuVGyl3aG9vbHltb2x5zwMSnw==
 ```
@@ -47,12 +48,14 @@ Encoded data: cb_KxHwzCuVGyl3aG9vbHltb2x5zwMSnw==
 The `decodeResult` method is used to decode contract call result based on it's type. While the first two arguments are the same as the encoding method, the third one is the actual result to be decoded and last one is the result type which defaults to 'ok'.
 
 Example:
+
 ```javascript
 const decoded = encoder.decodeResult(CONTRACT, 'test_string', 'cb_KXdob29seW1vbHlGazSE')
 console.log(`Decoded data: ${decoded}`)
 ```
 
 Expected output:
+
 ```
 Encoded data: cb_KxHwzCuVGyl3aG9vbHltb2x5zwMSnw==
 Decoded data: whoolymoly
@@ -64,6 +67,7 @@ FATE contract call error message is represented as encoded contract bytearray (`
 However, revert messages are FATE string encoded, so the `decodeResult` method accepts forth argument with the result type.
 
 Example:
+
 ```javascript
 // error message
 const error = encoder.decodeResult(
@@ -75,11 +79,17 @@ const error = encoder.decodeResult(
 console.log('Error: ' + error)
 
 // revert message
-const revert = encoder.decodeResult(CONTRACT, 'test_string', 'cb_OXJlcXVpcmUgZmFpbGVkarP9mg==', 'revert')
+const revert = encoder.decodeResult(
+    CONTRACT,
+    'test_string',
+    'cb_OXJlcXVpcmUgZmFpbGVkarP9mg==',
+    'revert'
+)
 console.log('Revert: ' + revert)
 ```
 
 Expected output:
+
 ```
 Error: Type error on call: [{bytes,<<240,2,...>>}] is not of type [{bytes,32}]
 Revert: require failed
@@ -88,15 +98,17 @@ Revert: require failed
 ### Events
 
 Example:
+
 ```javascript
 const data = encoder.decodeEvent('Test', 'cb_dHJpZ2dlcmVk1FYuYA==', [
     34853523142692495808479485503424878684430196596020091237715106250497712463899n,
-    17n
+    17n,
 ])
 console.log(data)
 ```
 
 Expected output:
+
 ```
 {EventTwo: [17n, 'triggered']}
 ```
@@ -113,6 +125,7 @@ Node that FATE does not carry some of the type informaton with the data:
 - STL type information is lost: i.e. Chain, AENS, Set, BLS12_381
 
 Example:
+
 ```javascript
 const {ContractByteArrayEncoder} = require('@aeternity/aepp-calldata')
 
@@ -121,10 +134,10 @@ console.log(`Decoded string: ${decodedString}`)
 
 const decodedMap = encoder.decode('cb_LwEOfzGit9U')
 console.log('Decoded map:', decodedMap)
-
 ```
 
 Expected output:
+
 ```
 Decoded string: whoolymoly
 Decoded map: Map(1) { 7n => false }
@@ -133,22 +146,26 @@ Decoded map: Map(1) { 7n => false }
 The encoder could also work with explicit type information:
 
 Example:
+
 ```javascript
 const {ContractByteArrayEncoder, TypeResolver} = require('@aeternity/aepp-calldata')
 
 const encoder = new ContractByteArrayEncoder()
 const resolver = new TypeResolver()
 
-const decodedString = encoder.decodeWithType('cb_KXdob29seW1vbHlGazSE', resolver.resolveType('string'))
+const decodedString = encoder.decodeWithType(
+    'cb_KXdob29seW1vbHlGazSE',
+    resolver.resolveType('string')
+)
 console.log(`Decoded string: ${decodedString}`)
 
 const type = resolver.resolveType({map: ['int', 'bool']})
 const encodedMap = encoder.encodeWithType(new Map([[7n, false]]), type)
 console.log('Encoded map:', encodedMap)
-
 ```
 
 Expected output:
+
 ```
 Decoded string: whoolymoly
 Decoded map: Map(1) { 7n => false }
@@ -157,6 +174,7 @@ Decoded map: Map(1) { 7n => false }
 ## FATE API Encoder
 
 Any of the following FATE API data types can be encoded and decoded:
+
 - key_block_hash
 - micro_block_hash
 - block_pof_hash
@@ -177,6 +195,7 @@ Any of the following FATE API data types can be encoded and decoded:
 - bytearray
 
 Example:
+
 ```javascript
 const {FateApiEncoder} = require('@aeternity/aepp-calldata')
 const encoder = new FateApiEncoder()
@@ -189,6 +208,7 @@ console.log('Decoded:', decoded)
 ```
 
 Expected output:
+
 ```
 Encoded: cb_Xfbg4g==
 Decoded: Uint8Array(0) []
@@ -197,6 +217,7 @@ Decoded: Uint8Array(0) []
 Note that the encoder work with binary data, so that strings has to be encoded as `Uint8Array`.
 
 String Example:
+
 ```javascript
 const textEncoder = new TextEncoder()
 const textDecoder = new TextDecoder()
@@ -209,6 +230,7 @@ console.log('Decoded:', decoded)
 ```
 
 Excepted output:
+
 ```
 Encoded: cb_d2hvb2x5bW9seeO2SW0=
 Decoded: whoolymoly
@@ -219,6 +241,7 @@ Decoded: whoolymoly
 Decodes contract metadata including bytecode.
 
 Example:
+
 ```javascript
 const {ContractEncoder} = require('@aeternity/aepp-calldata')
 const encoder = new ContractEncoder()
@@ -230,6 +253,7 @@ console.log('Contract:', contract)
 ```
 
 Expected output (trimmed):
+
 ```
 {
   tag: 70n,
@@ -280,24 +304,24 @@ Expected output (trimmed):
 
 Using the library involves data types and their mappings from Sophia to JavaScript and vice versa.
 
-| Sophia Type | Sophia Example                                          | Javascript type    | Javascript Example                                      |
-|-------------|---------------------------------------------------------|--------------------|---------------------------------------------------------|
-| int         | `63`, `-63`                                             | BigInt             | `63n`, `-63n`                                           |
-| bool        | `true`, `false`                                         | Boolean            | `true`, `false`                                         |
-| string      | `"whoolymoly"`                                          | String             | `"whoolymoly"`                                          |
-| bytes       | `#beef`                                                 | BigInt             | `BigInt("0xbeef")`                                      |
-| list        | `[1, 2, 3, 5, 8, 13, 21]`                               | Array              | `[1,2,3,5,8,13,21]`                                     |
-| tuple       | `(true, false)`                                         | Array              | `[true, false]`                                         |
-| map         | `{[7] = false}`                                         | Map, Object, Array | `new Map([[7, false]])`, `{7: false}`, `[[7, false]]`   |
-| record      | `{x = 0, y = 0}`                                        | Object (POJO)      | `{x: 0, y: 0}`                                          |
-| variant     | `Some(404)`, `None`                                     | Object (POJO)      | `{'Some': [404]}`, `{'None': []}`, `404`, `undefined`   |
-| bits        | `Bits.none`, `Bits.all`  `Bits.set(Bits.none, 0)`       | BigInt             | `0b0n`, `-1n`, `0b00000001n`                            |
-| hash        | `#001234d`                                              | BigInt             | `BigInt("0x001234d")`                                   |
-| signature   | `#001234d`                                              | BigInt             | `BigInt("0x001234d")`                                   |
-| address     | `ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt` | String             | `ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt` |
-| Set.set     | `Set.from_list([1, 2, 3])`                              | Set, Array         | `new Set([1,2,3])`,`[1,2,3]`                            |
-| BLS12_381.fr| `BLS12_381.int_to_fr(3735928559)`                       | BigInt             | `3735928559n`                                           |
-| BLS12_381.fp| `BLS12_381.int_to_fp(3735928559)`                       | BigInt             | `3735928559n`                                           |
+| Sophia Type  | Sophia Example                                          | Javascript type    | Javascript Example                                      |
+| ------------ | ------------------------------------------------------- | ------------------ | ------------------------------------------------------- |
+| int          | `63`, `-63`                                             | BigInt             | `63n`, `-63n`                                           |
+| bool         | `true`, `false`                                         | Boolean            | `true`, `false`                                         |
+| string       | `"whoolymoly"`                                          | String             | `"whoolymoly"`                                          |
+| bytes        | `#beef`                                                 | BigInt             | `BigInt("0xbeef")`                                      |
+| list         | `[1, 2, 3, 5, 8, 13, 21]`                               | Array              | `[1,2,3,5,8,13,21]`                                     |
+| tuple        | `(true, false)`                                         | Array              | `[true, false]`                                         |
+| map          | `{[7] = false}`                                         | Map, Object, Array | `new Map([[7, false]])`, `{7: false}`, `[[7, false]]`   |
+| record       | `{x = 0, y = 0}`                                        | Object (POJO)      | `{x: 0, y: 0}`                                          |
+| variant      | `Some(404)`, `None`                                     | Object (POJO)      | `{'Some': [404]}`, `{'None': []}`, `404`, `undefined`   |
+| bits         | `Bits.none`, `Bits.all` `Bits.set(Bits.none, 0)`        | BigInt             | `0b0n`, `-1n`, `0b00000001n`                            |
+| hash         | `#001234d`                                              | BigInt             | `BigInt("0x001234d")`                                   |
+| signature    | `#001234d`                                              | BigInt             | `BigInt("0x001234d")`                                   |
+| address      | `ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt` | String             | `ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt` |
+| Set.set      | `Set.from_list([1, 2, 3])`                              | Set, Array         | `new Set([1,2,3])`,`[1,2,3]`                            |
+| BLS12_381.fr | `BLS12_381.int_to_fr(3735928559)`                       | BigInt             | `3735928559n`                                           |
+| BLS12_381.fp | `BLS12_381.int_to_fp(3735928559)`                       | BigInt             | `3735928559n`                                           |
 
 - note the fixed structure of variant object with a single key - the variant constructor (i.e. `Some`) and array of variant arguments as it's value.
 - while Javascript Number and primitive `int` types can be used as well when `BigInt` type is expected it's not recommended because of it's `Number.MAX_SAFE_INTEGER` limitation.

@@ -15,18 +15,18 @@ class PrimitivesEncoder {
             bool: this.decodeBool,
             string: this.decodeString.bind(this),
             binary: this.decodeBinary,
-            hex: (value) => byteArray2Hex(value),
+            hex: value => byteArray2Hex(value),
         }
 
         this.encoders = {
             int: this.encodeInt,
-            uint_16: (value) => this.encodeTypedInt('uint_16', value),
-            uint_32: (value) => this.encodeTypedInt('uint_32', value),
-            uint_64: (value) => this.encodeTypedInt('uint_64', value),
+            uint_16: value => this.encodeTypedInt('uint_16', value),
+            uint_32: value => this.encodeTypedInt('uint_32', value),
+            uint_64: value => this.encodeTypedInt('uint_64', value),
             bool: this.encodeBool,
             string: this.encodeString.bind(this),
             binary: this.encodeBinary,
-            hex: (value) => hexStringToByteArray(value),
+            hex: value => hexStringToByteArray(value),
         }
     }
 
@@ -41,7 +41,7 @@ class PrimitivesEncoder {
 
         const encoder = this.encoders[type]
 
-        return (Array.isArray(value)) ? value.map(v => encoder(v)) : encoder(value)
+        return Array.isArray(value) ? value.map(v => encoder(v)) : encoder(value)
     }
 
     decode(type, value) {
@@ -51,7 +51,7 @@ class PrimitivesEncoder {
 
         const decoder = this.decoders[type]
 
-        return (Array.isArray(value)) ? value.map(v => decoder(v)) : decoder(value)
+        return Array.isArray(value) ? value.map(v => decoder(v)) : decoder(value)
     }
 
     encodeInt(value) {
@@ -62,20 +62,20 @@ class PrimitivesEncoder {
         let dataView
 
         switch (type) {
-        case 'uint_16':
-            dataView = new DataView(new ArrayBuffer(2))
-            dataView.setUint16(0, Number(value))
-            break
-        case 'uint_32':
-            dataView = new DataView(new ArrayBuffer(4))
-            dataView.setUint32(0, Number(value))
-            break
-        case 'uint_64':
-            dataView = new DataView(new ArrayBuffer(8))
-            dataView.setBigUint64(0, value)
-            break
-        default:
-            throw new Error('Unsupported int type')
+            case 'uint_16':
+                dataView = new DataView(new ArrayBuffer(2))
+                dataView.setUint16(0, Number(value))
+                break
+            case 'uint_32':
+                dataView = new DataView(new ArrayBuffer(4))
+                dataView.setUint32(0, Number(value))
+                break
+            case 'uint_64':
+                dataView = new DataView(new ArrayBuffer(8))
+                dataView.setBigUint64(0, value)
+                break
+            default:
+                throw new Error('Unsupported int type')
         }
 
         return new Uint8Array(dataView.buffer)
@@ -86,7 +86,7 @@ class PrimitivesEncoder {
     }
 
     encodeBool(value) {
-        return new Uint8Array((value === true) ? [0x01] : [0x00])
+        return new Uint8Array(value === true ? [0x01] : [0x00])
     }
 
     decodeBool(buffer) {

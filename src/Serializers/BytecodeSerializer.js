@@ -3,17 +3,13 @@ import BaseSerializer from './BaseSerializer.js'
 import TypeSerializer from './TypeSerializer.js'
 import {byteArray2Hex, byteArray2Int} from '../utils/int2ByteArray.js'
 import OPCODES from '../FateOpcodes.js'
-import {
-    FateTypeByteArray,
-    FateTypeString,
-    FateTypeMap,
-} from '../FateTypes.js'
+import {FateTypeByteArray, FateTypeString, FateTypeMap} from '../FateTypes.js'
 
 const MODIFIERS = {
     0b11: 'immediate',
     0b10: 'var',
     0b01: 'arg',
-    0b00: 'stack'
+    0b00: 'stack',
 }
 
 const splitArgs = (data, n = 1) => {
@@ -57,7 +53,7 @@ class BytecodeSerializer extends BaseSerializer {
         const functions = []
 
         while (rest.length) {
-            [fun, rest] = this.deserializeFunction(rest, symbols)
+            ;[fun, rest] = this.deserializeFunction(rest, symbols)
             functions.push(fun)
         }
 
@@ -84,9 +80,9 @@ class BytecodeSerializer extends BaseSerializer {
                 attributes,
                 args,
                 returnType,
-                instructions
+                instructions,
             },
-            rest4
+            rest4,
         ]
     }
 
@@ -103,7 +99,7 @@ class BytecodeSerializer extends BaseSerializer {
                 instructions[block] = []
             }
 
-            [instruction, rest, end] = this.deserializeInstruction(rest)
+            ;[instruction, rest, end] = this.deserializeInstruction(rest)
             instructions[block].push(instruction)
 
             if (end) {
@@ -135,7 +131,7 @@ class BytecodeSerializer extends BaseSerializer {
     }
 
     deserializeArguments(data, n) {
-        const numBytes = (n <= 4) ? 1 : 2
+        const numBytes = n <= 4 ? 1 : 2
         const modBytes = data.subarray(0, numBytes)
         const rest = data.slice(numBytes)
 
@@ -145,7 +141,7 @@ class BytecodeSerializer extends BaseSerializer {
         let arg
 
         modifiers.forEach(mod => {
-            [arg, rest2] = this.deserializeArgument(mod, rest2)
+            ;[arg, rest2] = this.deserializeArgument(mod, rest2)
             args.push(arg)
         })
 

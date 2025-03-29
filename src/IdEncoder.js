@@ -8,12 +8,12 @@ const TAGS = {
 }
 
 const PREFIX2TAG = {
-    'ak': TAGS.ACCOUNT_PUBKEY,
-    'nm': TAGS.NAME,
-    'cm': TAGS.COMMITMENT,
-    'ok': TAGS.ORACLE_PUBKEY,
-    'ct': TAGS.CONTRACT_PUBKEY,
-    'ch': TAGS.CHANNEL
+    ak: TAGS.ACCOUNT_PUBKEY,
+    nm: TAGS.NAME,
+    cm: TAGS.COMMITMENT,
+    ok: TAGS.ORACLE_PUBKEY,
+    ct: TAGS.CONTRACT_PUBKEY,
+    ch: TAGS.CHANNEL,
 }
 
 class IdEncoder {

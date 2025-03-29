@@ -4,7 +4,7 @@ import {FateTypeRecord} from '../FateTypes.js'
 import FateTypeError from '../Errors/FateTypeError.js'
 
 class RecordDataFactory extends BaseDataFactory {
-    supports({ name, _valueTypes }) {
+    supports({name, _valueTypes}) {
         return 'record' === name
     }
 

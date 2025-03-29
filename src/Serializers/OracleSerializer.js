@@ -8,7 +8,7 @@ class OracleSerializer extends BaseSerializer {
         return [
             FateTag.OBJECT,
             FateTag.OTYPE_ORACLE,
-            ...RLP.encode(data.value)
+            ...RLP.encode(data.value),
         ]
     }
 
@@ -18,7 +18,7 @@ class OracleSerializer extends BaseSerializer {
 
         return [
             new FateOracleAddress(decoded.data),
-            new Uint8Array(decoded.remainder)
+            new Uint8Array(decoded.remainder),
         ]
     }
 }

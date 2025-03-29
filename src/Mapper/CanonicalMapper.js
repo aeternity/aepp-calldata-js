@@ -56,7 +56,7 @@ class CanonicalMapper {
         }
 
         return {
-            [acceptor.variantName]: value
+            [acceptor.variantName]: value,
         }
     }
 
@@ -73,7 +73,7 @@ class CanonicalMapper {
 
         return {
             functionId: byteArray2Hex(functionId),
-            args: args.map(e => e.accept(this))
+            args: args.map(e => e.accept(this)),
         }
     }
 }

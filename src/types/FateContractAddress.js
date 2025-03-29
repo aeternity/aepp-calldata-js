@@ -1,5 +1,5 @@
 import FateAddress from './FateAddress.js'
-import { FateTypeContractAddress } from '../FateTypes.js'
+import {FateTypeContractAddress} from '../FateTypes.js'
 
 class FateContractAddress extends FateAddress {
     constructor(value) {

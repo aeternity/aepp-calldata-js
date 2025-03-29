@@ -30,7 +30,7 @@ class ContractByteArrayEncoder {
      * @param {object} type - Data as Javascript data structures. See README.md
      * @param {Array} data - Data as Javascript data structures. See README.md
      * @returns {string} Encoded contract byte array
-    */
+     */
     encode(type, value) {
         const data = this._externalDataFactory.create(type, value)
         const serialized = this._serializer.serialize(data)
@@ -57,7 +57,7 @@ class ContractByteArrayEncoder {
      * @param {string} data - Contract bytearray data in a canonical format.
      * @returns {boolean|string|BigInt|Array|Map|Object}
      *  Decoded value as Javascript data structures. See README.md
-    */
+     */
     decode(data) {
         const binData = this._apiEncoder.decodeWithType(data, 'contract_bytearray')
         const deserialized = this._serializer.deserialize(binData)
@@ -78,7 +78,7 @@ class ContractByteArrayEncoder {
      * @param {object} type - Data as Javascript data structures. See README.md
      * @returns {boolean|string|BigInt|Array|Map|Object}
      *  Decoded value as Javascript data structures. See README.md
-    */
+     */
     decodeWithType(data, type) {
         const binData = this._apiEncoder.decodeWithType(data, 'contract_bytearray')
         const deserialized = this._serializer.deserializeWithType(binData, type)

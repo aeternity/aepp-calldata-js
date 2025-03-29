@@ -1,7 +1,7 @@
 import test from '../test.js'
 import hexStringToByteArray from '../../src/utils/hexStringToByteArray.js'
 
-const b = (value) => new Uint8Array(value)
+const b = value => new Uint8Array(value)
 
 test('hexStringToByteArray', t => {
     t.plan(7)
@@ -11,5 +11,5 @@ test('hexStringToByteArray', t => {
     t.deepEqual(hexStringToByteArray('01'), b([1]))
     t.deepEqual(hexStringToByteArray('0x01'), b([1]))
     t.deepEqual(hexStringToByteArray('c0ffee'), b([192, 255, 238]))
-    t.throws(() => hexStringToByteArray('coffee'), { message: 'Invalid hex string: coffee' })
+    t.throws(() => hexStringToByteArray('coffee'), {message: 'Invalid hex string: coffee'})
 })

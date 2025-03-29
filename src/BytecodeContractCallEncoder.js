@@ -14,7 +14,7 @@ class BytecodeContractCallEncoder {
      * const encoder = new BytecodeContractCallEncoder(bytecode)
      *
      * @param {string} bytecode - Contract bytecode using cannonical format.
-    */
+     */
     constructor(bytecode) {
         /** @type {ContractByteArrayEncoder} */
         this._byteArrayEncoder = new ContractByteArrayEncoder()
@@ -41,14 +41,14 @@ class BytecodeContractCallEncoder {
      * @param {string} funName - The function name as defined in the bytecode.
      * @param {Array} args - An array of call arguments as Javascript data structures. See README.md
      * @returns {string} Encoded calldata
-    */
+     */
     encodeCall(funName, args) {
         const {types, required} = this._typeResolver.getCallTypes(funName)
 
         if (args.length > types.length || args.length < required) {
             throw new EncoderError(
                 'Non matching number of arguments. '
-                + `${funName} expects between ${required} and ${types.length} number of arguments but got ${args.length}`
+                    + `${funName} expects between ${required} and ${types.length} number of arguments but got ${args.length}`
             )
         }
 
@@ -70,7 +70,7 @@ class BytecodeContractCallEncoder {
      *
      * @param {string} data - Encoded calldata in canonical format.
      * @returns {object} Decoded calldata
-    */
+     */
     decodeCall(data) {
         const {functionId, args} = this._byteArrayEncoder.decodeWithType(data, FateTypeCalldata())
         const functionName = this._typeResolver.getFunctionName(functionId)
@@ -78,7 +78,7 @@ class BytecodeContractCallEncoder {
         return {
             functionId,
             functionName,
-            args
+            args,
         }
     }
 
@@ -96,7 +96,7 @@ class BytecodeContractCallEncoder {
      * @param {'ok'|'revert'|'error'} resultType - The call result type.
      * @returns {boolean|string|BigInt|Array|Map|Object}
      *  Decoded value as Javascript data structures. See README.md
-    */
+     */
     decodeResult(funName, data, resultType = 'ok') {
         if (resultType === 'ok') {
             const type = this._typeResolver.getReturnType(funName)

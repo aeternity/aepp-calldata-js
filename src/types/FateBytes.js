@@ -2,7 +2,7 @@ import FateData from './FateData.js'
 import {int2ByteArray} from '../utils/int2ByteArray.js'
 import hexStringToByteArray from '../utils/hexStringToByteArray.js'
 import FateTypeError from '../Errors/FateTypeError.js'
-import { FateTypeBytes } from '../FateTypes.js'
+import {FateTypeBytes} from '../FateTypes.js'
 
 const toByteArray = (value, size = 0) => {
     if (Array.isArray(value) || ArrayBuffer.isView(value)) {

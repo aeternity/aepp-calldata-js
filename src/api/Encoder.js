@@ -12,7 +12,7 @@ class Encoder {
      * const encoder = new Encoder(ACI)
      *
      * @param {Object} aci - The contract ACI in a canonical form as POJO.
-    */
+     */
     constructor(aci) {
         this._internalEncoder = new InternalEncoder(aci)
     }
@@ -30,7 +30,7 @@ class Encoder {
      * @param {string} funName - The function name as defined in the ACI.
      * @param {Array} args - An array of call arguments as Javascript data structures. See README.md
      * @returns {string} Encoded calldata
-    */
+     */
     encode(contract, funName, args) {
         return this._internalEncoder.encode(contract, funName, args)
     }
@@ -49,7 +49,7 @@ class Encoder {
      * @param {string} data - The call return value in a canonical format.
      * @returns {boolean|string|BigInt|Array|Map|Object}
      *  Decoded value as Javascript data structures. See README.md
-    */
+     */
     decode(contract, funName, data) {
         return this._internalEncoder.decode(contract, funName, data)
     }
@@ -72,7 +72,7 @@ class Encoder {
      * @param {string} data - Contract bytearray data in a canonical format.
      * @returns {boolean|string|BigInt|Array|Map|Object}
      *  Decoded value as Javascript data structures. See README.md
-    */
+     */
     decodeContractByteArray(data) {
         return this._internalEncoder.decodeContractByteArray(data)
     }
@@ -90,7 +90,7 @@ class Encoder {
      *
      * @param {string} data - The encoded string.
      * @returns {Uint8Array} Decoded value as byte array.
-    */
+     */
     decodeString(data) {
         return this._internalEncoder.decodeString(data)
     }
@@ -107,7 +107,7 @@ class Encoder {
      *
      * @param {string} data - The FATE encoded string.
      * @returns {string} Decoded string value.
-    */
+     */
     decodeFateString(data) {
         return this._internalEncoder.decodeFateString(data)
     }
@@ -117,6 +117,7 @@ class Encoder {
      *
      * @example
      * const data = encoder.decodeEvent('Test', 'cb_dHJpZ2dlcmVk1FYuYA==', [
+ // temp comment to fool Prettier
      *     34853523142692495808479485503424878684430196596020091237715106250497712463899n,
      *     17
      * ])

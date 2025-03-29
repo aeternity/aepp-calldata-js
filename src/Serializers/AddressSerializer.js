@@ -8,7 +8,7 @@ class AddressSerializer extends BaseSerializer {
         return [
             FateTag.OBJECT,
             FateTag.OTYPE_ADDRESS,
-            ...RLP.encode(data.value)
+            ...RLP.encode(data.value),
         ]
     }
 
@@ -18,7 +18,7 @@ class AddressSerializer extends BaseSerializer {
 
         return [
             new FateAccountAddress(decoded.data),
-            new Uint8Array(decoded.remainder)
+            new Uint8Array(decoded.remainder),
         ]
     }
 }

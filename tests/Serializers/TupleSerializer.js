@@ -12,27 +12,27 @@ const FTBool = FateTypeBool()
 
 test('Serialize', t => {
     t.plan(5)
-    t.deepEqual(
-        s.serialize(new FateTuple()),
-        [63],
-        'empty tuple'
-    )
+    t.deepEqual(s.serialize(new FateTuple()), [63], 'empty tuple')
 
     t.deepEqual(
-        s.serialize(new FateTuple(
-            [FTInt],
-            [new FateInt(0)]
-        )),
-        [27,0],
+        s.serialize(
+            new FateTuple(
+                [FTInt],
+                [new FateInt(0)]
+            )
+        ),
+        [27, 0],
         'single element tuple'
     )
 
     t.deepEqual(
-        s.serialize(new FateTuple(
-            [FTBool, FTBool, FTInt],
-            [new FateBool(true), new FateBool(false), new FateInt(0)]
-        )),
-        [59,255,127,0],
+        s.serialize(
+            new FateTuple(
+                [FTBool, FTBool, FTInt],
+                [new FateBool(true), new FateBool(false), new FateInt(0)]
+            )
+        ),
+        [59, 255, 127, 0],
         'short tuple'
     )
 
@@ -41,7 +41,7 @@ test('Serialize', t => {
 
     t.deepEqual(
         s.serialize(new FateTuple(types, longTuple)),
-        [11,0,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30],
+        [11, 0, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30],
         'long tuple'
     )
 
@@ -55,25 +55,23 @@ test('Serialize', t => {
     )
 
     t.deepEqual(
-        s.serialize(new FateTuple(
-            [t1.type, t2.type],
-            [t1, t2]
-        )),
-        [43,43,127,0,43,255,2],
+        s.serialize(
+            new FateTuple(
+                [t1.type, t2.type],
+                [t1, t2]
+            )
+        ),
+        [43, 43, 127, 0, 43, 255, 2],
         'nested tuple'
     )
 })
 
 test('Deserialize', t => {
     t.plan(4)
-    t.deepEqual(
-        s.deserialize([63]),
-        new FateTuple(),
-        'empty tuple'
-    )
+    t.deepEqual(s.deserialize([63]), new FateTuple(), 'empty tuple')
 
     t.deepEqual(
-        s.deserialize([59,255,127,0]),
+        s.deserialize([59, 255, 127, 0]),
         new FateTuple(
             [FTBool, FTBool, FTInt],
             [new FateBool(true), new FateBool(false), new FateInt(0)]
@@ -85,7 +83,7 @@ test('Deserialize', t => {
     const types = Array(16).fill(FTInt)
 
     t.deepEqual(
-        s.deserialize([11,0,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30]),
+        s.deserialize([11, 0, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30]),
         new FateTuple(types, longTuple),
         'long tuple'
     )
@@ -100,7 +98,7 @@ test('Deserialize', t => {
     )
 
     t.deepEqual(
-        s.deserialize([43,43,127,0,43,255,2]),
+        s.deserialize([43, 43, 127, 0, 43, 255, 2]),
         new FateTuple(
             [t1.type, t2.type],
             [t1, t2]

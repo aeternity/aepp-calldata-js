@@ -5,9 +5,7 @@
         "es2021": true,
         "node": true
     },
-    "extends": [
-        "airbnb-base"
-    ],
+    "extends": ["airbnb-base"],
     "parserOptions": {
         "ecmaVersion": 13
     },
@@ -15,21 +13,24 @@
     "rules": {
         "import/extensions": ["error", "always"],
         "semi": ["error", "never"],
-        "indent": ["error", 4],
+        "indent": "off",
         "curly": ["error", "all"],
         "padding-line-between-statements": [
             "error",
-            { "blankLine": "always", "prev": "*", "next": "block-like" },
-            { "blankLine": "always", "prev": "block-like", "next": "*" },
-            { "blankLine": "any",    "prev": ["const", "let", "var"], "next": "block-like"}
+            {"blankLine": "always", "prev": "*", "next": "block-like"},
+            {"blankLine": "always", "prev": "block-like", "next": "*"},
+            {"blankLine": "any", "prev": ["const", "let", "var"], "next": "block-like"}
         ],
         "no-negated-condition": "error",
         "no-else-return": "error",
         "no-underscore-dangle": "off",
         "object-curly-spacing": "off",
+        "object-curly-newline": "off",
         "no-bitwise": "off",
         "comma-dangle": "off",
         "arrow-body-style": "off",
+        "implicit-arrow-linebreak": "off",
+        "operator-linebreak": "off",
         "class-methods-use-this": "off",
         "prefer-template": "off",
         "arrow-parens": "off",
@@ -39,6 +40,7 @@
         "import/order": "off",
         "no-plusplus": "off",
         "yoda": "off",
-        "no-unused-vars": ["error", { "varsIgnorePattern": "^_.*$", "argsIgnorePattern": "^_.*$" }]
+        "no-extra-semi": "off",
+        "no-unused-vars": ["error", {"varsIgnorePattern": "^_.*$", "argsIgnorePattern": "^_.*$"}]
     }
 }

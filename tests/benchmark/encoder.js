@@ -1,6 +1,6 @@
 import Benchmark from 'benchmark'
 import Encoder from '../../src/Encoder.js'
-import aci from '../../build/contracts/Test.json' with { type: 'json' }
+import aci from '../../build/contracts/Test.json' with {type: 'json'}
 
 const CONTRACT = 'Test'
 const encoder = new Encoder(aci)
@@ -21,31 +21,25 @@ suite.add('Encoder#encode(bytes)', () => {
 })
 
 suite.add('Encoder#encode(string)', () => {
-    encoder.encode(CONTRACT, 'test_string', ["whoolymoly"])
+    encoder.encode(CONTRACT, 'test_string', ['whoolymoly'])
 })
 
 suite.add('Encoder#encode(hash)', () => {
-    encoder.encode(
-        CONTRACT,
-        'test_hash',
-        ["0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f"]
-    )
+    encoder.encode(CONTRACT, 'test_hash', [
+        '0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f',
+    ])
 })
 
 suite.add('Encoder#encode(signature)', () => {
-    encoder.encode(
-        CONTRACT,
-        'test_signature',
-        [`0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f`]
-    )
+    encoder.encode(CONTRACT, 'test_signature', [
+        `0x000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f`,
+    ])
 })
 
 suite.add('Encoder#encode(address)', () => {
-    encoder.encode(
-        CONTRACT,
-        'test_account_address',
-        ["ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt"]
-    )
+    encoder.encode(CONTRACT, 'test_account_address', [
+        'ak_2gx9MEFxKvY9vMG5YnqnXWv1hCsX7rgnfvBLJS4aQurustR1rt',
+    ])
 })
 
 suite.add('Encoder#encode(bits)', () => {
@@ -53,7 +47,7 @@ suite.add('Encoder#encode(bits)', () => {
 })
 
 suite.add('Encoder#encode(list)', () => {
-    encoder.encode(CONTRACT, 'test_list', [[1,2,3,5,8,13,21]])
+    encoder.encode(CONTRACT, 'test_list', [[1, 2, 3, 5, 8, 13, 21]])
 })
 
 suite.add('Encoder#encode(map)', () => {
@@ -75,7 +69,7 @@ suite.add('Encoder#encode(record)', () => {
 /* eslint-disable no-console */
 
 // print results
-suite.on('cycle', (event) => {
+suite.on('cycle', event => {
     console.log(String(event.target))
 })
 

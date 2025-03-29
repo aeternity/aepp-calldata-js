@@ -58,6 +58,7 @@
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-plugin-import": "2.29.1",
     "nyc": "17.0.0",
+    "prettier": "^3.5.3",
     "tape": "5.8.1"
   },
   "ava": {
@@ -82,6 +83,7 @@
     "prepare": "npm run build",
     "test": "ava --verbose",
     "test:watch": "ava --verbose --watch",
-    "lint": "eslint src tests"
+    "format": "node prettier.cjs . --write",
+    "lint": "node prettier.cjs . --check && eslint src tests"
   }
 }
