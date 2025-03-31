@@ -53,10 +53,6 @@ class FateVariant extends FateData {
     }
 
     valueOf() {
-        if (this.variants.length === 0) {
-            return this
-        }
-
         const value = this._value.map(e => e.valueOf())
 
         return {

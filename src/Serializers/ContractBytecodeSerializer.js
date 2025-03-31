@@ -1,14 +1,34 @@
 import RLP from 'rlp'
+import FateTag from '../FateTag.js'
 import BaseSerializer from './BaseSerializer.js'
 import BytecodeSerializer from './BytecodeSerializer.js'
 import IntSerializer from './IntSerializer.js'
-import {byteArray2Int, byteArray2Hex} from '../utils/int2ByteArray.js'
+import {byteArray2Int, byteArray2Hex, int2ByteArray} from '../utils/int2ByteArray.js'
+import hexStringToByteArray from '../utils/hexStringToByteArray.js'
 
 class ContractBytecodeSerializer extends BaseSerializer {
     constructor(globalSerializer) {
         super()
         this._bytecodeSerializer = new BytecodeSerializer(globalSerializer)
         this._intSerializer = new IntSerializer()
+    }
+
+    serialize(data) {
+        const stringEncoder = new TextEncoder()
+        const byteArray = RLP.encode([
+            data.tag,
+            data.vsn,
+            hexStringToByteArray(data.sourceHash),
+            data.aevmTypeInfo,
+            this._bytecodeSerializer.serialize(data.bytecode),
+            stringEncoder.encode(data.compilerVersion),
+            int2ByteArray(data.payable),
+        ])
+        return new Uint8Array([
+            FateTag.CONTRACT_BYTEARRAY,
+            ...this._intSerializer.serialize(byteArray.length),
+            ...byteArray,
+        ])
     }
 
     deserializeStream(data) {
