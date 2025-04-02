@@ -25,6 +25,7 @@ jobs:
     - run: npm config set fund false
     - run: make tests
     - run: make integration-tests
+    - run: make browser-tests-headless
     - run: make lint
   benchmark:
     runs-on: ubuntu-22.04

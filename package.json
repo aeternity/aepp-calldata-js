@@ -33,9 +33,6 @@
     "cjs/*",
     "src/*"
   ],
-  "browser": {
-    "./tests/test.js": "./tests/browser/test.js"
-  },
   "sideEffects": false,
   "dependencies": {
     "blakejs": "^1.2.1",
@@ -53,19 +50,24 @@
     "ava": "6.1.3",
     "babel-plugin-transform-rewrite-imports": "^1.5.3",
     "benchmark": "2.1.4",
-    "browserify": "17.0.0",
     "eslint": "8.57.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-plugin-import": "2.29.1",
+    "html-webpack-plugin": "^5.6.3",
     "nyc": "17.0.0",
-    "tape": "5.8.1"
+    "playwright": "^1.49.0",
+    "process": "^0.11.10",
+    "stream-browserify": "^3.0.0",
+    "tape": "5.8.1",
+    "webpack": "^5.96.1",
+    "webpack-cli": "^5.1.4"
   },
   "ava": {
     "files": [
       "tests/**/*",
       "!tests/test.js",
       "!tests/benchmark/*",
-      "!tests/browser/test.js"
+      "!tests/browser/run.js"
     ]
   },
   "nyc": {
@@ -76,12 +78,13 @@
     "temp-dir": "build/.nyc_output"
   },
   "scripts": {
-    "browser-test-bundle": "browserify tests/[A-Z]*.js tests/**/*.js > build/js/tests.js",
+    "browser-test-bundle": "webpack ./tests/*.js ./tests/Serializers/*.js",
     "coverage": "nyc ava",
     "build": "babel src --out-dir cjs --out-file-extension .cjs",
     "prepare": "npm run build",
     "test": "ava --verbose",
     "test:watch": "ava --verbose --watch",
+    "test:browser": "npm run browser-test-bundle && node ./tests/browser/run.js",
     "lint": "eslint src tests"
   }
 }

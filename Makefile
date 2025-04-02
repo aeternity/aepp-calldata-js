@@ -1,7 +1,7 @@
 COMPILER=./bin/aesophia_cli
 SOURCEDIR = contracts
 SOURCES=$(wildcard $(SOURCEDIR)/*.aes)
-BYTECODES=$(SOURCES:.aes=.aeb)
+BYTECODES=$(SOURCES:.aes=.aeb.json)
 JSON_ACIS=$(SOURCES:.aes=.json)
 ADDRESSES=$(SOURCES:.aes=.addr)
 BUILDDIR = build
@@ -17,7 +17,7 @@ $(BUILDDIR)/$(SOURCEDIR): | $(BUILDDIR)
 	mkdir -p $@
 
 $(BUILDDIR)/$(BYTECODES): $(SOURCES) | $(BUILDDIR)/$(SOURCEDIR)
-	$(COMPILER) $< -o $@
+	@echo \"$(shell $(COMPILER) $<)\" > $@
 
 # Note on jq default filter: https://github.com/stedolan/jq/issues/1110
 $(BUILDDIR)/$(JSON_ACIS): $(SOURCES) | $(BUILDDIR)/$(SOURCEDIR)
@@ -33,18 +33,19 @@ node_modules: package-lock.json
 tests: node_modules $(BUILDDIR)/$(JSON_ACIS) $(BUILDDIR)/$(BYTECODES)
 	npm test
 
-$(BUILDDIR)/js: | $(BUILDDIR)
-	mkdir -p $@
-
-$(BUILDDIR)/js/tests.js: node_modules $(BUILDDIR)/$(JSON_ACIS) $(BUILDDIR)/js
+$(BUILDDIR)/js/index.html: node_modules $(BUILDDIR)/$(JSON_ACIS) $(BUILDDIR)/$(BYTECODES)
 	npm run browser-test-bundle
 
-browser-tests: $(BUILDDIR)/js/tests.js
+browser-tests: $(BUILDDIR)/js/index.html
 ifneq ($(shell which open),)
-	@open tests/browser/index.html
+	@open build/js/index.html
 else
-	@echo Open "tests/browser/index.html" in your browser.
+	@echo Open "build/js/index.html" in your browser.
 endif
+
+browser-tests-headless: node_modules $(BUILDDIR)/$(JSON_ACIS) $(BUILDDIR)/$(BYTECODES)
+	npx playwright install chromium-headless-shell
+	npm run test:browser
 
 integration-tests: $(INTEGRATION_TESTS) | node_modules $(BUILDDIR)/$(JSON_ACIS)
 	@for file in $^; do bash $${file}; done

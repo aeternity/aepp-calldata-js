@@ -1,9 +1,8 @@
-import fs from 'fs'
 import test from './test.js'
+import bytecode from './data/dex.aeb.json' with { type: 'json' }
 import BytecodeContractCallEncoder from '../src/BytecodeContractCallEncoder.js'
 
-const bytecode = fs.readFileSync('./tests/data/dex.aeb')
-const encoder = new BytecodeContractCallEncoder(bytecode.toString())
+const encoder = new BytecodeContractCallEncoder(bytecode)
 
 // Regression test: https://github.com/aeternity/aepp-calldata-js/issues/220
 test('Decode DEX calldata', t => {

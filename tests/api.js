@@ -1,6 +1,6 @@
-import fs from 'fs'
 import test from './test.js'
 import aci from '../build/contracts/Test.json' with { type: 'json' }
+import bytecode from '../build/contracts/Test.aeb.json' with { type: 'json' }
 import {
     Encoder,
     AciContractCallEncoder,
@@ -65,8 +65,7 @@ test('AciContractCallEncoder public API', t => {
 test('BytecodeContractCallEncoder public API', t => {
     t.plan(3)
 
-    const bytecode = fs.readFileSync('./build/contracts/Test.aeb')
-    const encoder = new BytecodeContractCallEncoder(bytecode.toString())
+    const encoder = new BytecodeContractCallEncoder(bytecode)
 
     t.is(encoder.encodeCall('init', []), 'cb_KxFE1kQfP4oEp9E=')
     t.is(encoder.decodeResult('init', 'cb_Xfbg4g=='), undefined)
