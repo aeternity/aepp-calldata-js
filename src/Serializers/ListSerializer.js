@@ -1,3 +1,4 @@
+import {asU8} from '../utils/stream.js'
 import * as RLPInt from '../utils/RLPInt.js'
 import FateTag from '../FateTag.js'
 import FateList from '../types/FateList.js'
@@ -28,13 +29,13 @@ class ListSerializer extends BaseSerializer {
     }
 
     deserializeStream(data, typeInfo) {
-        const buffer = new Uint8Array(data)
+        const buffer = asU8(data)
         const prefix = buffer[0]
         let len = 0n
-        let rest = buffer.slice(1)
+        let rest = buffer.subarray(1)
 
         if (prefix === FateTag.LONG_LIST) {
-            [len, rest] = RLPInt.decode(buffer.slice(1))
+            [len, rest] = RLPInt.decode(buffer.subarray(1))
             len += 16n
         }
 

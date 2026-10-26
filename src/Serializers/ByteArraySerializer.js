@@ -1,3 +1,4 @@
+import {asU8} from '../utils/stream.js'
 import FateTag from '../FateTag.js'
 import BaseSerializer from './BaseSerializer.js'
 import FateByteArray from '../types/FateByteArray.js'
@@ -28,23 +29,23 @@ class ByteArraySerializer extends BaseSerializer {
     }
 
     deserializeStream(stream) {
-        const data = new Uint8Array(stream)
+        const data = asU8(stream)
         const prefix = data[0]
 
         if (prefix === FateTag.EMPTY_STRING) {
             return [
                 new FateByteArray(),
-                data.slice(1)
+                data.subarray(1)
             ]
         }
 
         if (prefix === FateTag.LONG_STRING) {
-            const [fateLen, rest] = intSerializer.deserializeStream(data.slice(1))
+            const [fateLen, rest] = intSerializer.deserializeStream(data.subarray(1))
             const len = Number(fateLen.valueOf()) + 64
 
             return [
                 new FateByteArray(rest.slice(0, len)),
-                rest.slice(len)
+                rest.subarray(len)
             ]
         }
 
@@ -53,7 +54,7 @@ class ByteArraySerializer extends BaseSerializer {
 
         return [
             new FateByteArray(data.slice(1, offset)),
-            data.slice(offset)
+            data.subarray(offset)
         ]
     }
 }

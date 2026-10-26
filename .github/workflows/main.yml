@@ -13,15 +13,15 @@ jobs:
       matrix:
         node-version: [20.x]
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v7
       with:
         node-version: ${{ matrix.node-version }}
         cache: npm
-    - run: |
-          wget -q https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_24.3.3-1~ubuntu~focal_amd64.deb
-          sudo apt install --allow-downgrades ./esl-erlang_24.3.3-1~ubuntu~focal_amd64.deb || true
+    - uses: erlef/setup-beam@v1
+      with:
+        otp-version: '24'
     - run: npm config set fund false
     - run: make tests
     - run: make integration-tests
@@ -34,14 +34,14 @@ jobs:
       matrix:
         node-version: [20.x]
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v7
       with:
         node-version: ${{ matrix.node-version }}
         cache: npm
-    - run: |
-          wget -q https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_24.3.3-1~ubuntu~focal_amd64.deb
-          sudo apt install --allow-downgrades ./esl-erlang_24.3.3-1~ubuntu~focal_amd64.deb || true
+    - uses: erlef/setup-beam@v1
+      with:
+        otp-version: '24'
     - run: npm config set fund false
     - run: make benchmark-tests

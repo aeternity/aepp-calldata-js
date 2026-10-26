@@ -1,3 +1,4 @@
+import {asU8, rlpDecodeStream} from '../utils/stream.js'
 import RLP from 'rlp'
 import FateTag from '../FateTag.js'
 import BaseSerializer from './BaseSerializer.js'
@@ -13,12 +14,12 @@ class AddressSerializer extends BaseSerializer {
     }
 
     deserializeStream(data) {
-        const buffer = new Uint8Array(data)
-        const decoded = RLP.decode(buffer.slice(2), true)
+        const buffer = asU8(data)
+        const decoded = rlpDecodeStream(buffer.subarray(2))
 
         return [
             new FateAccountAddress(decoded.data),
-            new Uint8Array(decoded.remainder)
+            decoded.remainder
         ]
     }
 }

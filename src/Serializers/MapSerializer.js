@@ -1,3 +1,4 @@
+import {asU8} from '../utils/stream.js'
 import FateTag from '../FateTag.js'
 import * as RLPInt from '../utils/RLPInt.js'
 import BaseSerializer from './BaseSerializer.js'
@@ -28,14 +29,14 @@ class MapSerializer extends BaseSerializer {
     }
 
     deserializeStream(data, typeInfo) {
-        const buffer = new Uint8Array(data)
+        const buffer = asU8(data)
         const prefix = buffer[0]
 
         if (prefix !== FateTag.MAP) {
             throw new FatePrefixError(prefix)
         }
 
-        const [len, remainder] = RLPInt.decode(buffer.slice(1))
+        const [len, remainder] = RLPInt.decode(buffer.subarray(1))
         let rest = remainder
 
         if (len === 0n) {
