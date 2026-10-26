@@ -1,3 +1,4 @@
+import {asU8, rlpDecodeStream} from '../utils/stream.js'
 import RLP from 'rlp'
 import FateTag from '../FateTag.js'
 import FateTuple from '../types/FateTuple.js'
@@ -18,11 +19,11 @@ class VariantSerializer extends BaseSerializer {
     }
 
     deserializeStream(stream, typeInfo) {
-        const buffer = new Uint8Array(stream)
-        const decoded = RLP.decode(buffer.slice(1), true)
+        const buffer = asU8(stream)
+        const decoded = rlpDecodeStream(buffer.subarray(1))
         const arities = [...decoded.data]
         const tag = decoded.remainder[0]
-        const data = decoded.remainder.slice(1)
+        const data = decoded.remainder.subarray(1)
         let variants = []
         let valueType
 

@@ -1,3 +1,4 @@
+import {asU8} from '../utils/stream.js'
 import FateTag from '../FateTag.js'
 import BaseSerializer from './BaseSerializer.js'
 import ByteArraySerializer from './ByteArraySerializer.js'
@@ -19,7 +20,7 @@ class StringSerializer extends BaseSerializer {
     }
 
     deserializeStream(data) {
-        const buffer = new Uint8Array(data)
+        const buffer = asU8(data)
         const prefix = buffer[0]
 
         if (

@@ -1,3 +1,4 @@
+import {asU8} from '../utils/stream.js'
 import FateTag from '../FateTag.js'
 import FateBool from '../types/FateBool.js'
 import BaseSerializer from './BaseSerializer.js'
@@ -9,9 +10,9 @@ class BoolSerializer extends BaseSerializer {
     }
 
     deserializeStream(data) {
-        const buffer = new Uint8Array(data)
+        const buffer = asU8(data)
         const prefix = buffer[0]
-        const rest = buffer.slice(1)
+        const rest = buffer.subarray(1)
 
         if (prefix === FateTag.TRUE) {
             return [new FateBool(true), rest]

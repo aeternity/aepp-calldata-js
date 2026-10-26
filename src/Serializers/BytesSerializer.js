@@ -1,3 +1,4 @@
+import {asU8} from '../utils/stream.js'
 import FateTag from '../FateTag.js'
 import ByteArraySerializer from './ByteArraySerializer.js'
 import FateBytes from '../types/FateBytes.js'
@@ -15,8 +16,8 @@ class BytesSerializer extends BaseSerializer {
     }
 
     deserializeStream(data) {
-        const buffer = new Uint8Array(data)
-        const [bytes, rest] = byteArraySerializer.deserializeStream(buffer.slice(2))
+        const buffer = asU8(data)
+        const [bytes, rest] = byteArraySerializer.deserializeStream(buffer.subarray(2))
 
         return [
             new FateBytes(bytes.valueOf()),

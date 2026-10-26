@@ -1,3 +1,4 @@
+import {asU8} from '../utils/stream.js'
 import FateTag from '../FateTag.js'
 import * as RLPInt from '../utils/RLPInt.js'
 import FateInt from '../types/FateInt.js'
@@ -39,7 +40,7 @@ class IntSerializer extends BaseSerializer {
     }
 
     deserializeStream(stream) {
-        const data = new Uint8Array(stream)
+        const data = asU8(stream)
         const prefix = data[0]
 
         // small int
@@ -48,7 +49,7 @@ class IntSerializer extends BaseSerializer {
             if ((prefix & 0b10000000) === 0) {
                 return [
                     new FateInt(prefix >> 1),
-                    data.slice(1)
+                    data.subarray(1)
                 ]
             }
 
@@ -57,17 +58,17 @@ class IntSerializer extends BaseSerializer {
 
             return [
                 new FateInt(-i),
-                data.slice(1)
+                data.subarray(1)
             ]
         }
 
         if (prefix === FateTag.POS_BIG_INT || prefix === FateTag.NEG_BIG_INT) {
             const sign = prefix === FateTag.POS_BIG_INT ? 1n : -1n
-            const [i, remainder] = RLPInt.decode(data.slice(1))
+            const [i, remainder] = RLPInt.decode(data.subarray(1))
 
             return [
                 new FateInt((i + 64n) * sign),
-                new Uint8Array(remainder)
+                remainder
             ]
         }
 

@@ -1,3 +1,4 @@
+import {asU8} from '../utils/stream.js'
 import FateTag from '../FateTag.js'
 import FateTuple from '../types/FateTuple.js'
 import BaseSerializer from './BaseSerializer.js'
@@ -31,10 +32,10 @@ class TupleSerializer extends BaseSerializer {
     }
 
     deserializeStream(data, typeInfo) {
-        const buffer = new Uint8Array(data)
+        const buffer = asU8(data)
         const prefix = buffer[0]
         let len = 0n
-        let rest = buffer.slice(1)
+        let rest = buffer.subarray(1)
 
         if (prefix === FateTag.EMPTY_TUPLE) {
             return [new FateTuple(), rest]
@@ -45,7 +46,7 @@ class TupleSerializer extends BaseSerializer {
         }
 
         if (prefix === FateTag.LONG_TUPLE) {
-            [len, rest] = RLPInt.decode(buffer.slice(1))
+            [len, rest] = RLPInt.decode(buffer.subarray(1))
             len += 16n
         }
 

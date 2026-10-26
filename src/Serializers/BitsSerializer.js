@@ -1,3 +1,4 @@
+import {asU8} from '../utils/stream.js'
 import FateTag from '../FateTag.js'
 import * as RLPInt from '../utils/RLPInt.js'
 import FateBits from '../types/FateBits.js'
@@ -15,13 +16,13 @@ class BitsSerializer extends BaseSerializer {
     }
 
     deserializeStream(data) {
-        const buffer = new Uint8Array(data)
+        const buffer = asU8(data)
         const sign = buffer[0] === FateTag.POS_BITS ? 1n : -1n
-        const [i, remainder] = RLPInt.decode(buffer.slice(1))
+        const [i, remainder] = RLPInt.decode(buffer.subarray(1))
 
         return [
             new FateBits(i * sign),
-            new Uint8Array(remainder)
+            remainder
         ]
     }
 }
