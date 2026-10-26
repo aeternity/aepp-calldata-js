@@ -2,18 +2,20 @@ name: Node.js Package
 on:
   release:
     types: [created]
+permissions:
+  contents: read
+  id-token: write
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v7
-      # Setup .npmrc file to publish to npm
+      # npm publishes with a short-lived OIDC token (trusted publisher), no npm token is stored
       - uses: actions/setup-node@v7
         with:
-          node-version: '20.x'
+          node-version: '24'
           registry-url: 'https://registry.npmjs.org'
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          package-manager-cache: false
       - run: npm config set fund false
-      - run: npm install
+      - run: npm ci
       - run: npm publish --access public
